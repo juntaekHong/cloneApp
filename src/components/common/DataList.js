@@ -28,7 +28,12 @@ const DataList = styled.FlatList`
 export const List = props => {
   const _renderItem = ({item, index}) => {
     return (
-      <ListView index={index} padding={10}>
+      <ListView
+        index={index}
+        padding={10}
+        onPress={() => {
+          props.navigation.navigate('HospitalDetail');
+        }}>
         <PhotoImg
           source={require('../../../assets/image/navigation/homeblue.png')}
           width={80}
@@ -46,8 +51,12 @@ export const List = props => {
             <NBGBText fontSize={12}>{item.rating}</NBGBText>
             <NBGLText>({item.reviewCount}+)</NBGLText>
           </EvaluationView>
-          <NBGText fontSize={13}>장소: {item.location}</NBGText>
-          <NBGText fontSize={13}>소요시간: {item.time}</NBGText>
+          <NBGText fontSize={13} color={'#b7b7b7'}>
+            장소: {item.location}
+          </NBGText>
+          <NBGText fontSize={13} color={'#b7b7b7'}>
+            소요시간: {item.time}
+          </NBGText>
         </ContentDataView>
       </ListView>
     );

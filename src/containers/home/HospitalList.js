@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {SafeAreaView, ScrollView, Text} from 'react-native';
 import {TopView} from '../../components/common/View';
@@ -69,7 +70,7 @@ const HospitalList = props => {
           props.navigation.goBack();
         }}
       />
-      <List data={DATA} />
+      <List data={DATA} navigation={props.navigation} />
     </SafeAreaView>
   );
 };

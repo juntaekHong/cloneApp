@@ -5,6 +5,11 @@ import {widthPercentageToDP} from '../../utils/util';
 import {BackImg, CloseImg} from './Image';
 import {NBGBText} from './Text';
 
+export const TopContainerView = styled.SafeAreaView`
+  flex: 1;
+  background-color: white;
+`;
+
 const StandardView = styled.View``;
 
 const TopContainer = styled.View`
