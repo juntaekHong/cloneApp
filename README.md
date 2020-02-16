@@ -1,6 +1,11 @@
 ## clone App
 
-#
+
+## 설치 전 해야할 사항
+
+```
+package-lock.json 삭제
+```
 
 ### 설치 및 실행
 
