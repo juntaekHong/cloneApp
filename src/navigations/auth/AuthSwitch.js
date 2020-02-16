@@ -1,5 +1,5 @@
 import {createSwitchNavigator} from 'react-navigation';
-// import UpdateCheck from "../../containers/update/UpdateCheck";
+import UpdateCheck from '../../containers/update/UpdateCheck';
 // import SignStack from "../sign/SignStack";
 import RootStack from '../root/root';
 // import LockSolve from "../../containers/lock/LockSolve";
@@ -11,7 +11,7 @@ const AuthSwitch = createSwitchNavigator(
   {
     root: RootStack,
     // intro: { screen: Intro },
-    // update: { screen: UpdateCheck },
+    update: {screen: UpdateCheck},
     // sign: { screen: SignStack },
     // locksolve: { screen: LockSolve },
     // library: { screen: LibraryUpdate },
@@ -19,7 +19,7 @@ const AuthSwitch = createSwitchNavigator(
     // test: TestContainer
   },
   {
-    initialRouteName: 'root',
+    initialRouteName: 'update',
   },
 );
 

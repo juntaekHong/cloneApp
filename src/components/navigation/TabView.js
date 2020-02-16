@@ -23,7 +23,7 @@ const shadow = {
   }),
 };
 const TabBarButton = styled.TouchableOpacity`
-  width: ${widthPercentageToDP(49)}
+  width: ${widthPercentageToDP(75)}
   height: ${widthPercentageToDP(49)}
   justify-content: center
   align-items: center
@@ -38,7 +38,7 @@ const TabBarIcon = styled.Image`
 const TabBarView = styled.View`
   flex-direction: row
   width: 100%
-  height: ${widthPercentageToDP(49)}
+  height: ${widthPercentageToDP(75)}
   align-items: center
   justify-content: center
   background-color: white
@@ -46,7 +46,7 @@ const TabBarView = styled.View`
 
 const TabBar = ({active, onPress, source, label = '', style}) => (
   <TabBarButton onPress={onPress} style={style}>
-    {/* <TabBarIcon source={source} style={{marginBottom: 0.2}} /> */}
+    <TabBarIcon source={source} style={{marginBottom: 0.2}} />
     {active ? (
       <NBGBText color={colors.active} fontSize={10}>
         {label}
@@ -78,55 +78,51 @@ export const TabView = ({navigationState}) => {
     <TabBarView style={shadow}>
       <TabBar
         onPress={navigateHistroy}
-        // source={
-        //   navigationState.index === 0
-        //     ? require('HandamProject/assets/image/navigation/gradecardblue.png')
-        //     : require('HandamProject/assets/image/navigation/gradecardgrey.png')
-        // }
+        source={
+          navigationState.index === 0
+            ? require('cloneApp/assets/image/navigation/gradecardblue.png')
+            : require('cloneApp/assets/image/navigation/gradecardgrey.png')
+        }
         label={'진료내역'}
         active={navigationState.index === 0}
       />
       <TabBar
         onPress={navigateSearch}
-        // source={
-        //   navigationState.index === 1
-        //     ? require('HandamProject/assets/image/navigation/gradecardblue.png')
-        //     : require('HandamProject/assets/image/navigation/gradecardgrey.png')
-        // }
+        source={
+          navigationState.index === 1
+            ? require('cloneApp/assets/image/navigation/gradecardblue.png')
+            : require('cloneApp/assets/image/navigation/gradecardgrey.png')
+        }
         label={'검색'}
         active={navigationState.index === 1}
       />
       <TabBar
         onPress={navigateHome}
-        style={{
-          marginLeft: widthPercentageToDP(51),
-          marginRight: widthPercentageToDP(51),
-        }}
-        // source={
-        //   navigationState.index === 2
-        //     ? require('HandamProject/assets/image/navigation/homeblue.png')
-        //     : require('HandamProject/assets/image/navigation/homegrey.png')
-        // }
+        source={
+          navigationState.index === 2
+            ? require('cloneApp/assets/image/navigation/homeblue.png')
+            : require('cloneApp/assets/image/navigation/homegrey.png')
+        }
         label={'홈'}
         active={navigationState.index === 2}
       />
       <TabBar
         onPress={navigateCommunity}
-        // source={
-        //   navigationState.index === 3
-        //     ? require('HandamProject/assets/image/navigation/communityblue.png')
-        //     : require('HandamProject/assets/image/navigation/communitygrey.png')
-        // }
+        source={
+          navigationState.index === 3
+            ? require('cloneApp/assets/image/navigation/communityblue.png')
+            : require('cloneApp/assets/image/navigation/communitygrey.png')
+        }
         label={'게시판'}
         active={navigationState.index === 3}
       />
       <TabBar
         onPress={navigateMyPage}
-        // source={
-        //   navigationState.index === 4
-        //     ? require('HandamProject/assets/image/navigation/gradecardblue.png')
-        //     : require('HandamProject/assets/image/navigation/gradecardgrey.png')
-        // }
+        source={
+          navigationState.index === 4
+            ? require('cloneApp/assets/image/navigation/gradecardblue.png')
+            : require('cloneApp/assets/image/navigation/gradecardgrey.png')
+        }
         label={'마이페이지'}
         active={navigationState.index === 4}
       />

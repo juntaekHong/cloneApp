@@ -3,12 +3,12 @@ import React from 'react';
 import {View, TouchableOpacity, Text} from 'react-native';
 import {widthPercentageToDP} from '../../utils/util';
 import {CenterView} from '../../components/common/Extra';
+import navigators from '../../utils/navigators';
 
-const Home = props => {
+const UpdateCheck = props => {
   return (
     <CenterView>
-      <Text>Main Page</Text>
-      {/* 임시 생성 버튼 */}
+      <Text>Version Check Page(로그인 페이지)</Text>
       <View style={{marginBottom: widthPercentageToDP(60)}} />
       <TouchableOpacity
         style={{
@@ -19,12 +19,12 @@ const Home = props => {
           borderColor: 'blue',
         }}
         onPress={() => {
-          props.navigation.navigate('HospitalList');
+          props.navigation.navigate('home');
         }}>
-        <Text>XX 병원 리스트로 이동</Text>
+        <Text>홈 화면으로 이동</Text>
       </TouchableOpacity>
     </CenterView>
   );
 };
 
-export default Home;
+export default UpdateCheck;

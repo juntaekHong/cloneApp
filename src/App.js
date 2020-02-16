@@ -16,7 +16,7 @@ import Modal from 'react-native-modal';
 class App extends Component {
   constructor(props) {
     super(props);
-    // SplashScreen.hide();
+    SplashScreen.hide();
   }
 
   render() {
