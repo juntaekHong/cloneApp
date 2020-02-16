@@ -1,11 +1,12 @@
 import React from 'react';
 import {View, Text} from 'react-native';
+import {CenterView} from '../../components/common/Extra';
 
 const Community = props => {
   return (
-    <View>
+    <CenterView>
       <Text>Community Page</Text>
-    </View>
+    </CenterView>
   );
 };
 

@@ -1,11 +1,12 @@
 import React from 'react';
 import {View, Text} from 'react-native';
+import {CenterView} from '../../components/common/Extra';
 
 const Search = props => {
   return (
-    <View>
+    <CenterView>
       <Text>Search Page</Text>
-    </View>
+    </CenterView>
   );
 };
 
