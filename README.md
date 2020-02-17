@@ -41,7 +41,7 @@ $ react-native run-android
 $ react-native run-ios
 ```
 
-### 실행 오류 시, 확인 사항
+### 실행 오류 시, 확인 사항(Mac)
 
 ```
 Mac 사용 시 추가 설정 사항
@@ -59,4 +59,12 @@ Project< ios Folder 안에 pod --version 으로 pod 설치 확인
 1. ios folder 안에 pod install
 2. pod update
 3. Project Top Folder에서 react-native run-ios 실행.
+```
+
+### 모듈 설치 시, 유의사항
+
+```
+기존 module 업데이트 Push 금지.
+새로 추가한 modlue만 push할 것. push 전 local repo 최신화 후, 충돌 제거해서 push
+
 ```
