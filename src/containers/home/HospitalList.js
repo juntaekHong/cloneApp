@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
-import {SafeAreaView, ScrollView, Text} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {SafeAreaView, ScrollView, View, Text} from 'react-native';
 import {TopView} from '../../components/common/View';
 import {List} from '../../components/common/DataList';
 import {widthPercentageToDP} from '../../utils/util';
@@ -58,6 +58,25 @@ const DATA = [
 ];
 
 const HospitalList = props => {
+  const [data, setData] = useState([]);
+
+  // 홈(메인) 페이지에서 항목에 맞는 병원 리스트만 보여지는 것으로 가정.
+  const Matching = findData => {
+    let searchData = [];
+
+    let MatchingData = DATA.map((item, index) => {
+      if (item.hospitalName.indexOf(findData) !== -1) {
+        return searchData.push(item);
+      }
+    });
+
+    return searchData;
+  };
+
+  useEffect(() => {
+    setData(Matching(props.navigation.state.params.object));
+  }, [props.navigation.state.params.object]);
+
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
       <TopView
@@ -70,7 +89,7 @@ const HospitalList = props => {
           props.navigation.goBack();
         }}
       />
-      <List data={DATA} navigation={props.navigation} />
+      <List data={data} navigation={props.navigation} />
     </SafeAreaView>
   );
 };

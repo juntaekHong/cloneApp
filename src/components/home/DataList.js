@@ -1,4 +1,4 @@
-/* eslint-disable react/react-in-jsx-scope */
+/* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
 import {View} from 'react-native';
 import styled from 'styled-components/native';
@@ -9,10 +9,7 @@ import {Img} from '../common/Image';
 import {NBGBText} from '../common/Text';
 
 export const DataList = props => {
-  const [index, setIndex] = useState(1);
-
   const _renderItem = ({item, index}) => {
-    setIndex(index % 4);
     return (
       <BTN
         style={{
@@ -23,8 +20,10 @@ export const DataList = props => {
           marginLeft: widthPercentageToDP(17),
           marginRight: widthPercentageToDP(17),
         }}
-        onPress={() => {
-          props.navigation.navigate('HospitalList');
+        onPress={async () => {
+          // 서버 연동 시에는 여기서 항목 걸러서 페이지 이동하는 방향으로 작업하기.
+
+          props.navigation.navigate('HospitalList', {object: item.title});
         }}>
         <Img
           width={60}
