@@ -26,7 +26,7 @@ const TopContainer = styled.View`
   height: ${widthPercentageToDP(60)};
 `;
 
-const BTN = styled.TouchableOpacity``;
+export const BTN = styled.TouchableOpacity``;
 
 export const TopView = props => {
   return (

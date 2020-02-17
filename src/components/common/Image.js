@@ -3,7 +3,7 @@ import React from 'react';
 import styled from 'styled-components/native';
 import {widthPercentageToDP} from '../../utils/util';
 
-const Img = styled.Image`
+export const Img = styled.Image`
   width: ${props =>
     props.width ? widthPercentageToDP(props.width) : widthPercentageToDP(30)};
   height: ${props =>
