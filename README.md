@@ -41,6 +41,22 @@ $ react-native run-android
 $ react-native run-ios
 ```
 
-### 모듈 수정 및 주의 사항
+### 실행 오류 시, 확인 사항
 
+```
+Mac 사용 시 추가 설정 사항
 
+* Android 
+Project< android Folder 안에 local.properties vi 명령어로 생성 후,
+sdk.dir = /Users/USERNAME/Library/Android/sdk 추가해주면 됨. // USERNAME 에는 해당 컴퓨터 계정명
+
+나머지는 윈도우와 실행방법 동일.
+
+* IOS
+Project< ios Folder 안에 pod --version 으로 pod 설치 확인
+
+설치 안되어 있을 때
+1. ios folder 안에 pod install
+2. pod update
+3. Project Top Folder에서 react-native run-ios 실행.
+```
