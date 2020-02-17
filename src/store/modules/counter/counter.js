@@ -1,5 +1,6 @@
 /**
  * 액션 타입, 액션 생성자, redux-thunk, immer 예제
+ * Root.js에서 Provider에 store 값이 있어야되는데 오류 방지를 위해 임시 생성.
  */
 import {createAction, handleActions} from 'redux-actions';
 import {produce} from 'immer';

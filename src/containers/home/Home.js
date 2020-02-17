@@ -2,11 +2,11 @@
 import React from 'react';
 import {View, TouchableOpacity, Text} from 'react-native';
 import {widthPercentageToDP} from '../../utils/util';
-import {CenterView} from '../../components/common/Extra';
+import {TopContainerView} from '../../components/common/View';
 
 const Home = props => {
   return (
-    <CenterView>
+    <TopContainerView>
       <Text>Main Page</Text>
       {/* 임시 생성 버튼 */}
       <View style={{marginBottom: widthPercentageToDP(60)}} />
@@ -23,7 +23,7 @@ const Home = props => {
         }}>
         <Text>XX 병원 리스트로 이동</Text>
       </TouchableOpacity>
-    </CenterView>
+    </TopContainerView>
   );
 };
 

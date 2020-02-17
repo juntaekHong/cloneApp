@@ -19,7 +19,7 @@ const AuthSwitch = createSwitchNavigator(
     // test: TestContainer
   },
   {
-    initialRouteName: 'update',
+    initialRouteName: 'root',
   },
 );
 

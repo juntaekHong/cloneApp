@@ -10,7 +10,7 @@ export const TopContainerView = styled.SafeAreaView`
   background-color: white;
 `;
 
-const StandardView = styled.View``;
+export const StandardView = styled.View``;
 
 const TopContainer = styled.View`
   flex-direction: row;
