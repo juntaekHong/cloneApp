@@ -42,7 +42,6 @@ export const DataList = props => {
       numColumns={4}
       style={{
         flexGrow: 1,
-        flexDirection: 'row',
         width: '100%',
         height: '100%',
       }}
