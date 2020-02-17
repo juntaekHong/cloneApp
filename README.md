@@ -64,5 +64,7 @@ Project< ios Folder 안에 pod --version 으로 pod 설치 확인
 ```
 기존 module 업데이트 Push 금지.
 새로 추가한 modlue만 push할 것. push 전 local repo 최신화 후, 충돌 제거해서 push
-
 ```
+
+### 실행 첫 화면(작업 중)
+<img width="346" alt="스크린샷 2020-02-18 오전 3 55 24" src="https://user-images.githubusercontent.com/50249009/74680027-d8447a00-5202-11ea-9da5-e644e31cf8e4.png">
