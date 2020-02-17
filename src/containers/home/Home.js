@@ -13,6 +13,9 @@ const DATA = [
   {image: '', title: '내과'},
   {image: '', title: '외과'},
   {image: '', title: '한의원'},
+  {image: '', title: '치과'},
+  {image: '', title: '이비인후과'},
+  {image: '', title: '정신병원'},
   {image: '', title: '약국'},
 ];
 
@@ -20,20 +23,7 @@ const Home = props => {
   return (
     <TopContainerView>
       <TopView settingLocation={'서울 광진구 자양동 7-7'} height={55} />
-      {/* 항목 별 병원 클릭 임시 버튼 주석처리 */}
-      {/* <TouchableOpacity
-        style={{
-          margin: widthPercentageToDP(2),
-          padding: widthPercentageToDP(5),
-          borderWidth: widthPercentageToDP(2),
-          borderRadius: widthPercentageToDP(6),
-          borderColor: 'blue',
-        }}
-        onPress={() => {
-          props.navigation.navigate('HospitalList');
-        }}>
-        <Text>XX 병원 리스트로 이동</Text>
-      </TouchableOpacity> */}
+      {/* 클릭 시, 항목에 해당하는 병원 리스트만 보여지기 구현해야 함. */}
       <DataList data={DATA} navigation={props.navigation} />
     </TopContainerView>
   );
