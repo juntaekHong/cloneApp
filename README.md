@@ -10,8 +10,6 @@ react-native-cli --version // cli 설치 확인.
 android studio 설치 및 API 28 버전 설치 확인
 Android SDK Build-Tools
 Android SDK Platform-Tools, Android SDK Tools 설치 확인
-
-package-lock.json 삭제
 ```
 
 ### 설치 및 실행
