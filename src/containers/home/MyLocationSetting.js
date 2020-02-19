@@ -6,6 +6,7 @@ import {TopContainerView, TopView} from '../../components/common/View';
 import {widthPercentageToDP} from '../../utils/util';
 // 내 위치 정보 확인
 import Geolocation from '@react-native-community/geolocation';
+import MapView, {Marker} from 'react-native-maps';
 
 const Label = Styled.Text`
     font-size: 24px;
@@ -43,16 +44,33 @@ const MyLocationSetting = props => {
         }}
       />
       {/* 지도 범위 뷰 작업중 */}
-      <View
-        style={{
-          backgroundColor: 'red',
-          width: '100%',
-          height: widthPercentageToDP(250),
-        }}
-      />
       <Text>위치 설정 페이지</Text>
       {location ? (
         <>
+          <View
+            style={{
+              width: '100%',
+              height: widthPercentageToDP(250),
+            }}>
+            <MapView
+              style={{
+                width: widthPercentageToDP(375),
+                height: widthPercentageToDP(207),
+              }}
+              initialRegion={{
+                latitude: location.latitude,
+                longitude: location.longitude,
+                latitudeDelta: 0.0121,
+                longitudeDelta: 0.0121,
+              }}>
+              <Marker
+                coordinate={{
+                  latitude: location.latitude,
+                  longitude: location.longitude,
+                }}
+              />
+            </MapView>
+          </View>
           <Label>Latitude: {location.latitude}</Label>
           <Label>Latitude: {location.longitude}</Label>
         </>
