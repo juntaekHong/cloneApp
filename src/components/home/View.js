@@ -20,10 +20,15 @@ const LocationView = styled(StandardView)`
     props.height ? widthPercentageToDP(props.height) : widthPercentageToDP(60)};
 `;
 
-export const TopView = ({settingLocation, height}) => {
+// 내 위치 설정(카카오톡 API 사용)
+export const TopView = ({settingLocation, height, navigation}) => {
   return (
     <LocationView height={height}>
-      <BTN style={{marginRight: widthPercentageToDP(5)}} onPress={() => {}}>
+      <BTN
+        style={{marginRight: widthPercentageToDP(5)}}
+        onPress={() => {
+          navigation.navigate('MyLocationSetting');
+        }}>
         <NBGBText fontSize={19}>{settingLocation}</NBGBText>
       </BTN>
       <SelectImg />

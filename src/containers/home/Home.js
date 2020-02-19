@@ -26,7 +26,11 @@ const Home = props => {
 
   return (
     <TopContainerView>
-      <TopView settingLocation={'서울 광진구 자양동 7-7'} height={55} />
+      <TopView
+        settingLocation={'서울 광진구 자양동 7-7'}
+        height={55}
+        navigation={props.navigation}
+      />
 
       {/* 광고 배너 뷰 작업 */}
       <NavigationEvents
@@ -42,7 +46,7 @@ const Home = props => {
         }}
       />
 
-      {/* 임시로 한담 광고 배너 넣음. */}
+      {/* 임시로 아무 이미지 광고 배너 넣음. */}
       <HomeAd
         list={[
           {
