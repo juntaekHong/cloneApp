@@ -1,10 +1,10 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react/react-in-jsx-scope */
-import React, {useCallback} from 'react';
+import React, {useCallback, useState, useEffect} from 'react';
 import {View, Text} from 'react-native';
 import styled from 'styled-components/native';
 import {StandardView, BTN} from '../common/View';
-import {BackImg} from '../common/Image';
+import {BackImg, StarImg} from '../common/Image';
 import {NBGBText, NBGText, NBGLText} from '../common/Text';
 import {widthPercentageToDP} from '../../utils/util';
 import colors from '../../configs/colors';
@@ -151,6 +151,7 @@ const BTNView = styled(StandardView)`
 const CustomBTN = styled(BTN)`
   flex-direction: row;
   justify-content: center;
+  align-items:center;
   padding-bottom: ${widthPercentageToDP(30)}
   width: ${widthPercentageToDP(355) / 3};
 `;
@@ -163,6 +164,14 @@ export const Card = ({
   isScrap,
   shared,
 }) => {
+  const [myScrap, setMyScrap] = useState(isScrap);
+  // 현재 찜(스크랩) 수에서 내 찜에 따라 수 변경
+  const [myScrapCount, setMyScrapCount] = useState(myScrap ? 1 : 0);
+
+  useEffect(() => {
+    setMyScrapCount(myScrap ? 1 : 0);
+  }, [myScrap]);
+
   const RatingImg = useCallback(() => {
     let ratingData = [];
 
@@ -193,7 +202,7 @@ export const Card = ({
         <RatingImg />
         <NBGText fontSize={20}>{rating}</NBGText>
       </RatingView>
-      <NBGText fontSize={15} color={'#dbdbdb'}>
+      <NBGText fontSize={15} color={'gray'}>
         최근 리뷰 {reviewCount}
       </NBGText>
       <BTNView>
@@ -204,11 +213,25 @@ export const Card = ({
           <CallImg />
           <Text>전화주문</Text>
         </CustomBTN>
-        <CustomBTN>
-          <Text>찜 {isScrap}</Text>
-          {/* 찜 하기 */}
+        <CustomBTN
+          onPress={() => {
+            // 실제 서버 연동해야 함.
+            myScrap ? setMyScrap(false) : setMyScrap(true);
+          }}>
+          {myScrap ? (
+            <StarImg
+              style={{marginRight: widthPercentageToDP(5)}}
+              width={21}
+              height={21}
+              source={require('../../../assets/image/home/star-0.png')}
+            />
+          ) : (
+            <RatingEmptyImg />
+          )}
+          {/* 찜 개수 임시 데이터 넣어둠(5) */}
+          <Text>찜 {5 + myScrapCount}</Text>
         </CustomBTN>
-        <CustomBTN>
+        <CustomBTN onPress={() => {}}>
           <Text>공유</Text>
           {/* shared */}
         </CustomBTN>
