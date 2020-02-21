@@ -17,7 +17,7 @@ import {
 } from './Image';
 import Carousel from 'react-native-looped-carousel';
 import FastImage from 'react-native-fast-image';
-// import call from "react-native-communications";
+import Communications from 'react-native-communications';
 
 const LocationView = styled(StandardView)`
   flex-direction: row;
@@ -132,7 +132,6 @@ const CardView = styled(StandardView)`
   margin-horizontal: ${widthPercentageToDP(10)};
   padding-top: ${widthPercentageToDP(40)};
   border-radius: ${widthPercentageToDP(10)};
-  background-color: red;
 `;
 
 const RatingView = styled(LocationView)`
@@ -198,7 +197,10 @@ export const Card = ({
         최근 리뷰 {reviewCount}
       </NBGText>
       <BTNView>
-        <CustomBTN onPress={() => {}}>
+        <CustomBTN
+          onPress={() => {
+            Communications.phonecall(phoneNumber.replace(/-/gi, ''), false);
+          }}>
           <CallImg />
           <Text>전화주문</Text>
         </CustomBTN>

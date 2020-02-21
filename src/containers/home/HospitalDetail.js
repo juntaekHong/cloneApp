@@ -25,7 +25,7 @@ const HospitalDetail = props => {
           hospitalName={props.navigation.state.params.hospitalName}
           rating={4.0}
           reviewCount={50}
-          phoneNumber={'02 - 760 - 4238'}
+          phoneNumber={'02-760-4238'}
           isSrap={false}
           shared={() => {}}
         />
