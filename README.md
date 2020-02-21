@@ -56,7 +56,8 @@ Project< ios Folder 안에 pod --version 으로 pod 설치 확인
 설치 안되어 있을 때
 1. ios folder 안에 pod install
 2. pod update
-3. Project Top Folder에서 react-native run-ios 실행.
+3. open ./ios/cloneApp.xcodeproj > Xcode > Build Phases > Copy Pod Resources > OutPut Files 들 빼기(-) // 안하면 IOS 실행 오류남.
+4. Project Top Folder에서 react-native run-ios 실행.
 ```
 
 ### 모듈 설치 시, 유의사항
