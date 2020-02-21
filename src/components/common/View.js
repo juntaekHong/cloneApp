@@ -44,16 +44,29 @@ export const TopView = props => {
 
       {props.title ? <NBGBText fontSize={17}>{props.title}</NBGBText> : null}
 
-      <BTN
-        onPress={() => {
-          props.closeHandler();
-        }}>
-        <CloseImg
-          width={28}
-          height={28}
-          source={require('../../../assets/image/common/close.png')}
-        />
-      </BTN>
+      {props.closeBtn ? (
+        <BTN
+          onPress={() => {
+            props.closeHandler();
+          }}>
+          <CloseImg
+            width={28}
+            height={28}
+            source={require('../../../assets/image/common/close.png')}
+          />
+        </BTN>
+      ) : (
+        <BTN
+          onPress={() => {
+            props.searchHandler();
+          }}>
+          <CloseImg
+            width={28}
+            height={28}
+            source={require('../../../assets/image/home/search.png')}
+          />
+        </BTN>
+      )}
     </TopContainer>
   );
 };

@@ -32,7 +32,9 @@ export const List = props => {
         index={index}
         padding={10}
         onPress={() => {
-          props.navigation.navigate('HospitalDetail');
+          props.navigation.navigate('HospitalDetail', {
+            hospitalName: item.hospitalName,
+          });
         }}>
         <PhotoImg
           source={require('../../../assets/image/navigation/homeblue.png')}

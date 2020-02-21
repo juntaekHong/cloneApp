@@ -1,7 +1,8 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useEffect} from 'react';
-import {SafeAreaView, ScrollView, Text} from 'react-native';
+import {SafeAreaView, ScrollView, Text, Platform} from 'react-native';
 import {TopView, TopContainerView} from '../../components/common/View';
+import {Card} from '../../components/home/View';
 import {widthPercentageToDP} from '../../utils/util';
 import {UIActivityIndicator} from 'react-native-indicators';
 
@@ -10,16 +11,24 @@ const HospitalDetail = props => {
     <TopContainerView>
       <TopView
         marginBottom={5}
-        title={'HospitalDetail Page'}
+        title={props.navigation.state.params.hospitalName}
         backHandler={() => {
           props.navigation.goBack();
         }}
-        closeHandler={() => {
-          props.navigation.goBack();
+        closeBtn={false}
+        searchHandler={() => {
+          // 검색 기능 구현 예정
         }}
       />
       <ScrollView>
-        <Text>asd</Text>
+        <Card
+          hospitalName={props.navigation.state.params.hospitalName}
+          rating={4.0}
+          reviewCount={50}
+          phoneNumber={'02 - 760 - 4238'}
+          isSrap={false}
+          shared={() => {}}
+        />
       </ScrollView>
     </TopContainerView>
   );

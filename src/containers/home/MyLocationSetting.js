@@ -39,6 +39,7 @@ const MyLocationSetting = props => {
         backHandler={() => {
           props.navigation.goBack(null);
         }}
+        closeBtn={true}
         closeHandler={() => {
           props.navigation.goBack(null);
         }}
@@ -58,21 +59,21 @@ const MyLocationSetting = props => {
                 height: widthPercentageToDP(207),
               }}
               initialRegion={{
-                latitude: location.latitude,
-                longitude: location.longitude,
+                latitude: parseFloat(location.latitude),
+                longitude: parseFloat(location.longitude),
                 latitudeDelta: 0.0121,
                 longitudeDelta: 0.0121,
               }}>
               <Marker
                 coordinate={{
-                  latitude: location.latitude,
-                  longitude: location.longitude,
+                  latitude: parseFloat(location.latitude),
+                  longitude: parseFloat(location.longitude),
                 }}
               />
             </MapView>
           </View>
-          <Label>Latitude: {location.latitude}</Label>
-          <Label>Latitude: {location.longitude}</Label>
+          <Label>Latitude: {parseFloat(location.latitude)}</Label>
+          <Label>Latitude: {parseFloat(location.longitude)}</Label>
         </>
       ) : (
         <Label>Loading...</Label>

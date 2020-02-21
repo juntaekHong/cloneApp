@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState, useEffect} from 'react';
 import {SafeAreaView, ScrollView, View, Text} from 'react-native';
-import {TopView} from '../../components/common/View';
+import {CustomTopView} from '../../components/home/View';
 import {List} from '../../components/common/DataList';
 import {widthPercentageToDP} from '../../utils/util';
 
@@ -79,7 +79,7 @@ const HospitalList = props => {
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
-      <TopView
+      {/* <TopView
         marginBottom={5}
         title={'HospitalList Page'}
         backHandler={() => {
@@ -88,6 +88,12 @@ const HospitalList = props => {
         closeHandler={() => {
           props.navigation.goBack();
         }}
+      /> */}
+      <CustomTopView
+        settingLocation={'서울 광진구 자양동 7-7'}
+        height={55}
+        navigation={props.navigation}
+        justifyContent={true}
       />
       <List data={data} navigation={props.navigation} />
     </SafeAreaView>
