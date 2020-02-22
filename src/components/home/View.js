@@ -163,7 +163,7 @@ export const Card = ({
   phoneNumber,
   isScrap,
   shared,
-  navi,
+  naviModal,
 }) => {
   const [myScrap, setMyScrap] = useState(isScrap);
   // 현재 찜(스크랩) 수에서 내 찜에 따라 수 변경
@@ -241,7 +241,7 @@ export const Card = ({
         </CustomBTN>
         <CustomBTN
           onPress={() => {
-            navi();
+            naviModal();
           }}>
           <Text>길찾기</Text>
         </CustomBTN>
