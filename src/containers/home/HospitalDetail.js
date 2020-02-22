@@ -31,26 +31,36 @@ const HospitalDetail = props => {
   }, [detailData]);
 
   const NaverMapNavigate = () => {
-    props.navigation.navigate('NaverMap', {
-      // uri:
-      //   'https://m.map.naver.com/directions/#/main//' +
-      //   NameEncoding +
-      //   ',' +
-      //   detailData.latitude +
-      //   ',' +
-      //   detailData.longitude +
-      //   ',,,false,34540408',
-      // uri:
-      //   'https://m.map.naver.com/directions/#/main//' +
-      //   NameEncoding +
-      //   ',' +
-      //   detailData.longitude +
-      //   ',' +
-      //   detailData.longitude +
-      //   ',,,false,34540408',
-      uri:
-        'https://m.map.naver.com/directions/#/poiSearch/destination/' +
-        NameEncoding,
+    Linking.openURL(
+      'nmap://place?lat=' +
+        detailData.latitude +
+        '&lng=' +
+        detailData.longitude +
+        '&name=' +
+        detailData.dutyName +
+        '&appname=클론프로젝트',
+    ).catch(() => {
+      props.navigation.navigate('NaverMap', {
+        // uri:
+        //   'https://m.map.naver.com/directions/#/main//' +
+        //   NameEncoding +
+        //   ',' +
+        //   detailData.latitude +
+        //   ',' +
+        //   detailData.longitude +
+        //   ',,,false,34540408',
+        // uri:
+        //   'https://m.map.naver.com/directions/#/main//' +
+        //   NameEncoding +
+        //   ',' +
+        //   detailData.longitude +
+        //   ',' +
+        //   detailData.longitude +
+        //   ',,,false,34540408',
+        uri:
+          'https://m.map.naver.com/directions/#/poiSearch/destination/' +
+          NameEncoding,
+      });
     });
   };
 
@@ -79,7 +89,7 @@ const HospitalDetail = props => {
               style={{
                 marginTop: widthPercentageToDP(30),
               }}>
-              <NBGText fontSize={17}>네이버지도로 길찾기(웹)</NBGText>
+              <NBGText fontSize={17}>네이버지도로 길찾기</NBGText>
             </BTN>
           </View>
         }
