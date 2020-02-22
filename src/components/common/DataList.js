@@ -28,8 +28,6 @@ import {CommonActions} from '../../store/actionCreator';
 //   dutyTel1: '전화번호',
 //   startTime: '시작시간',
 //   endTime: '종료시간',
-//   latitude: '위도 숫자',
-//   longitude: '경도 숫자',
 // },
 
 const DataList = styled.FlatList`
@@ -38,15 +36,55 @@ const DataList = styled.FlatList`
   height: 100%;
 `;
 
+// 진료시간 포맷 커스텀
+const TimeFormat = time => {
+  let toStringFormat =
+    String(time).substring(0, 2) + ':' + String(time).substring(2, 4);
+  return toStringFormat;
+};
+
 export const List = props => {
   const _renderItem = ({item, index}) => {
     return (
+      // <ListView
+      //   index={index}
+      //   padding={10}
+      //   onPress={async () => {
+      //     props.navigation.navigate('HospitalDetail', {
+      //       hospitalName: item.hospitalName,
+      //     });
+      //   }}>
+      //   <PhotoImg
+      //     source={require('../../../assets/image/navigation/homeblue.png')}
+      //     width={80}
+      //     height={80}
+      //     radius={25}
+      //   />
+      //   <ContentDataView>
+      //     <NBGBText fontSize={16}>{item.hospitalName}</NBGBText>
+      //     <EvaluationView marginTop={3} marginBottom={3}>
+      //       <StarImg
+      //         source={require('../../../assets/image/home/star-0.png')}
+      //         width={19}
+      //         height={19}
+      //       />
+      //       <NBGBText fontSize={12}>{item.rating}</NBGBText>
+      //       <NBGLText>({item.reviewCount}+)</NBGLText>
+      //     </EvaluationView>
+      //     <NBGText fontSize={13} color={'#b7b7b7'}>
+      //       장소: {item.location}
+      //     </NBGText>
+      //     <NBGText fontSize={13} color={'#b7b7b7'}>
+      //       소요시간: {item.time}
+      //     </NBGText>
+      //   </ContentDataView>
+      // </ListView>
       <ListView
         index={index}
         padding={10}
         onPress={async () => {
           props.navigation.navigate('HospitalDetail', {
-            hospitalName: item.hospitalName,
+            hospitalName: item.dutyName,
           });
         }}>
         <PhotoImg
@@ -56,21 +94,23 @@ export const List = props => {
           radius={25}
         />
         <ContentDataView>
-          <NBGBText fontSize={16}>{item.hospitalName}</NBGBText>
+          <NBGBText fontSize={16}>{item.dutyName}</NBGBText>
           <EvaluationView marginTop={3} marginBottom={3}>
-            <StarImg
-              source={require('../../../assets/image/home/star-0.png')}
-              width={19}
-              height={19}
-            />
-            <NBGBText fontSize={12}>{item.rating}</NBGBText>
-            <NBGLText>({item.reviewCount}+)</NBGLText>
+            <NBGBText fontSize={12}>전화번호: {item.dutyTel1}</NBGBText>
+            <NBGLText>
+              진료시간: {TimeFormat(item.startTime)} ~{' '}
+              {TimeFormat(item.endTime)}
+            </NBGLText>
           </EvaluationView>
-          <NBGText fontSize={13} color={'#b7b7b7'}>
-            장소: {item.location}
+          <NBGText
+            numberOfLines={1}
+            fontSize={13}
+            color={'gray'}
+            style={{width: widthPercentageToDP(250)}}>
+            장소: {item.dutyAddr}
           </NBGText>
-          <NBGText fontSize={13} color={'#b7b7b7'}>
-            소요시간: {item.time}
+          <NBGText fontSize={13} color={'gray'}>
+            거리: {item.distance} km
           </NBGText>
         </ContentDataView>
       </ListView>

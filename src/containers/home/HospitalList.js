@@ -76,8 +76,8 @@ const HospitalList = props => {
   const Matching = findData => {
     let searchData = [];
 
-    let MatchingData = DATA.map((item, index) => {
-      if (item.hospitalName.indexOf(findData) !== -1) {
+    let MatchingData = props.hospitalList.map((item, index) => {
+      if (item.dutyName.indexOf(findData) !== -1) {
         return searchData.push(item);
       }
     });
@@ -107,8 +107,8 @@ const HospitalList = props => {
         navigation={props.navigation}
         justifyContent={true}
       />
+      {/* <List data={data} navigation={props.navigation} /> */}
       <List data={data} navigation={props.navigation} />
-      {/* <List data={props.hospitalList} navigation={props.navigation} /> */}
     </SafeAreaView>
   );
 };

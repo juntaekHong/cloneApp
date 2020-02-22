@@ -93,8 +93,6 @@ export const ContentDataView = styled.View`
 `;
 
 export const EvaluationView = styled(StandardView)`
-  flex-direction: row;
-  align-items: center;
   margin-top: ${props =>
     props.marginTop ? widthPercentageToDP(props.marginTop) : 0};
   margin-bottom: ${props =>
