@@ -31,15 +31,25 @@ const HospitalDetail = props => {
   }, [detailData]);
 
   const KakaoMapNaivgate = () => {
-    props.navigation.navigate('KakaoMap', {
-      uri:
-        'https://map.kakao.com/link/map/' +
+    Linking.openURL(
+      'daummaps://search?q=' +
         detailData.dutyName +
-        ',' +
+        '&p=' +
         detailData.latitude +
         ',' +
         detailData.longitude +
         '',
+    ).catch(() => {
+      props.navigation.navigate('KakaoMap', {
+        uri:
+          'https://map.kakao.com/link/map/' +
+          detailData.dutyName +
+          ',' +
+          detailData.latitude +
+          ',' +
+          detailData.longitude +
+          '',
+      });
     });
   };
 
