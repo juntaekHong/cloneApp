@@ -12,6 +12,13 @@ const HospitalDetail = props => {
     props.navigation.state.params.detailData,
   );
 
+  const [NameEncoding, setNameEncoding] = useState();
+
+  // 병원 상세 데이터가 들어오면 네이버 길찾기에 대한 한글 인코딩 해주는 것.
+  useEffect(() => {
+    setNameEncoding(encodeURI(encodeURIComponent(detailData.dutyName)));
+  }, [detailData]);
+
   return (
     <TopContainerView>
       <TopView
@@ -33,6 +40,18 @@ const HospitalDetail = props => {
           phoneNumber={detailData.dutyTel1}
           isSrap={false}
           shared={() => {}}
+          navi={() => {
+            props.navigation.navigate('NaverMap', {
+              uri:
+                'https://m.map.naver.com/directions/#/main//' +
+                NameEncoding +
+                ',' +
+                detailData.latitude +
+                ',' +
+                detailData.longitude +
+                ',,,false,34540408',
+            });
+          }}
         />
       </ScrollView>
     </TopContainerView>

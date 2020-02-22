@@ -153,7 +153,7 @@ const CustomBTN = styled(BTN)`
   justify-content: center;
   align-items:center;
   padding-bottom: ${widthPercentageToDP(30)}
-  width: ${widthPercentageToDP(355) / 3};
+  width: ${widthPercentageToDP(355) / 4};
 `;
 
 export const Card = ({
@@ -163,6 +163,7 @@ export const Card = ({
   phoneNumber,
   isScrap,
   shared,
+  navi,
 }) => {
   const [myScrap, setMyScrap] = useState(isScrap);
   // 현재 찜(스크랩) 수에서 내 찜에 따라 수 변경
@@ -231,9 +232,18 @@ export const Card = ({
           {/* 찜 개수 임시 데이터 넣어둠(5) */}
           <Text>찜 {5 + myScrapCount}</Text>
         </CustomBTN>
-        <CustomBTN onPress={() => {}}>
+        <CustomBTN
+          onPress={() => {
+            shared();
+          }}>
           <Text>공유</Text>
-          {/* shared */}
+          {/* shared 기능 구현해야 됨*/}
+        </CustomBTN>
+        <CustomBTN
+          onPress={() => {
+            navi();
+          }}>
+          <Text>길찾기</Text>
         </CustomBTN>
       </BTNView>
     </CardView>
