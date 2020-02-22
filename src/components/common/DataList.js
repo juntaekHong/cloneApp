@@ -28,6 +28,7 @@ import {CommonActions} from '../../store/actionCreator';
 //   dutyTel1: '전화번호',
 //   startTime: '시작시간',
 //   endTime: '종료시간',
+//   이외에 다른 데이터들도 있긴함. 적어놓지 않는 것
 // },
 
 const DataList = styled.FlatList`
