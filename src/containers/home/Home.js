@@ -4,9 +4,11 @@ import {View, TouchableOpacity, Text} from 'react-native';
 import {NavigationEvents} from 'react-navigation';
 // import LottieView from 'lottie-react-native';
 import {widthPercentageToDP} from '../../utils/util';
+import {connect} from 'react-redux';
 import {TopContainerView} from '../../components/common/View';
 import {TopView, HomeAd} from '../../components/home/View';
 import {DataList} from '../../components/home/DataList';
+import {CommonActions} from '../../store/actionCreator';
 
 const DATA = [
   {image: '', title: '정형외과'},
@@ -67,11 +69,13 @@ const Home = props => {
           },
         ]}
       />
-
+      <Text>{props.hospitalList} asd</Text>
       {/* 클릭 시, 항목에 해당하는 병원 리스트만 보여지기 구현해야 함. */}
       <DataList data={DATA} navigation={props.navigation} />
     </TopContainerView>
   );
 };
 
-export default Home;
+export default connect(state => ({
+  hospitalList: state.common.hospitalList,
+}))(Home);

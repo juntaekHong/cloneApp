@@ -6,6 +6,7 @@ import {ListView, ContentDataView, EvaluationView} from './View';
 import {PhotoImg, StarImg} from './Image';
 import {NBGBText, NBGLText, NBGText} from './Text';
 import {widthPercentageToDP} from '../../utils/util';
+import {CommonActions} from '../../store/actionCreator';
 
 // 데이터 형식
 // const DATA = [
@@ -31,10 +32,11 @@ export const List = props => {
       <ListView
         index={index}
         padding={10}
-        onPress={() => {
+        onPress={async () => {
           props.navigation.navigate('HospitalDetail', {
             hospitalName: item.hospitalName,
           });
+          await CommonActions.getHospitalList();
         }}>
         <PhotoImg
           source={require('../../../assets/image/navigation/homeblue.png')}
