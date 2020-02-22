@@ -4,6 +4,7 @@ import {View, TouchableOpacity, Text} from 'react-native';
 import {widthPercentageToDP} from '../../utils/util';
 import {CenterView} from '../../components/common/Extra';
 import navigators from '../../utils/navigators';
+import {CommonActions} from '../../store/actionCreator';
 
 const UpdateCheck = props => {
   return (
@@ -18,8 +19,15 @@ const UpdateCheck = props => {
           borderRadius: widthPercentageToDP(6),
           borderColor: 'blue',
         }}
-        onPress={() => {
+        onPress={async () => {
+          await CommonActions.loadingAction(true);
+          await CommonActions.getHospitalList(
+            127.085156592737,
+            37.4881325624879,
+            100,
+          );
           props.navigation.navigate('home');
+          await CommonActions.loadingAction(false);
         }}>
         <Text>홈 화면으로 이동</Text>
       </TouchableOpacity>

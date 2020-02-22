@@ -23,9 +23,7 @@ export const DataList = props => {
         }}
         onPress={async () => {
           // 서버 연동 시에는 여기서 항목 걸러서 페이지 이동하는 방향으로 작업하기.
-
           props.navigation.navigate('HospitalList', {object: item.title});
-          await CommonActions.getHospitalList();
         }}>
         <Img
           width={60}

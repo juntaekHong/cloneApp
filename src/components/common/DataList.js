@@ -19,6 +19,18 @@ import {CommonActions} from '../../store/actionCreator';
 //       time: '5분',
 //     },
 //  ]
+// 변경될 데이터 형식
+// {
+//   distance: 0,
+//   dutyAddr: '주소',
+//   dutyDivName: '의원',
+//   dutyName: '병원이름',
+//   dutyTel1: '전화번호',
+//   startTime: '시작시간',
+//   endTime: '종료시간',
+//   latitude: '위도 숫자',
+//   longitude: '경도 숫자',
+// },
 
 const DataList = styled.FlatList`
   flex-grow: 1;
@@ -36,7 +48,6 @@ export const List = props => {
           props.navigation.navigate('HospitalDetail', {
             hospitalName: item.hospitalName,
           });
-          await CommonActions.getHospitalList();
         }}>
         <PhotoImg
           source={require('../../../assets/image/navigation/homeblue.png')}

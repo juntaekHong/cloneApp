@@ -1,12 +1,24 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState, useEffect} from 'react';
 import {SafeAreaView, ScrollView, View, Text} from 'react-native';
+import {connect} from 'react-redux';
 import {CustomTopView} from '../../components/home/View';
 import {List} from '../../components/common/DataList';
 import {widthPercentageToDP} from '../../utils/util';
 
 // 임시 데이터
 const DATA = [
+  // {
+  //   distance: 0,
+  //   dutyAddr: '주소',
+  //   dutyDivName: '의원',
+  //   dutyName: '병원이름',
+  //   dutyTel1: '전화번호',
+  //   startTime: '시작시간',
+  //   endTime: '종료시간',
+  //   latitude: '위도 숫자',
+  //   longitude: '경도 숫자',
+  // },
   {
     hospitalName: '서울정형외과',
     image: 'image',
@@ -96,8 +108,11 @@ const HospitalList = props => {
         justifyContent={true}
       />
       <List data={data} navigation={props.navigation} />
+      {/* <List data={props.hospitalList} navigation={props.navigation} /> */}
     </SafeAreaView>
   );
 };
 
-export default HospitalList;
+export default connect(state => ({
+  hospitalList: state.common.hospitalList,
+}))(HospitalList);

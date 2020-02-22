@@ -69,8 +69,6 @@ const Home = props => {
           },
         ]}
       />
-      <Text>{props.hospitalList} asd</Text>
-      {/* 클릭 시, 항목에 해당하는 병원 리스트만 보여지기 구현해야 함. */}
       <DataList data={DATA} navigation={props.navigation} />
     </TopContainerView>
   );
