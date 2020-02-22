@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {View, TouchableOpacity, Text} from 'react-native';
 import {NavigationEvents} from 'react-navigation';
 // import LottieView from 'lottie-react-native';
@@ -11,14 +11,15 @@ import {DataList} from '../../components/home/DataList';
 import {CommonActions} from '../../store/actionCreator';
 
 const DATA = [
-  {image: '', title: '정형외과'},
-  {image: '', title: '대학병원'},
-  {image: '', title: '성형외과'},
   {image: '', title: '내과'},
   {image: '', title: '외과'},
   {image: '', title: '한의원'},
   {image: '', title: '치과'},
   {image: '', title: '이비인후과'},
+  {image: '', title: '의원'},
+  {image: '', title: '정형외과'},
+  {image: '', title: '대학병원'},
+  {image: '', title: '성형외과'},
   {image: '', title: '정신병원'},
   {image: '', title: '약국'},
 ];

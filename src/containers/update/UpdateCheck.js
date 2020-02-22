@@ -1,6 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
+import React, {useEffect} from 'react';
 import {View, TouchableOpacity, Text} from 'react-native';
+import {connect} from 'react-redux';
 import {widthPercentageToDP} from '../../utils/util';
 import {CenterView} from '../../components/common/Extra';
 import navigators from '../../utils/navigators';
@@ -35,4 +36,6 @@ const UpdateCheck = props => {
   );
 };
 
-export default UpdateCheck;
+export default connect(state => ({
+  hospitalList: state.common.hospitalList,
+}))(UpdateCheck);

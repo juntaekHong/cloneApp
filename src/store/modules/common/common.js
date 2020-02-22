@@ -9,6 +9,7 @@ import axios from 'axios';
 import {parseString} from 'xml2js';
 import config from '../../../configs/config';
 import {Platform} from 'react-native';
+import {getData, storeData} from '../../../utils/util';
 
 const COMMON_INIT = 'common/COMMON_INIT';
 const COMMON_LOADING = 'common/COMMON_LOADING';
@@ -25,7 +26,7 @@ const initState = {
   appVersion: {},
 
   // 병원 리스트 불러오기
-  hospitalList: null,
+  hospitalList: [],
 };
 
 export const handleLoading = value => dispatch => {
@@ -66,7 +67,7 @@ export const getHospitalList = (Long, Lat, rows) => async dispatch => {
 
 export default handleActions(
   {
-    [COMMON_INIT]: (undefined, {}) => {},
+    [COMMON_INIT]: (state, {payload}) => produce(state, draft => {}),
     [COMMON_LOADING]: (state, {payload}) =>
       produce(state, draft => {
         draft.loading = payload;

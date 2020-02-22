@@ -1,17 +1,22 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {SafeAreaView, ScrollView, Text, Platform} from 'react-native';
+import {connect} from 'react-redux';
 import {TopView, TopContainerView} from '../../components/common/View';
 import {Card} from '../../components/home/View';
 import {widthPercentageToDP} from '../../utils/util';
 import {UIActivityIndicator} from 'react-native-indicators';
 
 const HospitalDetail = props => {
+  const [detailData, setDetailData] = useState(
+    props.navigation.state.params.detailData,
+  );
+
   return (
     <TopContainerView>
       <TopView
         marginBottom={5}
-        title={props.navigation.state.params.hospitalName}
+        title={detailData.dutyName}
         backHandler={() => {
           props.navigation.goBack();
         }}
@@ -22,10 +27,10 @@ const HospitalDetail = props => {
       />
       <ScrollView>
         <Card
-          hospitalName={props.navigation.state.params.hospitalName}
+          hospitalName={detailData.dutyName}
           rating={4.0}
           reviewCount={50}
-          phoneNumber={'02-760-4238'}
+          phoneNumber={detailData.dutyTel1}
           isSrap={false}
           shared={() => {}}
         />
@@ -34,4 +39,6 @@ const HospitalDetail = props => {
   );
 };
 
-export default HospitalDetail;
+export default connect(state => ({
+  hospitalList: state.common.hospitalList,
+}))(HospitalDetail);

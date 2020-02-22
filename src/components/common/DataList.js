@@ -84,7 +84,7 @@ export const List = props => {
         padding={10}
         onPress={async () => {
           props.navigation.navigate('HospitalDetail', {
-            hospitalName: item.dutyName,
+            detailData: item,
           });
         }}>
         <PhotoImg
