@@ -30,6 +30,20 @@ const HospitalDetail = props => {
     setNameEncoding(encodeURI(encodeURIComponent(detailData.dutyName)));
   }, [detailData]);
 
+  const KakaoMapNaivgate = () => {
+    props.navigation.navigate('KakaoMap', {
+      uri:
+        'https://map.kakao.com/link/map/' +
+        detailData.dutyName +
+        ',' +
+        detailData.latitude +
+        ',' +
+        detailData.longitude +
+        '',
+    });
+  };
+
+  // 네이버 지도 앱 or 웹으로 길찾기 기능
   const NaverMapNavigate = () => {
     Linking.openURL(
       'nmap://place?lat=' +
@@ -68,19 +82,20 @@ const HospitalDetail = props => {
     <TopContainerView>
       <CustomModal
         width={300}
-        height={150}
+        height={220}
         visible={roadMapModal}
         close={false}
         children={
           <View style={{marginLeft: widthPercentageToDP(20)}}>
             <NBGBText fontSize={20}>길찾기 선택</NBGBText>
-            {/* <BTN
+            <BTN
               onPress={() => {
                 setRoadMapModal(false);
+                KakaoMapNaivgate();
               }}
               style={{marginTop: widthPercentageToDP(30)}}>
               <NBGText fontSize={17}>카카오맵으로 길찾기</NBGText>
-            </BTN> */}
+            </BTN>
             <BTN
               onPress={() => {
                 setRoadMapModal(false);
