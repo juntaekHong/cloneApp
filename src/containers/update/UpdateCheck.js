@@ -25,7 +25,7 @@ const UpdateCheck = props => {
           await CommonActions.getHospitalList(
             127.085156592737,
             37.4881325624879,
-            100,
+            500,
           );
           props.navigation.navigate('home');
           await CommonActions.loadingAction(false);

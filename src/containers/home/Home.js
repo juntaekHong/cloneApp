@@ -11,6 +11,7 @@ import {DataList} from '../../components/home/DataList';
 import {CommonActions} from '../../store/actionCreator';
 
 const DATA = [
+  {image: '', title: '병원'},
   {image: '', title: '내과'},
   {image: '', title: '외과'},
   {image: '', title: '한의원'},

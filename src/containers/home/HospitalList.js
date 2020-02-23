@@ -77,7 +77,10 @@ const HospitalList = props => {
     let searchData = [];
 
     let MatchingData = props.hospitalList.map((item, index) => {
-      if (item.dutyName.indexOf(findData) !== -1) {
+      if (
+        item.dutyName.indexOf(findData) !== -1 ||
+        item.dutyDivName.indexOf(findData) !== -1
+      ) {
         return searchData.push(item);
       }
     });
