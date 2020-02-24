@@ -68,4 +68,5 @@ Project< ios Folder 안에 pod --version 으로 pod 설치 확인
 ```
 
 ### 실행 첫 화면(작업 중)
-<img width="346" alt="스크린샷 2020-02-18 오전 3 55 24" src="https://user-images.githubusercontent.com/50249009/74680027-d8447a00-5202-11ea-9da5-e644e31cf8e4.png">
+<img width="383" alt="스크린샷 2020-02-24 오후 7 46 01" src="https://user-images.githubusercontent.com/50249009/75146433-72924980-573e-11ea-9529-f1f1dbf3881e.png">
+
