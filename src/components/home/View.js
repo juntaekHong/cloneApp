@@ -33,11 +33,18 @@ export const TopView = ({settingLocation, height, navigation}) => {
   return (
     <LocationView height={height}>
       <BTN
-        style={{marginRight: widthPercentageToDP(5)}}
+        style={{
+          marginRight: widthPercentageToDP(5),
+        }}
         onPress={() => {
           navigation.navigate('MyLocationSetting');
         }}>
-        <NBGBText fontSize={19}>{settingLocation}</NBGBText>
+        <NBGBText
+          numberOfLines={1}
+          style={{width: widthPercentageToDP(150)}}
+          fontSize={19}>
+          {settingLocation}
+        </NBGBText>
       </BTN>
       <SelectImg />
     </LocationView>
@@ -73,7 +80,12 @@ export const CustomTopView = ({
           onPress={() => {
             navigation.navigate('MyLocationSetting');
           }}>
-          <NBGBText fontSize={19}>{settingLocation}</NBGBText>
+          <NBGBText
+            numberOfLines={1}
+            style={{width: widthPercentageToDP(150)}}
+            fontSize={19}>
+            {settingLocation}
+          </NBGBText>
         </BTN>
         <SelectImg />
       </StandardView>

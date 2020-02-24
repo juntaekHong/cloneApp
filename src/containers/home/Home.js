@@ -10,19 +10,37 @@ import {TopView, HomeAd} from '../../components/home/View';
 import {DataList} from '../../components/home/DataList';
 import {CommonActions} from '../../store/actionCreator';
 
+// 병원별 이미지 및 타이틀
 const DATA = [
-  {image: '', title: '병원'},
-  {image: '', title: '내과'},
-  {image: '', title: '외과'},
-  {image: '', title: '한의원'},
-  {image: '', title: '치과'},
-  {image: '', title: '이비인후과'},
-  {image: '', title: '의원'},
-  {image: '', title: '정형외과'},
-  {image: '', title: '대학병원'},
-  {image: '', title: '성형외과'},
-  {image: '', title: '정신병원'},
-  {image: '', title: '약국'},
+  {image: require('../../../assets/image/home/hospital.png'), title: '병원'},
+  {
+    image: require('../../../assets/image/home/fetus.png'),
+    title: '산부인과',
+  },
+  {image: require('../../../assets/image/home/stomach.png'), title: '내과'},
+  {image: require('../../../assets/image/home/doctor.png'), title: '외과'},
+  {
+    image: require('../../../assets/image/home/acupuncture.png'),
+    title: '한의원',
+  },
+  {image: require('../../../assets/image/home/tooth.png'), title: '치과'},
+  {
+    image: require('../../../assets/image/home/ear.png'),
+    title: '이비인후과',
+  },
+  {
+    image: require('../../../assets/image/home/injury.png'),
+    title: '정형외과',
+  },
+  {
+    image: require('../../../assets/image/home/healthcare-and-medical.png'),
+    title: '성형외과',
+  },
+  {
+    image: require('../../../assets/image/home/mental-health.png'),
+    title: '정신병원',
+  },
+  {image: require('../../../assets/image/home/pill.png'), title: '약국'},
 ];
 
 const Home = props => {
@@ -31,7 +49,7 @@ const Home = props => {
   return (
     <TopContainerView>
       <TopView
-        settingLocation={'서울 광진구 자양동 7-7'}
+        settingLocation={'서울특별시 성북구 삼선교로 16길 116'}
         height={55}
         navigation={props.navigation}
       />
