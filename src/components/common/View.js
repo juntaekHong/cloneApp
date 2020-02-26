@@ -43,7 +43,15 @@ export const TopView = props => {
         />
       </BTN>
 
-      {props.title ? <NBGBText fontSize={17}>{props.title}</NBGBText> : null}
+      {props.title ? (
+        <NBGBText
+          fontSize={17}
+          align={'center'}
+          numberOfLines={1}
+          style={{width: widthPercentageToDP(265)}}>
+          {props.title}
+        </NBGBText>
+      ) : null}
 
       {props.closeBtn ? (
         <BTN
@@ -68,7 +76,12 @@ export const TopView = props => {
           />
         </BTN>
       ) : (
-        <View />
+        <View
+          style={{
+            width: widthPercentageToDP(28),
+            height: widthPercentageToDP(28),
+          }}
+        />
       )}
     </TopContainer>
   );

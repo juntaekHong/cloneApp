@@ -157,7 +157,7 @@ const BTNView = styled(StandardView)`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding-horizontal: ${widthPercentageToDP(15)};
+  padding-horizontal: ${widthPercentageToDP(7)};
 `;
 
 const CustomBTN = styled(BTN)`
@@ -210,7 +210,13 @@ export const Card = ({
 
   return (
     <CardView>
-      <NBGBText fontSize={30}>{hospitalName}</NBGBText>
+      <NBGBText
+        fontSize={30}
+        numberOfLines={2}
+        align={'center'}
+        style={{width: widthPercentageToDP(250)}}>
+        {hospitalName}
+      </NBGBText>
       <RatingView height={30}>
         <RatingImg />
         <NBGText fontSize={20}>{rating}</NBGText>

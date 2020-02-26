@@ -141,9 +141,8 @@ const HospitalDetail = props => {
           props.navigation.goBack();
         }}
         closeBtn={false}
-        searchHandler={() => {
-          // 검색 기능 구현 예정
-        }}
+        // 추후 검색기능 활성화?
+        searchBtn={false}
       />
       <ScrollView>
         <Card
