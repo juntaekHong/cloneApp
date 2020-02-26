@@ -31,10 +31,16 @@ const HospitalDetail = props => {
   // 길찾기 클릭 시, 길찾기 모달(알림창) visible
   const [roadMapModal, setRoadMapModal] = useState(false);
 
+  const focus = useRef();
+
   // 병원 상세 데이터가 들어오면 네이버 길찾기에 대한 한글 인코딩 해주는 것.
   useEffect(() => {
     setNameEncoding(encodeURI(encodeURIComponent(detailData.dutyName)));
   }, [detailData]);
+
+  useEffect(() => {
+    focus.current = paginationIndex;
+  }, [paginationIndex]);
 
   const KakaoMapNaivgate = () => {
     Linking.openURL(
@@ -164,24 +170,26 @@ const HospitalDetail = props => {
         }}
       />
       <PagiNationTab
+        ref={focus}
         index={paginationIndex}
         page1={{title: '진료시간 정보', index: 0}}
         page2={{title: '진료항목 정보', index: 1}}
         page3={{title: '병원소개', index: 2}}
         onPress={index => {
           setPaginationIndex(index);
+          let timeout = setInterval(() => {
+            clearInterval(timeout);
+          }, 1000);
         }}
       />
       <Swiper
         index={paginationIndex}
-        onIndexChanged={index => setPaginationIndex(index)}
-        showsButtons={false}
+        onIndexChanged={index => {
+          setPaginationIndex(index);
+        }}
+        showsButtons={true}
         loop={false}
-        showsPagination={false}
-        renderPagination={() => {
-          // renderPagination을 주어야 pagination error가 안남.. 왜 그런지 모르겟음.
-          return <Text>{paginationIndex}</Text>;
-        }}>
+        showsPagination={false}>
         <OfficeHours />
         <TreatmentItem />
         <HospitalIntroduction />

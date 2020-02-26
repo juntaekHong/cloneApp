@@ -17,37 +17,40 @@ export const PagiNationTab = ({index, page1, page2, page3, onPress}) => {
   return (
     <TabView>
       <BTN
+        disabled={true}
         onPress={() => {
-          onPress(page1.index);
+          // onPress(page1.index);
         }}>
         <NBGBText
           align={'center'}
           fontSize={18}
-          color={index === 0 ? '#259ffa' : '#dbdbdb'}
+          color={index === 0 ? '#259ffa' : 'black'}
           style={{width: widthPercentageToDP(375 / 3)}}>
           {page1.title}
         </NBGBText>
       </BTN>
       <BTN
+        disabled={true}
         onPress={() => {
-          onPress(page2.index);
+          // onPress(page2.index);
         }}>
         <NBGBText
           align={'center'}
           fontSize={18}
-          color={index === 1 ? '#259ffa' : '#dbdbdb'}
+          color={index === 1 ? '#259ffa' : 'black'}
           style={{width: widthPercentageToDP(375 / 3)}}>
           {page2.title}
         </NBGBText>
       </BTN>
       <BTN
+        disabled={true}
         onPress={() => {
-          onPress(page3.index);
+          // onPress(page3.index);
         }}>
         <NBGBText
           align={'center'}
           fontSize={18}
-          color={index === 2 ? '#259ffa' : '#dbdbdb'}
+          color={index === 2 ? '#259ffa' : 'black'}
           style={{width: widthPercentageToDP(375 / 3)}}>
           {page3.title}
         </NBGBText>
