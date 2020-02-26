@@ -84,9 +84,10 @@ export const List = props => {
         index={index}
         padding={10}
         onPress={async () => {
-          props.navigation.navigate('HospitalDetail', {
-            detailData: item,
-          });
+          await CommonActions.loadingAction(true);
+          await CommonActions.getHospitalDetail(item.hpid);
+          props.navigation.navigate('HospitalDetail');
+          await CommonActions.loadingAction(false);
         }}>
         <PhotoImg
           source={require('../../../assets/image/navigation/homeblue.png')}

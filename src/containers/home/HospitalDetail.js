@@ -15,11 +15,10 @@ import {Card} from '../../components/home/View';
 import {widthPercentageToDP} from '../../utils/util';
 import {UIActivityIndicator} from 'react-native-indicators';
 import {CustomModal} from '../../components/common/Modal';
+import {List} from '../../components/common/DataList';
 
 const HospitalDetail = props => {
-  const [detailData, setDetailData] = useState(
-    props.navigation.state.params.detailData,
-  );
+  const [detailData, setDetailData] = useState(props.hospital_detail);
 
   const [NameEncoding, setNameEncoding] = useState();
   // 길찾기 클릭 시, 길찾기 모달(알림창) visible
@@ -35,9 +34,9 @@ const HospitalDetail = props => {
       'daummaps://search?q=' +
         detailData.dutyName +
         '&p=' +
-        detailData.latitude +
+        detailData.wgs84Lat +
         ',' +
-        detailData.longitude +
+        detailData.wgs84Lon +
         '',
     ).catch(() => {
       props.navigation.navigate('KakaoMap', {
@@ -45,9 +44,9 @@ const HospitalDetail = props => {
           'https://map.kakao.com/link/map/' +
           detailData.dutyName +
           ',' +
-          detailData.latitude +
+          detailData.wgs84Lat +
           ',' +
-          detailData.longitude +
+          detailData.wgs84Lon +
           '',
       });
     });
@@ -57,9 +56,9 @@ const HospitalDetail = props => {
   const NaverMapNavigate = () => {
     Linking.openURL(
       'nmap://place?lat=' +
-        detailData.latitude +
+        detailData.wgs84Lat +
         '&lng=' +
-        detailData.longitude +
+        detailData.wgs84Lon +
         '&name=' +
         detailData.dutyName +
         '&appname=클론프로젝트',
@@ -164,5 +163,5 @@ const HospitalDetail = props => {
 };
 
 export default connect(state => ({
-  hospitalList: state.common.hospitalList,
+  hospital_detail: state.common.hospital_detail,
 }))(HospitalDetail);

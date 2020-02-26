@@ -33,6 +33,8 @@ const config = {
   // },
   hospital_url:
     'http://apis.data.go.kr/B552657/HsptlAsembySearchService/getHsptlMdcncLcinfoInqire',
+  hospital_detail_url:
+    'http://apis.data.go.kr/B552657/HsptlAsembySearchService/getHsptlBassInfoInqire',
   hospital_ServiceKey:
     'I2F%2B1Oce6drCgGSm33cvy%2F3uLnHQ4BY46ALKDYUbKqPqslTOBJTUzx1yH%2FPt%2FsnttC0mZeVuTudJWDJ70xLCnw%3D%3D',
   signDataKey: ['token', 'userId', 'pass_locking', 'lock_pass'],
