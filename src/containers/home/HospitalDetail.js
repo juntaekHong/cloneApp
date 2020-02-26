@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -15,10 +15,17 @@ import {Card} from '../../components/home/View';
 import {widthPercentageToDP} from '../../utils/util';
 import {UIActivityIndicator} from 'react-native-indicators';
 import {CustomModal} from '../../components/common/Modal';
-import {List} from '../../components/common/DataList';
+import Swiper from 'react-native-swiper';
+import OfficeHours from '../hospitalDetail/OfficeHours';
+import TreatmentItem from '../hospitalDetail/TreatmentItem';
+import HospitalIntroduction from '../hospitalDetail/HospitalIntroduction';
+import {PagiNationTab} from '../../components/home/PagiNation';
 
 const HospitalDetail = props => {
   const [detailData, setDetailData] = useState(props.hospital_detail);
+
+  // 페이지네이션 탭 인덱스
+  const [paginationIndex, setPaginationIndex] = useState(0);
 
   const [NameEncoding, setNameEncoding] = useState();
   // 길찾기 클릭 시, 길찾기 모달(알림창) visible
@@ -144,19 +151,42 @@ const HospitalDetail = props => {
         // 추후 검색기능 활성화?
         searchBtn={false}
       />
-      <ScrollView>
-        <Card
-          hospitalName={detailData.dutyName}
-          rating={4.0}
-          reviewCount={50}
-          phoneNumber={detailData.dutyTel1}
-          isSrap={false}
-          shared={() => {}}
-          naviModal={() => {
-            setRoadMapModal(true);
-          }}
-        />
-      </ScrollView>
+      {/* <ScrollView> */}
+      <Card
+        hospitalName={detailData.dutyName}
+        rating={4.0}
+        reviewCount={50}
+        phoneNumber={detailData.dutyTel1}
+        isSrap={false}
+        shared={() => {}}
+        naviModal={() => {
+          setRoadMapModal(true);
+        }}
+      />
+      <PagiNationTab
+        index={paginationIndex}
+        page1={{title: '진료시간 정보', index: 0}}
+        page2={{title: '진료항목 정보', index: 1}}
+        page3={{title: '병원소개', index: 2}}
+        onPress={index => {
+          setPaginationIndex(index);
+        }}
+      />
+      <Swiper
+        index={paginationIndex}
+        onIndexChanged={index => setPaginationIndex(index)}
+        showsButtons={false}
+        loop={false}
+        showsPagination={false}
+        renderPagination={() => {
+          // renderPagination을 주어야 pagination error가 안남.. 왜 그런지 모르겟음.
+          return <Text>{paginationIndex}</Text>;
+        }}>
+        <OfficeHours />
+        <TreatmentItem />
+        <HospitalIntroduction />
+      </Swiper>
+      {/* </ScrollView> */}
     </TopContainerView>
   );
 };
