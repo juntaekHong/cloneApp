@@ -162,6 +162,8 @@ const HospitalDetail = props => {
         hospitalName={detailData.dutyName}
         rating={4.0}
         reviewCount={50}
+        dutyAddr={detailData.dutyAddr}
+        dutyMapimg={detailData.dutyMapimg}
         phoneNumber={detailData.dutyTel1}
         isSrap={false}
         shared={() => {}}
@@ -176,10 +178,7 @@ const HospitalDetail = props => {
         page2={{title: '진료항목 정보', index: 1}}
         page3={{title: '병원소개', index: 2}}
         onPress={index => {
-          setPaginationIndex(index);
-          let timeout = setInterval(() => {
-            clearInterval(timeout);
-          }, 1000);
+          // 탭 클릭, 페이지게이션 버그로 현재는 임시로 클릭 막아놓음.
         }}
       />
       <Swiper
@@ -194,6 +193,7 @@ const HospitalDetail = props => {
         <TreatmentItem />
         <HospitalIntroduction />
       </Swiper>
+
       {/* </ScrollView> */}
     </TopContainerView>
   );

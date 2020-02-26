@@ -9,6 +9,8 @@ import {NBGBText} from './Text';
 export const TopContainerView = styled.SafeAreaView`
   flex: 1;
   background-color: white;
+  margin-horizontal: ${props =>
+    props.marginHorizontal ? widthPercentageToDP(props.marginHorizontal) : 0};
 `;
 
 export const StandardView = styled.View``;

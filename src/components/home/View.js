@@ -143,6 +143,9 @@ const CardView = styled(StandardView)`
   height: ${widthPercentageToDP(250)};
   margin-horizontal: ${widthPercentageToDP(10)};
   padding-top: ${widthPercentageToDP(40)};
+  margin-bottom: ${widthPercentageToDP(10)};
+  border-color: #dbdbdb;
+  border-width: ${widthPercentageToDP(2)};
   border-radius: ${widthPercentageToDP(10)};
 `;
 
@@ -153,18 +156,16 @@ const RatingView = styled(LocationView)`
 
 const BTNView = styled(StandardView)`
   width: 100%;
-  height: 100%;
+  height: ${widthPercentageToDP(60)};
   flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
   padding-horizontal: ${widthPercentageToDP(7)};
 `;
 
 const CustomBTN = styled(BTN)`
+  width: 100%;
   flex-direction: row;
   justify-content: center;
-  align-items:center;
-  padding-bottom: ${widthPercentageToDP(30)}
+  align-items: center;
   width: ${widthPercentageToDP(355) / 4};
 `;
 
@@ -172,6 +173,8 @@ export const Card = ({
   hospitalName,
   rating,
   reviewCount,
+  dutyAddr,
+  dutyMapimg,
   phoneNumber,
   isScrap,
   shared,
@@ -224,13 +227,27 @@ export const Card = ({
       <NBGText fontSize={15} color={'gray'}>
         최근 리뷰 {reviewCount}
       </NBGText>
+      <NBGText
+        fontSize={15}
+        marginTop={7}
+        style={{width: widthPercentageToDP(340)}}
+        color={'black'}>
+        위치: {dutyAddr}
+      </NBGText>
+      <NBGText
+        fontSize={15}
+        marginTop={7}
+        style={{width: widthPercentageToDP(340)}}
+        color={'black'}>
+        가까운 역: {dutyMapimg ? dutyMapimg : '정보없음'}
+      </NBGText>
       <BTNView>
         <CustomBTN
           onPress={() => {
             Communications.phonecall(phoneNumber.replace(/-/gi, ''), false);
           }}>
-          <CallImg />
-          <Text>전화주문</Text>
+          <CallImg style={{justifyContent: 'center'}} />
+          <Text style={{justifyContent: 'center'}}>전화예약</Text>
         </CustomBTN>
         <CustomBTN
           onPress={() => {
