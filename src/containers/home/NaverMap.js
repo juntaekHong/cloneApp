@@ -16,7 +16,8 @@ const NaverMap = props => {
         backHandler={() => {
           props.navigation.goBack();
         }}
-        closeBtn={true}
+        closeBtn={false}
+        searchBtn={false}
       />
       <WebView source={{uri: props.navigation.state.params.uri}} />
     </SafeAreaView>

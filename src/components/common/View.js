@@ -1,5 +1,6 @@
 /* eslint-disable react/react-in-jsx-scope */
 import React from 'react';
+import {View} from 'react-native';
 import styled from 'styled-components/native';
 import {widthPercentageToDP} from '../../utils/util';
 import {BackImg, CloseImg} from './Image';
@@ -55,7 +56,7 @@ export const TopView = props => {
             source={require('../../../assets/image/common/close.png')}
           />
         </BTN>
-      ) : (
+      ) : props.searchBtn ? (
         <BTN
           onPress={() => {
             props.searchHandler();
@@ -66,6 +67,8 @@ export const TopView = props => {
             source={require('../../../assets/image/home/search.png')}
           />
         </BTN>
+      ) : (
+        <View />
       )}
     </TopContainer>
   );
