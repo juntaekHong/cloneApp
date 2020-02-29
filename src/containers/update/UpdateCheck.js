@@ -24,10 +24,10 @@ const UpdateCheck = props => {
         CommonActions.myLocation(latitude, longitude);
       },
       error => {
-        console.log(error.code, error.message);
         setError(error.message);
       },
-      {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
+      // enableHighAccuracy: true 시, 실제 디바이스에서 내 위치 설정 요청 오류남.
+      {enableHighAccuracy: false, timeout: 15000, maximumAge: 10000},
     );
     let timeout = setInterval(async () => {
       await CommonActions.handleLoading(false);
@@ -35,13 +35,7 @@ const UpdateCheck = props => {
     }, 1000);
   }, []);
 
-  return !location ? (
-    <Text>
-      {' '}
-      {props.loading} {'/'}
-      {error}
-    </Text>
-  ) : (
+  return !location ? null : (
     <>
       <CenterView>
         <Text>Version Check Page</Text>
