@@ -2,10 +2,10 @@
 import React, {useEffect, useRef, useState} from 'react';
 import Styled from 'styled-components/native';
 import {View, TouchableOpacity, Text} from 'react-native';
+import {connect} from 'react-redux';
 import {TopContainerView, TopView} from '../../components/common/View';
 import {widthPercentageToDP} from '../../utils/util';
 // 내 위치 정보 확인
-import Geolocation from '@react-native-community/geolocation';
 import MapView, {Marker} from 'react-native-maps';
 
 const Label = Styled.Text`
@@ -13,24 +13,6 @@ const Label = Styled.Text`
 `;
 
 const MyLocationSetting = props => {
-  const [location, setLocation] = useState();
-
-  useEffect(() => {
-    Geolocation.getCurrentPosition(
-      position => {
-        const {latitude, longitude} = position.coords;
-        setLocation({
-          latitude,
-          longitude,
-        });
-      },
-      error => {
-        console.log(error.code, error.message);
-      },
-      {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
-    );
-  }, []);
-
   return (
     <TopContainerView>
       <TopView
@@ -46,7 +28,7 @@ const MyLocationSetting = props => {
       />
       {/* 지도 범위 뷰 작업중 */}
       <Text>위치 설정 페이지</Text>
-      {location ? (
+      {props.latitude && props.longitude ? (
         <>
           <View
             style={{
@@ -59,21 +41,21 @@ const MyLocationSetting = props => {
                 height: widthPercentageToDP(207),
               }}
               initialRegion={{
-                latitude: parseFloat(location.latitude),
-                longitude: parseFloat(location.longitude),
+                latitude: parseFloat(props.latitude),
+                longitude: parseFloat(props.longitude),
                 latitudeDelta: 0.0121,
                 longitudeDelta: 0.0121,
               }}>
               <Marker
                 coordinate={{
-                  latitude: parseFloat(location.latitude),
-                  longitude: parseFloat(location.longitude),
+                  latitude: parseFloat(props.latitude),
+                  longitude: parseFloat(props.longitude),
                 }}
               />
             </MapView>
           </View>
-          <Label>Latitude: {parseFloat(location.latitude)}</Label>
-          <Label>Latitude: {parseFloat(location.longitude)}</Label>
+          <Label>Latitude: {parseFloat(props.latitude)}</Label>
+          <Label>Latitude: {parseFloat(props.longitude)}</Label>
         </>
       ) : (
         <Label>Loading...</Label>
@@ -82,4 +64,8 @@ const MyLocationSetting = props => {
   );
 };
 
-export default MyLocationSetting;
+export default connect(state => ({
+  latitude: state.common.latitude,
+  longitude: state.common.longitude,
+  hospitalList: state.common.hospitalList,
+}))(MyLocationSetting);
