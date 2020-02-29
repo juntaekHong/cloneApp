@@ -49,12 +49,11 @@ const UpdateCheck = props => {
             borderColor: 'blue',
           }}
           onPress={async () => {
+            const lat = props.latitude ? props.latitude : location.latitude;
+            const long = props.longitude ? props.longitude : location.longitude;
+
             await CommonActions.loadingAction(true);
-            await CommonActions.getHospitalList(
-              location.longitude,
-              location.latitude,
-              500,
-            );
+            await CommonActions.getHospitalList(long, lat, 500);
             props.navigation.navigate('home');
             await CommonActions.loadingAction(false);
           }}>

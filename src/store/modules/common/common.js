@@ -33,7 +33,7 @@ const initState = {
 
   // 내 위치 설정
   latitude: null,
-  longitude: 'asd',
+  longitude: null,
   // 병원 리스트 불러오기
   hospitalList: [],
   // 병원 상세 정보 불러오기
@@ -76,12 +76,8 @@ export const myLocation = (Lat, Long) => async dispatch => {
     await storeData('location_long', Long + '');
   } else {
     // 이미 내 위치 데이터가 있는 경우
-    await removeData('location_lat');
-    await removeData('location_long');
     await dispatch(locationLatitudeAction(Lat + ''));
     await dispatch(locationLongitudeAction(Long + ''));
-    await storeData('location_lat', Lat + '');
-    await storeData('location_long', Long + '');
   }
 };
 
