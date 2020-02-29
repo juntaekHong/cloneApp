@@ -50,13 +50,15 @@ const UpdateCheck = props => {
           }}
           onPress={async () => {
             await CommonActions.loadingAction(true);
-            await CommonActions.getHospitalList(
+            const promise1 = CommonActions.getHospitalList(
               location.longitude,
               location.latitude,
               500,
             );
-            props.navigation.navigate('home');
-            await CommonActions.loadingAction(false);
+            Promise.all([promise1]).then(async () => {
+              props.navigation.navigate('home');
+              await CommonActions.loadingAction(false);
+            });
           }}>
           <Text>홈 화면으로 이동</Text>
         </TouchableOpacity>

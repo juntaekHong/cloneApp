@@ -22,27 +22,29 @@ const DATA = [
 ];
 
 const HospitalList = props => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(props.hospitalList);
+  const [name, setName] = useState(props.navigation.state.params.object);
 
   // 홈(메인) 페이지에서 항목에 맞는 병원 리스트만 보여지는 것으로 가정.
-  const Matching = findData => {
-    let searchData = [];
-
-    let MatchingData = props.hospitalList.map((item, index) => {
-      if (
-        item.dutyName.indexOf(findData) !== -1 ||
-        item.dutyDivName.indexOf(findData) !== -1
-      ) {
-        return searchData.push(item);
-      }
-    });
-
-    return searchData;
-  };
 
   useEffect(() => {
-    setData(Matching(props.navigation.state.params.object));
-  }, [props.navigation.state.params.object]);
+    const Matching = findData => {
+      let searchData = [];
+
+      let MatchingData = data.map((item, index) => {
+        if (
+          item.dutyName.indexOf(findData) !== -1 ||
+          item.dutyDivName.indexOf(findData) !== -1
+        ) {
+          return searchData.push(item);
+        }
+      });
+
+      return searchData;
+    };
+
+    setData(Matching(name));
+  }, []);
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>

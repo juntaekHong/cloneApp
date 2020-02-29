@@ -96,6 +96,7 @@ export const getHospitalList = (Long, Lat, rows) => async dispatch => {
     await dispatch(hospitalListAction(jsonData.data.response.body.items.item));
   } catch (e) {
     // 병원 리스트 공공 api 요청 실패 => 서버 연동 실패
+    await dispatch(hospitalListAction([]));
   }
 };
 
@@ -134,7 +135,9 @@ export default handleActions(
       }),
     [HOSPITAL_LIST]: (state, {payload}) =>
       produce(state, draft => {
-        draft.hospitalList = payload;
+        payload.map(item => {
+          draft.hospitalList.push(item);
+        });
       }),
     [HOSPITAL_DETAIL]: (state, {payload}) =>
       produce(state, draft => {
