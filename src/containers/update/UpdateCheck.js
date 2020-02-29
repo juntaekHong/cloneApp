@@ -49,8 +49,10 @@ const UpdateCheck = props => {
             borderColor: 'blue',
           }}
           onPress={async () => {
-            const lat = props.latitude ? props.latitude : location.latitude;
-            const long = props.longitude ? props.longitude : location.longitude;
+            const lat =
+              props.latitude !== null ? props.latitude : location.latitude;
+            const long =
+              props.longitude !== null ? props.longitude : location.longitude;
 
             await CommonActions.loadingAction(true);
             await CommonActions.getHospitalList(long, lat, 500);
