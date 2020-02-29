@@ -57,7 +57,7 @@ const HospitalList = props => {
         }}
       /> */}
       <CustomTopView
-        settingLocation={'서울특별시 성북구 삼선교로 16길 116'}
+        settingLocation={'좌표 주소 변환 예정'}
         height={55}
         navigation={props.navigation}
         justifyContent={true}

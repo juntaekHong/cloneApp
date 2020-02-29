@@ -27,7 +27,7 @@ const UpdateCheck = props => {
         setError(error.message);
       },
       // enableHighAccuracy: true 시, 실제 디바이스에서 내 위치 설정 요청 오류남.
-      {enableHighAccuracy: false, timeout: 15000, maximumAge: 10000},
+      {enableHighAccuracy: false, timeout: 10000, maximumAge: 10000},
     );
     let timeout = setInterval(async () => {
       await CommonActions.handleLoading(false);
@@ -49,13 +49,12 @@ const UpdateCheck = props => {
             borderColor: 'blue',
           }}
           onPress={async () => {
-            const lat =
-              props.latitude !== null ? props.latitude : location.latitude;
-            const long =
-              props.longitude !== null ? props.longitude : location.longitude;
-
             await CommonActions.loadingAction(true);
-            await CommonActions.getHospitalList(long, lat, 500);
+            await CommonActions.getHospitalList(
+              location.longitude,
+              location.latitude,
+              500,
+            );
             props.navigation.navigate('home');
             await CommonActions.loadingAction(false);
           }}>

@@ -9,7 +9,12 @@ import axios from 'axios';
 import {parseString} from 'xml2js';
 import config from '../../../configs/config';
 import {Platform} from 'react-native';
-import {getData, storeData, removeData} from '../../../utils/util';
+import {
+  getData,
+  storeData,
+  removeData,
+  removeAllData,
+} from '../../../utils/util';
 
 const COMMON_INIT = 'common/COMMON_INIT';
 const COMMON_LOADING = 'common/COMMON_LOADING';
@@ -66,19 +71,20 @@ export const handleLoading = value => dispatch => {
 
 // 내 위치 설정
 export const myLocation = (Lat, Long) => async dispatch => {
-  const location_lat = getData('location_lat');
-  const location_long = getData('location_long');
+  // await removeAllData();
+  // const location_lat = getData('location_lat');
+  // const location_long = getData('location_long');
 
-  if (location_lat === null || location_long === null) {
-    await dispatch(locationLatitudeAction(Lat + ''));
-    await dispatch(locationLongitudeAction(Long + ''));
-    await storeData('location_lat', Lat + '');
-    await storeData('location_long', Long + '');
-  } else {
-    // 이미 내 위치 데이터가 있는 경우
-    await dispatch(locationLatitudeAction(Lat + ''));
-    await dispatch(locationLongitudeAction(Long + ''));
-  }
+  // if (location_lat === null || location_long === null) {
+  await dispatch(locationLatitudeAction(Lat + ''));
+  await dispatch(locationLongitudeAction(Long + ''));
+  //   await storeData('location_lat', Lat + '');
+  //   await storeData('location_long', Long + '');
+  // } else {
+  //   // 이미 내 위치 데이터가 있는 경우
+  // await dispatch(locationLatitudeAction(Lat + ''));
+  // await dispatch(locationLongitudeAction(Long + ''));
+  // }
 };
 
 // 병원 리스트 호출

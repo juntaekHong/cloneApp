@@ -94,6 +94,4 @@ const Home = props => {
   );
 };
 
-export default connect(state => ({
-  hospitalList: state.common.hospitalList,
-}))(Home);
+export default connect(state => ({}))(Home);
