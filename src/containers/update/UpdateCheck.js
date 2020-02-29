@@ -10,8 +10,10 @@ import {CommonActions} from '../../store/actionCreator';
 
 const UpdateCheck = props => {
   const [location, setLocation] = useState();
+  const [error, setError] = useState(null);
 
   useEffect(() => {
+    CommonActions.handleLoading(true);
     Geolocation.getCurrentPosition(
       position => {
         const {latitude, longitude} = position.coords;
@@ -23,15 +25,26 @@ const UpdateCheck = props => {
       },
       error => {
         console.log(error.code, error.message);
+        setError(error.message);
       },
       {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
     );
+    let timeout = setInterval(async () => {
+      await CommonActions.handleLoading(false);
+      clearInterval(timeout);
+    }, 1000);
   }, []);
 
-  return location ? (
+  return !location ? (
+    <Text>
+      {' '}
+      {props.loading} {'/'}
+      {error}
+    </Text>
+  ) : (
     <>
       <CenterView>
-        <Text>Version Check Page(로그인 페이지)</Text>
+        <Text>Version Check Page</Text>
         <View style={{marginBottom: widthPercentageToDP(60)}} />
         <TouchableOpacity
           style={{
@@ -55,10 +68,11 @@ const UpdateCheck = props => {
         </TouchableOpacity>
       </CenterView>
     </>
-  ) : null;
+  );
 };
 
 export default connect(state => ({
+  loading: state.common.loading,
   latitude: state.common.latitude,
   longitude: state.common.longitude,
   hospitalList: state.common.hospitalList,
