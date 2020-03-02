@@ -12,7 +12,16 @@ import {CommonActions} from '../../store/actionCreator';
 
 // 병원별 이미지 및 타이틀
 const DATA = [
-  {image: require('../../../assets/image/home/hospital.png'), title: '병원'},
+  {
+    image: require('../../../assets/image/home/hospital.png'),
+    title: '상급)\n종합병원',
+    dutyDiv: 'A',
+  },
+  {
+    image: require('../../../assets/image/home/hospital.png'),
+    title: '군)\n병원',
+    dutyDiv: 'B',
+  },
   {
     image: require('../../../assets/image/home/fetus.png'),
     title: '산부인과',
@@ -22,6 +31,7 @@ const DATA = [
   {
     image: require('../../../assets/image/home/acupuncture.png'),
     title: '한의원',
+    dutyDiv: 'G',
   },
   {image: require('../../../assets/image/home/tooth.png'), title: '치과'},
   {
@@ -40,7 +50,11 @@ const DATA = [
     image: require('../../../assets/image/home/mental-health.png'),
     title: '정신병원',
   },
-  {image: require('../../../assets/image/home/pill.png'), title: '약국'},
+  {
+    image: require('../../../assets/image/home/pill.png'),
+    title: '약국',
+    dutyDiv: 'H',
+  },
 ];
 
 const Home = props => {

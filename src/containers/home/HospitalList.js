@@ -24,17 +24,18 @@ const DATA = [
 const HospitalList = props => {
   const [data, setData] = useState(props.hospitalList);
   const [name, setName] = useState(props.navigation.state.params.object);
+  const [dutyDiv, setDutyDiv] = useState(props.navigation.state.params.dutyDiv);
 
   // 홈(메인) 페이지에서 항목에 맞는 병원 리스트만 보여지는 것으로 가정.
 
   useEffect(() => {
-    const Matching = findData => {
+    const Matching = (findData, dutyDiv) => {
       let searchData = [];
 
       let MatchingData = data.map((item, index) => {
         if (
           item.dutyName.indexOf(findData) !== -1 ||
-          item.dutyDivName.indexOf(findData) !== -1
+          item.dutyDiv.indexOf(dutyDiv) !== -1
         ) {
           return searchData.push(item);
         }
@@ -43,7 +44,7 @@ const HospitalList = props => {
       return searchData;
     };
 
-    setData(Matching(name));
+    setData(Matching(name, dutyDiv));
   }, []);
 
   return (
