@@ -67,6 +67,18 @@ Project< ios Folder 안에 pod --version 으로 pod 설치 확인
 새로 추가한 modlue만 push할 것. push 전 local repo 최신화 후, 충돌 제거해서 push
 ```
 
-### 실행 첫 화면(작업 중)
-<img width="383" alt="스크린샷 2020-02-24 오후 7 46 01" src="https://user-images.githubusercontent.com/50249009/75146433-72924980-573e-11ea-9529-f1f1dbf3881e.png">
+### 실행 화면들
+![KakaoTalk_Photo_2020-03-02-16-38-56](https://user-images.githubusercontent.com/50249009/75655098-7d9c2b00-5ca4-11ea-96a5-5936648d5aca.jpeg)
+
+
+![KakaoTalk_Photo_2020-03-02-16-39-06](https://user-images.githubusercontent.com/50249009/75655110-82f97580-5ca4-11ea-901f-8e6efae7a527.jpeg)
+
+
+![KakaoTalk_Photo_2020-03-02-16-39-11](https://user-images.githubusercontent.com/50249009/75655115-868cfc80-5ca4-11ea-8f4b-f84f6122780e.jpeg)
+
+
+![KakaoTalk_Photo_2020-03-02-16-39-23](https://user-images.githubusercontent.com/50249009/75655122-8a208380-5ca4-11ea-9213-1f3573fac76c.jpeg)
+
+![KakaoTalk_Photo_2020-03-02-16-39-32](https://user-images.githubusercontent.com/50249009/75655142-9573af00-5ca4-11ea-9469-a193626d0c70.jpeg)
+
 
