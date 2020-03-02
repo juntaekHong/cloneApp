@@ -3,39 +3,59 @@ import React, {useState, useEffect} from 'react';
 import {View, TouchableOpacity, Text} from 'react-native';
 import Geolocation from '@react-native-community/geolocation';
 import {connect} from 'react-redux';
-import {widthPercentageToDP} from '../../utils/util';
+import {widthPercentageToDP, getData} from '../../utils/util';
 import {CenterView} from '../../components/common/Extra';
 import navigators from '../../utils/navigators';
 import {CommonActions} from '../../store/actionCreator';
 
 const UpdateCheck = props => {
-  const [location, setLocation] = useState();
+  // 초기 처음 사용시, 내 위치 설정
+  const [location, setLocation] = useState(null);
+  // 초기 내 위치 설정 이후 내 위치 불러오기
+  const [latitude, setLatitude] = useState(null);
+  const [longitude, setLongitude] = useState(null);
+
   const [error, setError] = useState(null);
 
   useEffect(() => {
     CommonActions.handleLoading(true);
-    Geolocation.getCurrentPosition(
-      position => {
-        const {latitude, longitude} = position.coords;
-        setLocation({
-          latitude,
-          longitude,
-        });
-        CommonActions.myLocation(latitude, longitude);
-      },
-      error => {
-        setError(error.message);
-      },
-      // enableHighAccuracy: true 시, 실제 디바이스에서 내 위치 설정 요청 오류남.
-      {enableHighAccuracy: false, timeout: 10000, maximumAge: 10000},
-    );
-    let timeout = setInterval(async () => {
-      await CommonActions.handleLoading(false);
-      clearInterval(timeout);
-    }, 1000);
+
+    const promise1 = CommonActions.locationInit();
+
+    Promise.all([promise1]).then(async () => {
+      const lat = await getData('location_lat');
+      const long = await getData('location_long');
+
+      if (lat === null || long === null) {
+        Geolocation.getCurrentPosition(
+          position => {
+            const {latitude, longitude} = position.coords;
+            setLocation({
+              latitude,
+              longitude,
+            });
+            CommonActions.myLocation(latitude, longitude);
+          },
+          error => {
+            setError(error.message);
+          },
+          // enableHighAccuracy: true 시, 실제 디바이스에서 내 위치 설정 요청 오류남.
+          {enableHighAccuracy: false, timeout: 10000, maximumAge: 10000},
+        );
+        let timeout = setInterval(async () => {
+          await CommonActions.handleLoading(false);
+          clearInterval(timeout);
+        }, 1000);
+      } else {
+        setLatitude(lat);
+        setLongitude(long);
+
+        CommonActions.handleLoading(false);
+      }
+    });
   }, []);
 
-  return !location ? null : (
+  return latitude === null && location === null ? null : (
     <>
       <CenterView>
         <Text>Version Check Page</Text>
@@ -49,12 +69,11 @@ const UpdateCheck = props => {
             borderColor: 'blue',
           }}
           onPress={async () => {
+            const long = longitude === null ? location.longitude : longitude;
+            const lat = latitude === null ? location.latitude : latitude;
+
             await CommonActions.loadingAction(true);
-            const promise1 = CommonActions.getHospitalList(
-              location.longitude,
-              location.latitude,
-              500,
-            );
+            const promise1 = CommonActions.getHospitalList(long, lat, 500);
             Promise.all([promise1]).then(async () => {
               props.navigation.navigate('home');
               await CommonActions.loadingAction(false);

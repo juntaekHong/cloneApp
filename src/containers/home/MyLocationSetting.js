@@ -55,7 +55,7 @@ const MyLocationSetting = props => {
             </MapView>
           </View>
           <Label>Latitude: {parseFloat(props.latitude)}</Label>
-          <Label>Latitude: {parseFloat(props.longitude)}</Label>
+          <Label>longtiude: {parseFloat(props.longitude)}</Label>
         </>
       ) : (
         <Label>Loading...</Label>

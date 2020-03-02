@@ -69,22 +69,32 @@ export const handleLoading = value => dispatch => {
 //   });
 // };
 
+// 처음 들어왔을 때, Init
+export const locationInit = () => async dispatch => {
+  const location_lat = await getData('location_lat');
+  const location_long = await getData('location_long');
+
+  if (location_lat !== null || location_long !== null) {
+    await dispatch(locationLatitudeAction(parseFloat(location_lat)));
+    await dispatch(locationLongitudeAction(parseFloat(location_long)));
+  }
+};
+
 // 내 위치 설정
 export const myLocation = (Lat, Long) => async dispatch => {
-  // await removeAllData();
-  // const location_lat = getData('location_lat');
-  // const location_long = getData('location_long');
+  const location_lat = await getData('location_lat');
+  const location_long = await getData('location_long');
 
-  // if (location_lat === null || location_long === null) {
-  await dispatch(locationLatitudeAction(Lat + ''));
-  await dispatch(locationLongitudeAction(Long + ''));
-  //   await storeData('location_lat', Lat + '');
-  //   await storeData('location_long', Long + '');
-  // } else {
-  //   // 이미 내 위치 데이터가 있는 경우
-  // await dispatch(locationLatitudeAction(Lat + ''));
-  // await dispatch(locationLongitudeAction(Long + ''));
-  // }
+  if (location_lat === null || location_long === null) {
+    await dispatch(locationLatitudeAction(Lat));
+    await dispatch(locationLongitudeAction(Long));
+    await storeData('location_lat', Lat + '');
+    await storeData('location_long', Long + '');
+  } else {
+    // 이미 내 위치 데이터가 있는 경우
+    await dispatch(locationLatitudeAction(parseFloat(location_lat)));
+    await dispatch(locationLongitudeAction(parseFloat(location_long)));
+  }
 };
 
 // 병원 리스트 호출
