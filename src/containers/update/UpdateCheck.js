@@ -7,13 +7,19 @@ import {widthPercentageToDP, getData} from '../../utils/util';
 import {CenterView} from '../../components/common/Extra';
 import navigators from '../../utils/navigators';
 import {CommonActions} from '../../store/actionCreator';
+import {CustomModal} from '../../components/common/Modal';
+import {BTN} from '../../components/common/View';
+import {NBGBText, NBGText} from '../../components/common/Text';
+import {UIActivityIndicator} from 'react-native-indicators';
 
 const UpdateCheck = props => {
   // 초기 처음 사용시, 내 위치 설정
-  const [location, setLocation] = useState(null);
+  const [location, setLocation] = useState();
   // 초기 내 위치 설정 이후 내 위치 불러오기
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
+  // 첫 위치 권한 허용 전, 위치정보 키라고 알림창(모달) 띄우기.
+  const [alertModal, setAlertModal] = useState(false);
 
   const [error, setError] = useState(null);
 
@@ -46,6 +52,8 @@ const UpdateCheck = props => {
           await CommonActions.handleLoading(false);
           clearInterval(timeout);
         }, 1000);
+
+        await setAlertModal(true);
       } else {
         setLatitude(lat);
         setLongitude(long);
@@ -55,9 +63,44 @@ const UpdateCheck = props => {
     });
   }, []);
 
-  return latitude === null && location === null ? null : (
+  return location === undefined && latitude === null ? (
+    <CenterView>
+      {error !== null ? (
+        <NBGText
+          style={{
+            width: widthPercentageToDP(350),
+            textAlign: 'center',
+          }}>
+          {
+            '서버 요청이 실패하였거나 위치설정을 위한\n GPS를 키지 않으셨습니다!\nGPS를 켜신 후에 재실행하여 주세요!\n 이 과정은 첫 위치 설정 시에만 보여집니다!'
+          }
+        </NBGText>
+      ) : null}
+    </CenterView>
+  ) : (
     <>
       <CenterView>
+        {/* <CustomModal
+          width={300}
+          height={220}
+          visible={alertModal}
+          close={true}
+          closeHandler={() => setAlertModal(false)}
+          children={
+            <View
+              style={{
+                marginLeft: widthPercentageToDP(20),
+                marginRight: widthPercentageToDP(50),
+              }}>
+              <NBGBText fontSize={15}>
+                {'GPS 키지 않으셨다면 켜고 재실행해야 주세요!'}
+              </NBGBText>
+            </View>
+          }
+          renderFooter={() => {
+            return <View />;
+          }}
+        /> */}
         <Text>Version Check Page</Text>
         <View style={{marginBottom: widthPercentageToDP(60)}} />
         <TouchableOpacity
