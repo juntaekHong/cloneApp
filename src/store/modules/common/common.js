@@ -133,9 +133,11 @@ export const getMyAddress = (Long, Lat) => async dispatch => {
     const jsonData = await axios.get(
       `${config.toAddress_url}?x=${Long}&y=${Lat}&output=json&epsg=epsg:4326&apiKey=${config.toAddress_ServiceKey}`,
     );
-    await dispatch(addressAction(jsonData.data.NEW_JUSO));
 
-    console.log(jsonData.data.NEW_JUSO);
+    // 좌표를 통해 주소 찾는 결과에 따라 주는 key 값이 달라져서 이렇게 처리.
+    jsonData.data.NEW_JUSO === undefined
+      ? await dispatch(addressAction('정확한 주소를 찾을 수 없습니다.'))
+      : await dispatch(addressAction(jsonData.data.NEW_JUSO));
   } catch (e) {
     // 내 도로명 주소 공공 api 요청 실패 => 서버 연동 실패
     await dispatch(addressAction('error'));

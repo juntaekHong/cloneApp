@@ -41,6 +41,7 @@ export const TopView = ({settingLocation, height, navigation}) => {
         }}>
         <NBGBText
           numberOfLines={1}
+          align={'center'}
           style={{width: widthPercentageToDP(200)}}
           fontSize={14}>
           {settingLocation}
@@ -82,6 +83,7 @@ export const CustomTopView = ({
           }}>
           <NBGBText
             numberOfLines={1}
+            align={'center'}
             style={{width: widthPercentageToDP(200)}}
             fontSize={14}>
             {settingLocation}
