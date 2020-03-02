@@ -8,7 +8,10 @@ import fonts from '../../configs/fonts';
 import {widthPercentageToDP} from '../../utils/util';
 
 export const NBGText = styled.Text`
-  font-size: ${props => (props.fontSize ? props.fontSize : 14)};
+  font-size: ${props =>
+    props.fontSize
+      ? widthPercentageToDP(props.fontSize)
+      : widthPercentageToDP(14)};
   font-family: ${fonts.nanumBarunGothic};
   color: ${props => (props.color ? props.color : '#000')};
   margin-top: ${({marginTop}) =>

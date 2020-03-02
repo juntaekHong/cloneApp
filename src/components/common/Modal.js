@@ -21,7 +21,7 @@ const CustomModalView = styled.View`
 const HeaderView = styled.View`
   width: 100%
   height: ${props => (props.close ? widthPercentageToDP(61) : 0)}
-  padding-top: ${widthPercentageToDP(19)}
+  padding-top: ${widthPercentageToDP(40)}
   padding-bottom: ${widthPercentageToDP(14)}
   padding-right: ${widthPercentageToDP(19)}
   align-items: flex-end
@@ -35,6 +35,7 @@ const CloseIcon = styled.TouchableOpacity`
 `;
 const BodyView = styled.View`
   flex: 1;
+  padding-top: ${widthPercentageToDP(20)};
 `;
 const FooterView = styled.TouchableOpacity`
   width: 100%
@@ -73,8 +74,8 @@ export const CustomModal = ({
   return (
     <Modal style={{margin: 0}} animationType={animate} isVisible={visible}>
       <CustomModalView width={width} height={height}>
-        <HeaderView>
-          {close ? (
+        {close ? (
+          <HeaderView>
             <CloseIcon onPress={closeHandler}>
               <FastImage
                 style={{
@@ -84,8 +85,8 @@ export const CustomModal = ({
                 source={require('../../../assets/image/common/close.png')}
               />
             </CloseIcon>
-          ) : null}
-        </HeaderView>
+          </HeaderView>
+        ) : null}
         <BodyView>{children}</BodyView>
         {!renderFooter ? (
           <FooterView disabled={footerDisabled} onPress={footerHandler}>
