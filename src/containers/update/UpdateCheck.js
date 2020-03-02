@@ -24,8 +24,6 @@ const UpdateCheck = props => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    CommonActions.handleLoading(true);
-
     const promise1 = CommonActions.locationInit();
 
     Promise.all([promise1]).then(async () => {
@@ -49,16 +47,19 @@ const UpdateCheck = props => {
           {enableHighAccuracy: false, timeout: 10000, maximumAge: 10000},
         );
         let timeout = setInterval(async () => {
-          await CommonActions.handleLoading(false);
+          await CommonActions.handleFirstScreenLoading(false);
           clearInterval(timeout);
-        }, 1000);
+        }, 2000);
 
-        await setAlertModal(true);
+        // await setAlertModal(true);
       } else {
         setLatitude(lat);
         setLongitude(long);
 
-        CommonActions.handleLoading(false);
+        let timeout = setInterval(async () => {
+          await CommonActions.handleFirstScreenLoading(false);
+          clearInterval(timeout);
+        }, 2000);
       }
     });
   }, []);
@@ -131,6 +132,7 @@ const UpdateCheck = props => {
 };
 
 export default connect(state => ({
+  firstScreenLoading: state.common.firstScreenLoading,
   loading: state.common.loading,
   latitude: state.common.latitude,
   longitude: state.common.longitude,

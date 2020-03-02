@@ -17,6 +17,7 @@ import {
 } from '../../../utils/util';
 
 const COMMON_INIT = 'common/COMMON_INIT';
+const COMMON_FIRST_SCREEN_LOADING = 'common/COMMON_FIRST_SCREEN_LOADING';
 const COMMON_LOADING = 'common/COMMON_LOADING';
 // const COMMON_APP_VERSION = "common/COMMON_APP_VERSION";
 const LOCATION_LATITUDE = 'common/LOCATION_LATITUDE';
@@ -26,6 +27,9 @@ const HOSPITAL_LIST = 'common/HOSPITAL_LIST';
 const HOSPITAL_DETAIL = 'common/HOSPITAL_DETAIL';
 
 export const commonInit = createAction(COMMON_INIT);
+export const firstScreenLoadingAction = createAction(
+  COMMON_FIRST_SCREEN_LOADING,
+);
 export const loadingAction = createAction(COMMON_LOADING);
 // const appVersionAction = createAction(COMMON_APP_VERSION);
 const locationLatitudeAction = createAction(LOCATION_LATITUDE);
@@ -35,6 +39,8 @@ const hospitalListAction = createAction(HOSPITAL_LIST);
 const hospitalDetailAction = createAction(HOSPITAL_DETAIL);
 
 const initState = {
+  // 앱 첫 실행 시, 보여짐.
+  firstScreenLoading: true,
   loading: false,
   appVersion: {},
 
@@ -46,6 +52,10 @@ const initState = {
   hospitalList: [],
   // 병원 상세 정보 불러오기
   hospital_detail: [],
+};
+
+export const handleFirstScreenLoading = bool => dispatch => {
+  dispatch(firstScreenLoadingAction(bool));
 };
 
 export const handleLoading = value => dispatch => {
@@ -147,6 +157,10 @@ export const getMyAddress = (Long, Lat) => async dispatch => {
 export default handleActions(
   {
     [COMMON_INIT]: (state, {payload}) => produce(state, draft => {}),
+    [COMMON_FIRST_SCREEN_LOADING]: (state, {payload}) =>
+      produce(state, draft => {
+        draft.firstScreenLoading = payload;
+      }),
     [COMMON_LOADING]: (state, {payload}) =>
       produce(state, draft => {
         draft.loading = payload;

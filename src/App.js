@@ -26,25 +26,16 @@ class App extends Component {
   constructor(props) {
     super(props);
     // SplashScreen.hide();
-
-    this.state = {
-      firstScreen: true,
-    };
-  }
-
-  async componentDidMount() {
-    let timeout = setInterval(() => {
-      this.setState({firstScreen: false});
-      clearInterval(timeout);
-    }, 2000);
   }
 
   render() {
-    const {loading} = this.props;
+    const {firstScreenLoading, loading} = this.props;
     return (
       <SafeAreaView style={styles.container}>
         <Modal
-          isVisible={this.state.firstScreen}
+          isVisible={firstScreenLoading}
+          animationIn={'fadeIn'}
+          animationOut={'fadeOut'}
           style={{
             margin: 0,
             justifyContent: 'center',
@@ -83,5 +74,6 @@ const styles = StyleSheet.create({
 });
 
 export default connect(({common}) => ({
+  firstScreenLoading: common.firstScreenLoading,
   loading: common.loading,
 }))(App);
