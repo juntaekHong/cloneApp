@@ -21,6 +21,7 @@ const COMMON_LOADING = 'common/COMMON_LOADING';
 // const COMMON_APP_VERSION = "common/COMMON_APP_VERSION";
 const LOCATION_LATITUDE = 'common/LOCATION_LATITUDE';
 const LOCATION_LONGITUDE = 'common/LOCATION_LONGITUDE';
+const ADDRESS = 'common/ADDRESS';
 const HOSPITAL_LIST = 'common/HOSPITAL_LIST';
 const HOSPITAL_DETAIL = 'common/HOSPITAL_DETAIL';
 
@@ -29,6 +30,7 @@ export const loadingAction = createAction(COMMON_LOADING);
 // const appVersionAction = createAction(COMMON_APP_VERSION);
 const locationLatitudeAction = createAction(LOCATION_LATITUDE);
 const locationLongitudeAction = createAction(LOCATION_LONGITUDE);
+const addressAction = createAction(ADDRESS);
 const hospitalListAction = createAction(HOSPITAL_LIST);
 const hospitalDetailAction = createAction(HOSPITAL_DETAIL);
 
@@ -39,6 +41,7 @@ const initState = {
   // 내 위치 설정
   latitude: null,
   longitude: null,
+  address: null,
   // 병원 리스트 불러오기
   hospitalList: [],
   // 병원 상세 정보 불러오기
@@ -124,6 +127,21 @@ export const getHospitalDetail = hpid => async dispatch => {
   }
 };
 
+// 좌표 주소 변환
+export const getMyAddress = (Long, Lat) => async dispatch => {
+  try {
+    const jsonData = await axios.get(
+      `${config.toAddress_url}?x=${Long}&y=${Lat}&output=json&epsg=epsg:4326&apiKey=${config.toAddress_ServiceKey}`,
+    );
+    await dispatch(addressAction(jsonData.data.NEW_JUSO));
+
+    console.log(jsonData.data.NEW_JUSO);
+  } catch (e) {
+    // 내 도로명 주소 공공 api 요청 실패 => 서버 연동 실패
+    await dispatch(addressAction('error'));
+  }
+};
+
 export default handleActions(
   {
     [COMMON_INIT]: (state, {payload}) => produce(state, draft => {}),
@@ -142,6 +160,10 @@ export default handleActions(
     [LOCATION_LONGITUDE]: (state, {payload}) =>
       produce(state, draft => {
         draft.longitude = payload;
+      }),
+    [ADDRESS]: (state, {payload}) =>
+      produce(state, draft => {
+        draft.address = payload;
       }),
     [HOSPITAL_LIST]: (state, {payload}) =>
       produce(state, draft => {

@@ -59,7 +59,7 @@ const HospitalList = props => {
         }}
       /> */}
       <CustomTopView
-        settingLocation={'좌표 주소 변환 예정'}
+        settingLocation={props.address}
         height={55}
         navigation={props.navigation}
         justifyContent={true}
@@ -71,5 +71,6 @@ const HospitalList = props => {
 };
 
 export default connect(state => ({
+  address: state.common.address,
   hospitalList: state.common.hospitalList,
 }))(HospitalList);

@@ -31,12 +31,17 @@ const config = {
   // androidStore: {
   //   packageName: "com.cloneApp"
   // },
+
+  // 병원 리스트 관련 공공 api
   hospital_url:
     'http://apis.data.go.kr/B552657/HsptlAsembySearchService/getHsptlMdcncLcinfoInqire',
   hospital_detail_url:
     'http://apis.data.go.kr/B552657/HsptlAsembySearchService/getHsptlBassInfoInqire',
   hospital_ServiceKey:
     'I2F%2B1Oce6drCgGSm33cvy%2F3uLnHQ4BY46ALKDYUbKqPqslTOBJTUzx1yH%2FPt%2FsnttC0mZeVuTudJWDJ70xLCnw%3D%3D',
+  // 좌표 주소 변환 공공 api
+  toAddress_url: 'http://apis.vworld.kr/coord2new.do',
+  toAddress_ServiceKey: '597B78FF-588A-39E2-9559-6E64981C808F',
   signDataKey: ['token', 'userId', 'pass_locking', 'lock_pass'],
 };
 

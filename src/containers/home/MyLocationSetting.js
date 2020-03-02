@@ -9,7 +9,7 @@ import {widthPercentageToDP} from '../../utils/util';
 import MapView, {Marker} from 'react-native-maps';
 
 const Label = Styled.Text`
-    font-size: 24px;
+    font-size: ${widthPercentageToDP(15)};
 `;
 
 const MyLocationSetting = props => {
@@ -54,6 +54,7 @@ const MyLocationSetting = props => {
               />
             </MapView>
           </View>
+          <Label>Address: {props.address}</Label>
           <Label>Latitude: {parseFloat(props.latitude)}</Label>
           <Label>longtiude: {parseFloat(props.longitude)}</Label>
         </>
@@ -65,6 +66,7 @@ const MyLocationSetting = props => {
 };
 
 export default connect(state => ({
+  address: state.common.address,
   latitude: state.common.latitude,
   longitude: state.common.longitude,
   hospitalList: state.common.hospitalList,

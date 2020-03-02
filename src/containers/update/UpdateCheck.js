@@ -117,7 +117,8 @@ const UpdateCheck = props => {
 
             await CommonActions.loadingAction(true);
             const promise1 = CommonActions.getHospitalList(long, lat, 500);
-            Promise.all([promise1]).then(async () => {
+            const promise2 = CommonActions.getMyAddress(long, lat);
+            Promise.all([promise1, promise2]).then(async () => {
               props.navigation.navigate('home');
               await CommonActions.loadingAction(false);
             });

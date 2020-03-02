@@ -41,8 +41,8 @@ export const TopView = ({settingLocation, height, navigation}) => {
         }}>
         <NBGBText
           numberOfLines={1}
-          style={{width: widthPercentageToDP(150)}}
-          fontSize={19}>
+          style={{width: widthPercentageToDP(200)}}
+          fontSize={14}>
           {settingLocation}
         </NBGBText>
       </BTN>
@@ -82,8 +82,8 @@ export const CustomTopView = ({
           }}>
           <NBGBText
             numberOfLines={1}
-            style={{width: widthPercentageToDP(150)}}
-            fontSize={19}>
+            style={{width: widthPercentageToDP(200)}}
+            fontSize={14}>
             {settingLocation}
           </NBGBText>
         </BTN>

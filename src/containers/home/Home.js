@@ -49,7 +49,7 @@ const Home = props => {
   return (
     <TopContainerView>
       <TopView
-        settingLocation={'좌표 주소 변환 예정'}
+        settingLocation={props.address}
         height={55}
         navigation={props.navigation}
       />
@@ -94,4 +94,6 @@ const Home = props => {
   );
 };
 
-export default connect(state => ({}))(Home);
+export default connect(state => ({
+  address: state.common.address,
+}))(Home);
