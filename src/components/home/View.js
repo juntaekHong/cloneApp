@@ -228,7 +228,7 @@ export const Card = ({
         style={{width: widthPercentageToDP(250)}}>
         {hospitalName}
       </NBGBText>
-      <RatingView height={30}>
+      <RatingView height={30} justifyContent={'center'}>
         <RatingImg />
         <NBGText fontSize={20}>{rating}</NBGText>
       </RatingView>
@@ -247,7 +247,7 @@ export const Card = ({
         marginTop={7}
         style={{width: widthPercentageToDP(340)}}
         color={'black'}>
-        가까운 역: {dutyMapimg ? dutyMapimg : '정보없음'}
+        인근 위치: {dutyMapimg ? dutyMapimg : '정보없음'}
       </NBGText>
       <BTNView>
         <CustomBTN

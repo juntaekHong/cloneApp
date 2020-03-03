@@ -96,7 +96,9 @@ export const List = props => {
           radius={25}
         />
         <ContentDataView>
-          <NBGBText fontSize={16}>{item.dutyName}</NBGBText>
+          <NBGBText fontSize={14} numberOfLines={1}>
+            {item.dutyName}
+          </NBGBText>
           <EvaluationView marginTop={3} marginBottom={3}>
             <NBGBText fontSize={12}>전화번호: {item.dutyTel1}</NBGBText>
             <NBGLText>

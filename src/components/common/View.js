@@ -89,17 +89,21 @@ export const TopView = props => {
   );
 };
 
+// height: ${props =>
+//   props.height
+//     ? widthPercentageToDP(props.height)
+//     : widthPercentageToDP(100)};
 export const ListView = styled(BTN)`
   flex-direction: row;
   align-items: center;
   width: 100%;
-  height: ${props =>
-    props.height
-      ? widthPercentageToDP(props.height)
-      : widthPercentageToDP(100)};
   padding-left: ${props =>
     props.padding ? widthPercentageToDP(props.padding) : 0};
   padding-right: ${props =>
+    props.padding ? widthPercentageToDP(props.padding) : 0};
+  padding-top: ${props =>
+    props.padding ? widthPercentageToDP(props.padding) : 0};
+  padding-bottom: ${props =>
     props.padding ? widthPercentageToDP(props.padding) : 0};
   border-bottom-width: ${widthPercentageToDP(1)};
   border-bottom-color: #dbdbdb;
@@ -107,7 +111,6 @@ export const ListView = styled(BTN)`
 
 export const ContentDataView = styled.View`
   margin-left: ${widthPercentageToDP(10)};
-  height: ${widthPercentageToDP(70)};
 `;
 
 export const EvaluationView = styled(StandardView)`
