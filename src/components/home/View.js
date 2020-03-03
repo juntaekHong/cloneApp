@@ -291,3 +291,18 @@ export const Card = ({
     </CardView>
   );
 };
+
+const Bottom = styled(StandardView)`
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  background-color: transparent;
+`;
+
+export const BottomView = props => {
+  return (
+    <Bottom>
+      <Text>Test</Text>
+    </Bottom>
+  );
+};

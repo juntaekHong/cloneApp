@@ -25,6 +25,7 @@ const LOCATION_LONGITUDE = 'common/LOCATION_LONGITUDE';
 const ADDRESS = 'common/ADDRESS';
 const HOSPITAL_LIST = 'common/HOSPITAL_LIST';
 const HOSPITAL_DETAIL = 'common/HOSPITAL_DETAIL';
+const PAGE_INDEX = 'common/Page_INDEX';
 
 export const commonInit = createAction(COMMON_INIT);
 export const firstScreenLoadingAction = createAction(
@@ -37,6 +38,7 @@ const locationLongitudeAction = createAction(LOCATION_LONGITUDE);
 const addressAction = createAction(ADDRESS);
 const hospitalListAction = createAction(HOSPITAL_LIST);
 const hospitalDetailAction = createAction(HOSPITAL_DETAIL);
+const pageIndexAction = createAction(PAGE_INDEX);
 
 const initState = {
   // 앱 첫 실행 시, 보여짐.
@@ -52,6 +54,9 @@ const initState = {
   hospitalList: [],
   // 병원 상세 정보 불러오기
   hospital_detail: [],
+
+  // Test
+  page_index: 0,
 };
 
 export const handleFirstScreenLoading = bool => dispatch => {
@@ -60,6 +65,10 @@ export const handleFirstScreenLoading = bool => dispatch => {
 
 export const handleLoading = value => dispatch => {
   dispatch(loadingAction(value));
+};
+
+export const handlePageIndex = number => dispatch => {
+  dispatch(pageIndexAction(number));
 };
 
 // export const getAppVersion = () => async dispatch => {
@@ -190,6 +199,10 @@ export default handleActions(
     [HOSPITAL_DETAIL]: (state, {payload}) =>
       produce(state, draft => {
         draft.hospital_detail = payload;
+      }),
+    [PAGE_INDEX]: (state, {payload}) =>
+      produce(state, draft => {
+        draft.page_index = payload;
       }),
   },
   initState,

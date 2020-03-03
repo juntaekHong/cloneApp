@@ -11,7 +11,7 @@ import {
 import {connect} from 'react-redux';
 import {TopView, TopContainerView, BTN} from '../../components/common/View';
 import {NBGText, NBGBText} from '../../components/common/Text';
-import {Card} from '../../components/home/View';
+import {Card, BottomView} from '../../components/home/View';
 import {widthPercentageToDP} from '../../utils/util';
 import {UIActivityIndicator} from 'react-native-indicators';
 import {CustomModal} from '../../components/common/Modal';
@@ -20,18 +20,14 @@ import OfficeHours from '../hospitalDetail/OfficeHours';
 import TreatmentItem from '../hospitalDetail/TreatmentItem';
 import HospitalIntroduction from '../hospitalDetail/HospitalIntroduction';
 import {PagiNationTab} from '../../components/home/PagiNation';
+import {CommonActions} from '../../store/actionCreator';
 
 const HospitalDetail = props => {
   const [detailData, setDetailData] = useState(props.hospital_detail);
 
-  // 페이지네이션 탭 인덱스
-  const [paginationIndex, setPaginationIndex] = useState(0);
-
   const [NameEncoding, setNameEncoding] = useState();
   // 길찾기 클릭 시, 길찾기 모달(알림창) visible
   const [roadMapModal, setRoadMapModal] = useState(false);
-
-  const focus = useRef();
 
   // 병원 상세 데이터가 들어오면 네이버 길찾기에 대한 한글 인코딩 해주는 것.
   useEffect(() => {
@@ -39,8 +35,12 @@ const HospitalDetail = props => {
   }, [detailData]);
 
   useEffect(() => {
-    focus.current = paginationIndex;
-  }, [paginationIndex]);
+    return async () => {
+      await CommonActions.handlePageIndex(0);
+    };
+  }, []);
+
+  const swipe = useRef();
 
   const KakaoMapNaivgate = () => {
     Linking.openURL(
@@ -100,6 +100,10 @@ const HospitalDetail = props => {
     });
   };
 
+  const changPageIndex = async index => {
+    await CommonActions.handlePageIndex(index);
+  };
+
   return (
     <TopContainerView>
       <CustomModal
@@ -157,48 +161,59 @@ const HospitalDetail = props => {
         // 추후 검색기능 활성화?
         searchBtn={false}
       />
-      {/* <ScrollView> */}
-      <Card
-        hospitalName={detailData.dutyName}
-        rating={4.0}
-        reviewCount={50}
-        dutyAddr={detailData.dutyAddr}
-        dutyMapimg={detailData.dutyMapimg}
-        phoneNumber={detailData.dutyTel1}
-        isSrap={false}
-        shared={() => {}}
-        naviModal={() => {
-          setRoadMapModal(true);
-        }}
-      />
-      <PagiNationTab
-        ref={focus}
-        index={paginationIndex}
-        page1={{title: '진료시간 정보', index: 0}}
-        page2={{title: '진료항목 정보', index: 1}}
-        page3={{title: '병원소개', index: 2}}
-        onPress={index => {
-          // 탭 클릭, 페이지게이션 버그로 현재는 임시로 클릭 막아놓음.
-        }}
-      />
-      <Swiper
-        index={paginationIndex}
-        onIndexChanged={index => {
-          setPaginationIndex(index);
-        }}
-        showsButtons={true}
-        loop={false}
-        showsPagination={false}>
-        <OfficeHours />
-        <TreatmentItem />
-        <HospitalIntroduction />
-      </Swiper>
-
-      {/* </ScrollView> */}
+      <ScrollView>
+        <Card
+          hospitalName={detailData.dutyName}
+          rating={4.0}
+          reviewCount={50}
+          dutyAddr={detailData.dutyAddr}
+          dutyMapimg={detailData.dutyMapimg}
+          phoneNumber={detailData.dutyTel1}
+          isSrap={false}
+          shared={() => {}}
+          naviModal={() => {
+            setRoadMapModal(true);
+          }}
+        />
+        <PagiNationTab
+          index={props.page_index}
+          page1={{title: '진료시간 정보', index: 0}}
+          page2={{title: '진료항목 정보', index: 1}}
+          page3={{title: '병원소개', index: 2}}
+          onPress={async index => {
+            if (props.page_index !== index) {
+              await swipe.current.scrollBy(index - props.page_index);
+            }
+          }}
+        />
+        <View
+          style={{
+            flex: 1,
+            minHeight: widthPercentageToDP(340),
+          }}>
+          <Swiper
+            ref={swipe}
+            height={'100%'}
+            index={props.page_index}
+            onIndexChanged={async index => {
+              await changPageIndex(index);
+            }}
+            loop={false}
+            showsPagination={false}>
+            <OfficeHours />
+            <TreatmentItem />
+            <HospitalIntroduction />
+          </Swiper>
+        </View>
+      </ScrollView>
+      {/* 하단 고정 뷰(내비, 예약 등의 버튼이 올 예정) */}
+      {/* <BottomView /> */}
     </TopContainerView>
   );
 };
 
 export default connect(state => ({
   hospital_detail: state.common.hospital_detail,
+  // Test
+  page_index: state.common.page_index,
 }))(HospitalDetail);
