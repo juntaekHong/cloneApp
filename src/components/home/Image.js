@@ -15,7 +15,14 @@ export const SelectImg = () => {
 };
 
 const RatingImg = props => {
-  return <Img width={21} height={21} source={props.source} />;
+  return (
+    <Img
+      width={props.width ? props.width : 21}
+      height={props.height ? props.height : 21}
+      radius={props.borderRadius ? props.borderRadius : 0}
+      source={props.source}
+    />
+  );
 };
 
 export const RatingPullImg = () => {
@@ -36,13 +43,24 @@ export const RatingEmptyImg = () => {
   );
 };
 
-export const CallImg = () => {
+export const CallImg = props => {
   return (
     <Img
-      style={{marginRight: widthPercentageToDP(5)}}
-      width={15}
-      height={15}
+      width={props.width}
+      height={props.height}
+      radius={props.borderRadius}
       source={require('../../../assets/image/home/phone.png')}
+    />
+  );
+};
+
+export const TaxiImg = props => {
+  return (
+    <RatingImg
+      source={props.source}
+      borderRadius={props.borderRadius}
+      width={props.width}
+      height={props.height}
     />
   );
 };

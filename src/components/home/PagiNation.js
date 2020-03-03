@@ -14,45 +14,60 @@ const TabView = styled.View`
   width: 100%;
 `;
 
+const PagiNationBTN = styled(BTN)`
+  padding-bottom: ${widthPercentageToDP(10)};
+  border-bottom-color: ${props =>
+    props.index === props.page ? '#24a0fa' : '#dbdbdb'}
+  border-right-color: #dbdbdb;
+  border-right-width: ${widthPercentageToDP(1)};
+  border-bottom-width: ${widthPercentageToDP(3)};
+`;
+
 export const PagiNationTab = ({index, page1, page2, page3, onPress}) => {
   return (
     <TabView>
-      <BTN
+      <PagiNationBTN
+        index={index}
+        page={page1.index}
         onPress={() => {
           onPress(page1.index);
         }}>
         <NBGBText
           align={'center'}
           fontSize={15}
-          color={index === 0 ? '#259ffa' : 'black'}
+          color={index === 0 ? '#259ffa' : '#dbdbdb'}
           style={{width: widthPercentageToDP(375 / 3)}}>
           {page1.title}
         </NBGBText>
-      </BTN>
-      <BTN
+      </PagiNationBTN>
+      <PagiNationBTN
+        index={index}
+        page={page2.index}
         onPress={() => {
           onPress(page2.index);
         }}>
         <NBGBText
           align={'center'}
           fontSize={15}
-          color={index === 1 ? '#259ffa' : 'black'}
+          color={index === 1 ? '#259ffa' : '#dbdbdb'}
           style={{width: widthPercentageToDP(375 / 3)}}>
           {page2.title}
         </NBGBText>
-      </BTN>
-      <BTN
+      </PagiNationBTN>
+      <PagiNationBTN
+        index={index}
+        page={page3.index}
         onPress={() => {
           onPress(page3.index);
         }}>
         <NBGBText
           align={'center'}
           fontSize={15}
-          color={index === 2 ? '#259ffa' : 'black'}
+          color={index === 2 ? '#259ffa' : '#dbdbdb'}
           style={{width: widthPercentageToDP(375 / 3)}}>
           {page3.title}
         </NBGBText>
-      </BTN>
+      </PagiNationBTN>
     </TabView>
   );
 };

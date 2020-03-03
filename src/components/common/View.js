@@ -22,6 +22,8 @@ const TopContainer = styled.View`
   width: 100%;
   padding-left: ${widthPercentageToDP(7)};
   padding-right: ${widthPercentageToDP(14)};
+  margin-top: ${props =>
+    props.marginTop ? widthPercentageToDP(props.marginTop) : 0};
   margin-bottom: ${props =>
     props.marginBottom
       ? widthPercentageToDP(props.marginBottom)

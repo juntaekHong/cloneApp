@@ -55,7 +55,6 @@ const initState = {
   // 병원 상세 정보 불러오기
   hospital_detail: [],
 
-  // Test
   page_index: 0,
 };
 

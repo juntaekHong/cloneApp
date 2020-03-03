@@ -28,3 +28,9 @@ export const PhotoImg = ({source, width, height, radius}) => {
 export const StarImg = ({source, width, height}) => {
   return <Img source={source} width={width} height={height} />;
 };
+
+export const MapImg = ({source, width, height, borderRadius}) => {
+  return (
+    <Img source={source} width={width} height={height} radius={borderRadius} />
+  );
+};

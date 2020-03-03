@@ -168,12 +168,12 @@ const HospitalDetail = props => {
           reviewCount={50}
           dutyAddr={detailData.dutyAddr}
           dutyMapimg={detailData.dutyMapimg}
-          phoneNumber={detailData.dutyTel1}
+          // phoneNumber={detailData.dutyTel1}
           isSrap={false}
           shared={() => {}}
-          naviModal={() => {
-            setRoadMapModal(true);
-          }}
+          // naviModal={() => {
+          //   setRoadMapModal(true);
+          // }}
         />
         <PagiNationTab
           index={props.page_index}
@@ -206,14 +206,17 @@ const HospitalDetail = props => {
           </Swiper>
         </View>
       </ScrollView>
-      {/* 하단 고정 뷰(내비, 예약 등의 버튼이 올 예정) */}
-      {/* <BottomView /> */}
+      <BottomView
+        phoneNumber={detailData.dutyTel1}
+        naviModal={() => {
+          setRoadMapModal(true);
+        }}
+      />
     </TopContainerView>
   );
 };
 
 export default connect(state => ({
   hospital_detail: state.common.hospital_detail,
-  // Test
   page_index: state.common.page_index,
 }))(HospitalDetail);

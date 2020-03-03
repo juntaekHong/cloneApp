@@ -4,7 +4,7 @@ import React, {useCallback, useState, useEffect} from 'react';
 import {View, Text} from 'react-native';
 import styled from 'styled-components/native';
 import {StandardView, BTN} from '../common/View';
-import {BackImg, StarImg} from '../common/Image';
+import {BackImg, StarImg, MapImg} from '../common/Image';
 import {NBGBText, NBGText, NBGLText} from '../common/Text';
 import {widthPercentageToDP} from '../../utils/util';
 import colors from '../../configs/colors';
@@ -14,6 +14,7 @@ import {
   RatingHalfImg,
   RatingEmptyImg,
   CallImg,
+  TaxiImg,
 } from './Image';
 import Carousel from 'react-native-looped-carousel';
 import FastImage from 'react-native-fast-image';
@@ -173,7 +174,7 @@ const CustomBTN = styled(BTN)`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  width: ${widthPercentageToDP(355) / 4};
+  width: ${widthPercentageToDP(355) / 2};
 `;
 
 export const Card = ({
@@ -182,10 +183,10 @@ export const Card = ({
   reviewCount,
   dutyAddr,
   dutyMapimg,
-  phoneNumber,
+  // phoneNumber,
   isScrap,
   shared,
-  naviModal,
+  // naviModal,
 }) => {
   const [myScrap, setMyScrap] = useState(isScrap);
   // 현재 찜(스크랩) 수에서 내 찜에 따라 수 변경
@@ -249,13 +250,13 @@ export const Card = ({
         인근 위치: {dutyMapimg ? dutyMapimg : '정보없음'}
       </NBGText>
       <BTNView>
-        <CustomBTN
+        {/* <CustomBTN
           onPress={() => {
             Communications.phonecall(phoneNumber.replace(/-/gi, ''), false);
           }}>
           <CallImg style={{justifyContent: 'center'}} />
           <Text style={{justifyContent: 'center'}}>전화예약</Text>
-        </CustomBTN>
+        </CustomBTN> */}
         <CustomBTN
           onPress={() => {
             // 실제 서버 연동해야 함.
@@ -281,28 +282,76 @@ export const Card = ({
           <Text>공유</Text>
           {/* shared 기능 구현해야 됨*/}
         </CustomBTN>
-        <CustomBTN
+        {/* <CustomBTN
           onPress={() => {
             naviModal();
           }}>
           <Text>길찾기</Text>
-        </CustomBTN>
+        </CustomBTN> */}
       </BTNView>
     </CardView>
   );
 };
 
+// 하위 하단 고정 버튼 바 뷰
 const Bottom = styled(StandardView)`
+  flex-direction: row;
   position: absolute;
   right: 0;
   bottom: 0;
+  width: 100%;
   background-color: transparent;
 `;
 
-export const BottomView = props => {
+const BottomBtnView = styled(StandardView)`
+  width: ${widthPercentageToDP(375 / 3)};
+  margin-bottom: ${widthPercentageToDP(20)};
+  justify-content: center;
+  align-items: center;
+`;
+
+const BottomBTN = styled(BTN)`
+  width: ${widthPercentageToDP(60)};
+  height: ${widthPercentageToDP(60)};
+  justify-content: center;
+  align-items: center;
+  border-width: ${widthPercentageToDP(2)};
+  border-color: #f8f8f8;
+  border-radius: ${widthPercentageToDP(30)};
+`;
+
+export const BottomView = ({phoneNumber, naviModal}) => {
   return (
     <Bottom>
-      <Text>Test</Text>
+      <BottomBtnView>
+        <BottomBTN
+          onPress={() => {
+            Communications.phonecall(phoneNumber.replace(/-/gi, ''), false);
+          }}>
+          <CallImg width={17} height={17} />
+        </BottomBTN>
+      </BottomBtnView>
+      <BottomBtnView>
+        <BottomBTN onPress={() => {}}>
+          <TaxiImg
+            width={24}
+            height={24}
+            source={require('../../../assets/image/home/taxi.png')}
+          />
+        </BottomBTN>
+      </BottomBtnView>
+      <BottomBtnView>
+        <BottomBTN
+          onPress={() => {
+            naviModal();
+          }}>
+          <MapImg
+            width={24}
+            height={24}
+            source={require('../../../assets/image/common/map.png')}
+          />
+        </BottomBTN>
+      </BottomBtnView>
     </Bottom>
   );
 };

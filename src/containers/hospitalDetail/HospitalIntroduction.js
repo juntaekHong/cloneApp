@@ -4,7 +4,7 @@ import {TopContainerView} from '../../components/common/View';
 
 const HospitalIntroduction = props => {
   return (
-    <TopContainerView marginHorizontal={30}>
+    <TopContainerView marginTop={10}>
       <Text>병원 소개 페이지</Text>
     </TopContainerView>
   );

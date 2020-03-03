@@ -5,7 +5,7 @@ import {TopContainerView} from '../../components/common/View';
 
 const OfficeHours = props => {
   return (
-    <TopContainerView marginHorizontal={30}>
+    <TopContainerView marginTop={10}>
       <Text>진료시간 정보 페이지</Text>
     </TopContainerView>
   );
