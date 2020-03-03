@@ -9,6 +9,7 @@ import {BTN} from '../common/View';
 import {NBGBText} from '../common/Text';
 
 const TabView = styled.View`
+  margin-top: ${widthPercentageToDP(10)};
   flex-direction: row;
   width: 100%;
 `;

@@ -148,7 +148,6 @@ const dotStyle = {
 // 병원 상세페이지 카드형식 뷰 (임시 뷰)
 const CardView = styled(StandardView)`
   align-items: center;
-  height: ${widthPercentageToDP(250)};
   margin-horizontal: ${widthPercentageToDP(10)};
   padding-top: ${widthPercentageToDP(40)};
   margin-bottom: ${widthPercentageToDP(10)};
@@ -222,7 +221,7 @@ export const Card = ({
   return (
     <CardView>
       <NBGBText
-        fontSize={30}
+        fontSize={20}
         numberOfLines={2}
         align={'center'}
         style={{width: widthPercentageToDP(250)}}>
@@ -236,14 +235,14 @@ export const Card = ({
         최근 리뷰 {reviewCount}
       </NBGText>
       <NBGText
-        fontSize={15}
+        fontSize={13}
         marginTop={7}
         style={{width: widthPercentageToDP(340)}}
         color={'black'}>
         위치: {dutyAddr}
       </NBGText>
       <NBGText
-        fontSize={15}
+        fontSize={13}
         marginTop={7}
         style={{width: widthPercentageToDP(340)}}
         color={'black'}>
