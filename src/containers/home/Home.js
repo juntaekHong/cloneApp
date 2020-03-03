@@ -65,6 +65,7 @@ const Home = props => {
       <TopView
         settingLocation={props.address}
         height={55}
+        justifyContent={'center'}
         navigation={props.navigation}
       />
 

@@ -63,7 +63,6 @@ const HospitalList = props => {
         settingLocation={props.address}
         height={55}
         navigation={props.navigation}
-        justifyContent={true}
       />
       {/* <List data={data} navigation={props.navigation} /> */}
       <List data={data} navigation={props.navigation} />

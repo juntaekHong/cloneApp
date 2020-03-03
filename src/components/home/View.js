@@ -22,16 +22,22 @@ import Communications from 'react-native-communications';
 const LocationView = styled(StandardView)`
   flex-direction: row;
   align-items: center;
-  justify-content: ${props => (props.justifyContent ? 'flex-start' : 'center')};
+  justify-content: ${props =>
+    props.justifyContent ? props.justifyContent : 'flex-start'};
   width: 100%;
   height: ${props =>
     props.height ? widthPercentageToDP(props.height) : widthPercentageToDP(60)};
 `;
 
 // 내 위치 설정(카카오톡 API 사용)
-export const TopView = ({settingLocation, height, navigation}) => {
+export const TopView = ({
+  settingLocation,
+  height,
+  justifyContent,
+  navigation,
+}) => {
   return (
-    <LocationView height={height}>
+    <LocationView height={height} justifyContent={justifyContent}>
       <BTN
         style={{
           marginRight: widthPercentageToDP(5),
@@ -75,7 +81,7 @@ export const CustomTopView = ({
         />
       </BTN>
 
-      <StandardView style={{flexDirection: 'row'}}>
+      <StandardView style={{flexDirection: 'row', alignItems: 'center'}}>
         <BTN
           style={{marginRight: widthPercentageToDP(5)}}
           onPress={() => {
