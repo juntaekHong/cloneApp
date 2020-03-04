@@ -1,9 +1,9 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components/native';
 import {TouchableWithoutFeedback, Keyboard} from 'react-native';
 import {StandardView, BTN} from '../common/View';
 import {NBGBText, NBGText, NBGLText} from '../common/Text';
-import {widthPercentageToDP} from '../../utils/util';
+import {widthPercentageToDP, showMessage} from '../../utils/util';
 import colors from '../../configs/colors';
 import {SearchBtn} from './Button';
 
@@ -28,6 +28,17 @@ const Input = styled.TextInput`
 `;
 
 export const SearchInput = ({marginTop, fontSize}) => {
+  const [searchText, setSearchText] = useState('');
+
+  const submit = () => {
+    Keyboard.dismiss();
+
+    if (searchText === '') {
+      showMessage('검색어를 입력해주세요');
+    } else {
+    }
+  };
+
   return (
     <TouchableWithoutFeedback>
       <InputView marginTop={marginTop}>
@@ -37,14 +48,16 @@ export const SearchInput = ({marginTop, fontSize}) => {
           placeholder={'예) 병원동 12-3 또는 병원아파트'}
           placeholderTextColor={'gray'}
           returnKeyType={'search'}
+          onChangeText={text => setSearchText(text)}
+          value={searchText}
           onSubmitEditing={() => {
-            Keyboard.dismiss();
+            submit();
           }}
         />
         <SearchBtn
           marginLeft={10}
           onPress={() => {
-            Keyboard.dismiss();
+            submit();
           }}
         />
       </InputView>

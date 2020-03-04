@@ -77,22 +77,6 @@ const HospitalDetail = props => {
         '&appname=클론프로젝트',
     ).catch(() => {
       props.navigation.navigate('NaverMap', {
-        // uri:
-        //   'https://m.map.naver.com/directions/#/main//' +
-        //   NameEncoding +
-        //   ',' +
-        //   detailData.latitude +
-        //   ',' +
-        //   detailData.longitude +
-        //   ',,,false,34540408',
-        // uri:
-        //   'https://m.map.naver.com/directions/#/main//' +
-        //   NameEncoding +
-        //   ',' +
-        //   detailData.longitude +
-        //   ',' +
-        //   detailData.longitude +
-        //   ',,,false,34540408',
         uri:
           'https://m.map.naver.com/directions/#/poiSearch/destination/' +
           NameEncoding,

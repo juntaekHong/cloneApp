@@ -9,10 +9,6 @@ import {widthPercentageToDP} from '../../utils/util';
 import MapView, {Marker} from 'react-native-maps';
 import {SearchView} from '../../components/myLocationSetting/View';
 
-const Label = Styled.Text`
-    font-size: ${widthPercentageToDP(15)};
-`;
-
 const MyLocationSetting = props => {
   return (
     <TopContainerView>
@@ -27,7 +23,6 @@ const MyLocationSetting = props => {
           props.navigation.goBack(null);
         }}
       />
-      {/* 검색 뷰 작업중 */}
       <SearchView marginTop={10} />
     </TopContainerView>
   );
