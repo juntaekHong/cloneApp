@@ -1,15 +1,23 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useEffect, useRef, useState} from 'react';
 import Styled from 'styled-components/native';
-import {View, TouchableOpacity, Text} from 'react-native';
+import {View, TouchableOpacity, Text, ScrollView} from 'react-native';
 import {connect} from 'react-redux';
 import {TopContainerView, TopView} from '../../components/common/View';
 import {widthPercentageToDP} from '../../utils/util';
 // 내 위치 정보 확인
 import MapView, {Marker} from 'react-native-maps';
 import {SearchView} from '../../components/myLocationSetting/View';
+import {LocationActions} from '../../store/actionCreator';
 
 const MyLocationSetting = props => {
+  // 페이지 unMount되면, 검색 데이터 삭제
+  useEffect(() => {
+    return async () => {
+      await LocationActions.handleSearchAddressInit();
+    };
+  }, []);
+
   return (
     <TopContainerView>
       <TopView
@@ -24,7 +32,23 @@ const MyLocationSetting = props => {
         }}
       />
       <SearchView marginTop={10} />
-      {props.search_address !== [] ? <Text>Success</Text> : null}
+      <ScrollView>
+        {props.search_address !== null
+          ? props.search_address.map((item, index) => {
+              return (
+                <Text>
+                  {'검색 장소: ' +
+                    item.nameFull +
+                    '\n' +
+                    item.juso +
+                    '\n 도로명: ' +
+                    item.njuso +
+                    '\n\n'}
+                </Text>
+              );
+            })
+          : null}
+      </ScrollView>
     </TopContainerView>
   );
 };

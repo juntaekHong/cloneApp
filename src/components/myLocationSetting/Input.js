@@ -38,7 +38,7 @@ export const SearchInput = ({marginTop, fontSize}) => {
     if (searchText === '') {
       showMessage('검색어를 입력해주세요');
     } else {
-      await LocationActions.searchAddress('공간정보산업진흥원', 10, 1);
+      await LocationActions.searchAddress(searchText, 100, 1);
     }
   };
 

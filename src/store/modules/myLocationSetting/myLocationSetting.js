@@ -16,12 +16,19 @@ import {
   removeAllData,
 } from '../../../utils/util';
 
+const SEARCH_ADDRESS_INIT = 'myLocationSetting/SEARCH_ADDRESS_INIT';
 const SEARCH_ADDRESS = 'myLocationSetting/SEARCH_ADDRESS';
 
 export const searchAddressAction = createAction(SEARCH_ADDRESS);
+export const searchAddressInitAction = createAction(SEARCH_ADDRESS_INIT);
 
 const initState = {
-  search_address: [],
+  search_address: null,
+};
+
+// 검색했던 주소 데이터 삭제
+export const handleSearchAddressInit = () => dispatch => {
+  dispatch(searchAddressInitAction(null));
 };
 
 // 주소 검색
@@ -40,8 +47,8 @@ export const searchAddress = (place, count, page) => async dispatch => {
     //   `${config.searchAddress_url}category=juso&q=성남시 분당구 판교로 242&pageunit=10&output=json&pageindex=1&apiKey=${config.searchAddress_ServiceKey}`,
     // );
 
-    // await dispatch(searchAddressAction(jsonData));
-    console.log(jsonData);
+    await dispatch(searchAddressAction(jsonData.data.LIST));
+    console.log(jsonData.data.LIST);
   } catch (e) {
     // 주소 검색 공공 api 요청 실패 => 서버 연동 실패
     await dispatch(searchAddressAction([]));
@@ -50,6 +57,10 @@ export const searchAddress = (place, count, page) => async dispatch => {
 
 export default handleActions(
   {
+    [SEARCH_ADDRESS_INIT]: (state, {payload}) =>
+      produce(state, draft => {
+        draft.search_address = payload;
+      }),
     [SEARCH_ADDRESS]: (state, {payload}) =>
       produce(state, draft => {
         draft.search_address = payload;
