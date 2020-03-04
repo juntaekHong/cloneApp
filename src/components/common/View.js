@@ -11,6 +11,8 @@ export const TopContainerView = styled.SafeAreaView`
   background-color: white;
   margin-horizontal: ${props =>
     props.marginHorizontal ? widthPercentageToDP(props.marginHorizontal) : 0};
+  margin-bottom: ${props =>
+    props.marginBottom ? widthPercentageToDP(props.marginBottom) : 0};
 `;
 
 export const StandardView = styled.View``;

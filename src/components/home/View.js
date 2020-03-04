@@ -318,6 +318,7 @@ const BottomBTN = styled(BTN)`
   border-width: ${widthPercentageToDP(2)};
   border-color: #f8f8f8;
   border-radius: ${widthPercentageToDP(30)};
+  background-color: white;
 `;
 
 export const BottomView = ({phoneNumber, naviModal}) => {
