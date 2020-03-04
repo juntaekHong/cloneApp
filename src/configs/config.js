@@ -42,6 +42,9 @@ const config = {
   // 좌표 주소 변환 공공 api
   toAddress_url: 'http://apis.vworld.kr/coord2new.do',
   toAddress_ServiceKey: '597B78FF-588A-39E2-9559-6E64981C808F',
+  // 위치 설정 페이지 주소 검색 api
+  searchAddress_url: 'http://map.vworld.kr/search.do?',
+  searchAddress_ServiceKey: '1024C3D6-E691-3ADA-B8CD-8FF2406FC102',
   signDataKey: ['token', 'userId', 'pass_locking', 'lock_pass'],
 };
 
