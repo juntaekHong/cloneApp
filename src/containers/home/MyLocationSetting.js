@@ -7,6 +7,7 @@ import {TopContainerView, TopView} from '../../components/common/View';
 import {widthPercentageToDP} from '../../utils/util';
 // 내 위치 정보 확인
 import MapView, {Marker} from 'react-native-maps';
+import {SearchView} from '../../components/myLocationSetting/View';
 
 const Label = Styled.Text`
     font-size: ${widthPercentageToDP(15)};
@@ -17,50 +18,17 @@ const MyLocationSetting = props => {
     <TopContainerView>
       <TopView
         marginBottom={5}
-        title={'My Location Setting Page'}
+        title={'위치 설정'}
         backHandler={() => {
           props.navigation.goBack(null);
         }}
-        closeBtn={true}
+        closeBtn={false}
         closeHandler={() => {
           props.navigation.goBack(null);
         }}
       />
-      {/* 지도 범위 뷰 작업중 */}
-      <Text>위치 설정 페이지</Text>
-      {props.latitude && props.longitude ? (
-        <>
-          <View
-            style={{
-              width: '100%',
-              height: widthPercentageToDP(250),
-            }}>
-            <MapView
-              style={{
-                width: widthPercentageToDP(375),
-                height: widthPercentageToDP(207),
-              }}
-              initialRegion={{
-                latitude: parseFloat(props.latitude),
-                longitude: parseFloat(props.longitude),
-                latitudeDelta: 0.0121,
-                longitudeDelta: 0.0121,
-              }}>
-              <Marker
-                coordinate={{
-                  latitude: parseFloat(props.latitude),
-                  longitude: parseFloat(props.longitude),
-                }}
-              />
-            </MapView>
-          </View>
-          <Label>Address: {props.address}</Label>
-          <Label>Latitude: {parseFloat(props.latitude)}</Label>
-          <Label>longtiude: {parseFloat(props.longitude)}</Label>
-        </>
-      ) : (
-        <Label>Loading...</Label>
-      )}
+      {/* 검색 뷰 작업중 */}
+      <SearchView marginTop={10} />
     </TopContainerView>
   );
 };
