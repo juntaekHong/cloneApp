@@ -6,6 +6,7 @@ import {NBGBText, NBGText, NBGLText} from '../common/Text';
 import {widthPercentageToDP, showMessage} from '../../utils/util';
 import colors from '../../configs/colors';
 import {SearchBtn} from './Button';
+import {LocationActions} from '../../store/actionCreator';
 
 const InputView = styled(StandardView)`
   flex-direction: row;
@@ -30,12 +31,14 @@ const Input = styled.TextInput`
 export const SearchInput = ({marginTop, fontSize}) => {
   const [searchText, setSearchText] = useState('');
 
-  const submit = () => {
+  // 텍스트 검색 완료 클릭 시 호출
+  const submit = async () => {
     Keyboard.dismiss();
 
     if (searchText === '') {
       showMessage('검색어를 입력해주세요');
     } else {
+      await LocationActions.searchAddress('공간정보산업진흥원', 10, 1);
     }
   };
 

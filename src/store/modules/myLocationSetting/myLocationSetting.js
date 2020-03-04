@@ -25,11 +25,11 @@ const initState = {
 };
 
 // 주소 검색
-export const searchAddress = (Long, Lat) => async dispatch => {
+export const searchAddress = (place, count, page) => async dispatch => {
   try {
     // 장소 검색
     const jsonData = await axios.get(
-      `${config.searchAddress_url}category=poi&q=공간정보산업진흥원&pageunit=10&output=json&pageindex=1&apiKey=${config.searchAddress_ServiceKey}`,
+      `${config.searchAddress_url}category=poi&q=${place}&pageunit=${count}&output=json&pageindex=${page}&apiKey=${config.searchAddress_ServiceKey}`,
     );
     // // 지번 검색
     // const jsonData2 = await axios.get(
@@ -40,7 +40,8 @@ export const searchAddress = (Long, Lat) => async dispatch => {
     //   `${config.searchAddress_url}category=juso&q=성남시 분당구 판교로 242&pageunit=10&output=json&pageindex=1&apiKey=${config.searchAddress_ServiceKey}`,
     // );
 
-    await dispatch(searchAddressAction(jsonData));
+    // await dispatch(searchAddressAction(jsonData));
+    console.log(jsonData);
   } catch (e) {
     // 주소 검색 공공 api 요청 실패 => 서버 연동 실패
     await dispatch(searchAddressAction([]));

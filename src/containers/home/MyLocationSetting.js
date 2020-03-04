@@ -24,6 +24,7 @@ const MyLocationSetting = props => {
         }}
       />
       <SearchView marginTop={10} />
+      {props.search_address !== [] ? <Text>Success</Text> : null}
     </TopContainerView>
   );
 };
@@ -33,4 +34,7 @@ export default connect(state => ({
   latitude: state.common.latitude,
   longitude: state.common.longitude,
   hospitalList: state.common.hospitalList,
+
+  // Test
+  search_address: state.location.search_address,
 }))(MyLocationSetting);
