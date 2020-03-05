@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useEffect, useState, useRef} from 'react';
+import React, {useEffect, useState, useRef, useCallback} from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -53,8 +53,8 @@ const HospitalDetail = props => {
   // 스와이프 후, 자동 상향 스크롤
   const focusing = useRef();
 
-  const KakaoMapNaivgate = () => {
-    Linking.openURL(
+  const KakaoMapNaivgate = async () => {
+    await Linking.openURL(
       'daummaps://search?q=' +
         detailData.dutyName +
         '&p=' +
@@ -62,8 +62,8 @@ const HospitalDetail = props => {
         ',' +
         detailData.wgs84Lon +
         '',
-    ).catch(() => {
-      props.navigation.navigate('KakaoMap', {
+    ).catch(async () => {
+      await props.navigation.navigate('KakaoMap', {
         uri:
           'https://map.kakao.com/link/map/' +
           detailData.dutyName +
@@ -77,8 +77,8 @@ const HospitalDetail = props => {
   };
 
   // 네이버 지도 앱 or 웹으로 길찾기 기능
-  const NaverMapNavigate = () => {
-    Linking.openURL(
+  const NaverMapNavigate = async () => {
+    await Linking.openURL(
       'nmap://place?lat=' +
         detailData.wgs84Lat +
         '&lng=' +
@@ -86,8 +86,8 @@ const HospitalDetail = props => {
         '&name=' +
         detailData.dutyName +
         '&appname=클론프로젝트',
-    ).catch(() => {
-      props.navigation.navigate('NaverMap', {
+    ).catch(async () => {
+      await props.navigation.navigate('NaverMap', {
         uri:
           'https://m.map.naver.com/directions/#/poiSearch/destination/' +
           NameEncoding,
@@ -96,20 +96,20 @@ const HospitalDetail = props => {
   };
 
   // 카카오택시 앱 열기
-  const KakaoTaxi = () => {
-    Linking.openURL('kakaotaxi://').catch(() => {
-      setTaxiModal(true);
+  const KakaoTaxi = useCallback(async () => {
+    await Linking.openURL('kakaotaxi://').catch(async () => {
+      await setTaxiModal(true);
     });
-  };
+  }, []);
 
-  const openStore = () => {
+  const openStore = useCallback(async () => {
     Platform.OS === 'android'
-      ? Linking.openURL(
+      ? await Linking.openURL(
           'https://play.google.com/store/apps/details?id=com.kakao.taxi',
         ).catch(() => {
           // 플레이 스토어 열기 실패 시
         })
-      : Linking.openURL(
+      : await Linking.openURL(
           // 앱 스토어 테스트 불가. 일단, 모바일 웹페이지로 연결
           'https://apps.apple.com/kr/app/카카오-t/id981110422',
           // 밑에는 앱스토어 url 임.
@@ -117,7 +117,7 @@ const HospitalDetail = props => {
         ).catch(() => {
           // 앱 스토어 열기 실패 시
         });
-  };
+  }, []);
 
   const changPageIndex = async index => {
     await CommonActions.handlePageIndex(index);
