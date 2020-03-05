@@ -139,7 +139,7 @@ const HospitalDetail = props => {
         marginBottom={5}
         title={detailData.dutyName}
         backHandler={() => {
-          props.navigation.goBack();
+          props.navigation.goBack(null);
         }}
         closeBtn={false}
         // 추후 검색기능 활성화?

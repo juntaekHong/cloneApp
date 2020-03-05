@@ -1,9 +1,9 @@
 import {createStackNavigator} from 'react-navigation-stack';
-import MyLocationSetting from '../../containers/home/MyLocationSetting';
+import HospitalDetail from '../../containers/home/HospitalDetail';
 
 const HomeStack_noTab = createStackNavigator(
   {
-    MyLocationSetting: {screen: MyLocationSetting},
+    HospitalDetail: {screen: HospitalDetail},
   },
   {
     defaultNavigationOptions: {

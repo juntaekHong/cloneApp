@@ -163,7 +163,6 @@ const RatingView = styled(LocationView)`
 `;
 
 const BTNView = styled(StandardView)`
-  width: 100%;
   height: ${widthPercentageToDP(60)};
   flex-direction: row;
   padding-horizontal: ${widthPercentageToDP(7)};
