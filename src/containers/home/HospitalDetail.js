@@ -252,11 +252,17 @@ const HospitalDetail = props => {
             onIndexChanged={async index => {
               await changPageIndex(index);
 
-              await focusing.current.scrollTo(
-                Platform.OS === 'android'
-                  ? widthPercentageToDP(230)
-                  : widthPercentageToDP(240),
-              );
+              Platform.OS === 'ios'
+                ? await focusing.current.scrollTo({
+                    x: 0,
+                    y: widthPercentageToDP(230),
+                    animated: true,
+                  })
+                : await focusing.current.scrollTo({
+                    x: 0,
+                    y: widthPercentageToDP(260),
+                    animated: true,
+                  });
             }}
             loop={false}
             showsPagination={false}>
