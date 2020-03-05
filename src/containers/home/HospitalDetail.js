@@ -119,9 +119,14 @@ const HospitalDetail = props => {
         });
   }, []);
 
-  const changPageIndex = async index => {
+  const changPageIndex = useCallback(async index => {
     await CommonActions.handlePageIndex(index);
-  };
+    await focusing.current.scrollTo({
+      x: 0,
+      y: widthPercentageToDP(290),
+      animated: true,
+    });
+  }, []);
 
   return (
     <TopContainerView>
@@ -134,17 +139,17 @@ const HospitalDetail = props => {
           <View style={{marginLeft: widthPercentageToDP(20)}}>
             <NBGBText fontSize={20}>길찾기 선택</NBGBText>
             <BTN
-              onPress={() => {
-                setRoadMapModal(false);
-                KakaoMapNaivgate();
+              onPress={async () => {
+                await setRoadMapModal(false);
+                await KakaoMapNaivgate();
               }}
               style={{marginTop: widthPercentageToDP(30)}}>
               <NBGText fontSize={17}>카카오맵으로 길찾기</NBGText>
             </BTN>
             <BTN
-              onPress={() => {
-                setRoadMapModal(false);
-                NaverMapNavigate();
+              onPress={async () => {
+                await setRoadMapModal(false);
+                await NaverMapNavigate();
               }}
               style={{
                 marginTop: widthPercentageToDP(30),
@@ -162,8 +167,8 @@ const HospitalDetail = props => {
                 justifyContent: 'flex-end',
                 alignItems: 'flex-end',
               }}
-              onPress={() => {
-                setRoadMapModal(false);
+              onPress={async () => {
+                await setRoadMapModal(false);
               }}>
               <NBGText fontSize={15}>취소</NBGText>
             </BTN>
@@ -240,11 +245,11 @@ const HospitalDetail = props => {
           dutyMapimg={detailData.dutyMapimg}
           isSrap={false}
           phoneNumber={detailData.dutyTel1}
-          naviModal={() => {
-            setRoadMapModal(true);
+          naviModal={async () => {
+            await setRoadMapModal(true);
           }}
-          taxiModal={() => {
-            KakaoTaxi();
+          taxiModal={async () => {
+            await KakaoTaxi();
           }}
         />
         <PagiNationTab
@@ -269,12 +274,6 @@ const HospitalDetail = props => {
             index={props.page_index}
             onIndexChanged={async index => {
               await changPageIndex(index);
-
-              await focusing.current.scrollTo({
-                x: 0,
-                y: widthPercentageToDP(290),
-                animated: true,
-              });
             }}
             loop={false}
             showsPagination={false}>
