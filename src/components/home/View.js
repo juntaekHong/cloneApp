@@ -173,7 +173,7 @@ const CustomBTN = styled(BTN)`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  width: ${widthPercentageToDP(355) / 3};
+  width: ${widthPercentageToDP(355) / 4};
 `;
 
 export const Card = ({
@@ -185,7 +185,7 @@ export const Card = ({
   phoneNumber,
   isScrap,
   naviModal,
-  // taxiModal,
+  taxiModal,
 }) => {
   const [myScrap, setMyScrap] = useState(isScrap);
   // 현재 찜(스크랩) 수에서 내 찜에 따라 수 변경
@@ -273,7 +273,7 @@ export const Card = ({
           }}>
           <CallImg width={17} height={17} style={{justifyContent: 'center'}} />
         </CustomBTN>
-        {/* <CustomBTN
+        <CustomBTN
           onPress={() => {
             taxiModal();
           }}>
@@ -282,7 +282,7 @@ export const Card = ({
             height={21}
             source={require('../../../assets/image/home/taxi.png')}
           />
-        </CustomBTN> */}
+        </CustomBTN>
         <CustomBTN
           onPress={() => {
             naviModal();

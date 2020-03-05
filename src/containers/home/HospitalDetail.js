@@ -34,7 +34,7 @@ const HospitalDetail = props => {
   // 길찾기 클릭 시, 길찾기 모달(알림창) visible
   const [roadMapModal, setRoadMapModal] = useState(false);
   // 택시 모달
-  // const [taxiModal, setTaxiModal] = useState(false);
+  const [taxiModal, setTaxiModal] = useState(false);
 
   // 병원 상세 데이터가 들어오면 네이버 길찾기에 대한 한글 인코딩 해주는 것.
   useEffect(() => {
@@ -95,12 +95,29 @@ const HospitalDetail = props => {
     });
   };
 
-  // 네이버 지도 앱 or 웹으로 길찾기 기능
-  // const KakaoTaxi = () => {
-  //   Linking.openURL('kakaotaxi://').catch(() => {
-  //     setTaxiModal(true);
-  //   });
-  // };
+  // 카카오택시 앱 열기
+  const KakaoTaxi = () => {
+    Linking.openURL('kakaotaxi://').catch(() => {
+      setTaxiModal(true);
+    });
+  };
+
+  const openStore = () => {
+    Platform.OS === 'android'
+      ? Linking.openURL(
+          'https://play.google.com/store/apps/details?id=com.kakao.taxi',
+        ).catch(() => {
+          // 플레이 스토어 열기 실패 시
+        })
+      : Linking.openURL(
+          // 앱 스토어 테스트 불가. 일단, 모바일 웹페이지로 연결
+          'https://apps.apple.com/kr/app/카카오-t/id981110422',
+          // 밑에는 앱스토어 url 임.
+          // http://itunes.apple.com/<country>/app/<app–name>/id<app-ID>?mt=8
+        ).catch(() => {
+          // 앱 스토어 열기 실패 시
+        });
+  };
 
   const changPageIndex = async index => {
     await CommonActions.handlePageIndex(index);
@@ -153,7 +170,7 @@ const HospitalDetail = props => {
           );
         }}
       />
-      {/* <CustomModal
+      <CustomModal
         width={300}
         height={200}
         visible={taxiModal}
@@ -181,8 +198,8 @@ const HospitalDetail = props => {
                   justifyContent: 'flex-end',
                   alignItems: 'flex-end',
                 }}
-                onPress={() => {
-                  setTaxiModal(false);
+                onPress={async () => {
+                  await setTaxiModal(false);
                 }}>
                 <NBGText fontSize={15}>취소</NBGText>
               </BTN>
@@ -193,15 +210,16 @@ const HospitalDetail = props => {
                   justifyContent: 'flex-end',
                   alignItems: 'flex-end',
                 }}
-                onPress={() => {
-                  setTaxiModal(false);
+                onPress={async () => {
+                  await setTaxiModal(false);
+                  await openStore();
                 }}>
                 <NBGText fontSize={15}>설치</NBGText>
               </BTN>
             </StandardView>
           );
         }}
-      /> */}
+      />
       <TopView
         marginBottom={5}
         title={detailData.dutyName}
@@ -225,9 +243,9 @@ const HospitalDetail = props => {
           naviModal={() => {
             setRoadMapModal(true);
           }}
-          // taxiModal={() => {
-          //   KakaoTaxi();
-          // }}
+          taxiModal={() => {
+            KakaoTaxi();
+          }}
         />
         <PagiNationTab
           index={props.page_index}
