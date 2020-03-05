@@ -104,10 +104,6 @@ export const TopView = props => {
   );
 };
 
-// height: ${props =>
-//   props.height
-//     ? widthPercentageToDP(props.height)
-//     : widthPercentageToDP(100)};
 export const ListView = styled(BTN)`
   flex-direction: row;
   align-items: center;

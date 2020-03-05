@@ -10,6 +10,7 @@ import {Text} from 'react-native';
 import {SearchInput} from './Input';
 import {AutoBtn} from './Button';
 
+// 하위 검색창 뷰
 const Search = styled(StandardView)`
   margin-horizontal: ${widthPercentageToDP(14)};
 `;
@@ -27,5 +28,22 @@ export const SearchView = ({marginTop}) => {
         }}
       />
     </Search>
+  );
+};
+
+// 검색결과 개수 뷰
+const ResultCount = styled(StandardView)`
+  justify-content: center;
+  height: ${widthPercentageToDP(30)};
+  background-color: #f8f8f8;
+  margin-top: ${widthPercentageToDP(20)};
+  padding-left: ${widthPercentageToDP(15)};
+`;
+
+export const ResultCountView = ({resultCount}) => {
+  return (
+    <ResultCount>
+      <NBGText fontSize={12}>검색결과 ({resultCount})</NBGText>
+    </ResultCount>
   );
 };

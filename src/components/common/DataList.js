@@ -47,39 +47,6 @@ const TimeFormat = time => {
 export const List = props => {
   const _renderItem = ({item, index}) => {
     return (
-      // <ListView
-      //   index={index}
-      //   padding={10}
-      //   onPress={async () => {
-      //     props.navigation.navigate('HospitalDetail', {
-      //       hospitalName: item.hospitalName,
-      //     });
-      //   }}>
-      //   <PhotoImg
-      //     source={require('../../../assets/image/navigation/homeblue.png')}
-      //     width={80}
-      //     height={80}
-      //     radius={25}
-      //   />
-      //   <ContentDataView>
-      //     <NBGBText fontSize={16}>{item.hospitalName}</NBGBText>
-      //     <EvaluationView marginTop={3} marginBottom={3}>
-      //       <StarImg
-      //         source={require('../../../assets/image/home/star-0.png')}
-      //         width={19}
-      //         height={19}
-      //       />
-      //       <NBGBText fontSize={12}>{item.rating}</NBGBText>
-      //       <NBGLText>({item.reviewCount}+)</NBGLText>
-      //     </EvaluationView>
-      //     <NBGText fontSize={13} color={'#b7b7b7'}>
-      //       장소: {item.location}
-      //     </NBGText>
-      //     <NBGText fontSize={13} color={'#b7b7b7'}>
-      //       소요시간: {item.time}
-      //     </NBGText>
-      //   </ContentDataView>
-      // </ListView>
       <ListView
         index={index}
         padding={10}

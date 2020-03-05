@@ -9,6 +9,7 @@ import {widthPercentageToDP} from '../../utils/util';
 import MapView, {Marker} from 'react-native-maps';
 import {SearchView} from '../../components/myLocationSetting/View';
 import {LocationActions} from '../../store/actionCreator';
+import {SearchResult} from '../../components/myLocationSetting/FlatList';
 
 const MyLocationSetting = props => {
   // 페이지 unMount되면, 검색 데이터 삭제
@@ -33,21 +34,7 @@ const MyLocationSetting = props => {
       />
       <SearchView marginTop={10} />
       <ScrollView>
-        {props.search_address !== null
-          ? props.search_address.map((item, index) => {
-              return (
-                <Text>
-                  {'검색 장소: ' +
-                    item.nameFull +
-                    '\n' +
-                    item.juso +
-                    '\n 도로명: ' +
-                    item.njuso +
-                    '\n\n'}
-                </Text>
-              );
-            })
-          : null}
+        <SearchResult data={props.search_address} />
       </ScrollView>
     </TopContainerView>
   );
