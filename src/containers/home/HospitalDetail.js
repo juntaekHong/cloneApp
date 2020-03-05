@@ -17,10 +17,10 @@ import {UIActivityIndicator} from 'react-native-indicators';
 import {CustomModal} from '../../components/common/Modal';
 import Swiper from 'react-native-swiper';
 import OfficeHours from '../hospitalDetail/OfficeHours';
-import TreatmentItem from '../hospitalDetail/TreatmentItem';
-import HospitalIntroduction from '../hospitalDetail/HospitalIntroduction';
 import {PagiNationTab} from '../../components/home/PagiNation';
 import {CommonActions} from '../../store/actionCreator';
+import HospitalMap from '../hospitalDetail/HospitalMap';
+import HospitalReview from '../hospitalDetail/HospitalReview';
 
 const HospitalDetail = props => {
   const [detailData, setDetailData] = useState(props.hospital_detail);
@@ -142,7 +142,6 @@ const HospitalDetail = props => {
           props.navigation.goBack(null);
         }}
         closeBtn={false}
-        // 추후 검색기능 활성화?
         searchBtn={false}
         sharedBtn={true}
         sharedHandler={() => {}}
@@ -163,8 +162,8 @@ const HospitalDetail = props => {
         <PagiNationTab
           index={props.page_index}
           page1={{title: '진료시간 정보', index: 0}}
-          page2={{title: '진료항목 정보', index: 1}}
-          page3={{title: '병원소개', index: 2}}
+          page2={{title: '길찾기', index: 1}}
+          page3={{title: '리뷰', index: 2}}
           onPress={async index => {
             if (props.page_index !== index) {
               await swipe.current.scrollBy(index - props.page_index);
@@ -186,8 +185,8 @@ const HospitalDetail = props => {
             loop={false}
             showsPagination={false}>
             <OfficeHours />
-            <TreatmentItem />
-            <HospitalIntroduction />
+            <HospitalMap />
+            <HospitalReview />
           </Swiper>
         </View>
       </ScrollView>
