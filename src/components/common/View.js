@@ -81,6 +81,17 @@ export const TopView = props => {
             source={require('../../../assets/image/home/search.png')}
           />
         </BTN>
+      ) : props.sharedBtn ? (
+        <BTN
+          onPress={() => {
+            props.sharedHandler();
+          }}>
+          <CloseImg
+            width={20}
+            height={20}
+            source={require('../../../assets/image/home/share.png')}
+          />
+        </BTN>
       ) : (
         <View
           style={{

@@ -174,7 +174,7 @@ const CustomBTN = styled(BTN)`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  width: ${widthPercentageToDP(355) / 2};
+  width: ${widthPercentageToDP(355) / 4};
 `;
 
 export const Card = ({
@@ -183,10 +183,9 @@ export const Card = ({
   reviewCount,
   dutyAddr,
   dutyMapimg,
-  // phoneNumber,
+  phoneNumber,
   isScrap,
-  shared,
-  // naviModal,
+  naviModal,
 }) => {
   const [myScrap, setMyScrap] = useState(isScrap);
   // 현재 찜(스크랩) 수에서 내 찜에 따라 수 변경
@@ -250,13 +249,6 @@ export const Card = ({
         인근 위치: {dutyMapimg ? dutyMapimg : '정보없음'}
       </NBGText>
       <BTNView>
-        {/* <CustomBTN
-          onPress={() => {
-            Communications.phonecall(phoneNumber.replace(/-/gi, ''), false);
-          }}>
-          <CallImg style={{justifyContent: 'center'}} />
-          <Text style={{justifyContent: 'center'}}>전화예약</Text>
-        </CustomBTN> */}
         <CustomBTN
           onPress={() => {
             // 실제 서버 연동해야 함.
@@ -273,21 +265,32 @@ export const Card = ({
             <RatingEmptyImg />
           )}
           {/* 찜 개수 임시 데이터 넣어둠(5) */}
-          <Text>찜 {5 + myScrapCount}</Text>
+          <NBGLText fontSize={13}>{5 + myScrapCount}</NBGLText>
         </CustomBTN>
         <CustomBTN
           onPress={() => {
-            shared();
+            Communications.phonecall(phoneNumber.replace(/-/gi, ''), false);
           }}>
-          <Text>공유</Text>
+          <CallImg width={17} height={17} style={{justifyContent: 'center'}} />
+        </CustomBTN>
+        <CustomBTN onPress={() => {}}>
+          <TaxiImg
+            width={21}
+            height={21}
+            source={require('../../../assets/image/home/taxi.png')}
+          />
           {/* shared 기능 구현해야 됨*/}
         </CustomBTN>
-        {/* <CustomBTN
+        <CustomBTN
           onPress={() => {
             naviModal();
           }}>
-          <Text>길찾기</Text>
-        </CustomBTN> */}
+          <MapImg
+            width={21}
+            height={21}
+            source={require('../../../assets/image/common/map.png')}
+          />
+        </CustomBTN>
       </BTNView>
     </CardView>
   );
@@ -299,12 +302,11 @@ const Bottom = styled(StandardView)`
   position: absolute;
   right: 0;
   bottom: 0;
-  width: 100%;
   background-color: transparent;
 `;
 
 const BottomBtnView = styled(StandardView)`
-  width: ${widthPercentageToDP(375 / 3)};
+  margin-right: ${widthPercentageToDP(25)};
   margin-bottom: ${widthPercentageToDP(20)};
   justify-content: center;
   align-items: center;
@@ -316,41 +318,20 @@ const BottomBTN = styled(BTN)`
   justify-content: center;
   align-items: center;
   border-width: ${widthPercentageToDP(2)};
-  border-color: #f8f8f8;
+  border-color: yellow;
   border-radius: ${widthPercentageToDP(30)};
-  background-color: white;
+  background-color: yellow;
 `;
 
-export const BottomView = ({phoneNumber, naviModal}) => {
+export const BottomView = ({reservation}) => {
   return (
     <Bottom>
       <BottomBtnView>
         <BottomBTN
           onPress={() => {
-            Communications.phonecall(phoneNumber.replace(/-/gi, ''), false);
+            reservation();
           }}>
-          <CallImg width={17} height={17} />
-        </BottomBTN>
-      </BottomBtnView>
-      <BottomBtnView>
-        <BottomBTN onPress={() => {}}>
-          <TaxiImg
-            width={24}
-            height={24}
-            source={require('../../../assets/image/home/taxi.png')}
-          />
-        </BottomBTN>
-      </BottomBtnView>
-      <BottomBtnView>
-        <BottomBTN
-          onPress={() => {
-            naviModal();
-          }}>
-          <MapImg
-            width={24}
-            height={24}
-            source={require('../../../assets/image/common/map.png')}
-          />
+          <NBGBText>예약</NBGBText>
         </BottomBTN>
       </BottomBtnView>
     </Bottom>

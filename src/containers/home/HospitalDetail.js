@@ -144,6 +144,8 @@ const HospitalDetail = props => {
         closeBtn={false}
         // 추후 검색기능 활성화?
         searchBtn={false}
+        sharedBtn={true}
+        sharedHandler={() => {}}
       />
       <ScrollView>
         <Card
@@ -152,12 +154,11 @@ const HospitalDetail = props => {
           reviewCount={50}
           dutyAddr={detailData.dutyAddr}
           dutyMapimg={detailData.dutyMapimg}
-          // phoneNumber={detailData.dutyTel1}
           isSrap={false}
-          shared={() => {}}
-          // naviModal={() => {
-          //   setRoadMapModal(true);
-          // }}
+          phoneNumber={detailData.dutyTel1}
+          naviModal={() => {
+            setRoadMapModal(true);
+          }}
         />
         <PagiNationTab
           index={props.page_index}
@@ -190,12 +191,8 @@ const HospitalDetail = props => {
           </Swiper>
         </View>
       </ScrollView>
-      <BottomView
-        phoneNumber={detailData.dutyTel1}
-        naviModal={() => {
-          setRoadMapModal(true);
-        }}
-      />
+      {/* 예약 페이지로 이동 */}
+      <BottomView reservation={() => {}} />
     </TopContainerView>
   );
 };
