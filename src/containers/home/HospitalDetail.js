@@ -111,7 +111,7 @@ const HospitalDetail = props => {
         })
       : await Linking.openURL(
           // 앱 스토어 테스트 불가. 일단, 모바일 웹페이지로 연결
-          'https://apps.apple.com/kr/app/카카오-t/id981110422',
+          'https://apps.apple.com/us/app/kakao-t/id981110422',
           // 밑에는 앱스토어 url 임.
           // http://itunes.apple.com/<country>/app/<app–name>/id<app-ID>?mt=8
         ).catch(() => {
@@ -121,6 +121,7 @@ const HospitalDetail = props => {
 
   const changPageIndex = useCallback(async index => {
     await CommonActions.handlePageIndex(index);
+
     await focusing.current.scrollTo({
       x: 0,
       y: widthPercentageToDP(290),
