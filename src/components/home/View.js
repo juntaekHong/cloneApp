@@ -224,7 +224,10 @@ export const Card = ({
         fontSize={20}
         numberOfLines={2}
         align={'center'}
-        style={{width: widthPercentageToDP(250)}}>
+        style={{
+          width: widthPercentageToDP(250),
+          height: widthPercentageToDP(46),
+        }}>
         {hospitalName}
       </NBGBText>
       <RatingView height={30} justifyContent={'center'}>
@@ -236,15 +239,22 @@ export const Card = ({
       </NBGText>
       <NBGText
         fontSize={13}
-        marginTop={7}
-        style={{width: widthPercentageToDP(340)}}
+        numberOfLines={2}
+        marginTop={15}
+        style={{
+          width: widthPercentageToDP(340),
+          height: widthPercentageToDP(33),
+        }}
         color={'black'}>
         위치: {dutyAddr}
       </NBGText>
       <NBGText
         fontSize={13}
-        marginTop={7}
-        style={{width: widthPercentageToDP(340)}}
+        numberOfLines={2}
+        style={{
+          width: widthPercentageToDP(340),
+          height: widthPercentageToDP(33),
+        }}
         color={'black'}>
         인근 위치: {dutyMapimg ? dutyMapimg : '정보없음'}
       </NBGText>
