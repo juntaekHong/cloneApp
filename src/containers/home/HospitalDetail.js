@@ -9,7 +9,12 @@ import {
   Linking,
 } from 'react-native';
 import {connect} from 'react-redux';
-import {TopView, TopContainerView, BTN} from '../../components/common/View';
+import {
+  TopView,
+  TopContainerView,
+  BTN,
+  StandardView,
+} from '../../components/common/View';
 import {NBGText, NBGBText} from '../../components/common/Text';
 import {Card, BottomView} from '../../components/home/View';
 import {widthPercentageToDP} from '../../utils/util';
@@ -28,6 +33,8 @@ const HospitalDetail = props => {
   const [NameEncoding, setNameEncoding] = useState();
   // 길찾기 클릭 시, 길찾기 모달(알림창) visible
   const [roadMapModal, setRoadMapModal] = useState(false);
+  // 택시 모달
+  // const [taxiModal, setTaxiModal] = useState(false);
 
   // 병원 상세 데이터가 들어오면 네이버 길찾기에 대한 한글 인코딩 해주는 것.
   useEffect(() => {
@@ -40,7 +47,11 @@ const HospitalDetail = props => {
     };
   }, []);
 
+  // 탭 버튼 스와이프 연동
   const swipe = useRef();
+
+  // 스와이프 후, 자동 상향 스크롤
+  const focusing = useRef();
 
   const KakaoMapNaivgate = () => {
     Linking.openURL(
@@ -83,6 +94,13 @@ const HospitalDetail = props => {
       });
     });
   };
+
+  // 네이버 지도 앱 or 웹으로 길찾기 기능
+  // const KakaoTaxi = () => {
+  //   Linking.openURL('kakaotaxi://').catch(() => {
+  //     setTaxiModal(true);
+  //   });
+  // };
 
   const changPageIndex = async index => {
     await CommonActions.handlePageIndex(index);
@@ -135,6 +153,55 @@ const HospitalDetail = props => {
           );
         }}
       />
+      {/* <CustomModal
+        width={300}
+        height={200}
+        visible={taxiModal}
+        close={false}
+        children={
+          <View style={{marginLeft: widthPercentageToDP(20)}}>
+            <NBGBText fontSize={15}>카카오택시 앱이 없습니다.</NBGBText>
+            <StandardView style={{marginTop: widthPercentageToDP(30)}}>
+              <NBGText fontSize={13}>
+                {
+                  '카카오택시 앱이\n설치되어 있지 않습니다.\n카카오택시앱을 설치 하시겠습니까?'
+                }
+              </NBGText>
+            </StandardView>
+          </View>
+        }
+        renderFooter={() => {
+          return (
+            <StandardView
+              style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
+              <BTN
+                style={{
+                  marginRight: widthPercentageToDP(30),
+                  marginBottom: widthPercentageToDP(20),
+                  justifyContent: 'flex-end',
+                  alignItems: 'flex-end',
+                }}
+                onPress={() => {
+                  setTaxiModal(false);
+                }}>
+                <NBGText fontSize={15}>취소</NBGText>
+              </BTN>
+              <BTN
+                style={{
+                  marginRight: widthPercentageToDP(30),
+                  marginBottom: widthPercentageToDP(20),
+                  justifyContent: 'flex-end',
+                  alignItems: 'flex-end',
+                }}
+                onPress={() => {
+                  setTaxiModal(false);
+                }}>
+                <NBGText fontSize={15}>설치</NBGText>
+              </BTN>
+            </StandardView>
+          );
+        }}
+      /> */}
       <TopView
         marginBottom={5}
         title={detailData.dutyName}
@@ -146,7 +213,7 @@ const HospitalDetail = props => {
         sharedBtn={true}
         sharedHandler={() => {}}
       />
-      <ScrollView>
+      <ScrollView ref={focusing}>
         <Card
           hospitalName={detailData.dutyName}
           rating={4.0}
@@ -158,6 +225,9 @@ const HospitalDetail = props => {
           naviModal={() => {
             setRoadMapModal(true);
           }}
+          // taxiModal={() => {
+          //   KakaoTaxi();
+          // }}
         />
         <PagiNationTab
           index={props.page_index}
@@ -181,6 +251,12 @@ const HospitalDetail = props => {
             index={props.page_index}
             onIndexChanged={async index => {
               await changPageIndex(index);
+
+              await focusing.current.scrollTo(
+                Platform.OS === 'android'
+                  ? widthPercentageToDP(230)
+                  : widthPercentageToDP(240),
+              );
             }}
             loop={false}
             showsPagination={false}>
@@ -199,4 +275,7 @@ const HospitalDetail = props => {
 export default connect(state => ({
   hospital_detail: state.common.hospital_detail,
   page_index: state.common.page_index,
+
+  latitude: state.common.latitude,
+  longitude: state.common.longitude,
 }))(HospitalDetail);
