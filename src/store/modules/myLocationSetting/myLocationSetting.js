@@ -18,12 +18,15 @@ import {
 
 const SEARCH_ADDRESS_INIT = 'myLocationSetting/SEARCH_ADDRESS_INIT';
 const SEARCH_ADDRESS = 'myLocationSetting/SEARCH_ADDRESS';
+const SEARCH_TOTAL = 'myLocationSetting/SEARCH_TOTAL';
 
 export const searchAddressAction = createAction(SEARCH_ADDRESS);
 export const searchAddressInitAction = createAction(SEARCH_ADDRESS_INIT);
+const searchTotalAction = createAction(SEARCH_TOTAL);
 
 const initState = {
-  search_address: null,
+  search_address: [],
+  search_total: null,
 };
 
 // 검색했던 주소 데이터 삭제
@@ -48,7 +51,10 @@ export const searchAddress = (place, count, page) => async dispatch => {
     // );
 
     await dispatch(searchAddressAction(jsonData.data.LIST));
-    console.log(jsonData.data.LIST);
+
+    await dispatch(searchTotalAction(jsonData.data.Poi));
+
+    console.log('123');
   } catch (e) {
     // 주소 검색 공공 api 요청 실패 => 서버 연동 실패
     await dispatch(searchAddressAction([]));
@@ -59,11 +65,18 @@ export default handleActions(
   {
     [SEARCH_ADDRESS_INIT]: (state, {payload}) =>
       produce(state, draft => {
-        draft.search_address = payload;
+        draft.search_address = [];
+        draft.search_total = null;
       }),
     [SEARCH_ADDRESS]: (state, {payload}) =>
       produce(state, draft => {
-        draft.search_address = payload;
+        payload.map(item => {
+          draft.search_address.push(item);
+        });
+      }),
+    [SEARCH_TOTAL]: (state, {payload}) =>
+      produce(state, draft => {
+        draft.search_total = payload;
       }),
   },
   initState,

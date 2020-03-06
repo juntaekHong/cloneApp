@@ -45,6 +45,10 @@ const config = {
   // 위치 설정 페이지 주소 검색 api
   searchAddress_url: 'http://map.vworld.kr/search.do?',
   searchAddress_ServiceKey: '1024C3D6-E691-3ADA-B8CD-8FF2406FC102',
+  // 병원 상세페이지 길찾기에 사용되는 api
+  googleMaps_url: 'https://maps.googleapis.com/maps/api/directions/json?',
+  googleMaps_ServiceKey: 'AIzaSyDgBRnXW2cAmBWKGd-EFo-P0cZ_zKKp5As',
+
   signDataKey: ['token', 'userId', 'pass_locking', 'lock_pass'],
 };
 

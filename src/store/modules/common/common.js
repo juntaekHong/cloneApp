@@ -162,6 +162,24 @@ export const getMyAddress = (Long, Lat) => async dispatch => {
   }
 };
 
+// 병원 상세 페이지에서 길찾기
+export const getDirection = (
+  startLat,
+  startLong,
+  endLat,
+  endLong,
+) => async dispatch => {
+  try {
+    const jsonData = await axios.get(
+      `${config.googleMaps_url}origin=${startLat},${startLong}&destination=${endLat},${endLong}&mode=transit&departure_time=now&key=${config.googleMaps_ServiceKey}`,
+    );
+
+    console.log(jsonData);
+  } catch (e) {
+    //
+  }
+};
+
 export default handleActions(
   {
     [COMMON_INIT]: (state, {payload}) => produce(state, draft => {}),

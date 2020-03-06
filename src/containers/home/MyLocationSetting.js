@@ -19,6 +19,8 @@ const MyLocationSetting = props => {
     };
   }, []);
 
+  const [searchText, setSearchText] = useState();
+
   return (
     <TopContainerView>
       <TopView
@@ -32,10 +34,12 @@ const MyLocationSetting = props => {
           props.navigation.goBack(null);
         }}
       />
-      <SearchView marginTop={10} />
-      <ScrollView>
-        <SearchResult data={props.search_address} />
-      </ScrollView>
+      <SearchView marginTop={10} search={value => setSearchText(value)} />
+      <SearchResult
+        data={props.search_address}
+        totalCount={props.search_total}
+        searchText={searchText}
+      />
     </TopContainerView>
   );
 };
@@ -48,4 +52,5 @@ export default connect(state => ({
 
   // Test
   search_address: state.location.search_address,
+  search_total: state.location.search_total,
 }))(MyLocationSetting);

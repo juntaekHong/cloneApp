@@ -15,11 +15,11 @@ const Search = styled(StandardView)`
   margin-horizontal: ${widthPercentageToDP(14)};
 `;
 
-export const SearchView = ({marginTop}) => {
+export const SearchView = ({marginTop, search}) => {
   return (
     <Search>
       <NBGBText fontSize={18}>지번, 도로명, 건물명을 입력하세요</NBGBText>
-      <SearchInput marginTop={marginTop} fontSize={13} />
+      <SearchInput marginTop={marginTop} fontSize={13} search={search} />
       <AutoBtn
         marginTop={10}
         title={'현 위치로 주소 설정'}

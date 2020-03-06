@@ -28,7 +28,7 @@ const Input = styled.TextInput`
     fontSize ? widthPercentageToDP(fontSize) : widthPercentageToDP(10)};
 `;
 
-export const SearchInput = ({marginTop, fontSize}) => {
+export const SearchInput = ({marginTop, fontSize, search}) => {
   const [searchText, setSearchText] = useState('');
 
   // 텍스트 검색 완료 클릭 시 호출
@@ -38,7 +38,10 @@ export const SearchInput = ({marginTop, fontSize}) => {
     if (searchText === '') {
       showMessage('검색어를 입력해주세요');
     } else {
-      await LocationActions.searchAddress(searchText, 100, 1);
+      await LocationActions.handleSearchAddressInit();
+
+      await search(searchText);
+      await LocationActions.searchAddress(searchText, 10, 0);
     }
   };
 

@@ -170,6 +170,12 @@ const HospitalDetail = props => {
               }}
               onPress={async () => {
                 await setRoadMapModal(false);
+                await CommonActions.getDirection(
+                  parseFloat(props.latitude),
+                  parseFloat(props.longitude),
+                  parseFloat(detailData.wgs84Lat),
+                  parseFloat(detailData.wgs84Lon),
+                );
               }}>
               <NBGText fontSize={15}>취소</NBGText>
             </BTN>
