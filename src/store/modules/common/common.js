@@ -181,7 +181,6 @@ export const getDirection = (
     );
 
     await dispatch(startEndAction(jsonData.data.routes));
-    console.log(jsonData);
   } catch (e) {
     //
   }

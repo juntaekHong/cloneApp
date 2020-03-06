@@ -119,3 +119,28 @@ export const LegView = ({legs}) => {
 
 // 간략정보 출발&도착 주소 뷰
 export const AddressView = styled(LegInnerView)``;
+
+// 하위 상세 길찾기 정보 뷰
+const DetailList = styled.FlatList`
+  flex-grow: 1;
+  width: 100%;
+  height: 100%;
+`;
+
+export const DetailView = ({detail}) => {
+  const _renderItem = (item, index) => {
+    return (
+      <StandardView>
+        <NBGBText>{item.travel_mode}</NBGBText>
+      </StandardView>
+    );
+  };
+
+  return (
+    <DetailList
+      data={detail}
+      keyExtractor={(item, index) => index.toString()}
+      renderItem={_renderItem}
+    />
+  );
+};
