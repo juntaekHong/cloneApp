@@ -8,48 +8,6 @@ import {LegView} from '../../components/homeDetail/View';
 
 // Test
 // const DATA = [
-//   {
-//     bounds: {
-//       northeast: {
-//         lat: 37.531635,
-//         lng: 127.0826174,
-//       },
-//       southwest: {
-//         lat: 37.5315283,
-//         lng: 127.080739,
-//       },
-//     },
-//     copyrights: 'Map data ©2020 SK telecom',
-//     legs: [
-//       {
-//         arrival_time: {
-//           text: '오전 10:19',
-//           time_zone: 'Asia/Seoul',
-//           value: 1583457589,
-//         },
-//         departure_time: {
-//           text: '오전 10:09',
-//           time_zone: 'Asia/Seoul',
-//           value: 1583456966,
-//         },
-//         distance: {
-//           text: '0.3 km',
-//           value: 279,
-//         },
-//         duration: {
-//           text: '10분',
-//           value: 623,
-//         },
-//         end_address: '대한민국 서울특별시 자양2동 국민은행자양지점앞',
-//         end_location: {
-//           lat: 37.531606,
-//           lng: 127.080739,
-//         },
-//         start_address: '대한민국 서울특별시 자양1동 국민은행자양지점앞',
-//         start_location: {
-//           lat: 37.531635,
-//           lng: 127.081353,
-//         },
 //         steps: [
 //           {
 //             distance: {

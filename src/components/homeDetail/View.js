@@ -1,5 +1,5 @@
 import React, {useCallback, useState, useEffect} from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, Platform} from 'react-native';
 import styled from 'styled-components/native';
 import {StandardView, BTN} from '../common/View';
 import {NBGBText, NBGText, NBGLText} from '../common/Text';
@@ -14,6 +14,7 @@ const Leg = styled(StandardView)`
   margin-right: ${widthPercentageToDP(10)};
   margin-top: ${widthPercentageToDP(10)};
   margin-bottom: ${widthPercentageToDP(10)};
+  align-items: center;
 `;
 
 const LegInnerView = styled(StandardView)`
@@ -40,12 +41,16 @@ export const LegView = ({legs}) => {
             height={32}
             source={require('../../../assets/image/home/start.png')}
           />
-          <LegText fontSize={12}>{legs.start}</LegText>
+          <LegText fontSize={12}>
+            {Platform.OS === 'android'
+              ? legs.start.substring(0, legs.start.length - 2) + '오전'
+              : legs.start}
+          </LegText>
         </LegInnerView>
         <LegInnerView marginRight={5}>
           <ConnectionImg
-            width={22}
-            height={22}
+            width={24}
+            height={24}
             source={require('../../../assets/image/home/connection.png')}
           />
         </LegInnerView>
@@ -64,8 +69,12 @@ export const LegView = ({legs}) => {
           />
         </LegInnerView>
         <LegInnerView marginRight={5} align={'center'}>
-          <LegText fontSize={10}>{legs.distance}</LegText>
-          <LegText fontSize={10}>소요시간: {legs.duration}</LegText>
+          <LegText fontSize={10}>{legs.distance + '\n'}</LegText>
+          <LegText fontSize={10}>
+            {Platform.OS === 'android'
+              ? legs.duration.substring(0, legs.start.length - 4) + '분'
+              : legs.duration}
+          </LegText>
         </LegInnerView>
         <LegInnerView marginRight={5}>
           <ConnectionImg
@@ -95,7 +104,11 @@ export const LegView = ({legs}) => {
             height={26}
             source={require('../../../assets/image/home/finish.png')}
           />
-          <LegText fontSize={12}>{legs.end}</LegText>
+          <LegText fontSize={12}>
+            {Platform.OS === 'android'
+              ? legs.end.substring(0, legs.end.length - 2) + '오후'
+              : legs.end}
+          </LegText>
         </LegInnerView>
       </LegInnerView>
     </Leg>
