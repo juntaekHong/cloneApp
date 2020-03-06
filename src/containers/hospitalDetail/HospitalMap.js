@@ -4,7 +4,7 @@ import {TopContainerView} from '../../components/common/View';
 import {CommonActions} from '../../store/actionCreator';
 import {NBGBText, NBGLText} from '../../components/common/Text';
 import {widthPercentageToDP} from '../../utils/util';
-import {LegView} from '../../components/homeDetail/View';
+import {LegView, AddressView} from '../../components/homeDetail/View';
 
 // Test
 // const DATA = [
@@ -18,40 +18,7 @@ import {LegView} from '../../components/homeDetail/View';
 //               text: '2분',
 //               value: 113,
 //             },
-//             end_location: {
-//               lat: 37.53154,
-//               lng: 127.082618,
-//             },
 //             html_instructions: '성자초등학교앞까지 도보',
-//             polyline: {
-//               points: 'wkadFmqsfWR}F',
-//             },
-//             start_location: {
-//               lat: 37.531635,
-//               lng: 127.081353,
-//             },
-//             steps: [
-//               {
-//                 distance: {
-//                   text: '0.1 km',
-//                   value: 112,
-//                 },
-//                 duration: {
-//                   text: '2분',
-//                   value: 113,
-//                 },
-//                 end_location: {
-//                   lat: 37.53154,
-//                   lng: 127.082618,
-//                 },
-//                 polyline: {
-//                   points: 'wkadFmqsfWR}F',
-//                 },
-//                 start_location: {
-//                   lat: 37.531635,
-//                   lng: 127.081353,
-//                 },
-//                 travel_mode: 'WALKING',
 //               },
 //             ],
 //             travel_mode: 'WALKING',
@@ -191,30 +158,60 @@ import {LegView} from '../../components/homeDetail/View';
 // ];
 
 const HospitalMap = ({start_end}) => {
+  // 간략 데이터
   const [legs, setLegs] = useState(null);
-  const [step, setStep] = useState();
+  // 상세 데이터
+  const [detailData, setDetailData] = useState();
+  // 유의사항 문구
   const warning =
     '도보 경로는 베타 서비스입니다. 주의 – 이 경로에는 인도 또는 보행 경로가 누락되었을 수도 있습니다';
 
   useEffect(() => {
     // 대략적인 시간 정보
     if (start_end !== null) {
-      const CustomData = start_end[0].legs[0];
+      // 간략 길찾기 데이터
+      const Abstract = start_end[0].legs[0];
 
       const aboutTimeInfo = new Object();
 
-      aboutTimeInfo.start = CustomData.departure_time.text;
-      aboutTimeInfo.distance = CustomData.distance.text;
-      aboutTimeInfo.duration = CustomData.duration.text;
-      aboutTimeInfo.end = CustomData.arrival_time.text;
+      aboutTimeInfo.start = Abstract.departure_time.text;
+      aboutTimeInfo.distance = Abstract.distance.text;
+      aboutTimeInfo.duration = Abstract.duration.text;
+      aboutTimeInfo.end = Abstract.arrival_time.text;
+      aboutTimeInfo.start_address = Abstract.start_address;
+      aboutTimeInfo.end_address = Abstract.end_address;
 
       setLegs(aboutTimeInfo);
+
+      // 상세 길찾기 데이터 - 도보&버스 구분
+      // Abstract.steps.map((item, index) => {
+      //   if (item.travel_mode === 'WALKING') {
+      //     console.log('WALKING', item.travel_mode + ' / ' + index);
+      //     // 도보 시 처리 코드
+      //   } else if (item.travel_mode === 'TRANSIT') {
+      //     console.log('TRANSIT', item.travel_mode + ' / ' + index);
+      //     // 버스 시 처리 코드
+      //   }
+      // });
+      setDetailData(Abstract.steps);
     }
   }, [start_end]);
 
   return (
     <TopContainerView marginTop={10}>
+      {/* 간략 길찾기 정보 뷰 */}
       <LegView legs={legs} />
+      {/* 상세 길찾기 정보 뷰*/}
+      {legs !== null ? (
+        <AddressView marginLeft={10} marginRight={10}>
+          <NBGBText marginTop={10} fontSize={12} numberOfLines={2}>
+            출발지: {legs.start_address}
+          </NBGBText>
+          <NBGBText marginTop={10} fontSize={12} numberOfLines={2}>
+            도착지: {legs.end_address}
+          </NBGBText>
+        </AddressView>
+      ) : null}
       <NBGLText
         marginTop={10}
         marginLeft={10}

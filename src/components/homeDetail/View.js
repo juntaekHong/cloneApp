@@ -20,6 +20,8 @@ const Leg = styled(StandardView)`
 const LegInnerView = styled(StandardView)`
   flex-direction: ${({flexDirection}) =>
     flexDirection ? flexDirection : 'column'};
+  margin-left: ${({marginLeft}) =>
+    marginLeft ? widthPercentageToDP(marginLeft) : 0};
   margin-right: ${({marginRight}) =>
     marginRight ? widthPercentageToDP(marginRight) : 0};
   align-items: ${({align}) => (align ? align : 'flex-start')};
@@ -114,3 +116,6 @@ export const LegView = ({legs}) => {
     </Leg>
   ) : null;
 };
+
+// 간략정보 출발&도착 주소 뷰
+export const AddressView = styled(LegInnerView)``;
