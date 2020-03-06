@@ -43,7 +43,7 @@ export const LegView = ({legs}) => {
           />
           <LegText fontSize={12}>
             {Platform.OS === 'android'
-              ? legs.start.substring(0, legs.start.length - 2) + '오전'
+              ? '오전 ' + legs.start.substring(0, legs.start.length - 2)
               : legs.start}
           </LegText>
         </LegInnerView>
@@ -106,7 +106,7 @@ export const LegView = ({legs}) => {
           />
           <LegText fontSize={12}>
             {Platform.OS === 'android'
-              ? legs.end.substring(0, legs.end.length - 2) + '오후'
+              ? '오후 ' + legs.end.substring(0, legs.end.length - 2)
               : legs.end}
           </LegText>
         </LegInnerView>
