@@ -14,10 +14,12 @@ const HospitalMap = ({start_end}) => {
   // 간략 데이터
   const [legs, setLegs] = useState(null);
   // 상세 데이터
-  const [detailData, setDetailData] = useState(null);
+  const [detailData, setDetailData] = useState();
   // 유의사항 문구
   const warning =
     '도보 경로는 베타 서비스입니다. 주의 – 이 경로에는 인도 또는 보행 경로가 누락되었을 수도 있습니다';
+
+  useEffect(() => {}, [detailData]);
 
   useEffect(() => {
     // 대략적인 시간 정보
@@ -43,27 +45,39 @@ const HospitalMap = ({start_end}) => {
         let detail = new Object();
         if (item.travel_mode === 'WALKING') {
           // 도보 시 처리 코드
+          detail.travel_mode = item.travel_mode;
           detail.distance = item.distance.text;
           detail.duration = item.duration.text;
           detail.html_instructions = item.html_instructions;
           detail.travel_mode = item.travel_mode;
 
-          list.push(detail);
+          // 문자열로 전달 => flatlist 에서 파싱
+          list.push(JSON.stringify(detail));
         } else if (item.travel_mode === 'TRANSIT') {
-          console.log('TRANSIT', item.travel_mode + ' / ' + index);
           // 버스 시 처리 코드
+          detail.travel_mode = item.travel_mode;
           // 거리, 소요 시간, xx행
-          // distance, duration, html_instructions,
+          detail.distance = item.distance.text;
+          detail.duration = item.duration.text;
+          detail.html_instructions = item.html_instructions;
           // 출발 정류장 이름, 출발 시간
-          // transit_details.departure_stop.name, transit_details.departure_time.text
+          detail.departure_stop_name = item.transit_details.departure_stop.name;
+          detail.departure_time_text = item.transit_details.departure_time.text;
           // 도착 정류장 이름, 도착 시간
-          // transit_details.arrival_stop.name, transit_details.arrival_time.text
+          detail.arrival_stop_name = item.transit_details.arrival_stop.name;
+          detail.arrival_time_text = item.transit_details.arrival_time.text;
           // 예상 대기시간, 정류장 개수
-          // transit_details.headway, transit_details.num_stops
+          detail.headway = item.transit_details.headway;
+          detail.num_stops = item.transit_details.num_stops;
           // 타야되는 버스명
-          // transit_details.line.short_name
+          detail.short_name = item.transit_details.line.short_name;
+
+          // 문자열로 전달 => flatlist 에서 파싱
+          list.push(JSON.stringify(detail));
         }
       });
+
+      setDetailData(list);
     }
   }, [start_end]);
 
@@ -82,7 +96,6 @@ const HospitalMap = ({start_end}) => {
         </AddressView>
       ) : null}
       {/* 상세 길찾기 정보 뷰*/}
-      <NBGLText>{detailData}</NBGLText>
       <DetailView detail={detailData} />
       <NBGLText
         marginTop={10}

@@ -128,10 +128,16 @@ const DetailList = styled.FlatList`
 `;
 
 export const DetailView = ({detail}) => {
-  const _renderItem = (item, index) => {
-    return (
+  const _renderItem = ({item, index}) => {
+    // 다시 파싱
+    let items = JSON.parse(item);
+    return items.travel_mode === 'WALKING' ? (
       <StandardView>
-        <NBGBText>{item.travel_mode}</NBGBText>
+        <NBGBText>{items.travel_mode}</NBGBText>
+      </StandardView>
+    ) : (
+      <StandardView>
+        <NBGBText>{items.travel_mode}</NBGBText>
       </StandardView>
     );
   };
