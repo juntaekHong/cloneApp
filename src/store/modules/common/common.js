@@ -26,6 +26,8 @@ const ADDRESS = 'common/ADDRESS';
 const HOSPITAL_LIST = 'common/HOSPITAL_LIST';
 const HOSPITAL_DETAIL = 'common/HOSPITAL_DETAIL';
 const PAGE_INDEX = 'common/Page_INDEX';
+const START_END_INIT = 'common/START_END_INIT';
+const START_END = 'common/START_END';
 
 export const commonInit = createAction(COMMON_INIT);
 export const firstScreenLoadingAction = createAction(
@@ -39,6 +41,8 @@ const addressAction = createAction(ADDRESS);
 const hospitalListAction = createAction(HOSPITAL_LIST);
 const hospitalDetailAction = createAction(HOSPITAL_DETAIL);
 const pageIndexAction = createAction(PAGE_INDEX);
+export const startEndInitAction = createAction(START_END_INIT);
+const startEndAction = createAction(START_END);
 
 const initState = {
   // 앱 첫 실행 시, 보여짐.
@@ -54,6 +58,8 @@ const initState = {
   hospitalList: [],
   // 병원 상세 정보 불러오기
   hospital_detail: [],
+  // 내 위치에서 병원 길찾기
+  start_end: null,
 
   page_index: 0,
 };
@@ -174,7 +180,8 @@ export const getDirection = (
       `${config.googleMaps_url}origin=${startLat},${startLong}&destination=${endLat},${endLong}&mode=transit&departure_time=now&key=${config.googleMaps_ServiceKey}`,
     );
 
-    console.log(jsonData);
+    await dispatch(startEndAction(jsonData.data.routes));
+    // console.log(jsonData.data.routes);
   } catch (e) {
     //
   }
@@ -220,6 +227,14 @@ export default handleActions(
     [PAGE_INDEX]: (state, {payload}) =>
       produce(state, draft => {
         draft.page_index = payload;
+      }),
+    [START_END_INIT]: (state, {payload}) =>
+      produce(state, draft => {
+        draft.start_end = null;
+      }),
+    [START_END]: (state, {payload}) =>
+      produce(state, draft => {
+        draft.start_end = payload;
       }),
   },
   initState,

@@ -64,3 +64,10 @@ export const TaxiImg = props => {
     />
   );
 };
+
+// 하위 길찾기 페이지 이미지
+export const StartImg = styled(TaxiImg)``;
+
+export const ConnectionImg = styled(Img)``;
+
+export const FinishImg = styled(Img)``;

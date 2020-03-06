@@ -42,8 +42,16 @@ const HospitalDetail = props => {
   }, [detailData]);
 
   useEffect(() => {
+    CommonActions.getDirection(
+      props.latitude,
+      props.longitude,
+      detailData.wgs84Lat,
+      detailData.wgs84Lon,
+    );
+
     return async () => {
       await CommonActions.handlePageIndex(0);
+      await CommonActions.startEndInitAction();
     };
   }, []);
 
@@ -284,8 +292,16 @@ const HospitalDetail = props => {
             }}
             loop={false}
             showsPagination={false}>
+            {/* 진료시간 정보 페이지(간략 병원 소개 포함) */}
             <OfficeHours />
-            <HospitalMap />
+            {/* 길찾기 페이지 */}
+            <HospitalMap
+              startLat={props.latitude}
+              startLong={props.longitude}
+              endLat={detailData.wgs84Lat}
+              endLong={detailData.wgs84Lon}
+            />
+            {/* 해당 병원 리뷰 페이지 */}
             <HospitalReview />
           </Swiper>
         </View>
