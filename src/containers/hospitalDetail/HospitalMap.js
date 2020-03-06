@@ -58,79 +58,10 @@ const HospitalMap = ({start_end}) => {
           // transit_details.departure_stop.name, transit_details.departure_time.text
           // 도착 정류장 이름, 도착 시간
           // transit_details.arrival_stop.name, transit_details.arrival_time.text
-          // transit_details.headsign, transit_details.headway
+          // 예상 대기시간, 정류장 개수
+          // transit_details.headway, transit_details.num_stops
+          // 타야되는 버스명
           // transit_details.line.short_name
-          //
-          //           {
-          //             distance: {
-          //               text: '0.1 km',
-          //               value: 116,
-          //             },
-          //             duration: {
-          //               text: '1분',
-          //               value: 38,
-          //             },
-          //             end_location: {
-          //               lat: 37.531602,
-          //               lng: 127.081327,
-          //             },
-          //             html_instructions: '버스 신자초교행',
-          //             polyline: {
-          //               points: 'ckadFkysfWA?BdA?J?t@OvB?@@?',
-          //             },
-          //             start_location: {
-          //               lat: 37.53154,
-          //               lng: 127.082618,
-          //             },
-          //             transit_details: {
-          //               arrival_stop: {
-          //                 location: {
-          //                   lat: 37.531602,
-          //                   lng: 127.081327,
-          //                 },
-          //                 name: '국민은행자양지점앞',
-          //               },
-          //               arrival_time: {
-          //                 text: '오전 10:18',
-          //                 time_zone: 'Asia/Seoul',
-          //                 value: 1583457537,
-          //               },
-          //               departure_stop: {
-          //                 location: {
-          //                   lat: 37.53154,
-          //                   lng: 127.082618,
-          //                 },
-          //                 name: '성자초등학교앞',
-          //               },
-          //               departure_time: {
-          //                 text: '오전 10:18',
-          //                 time_zone: 'Asia/Seoul',
-          //                 value: 1583457499,
-          //               },
-          //               headsign: '신자초교',
-          //               headway: 420,
-          //               line: {
-          //                 agencies: [
-          //                   {
-          //                     name: '서울특별시버스운송사업조합',
-          //                     url:
-          //                       'http://www.odsay.com/Bus/Seoul_Main.asp?CID=1000&LMenu=1',
-          //                   },
-          //                 ],
-          //                 color: '#0abb0c',
-          //                 name: '서울 마을버스',
-          //                 short_name: '광진05',
-          //                 text_color: '#ffffff',
-          //                 vehicle: {
-          //                   icon: '//maps.gstatic.com/mapfiles/transit/iw2/6/bus2.png',
-          //                   name: '버스',
-          //                   type: 'BUS',
-          //                 },
-          //               },
-          //               num_stops: 1,
-          //             },
-          //             travel_mode: 'TRANSIT',
-          //           },
         }
       });
     }
