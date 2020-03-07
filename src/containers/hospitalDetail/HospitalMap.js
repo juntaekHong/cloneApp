@@ -78,6 +78,8 @@ const HospitalMap = ({start_end}) => {
         }
       });
 
+      console.log(list);
+
       setDetailData(list);
     }
   }, [start_end]);

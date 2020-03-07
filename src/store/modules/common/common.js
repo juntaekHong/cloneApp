@@ -177,7 +177,7 @@ export const getDirection = (
 ) => async dispatch => {
   try {
     const jsonData = await axios.get(
-      `${config.googleMaps_url}origin=${startLat},${startLong}&destination=${endLat},${endLong}&mode=transit&departure_time=now&key=${config.googleMaps_ServiceKey}`,
+      `${config.googleMaps_url}origin=${startLat},${startLong}&destination=${endLat},${endLong}&mode=transit&departure_time=now&language=ko&&key=${config.googleMaps_ServiceKey}`,
     );
 
     await dispatch(startEndAction(jsonData.data.routes));

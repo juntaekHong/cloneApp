@@ -44,11 +44,7 @@ export const LegView = ({legs}) => {
             height={32}
             source={require('../../../assets/image/home/start.png')}
           />
-          <LegText fontSize={12}>
-            {Platform.OS === 'android'
-              ? '오전 ' + legs.start.substring(0, legs.start.length - 2)
-              : legs.start}
-          </LegText>
+          <LegText fontSize={12}>{legs.start}</LegText>
         </LegInnerView>
         <LegInnerView marginRight={5}>
           <ConnectionImg
@@ -73,11 +69,7 @@ export const LegView = ({legs}) => {
         </LegInnerView>
         <LegInnerView marginRight={5} align={'center'}>
           <LegText fontSize={10}>{legs.distance + '\n'}</LegText>
-          <LegText fontSize={10}>
-            {Platform.OS === 'android'
-              ? legs.duration.substring(0, legs.start.length - 4) + '분'
-              : legs.duration}
-          </LegText>
+          <LegText fontSize={10}>{legs.duration}</LegText>
         </LegInnerView>
         <LegInnerView marginRight={5}>
           <ConnectionImg
@@ -107,11 +99,7 @@ export const LegView = ({legs}) => {
             height={26}
             source={require('../../../assets/image/home/finish.png')}
           />
-          <LegText fontSize={12}>
-            {Platform.OS === 'android'
-              ? '오후 ' + legs.end.substring(0, legs.end.length - 2)
-              : legs.end}
-          </LegText>
+          <LegText fontSize={12}>{legs.end}</LegText>
         </LegInnerView>
       </LegInnerView>
     </Leg>
@@ -185,7 +173,7 @@ export const DetailView = ({
         <NBGBText>이동 시간: {items.duration}</NBGBText>
         <NBGBText>{items.html_instructions}</NBGBText>
       </StandardView>
-    ) : (
+    ) : items.html_instructions.indexOf('버스') !== -1 ? (
       <StandardView>
         <Img
           width={24}
@@ -198,18 +186,44 @@ export const DetailView = ({
         {/* 거리, 소요 시간, xx행 */}
         <NBGBText>이동 거리: {items.distance}</NBGBText>
         <NBGBText>이동 시간: {items.duration}</NBGBText>
-        <NBGBText>버스: {items.html_instructions}</NBGBText>
+        <NBGBText>{items.html_instructions}</NBGBText>
         {/* 예상 대기시간, 정류장 개수 */}
         <NBGBText>
           예상 대기시간: {items.headway > 60 ? items.headway / 60 : 0}분(이동
           시간에 제외된 시간)
         </NBGBText>
-        <NBGBText>{items.num_stops} 정류장 전</NBGBText>
+        <NBGBText>버스 도착: {items.num_stops} 정류장 전</NBGBText>
         {/* 도착 정류장 이름, 도착 시간 */}
         <NBGBText>도착 정류장: {items.arrival_stop_name}</NBGBText>
         <NBGBText>도착 시간: {items.arrival_time_text}</NBGBText>
         {/* 타야되는 버스명 */}
-        <NBGBText>{items.short_name}</NBGBText>
+        <NBGBText>버스번호: {items.short_name}</NBGBText>
+      </StandardView>
+    ) : (
+      <StandardView>
+        <Img
+          width={24}
+          height={24}
+          source={require('../../../assets/image/home/bus-stop.png')}
+        />
+        {/* 출발 정류장 이름, 출발 시간 */}
+        <NBGBText>출발 정거장: {items.departure_stop_name}</NBGBText>
+        <NBGBText>출발 시간: {items.departure_time_text}</NBGBText>
+        {/* 거리, 소요 시간, xx행 */}
+        <NBGBText>이동 거리: {items.distance}</NBGBText>
+        <NBGBText>이동 시간: {items.duration}</NBGBText>
+        <NBGBText>{items.html_instructions}</NBGBText>
+        {/* 예상 대기시간, 정류장 개수 */}
+        <NBGBText>
+          예상 대기시간: {items.headway > 60 ? items.headway / 60 : 0}분(이동
+          시간에 제외된 시간)
+        </NBGBText>
+        <NBGBText>전철 도착: {items.num_stops} 정류장 전</NBGBText>
+        {/* 도착 정류장 이름, 도착 시간 */}
+        <NBGBText>도착 정거장: {items.arrival_stop_name}</NBGBText>
+        <NBGBText>도착 시간: {items.arrival_time_text}</NBGBText>
+        {/* 타야되는 버스명 */}
+        <NBGBText>전철 호선: {items.short_name}</NBGBText>
       </StandardView>
     );
   };
