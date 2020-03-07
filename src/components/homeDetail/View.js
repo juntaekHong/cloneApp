@@ -181,7 +181,6 @@ export const DetailView = ({
           height={24}
           source={require('../../../assets/image/home/walk.png')}
         />
-        <NBGBText>{items.travel_mode}</NBGBText>
         <NBGBText>{items.distance}</NBGBText>
         <NBGBText>{items.duration}</NBGBText>
         <NBGBText>{items.html_instructions}</NBGBText>
@@ -193,20 +192,19 @@ export const DetailView = ({
           height={24}
           source={require('../../../assets/image/home/bus-stop.png')}
         />
-        <NBGBText>{items.travel_mode}</NBGBText>
+        {/* 출발 정류장 이름, 출발 시간 */}
+        <NBGBText>{items.departure_stop_name}</NBGBText>
+        <NBGBText>{items.departure_time_text}</NBGBText>
         {/* 거리, 소요 시간, xx행 */}
         <NBGBText>{items.distance}</NBGBText>
         <NBGBText>{items.duration}</NBGBText>
         <NBGBText>{items.html_instructions}</NBGBText>
-        {/* 출발 정류장 이름, 출발 시간 */}
-        <NBGBText>{items.departure_stop_name}</NBGBText>
-        <NBGBText>{items.departure_time_text}</NBGBText>
+        {/* 예상 대기시간, 정류장 개수 */}
+        <NBGBText>예상 대기시간: {items.headway / 60} 분</NBGBText>
+        <NBGBText>{items.num_stops} 정류장 전</NBGBText>
         {/* 도착 정류장 이름, 도착 시간 */}
         <NBGBText>{items.arrival_stop_name}</NBGBText>
         <NBGBText>{items.arrival_time_text}</NBGBText>
-        {/* 예상 대기시간, 정류장 개수 */}
-        <NBGBText>{items.headway}</NBGBText>
-        <NBGBText>{items.num_stops}</NBGBText>
         {/* 타야되는 버스명 */}
         <NBGBText>{items.short_name}</NBGBText>
       </StandardView>
