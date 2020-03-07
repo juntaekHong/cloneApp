@@ -159,9 +159,18 @@ export const getMyAddress = (Long, Lat) => async dispatch => {
     );
 
     // 좌표를 통해 주소 찾는 결과에 따라 주는 key 값이 달라져서 이렇게 처리.
-    jsonData.data.NEW_JUSO === undefined
-      ? await dispatch(addressAction('정확한 주소를 찾을 수 없습니다.'))
-      : await dispatch(addressAction(jsonData.data.NEW_JUSO));
+    if (jsonData.data.NEW_JUSO === undefined) {
+      const jsonData2 = await axios.get(
+        `${
+          config.googleMaps_url
+        }origin=${Lat},${Long}&destination=${37.5525774},${126.9337294}&mode=transit&departure_time=now&language=ko&key=${
+          config.googleMaps_ServiceKey
+        }`,
+      );
+      await dispatch(
+        addressAction(jsonData2.data.routes[0].legs[0].start_address),
+      );
+    } else await dispatch(addressAction(jsonData.data.NEW_JUSO));
   } catch (e) {
     // 내 도로명 주소 공공 api 요청 실패 => 서버 연동 실패
     await dispatch(addressAction('error'));
@@ -177,7 +186,7 @@ export const getDirection = (
 ) => async dispatch => {
   try {
     const jsonData = await axios.get(
-      `${config.googleMaps_url}origin=${startLat},${startLong}&destination=${endLat},${endLong}&mode=transit&departure_time=now&language=ko&&key=${config.googleMaps_ServiceKey}`,
+      `${config.googleMaps_url}origin=${startLat},${startLong}&destination=${endLat},${endLong}&mode=transit&departure_time=now&language=ko&key=${config.googleMaps_ServiceKey}`,
     );
 
     await dispatch(startEndAction(jsonData.data.routes));

@@ -234,7 +234,7 @@ export const DetailView = ({
           justifyContent={'center'}
           borderColor={'#24a0fa'}>
           <StandardView alignItems={'center'} flexDirection={'row'}>
-            <StandardView>
+            <StandardView style={{width: widthPercentageToDP(80)}}>
               <Img
                 width={24}
                 height={24}
@@ -294,7 +294,7 @@ export const DetailView = ({
           justifyContent={'center'}
           borderColor={'#24a0fa'}>
           <StandardView alignItems={'center'} flexDirection={'row'}>
-            <StandardView>
+            <StandardView style={{width: widthPercentageToDP(80)}}>
               <Img
                 width={24}
                 height={24}
@@ -335,26 +335,6 @@ export const DetailView = ({
           </EndView>
         </StartView>
       </StandardView>
-      // <StandardView>
-      //   <Img
-      //     width={24}
-      //     height={24}
-      //     source={require('../../../assets/image/home/bus-stop.png')}
-      //   />
-      //   <NBGBText>출발 정거장: {items.departure_stop_name}</NBGBText>
-      //   <NBGBText>출발 시간: {items.departure_time_text}</NBGBText>
-      //   <NBGBText>이동 거리: {items.distance}</NBGBText>
-      //   <NBGBText>이동 시간: {items.duration}</NBGBText>
-      //   <NBGBText>{items.html_instructions}</NBGBText>
-      //   <NBGBText>
-      //     예상 대기시간: {items.headway > 60 ? items.headway / 60 : 0}분(이동
-      //     시간에 제외된 시간)
-      //   </NBGBText>
-      //   <NBGBText>전철 도착: {items.num_stops} 정류장 전</NBGBText>
-      //   <NBGBText>도착 정거장: {items.arrival_stop_name}</NBGBText>
-      //   <NBGBText>도착 시간: {items.arrival_time_text}</NBGBText>
-      //   <NBGBText>전철 호선: {items.short_name}</NBGBText>
-      // </StandardView>
     );
   };
 
