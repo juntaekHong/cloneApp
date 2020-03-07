@@ -142,12 +142,12 @@ const DetailList = styled.FlatList`
 // 상세 길찾기 정보 헤더 뷰
 const ListHeaderView = styled(Leg)`
   margin-top: 0;
-  margin-bottom: 0;
+  margin-bottom: 10;
   margin-left: 0;
   align-items: flex-start;
 `;
 const ListFooterView = styled(Leg)`
-  margin-top: 0;
+  margin-top: 10;
   margin-left: 0;
   align-items: flex-start;
 `;
@@ -165,8 +165,8 @@ export const DetailView = ({
   const _headerView = () => {
     return (
       <ListHeaderView>
-        <NBGBText>{start}</NBGBText>
-        <NBGBText>{start_address}</NBGBText>
+        <NBGBText>출발시간: {start}</NBGBText>
+        <NBGBText>출발지: {start_address}</NBGBText>
       </ListHeaderView>
     );
   };
@@ -181,8 +181,8 @@ export const DetailView = ({
           height={24}
           source={require('../../../assets/image/home/walk.png')}
         />
-        <NBGBText>{items.distance}</NBGBText>
-        <NBGBText>{items.duration}</NBGBText>
+        <NBGBText>이동 거리: {items.distance}</NBGBText>
+        <NBGBText>이동 시간: {items.duration}</NBGBText>
         <NBGBText>{items.html_instructions}</NBGBText>
       </StandardView>
     ) : (
@@ -193,18 +193,21 @@ export const DetailView = ({
           source={require('../../../assets/image/home/bus-stop.png')}
         />
         {/* 출발 정류장 이름, 출발 시간 */}
-        <NBGBText>{items.departure_stop_name}</NBGBText>
-        <NBGBText>{items.departure_time_text}</NBGBText>
+        <NBGBText>출발 정류장: {items.departure_stop_name}</NBGBText>
+        <NBGBText>출발 시간: {items.departure_time_text}</NBGBText>
         {/* 거리, 소요 시간, xx행 */}
-        <NBGBText>{items.distance}</NBGBText>
-        <NBGBText>{items.duration}</NBGBText>
-        <NBGBText>{items.html_instructions}</NBGBText>
+        <NBGBText>이동 거리: {items.distance}</NBGBText>
+        <NBGBText>이동 시간: {items.duration}</NBGBText>
+        <NBGBText>버스: {items.html_instructions}</NBGBText>
         {/* 예상 대기시간, 정류장 개수 */}
-        <NBGBText>예상 대기시간: {items.headway / 60} 분</NBGBText>
+        <NBGBText>
+          예상 대기시간: {items.headway > 60 ? items.headway / 60 : 0}분(이동
+          시간에 제외된 시간)
+        </NBGBText>
         <NBGBText>{items.num_stops} 정류장 전</NBGBText>
         {/* 도착 정류장 이름, 도착 시간 */}
-        <NBGBText>{items.arrival_stop_name}</NBGBText>
-        <NBGBText>{items.arrival_time_text}</NBGBText>
+        <NBGBText>도착 정류장: {items.arrival_stop_name}</NBGBText>
+        <NBGBText>도착 시간: {items.arrival_time_text}</NBGBText>
         {/* 타야되는 버스명 */}
         <NBGBText>{items.short_name}</NBGBText>
       </StandardView>
@@ -214,8 +217,8 @@ export const DetailView = ({
   const _footerView = () => {
     return (
       <ListFooterView>
-        <NBGBText>{end}</NBGBText>
-        <NBGBText>{end_address}</NBGBText>
+        <NBGBText>도착 시간: {end}</NBGBText>
+        <NBGBText>도착지: {end_address}</NBGBText>
         <NBGLText marginTop={10} color={'red'} fontSize={10}>
           {warning}
         </NBGLText>
