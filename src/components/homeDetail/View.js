@@ -125,27 +125,63 @@ const DetailList = styled.FlatList`
   flex-grow: 1;
   width: 100%;
   height: 100%;
+  padding-left: ${widthPercentageToDP(10)};
+  padding-right: ${widthPercentageToDP(10)};
+  padding-top: ${widthPercentageToDP(20)};
 `;
 
+// 상세 길찾기 정보 헤더 뷰
+const ListHeaderView = styled(Leg)``;
+
+// 상세 길찾기 정보 이동수단(도보 or 버스) 단위별 뷰
+
 export const DetailView = ({detail}) => {
+  const _headerView = () => {
+    return (
+      <ListHeaderView>
+        <NBGBText>상세 길찾기 정보</NBGBText>
+      </ListHeaderView>
+    );
+  };
+
   const _renderItem = ({item, index}) => {
     // 다시 파싱
     let items = JSON.parse(item);
     return items.travel_mode === 'WALKING' ? (
       <StandardView>
         <NBGBText>{items.travel_mode}</NBGBText>
+        <NBGBText>{items.distance}</NBGBText>
+        <NBGBText>{items.duration}</NBGBText>
+        <NBGBText>{items.html_instructions}</NBGBText>
       </StandardView>
     ) : (
       <StandardView>
         <NBGBText>{items.travel_mode}</NBGBText>
+        {/* 거리, 소요 시간, xx행 */}
+        <NBGBText>{items.distance}</NBGBText>
+        <NBGBText>{items.duration}</NBGBText>
+        <NBGBText>{items.html_instructions}</NBGBText>
+        {/* 출발 정류장 이름, 출발 시간 */}
+        <NBGBText>{items.departure_stop_name}</NBGBText>
+        <NBGBText>{items.departure_time_text}</NBGBText>
+        {/* 도착 정류장 이름, 도착 시간 */}
+        <NBGBText>{items.arrival_stop_name}</NBGBText>
+        <NBGBText>{items.arrival_time_text}</NBGBText>
+        {/* 예상 대기시간, 정류장 개수 */}
+        <NBGBText>{items.headway}</NBGBText>
+        <NBGBText>{items.num_stops}</NBGBText>
+        {/* 타야되는 버스명 */}
+        <NBGBText>{items.short_name}</NBGBText>
       </StandardView>
     );
   };
 
   return (
     <DetailList
+      scrollEnabled={false}
       data={detail}
       keyExtractor={(item, index) => index.toString()}
+      ListHeaderComponent={_headerView}
       renderItem={_renderItem}
     />
   );

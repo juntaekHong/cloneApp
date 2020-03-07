@@ -49,7 +49,6 @@ const HospitalMap = ({start_end}) => {
           detail.distance = item.distance.text;
           detail.duration = item.duration.text;
           detail.html_instructions = item.html_instructions;
-          detail.travel_mode = item.travel_mode;
 
           // 문자열로 전달 => flatlist 에서 파싱
           list.push(JSON.stringify(detail));
@@ -82,7 +81,7 @@ const HospitalMap = ({start_end}) => {
   }, [start_end]);
 
   return (
-    <TopContainerView marginTop={10}>
+    <TopContainerView marginTop={10} marginBottom={100}>
       {/* 간략 길찾기 정보 뷰 */}
       <LegView legs={legs} />
       {legs !== null ? (
