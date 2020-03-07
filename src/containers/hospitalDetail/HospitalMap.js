@@ -12,7 +12,7 @@ import {
   DetailView,
 } from '../../components/homeDetail/View';
 
-const HospitalMap = ({start_end}) => {
+const HospitalMap = ({start_end, hospital_detail}) => {
   // 간략 데이터
   const [legs, setLegs] = useState(null);
   // 상세 데이터
@@ -78,8 +78,6 @@ const HospitalMap = ({start_end}) => {
         }
       });
 
-      console.log(list);
-
       setDetailData(list);
     }
   }, [start_end]);
@@ -94,7 +92,7 @@ const HospitalMap = ({start_end}) => {
             출발지: {legs.start_address}
           </NBGBText>
           <NBGBText marginTop={10} fontSize={12} numberOfLines={2}>
-            도착지: {legs.end_address}
+            도착지: {hospital_detail.dutyAddr}
           </NBGBText>
         </AddressView>
       ) : null}
@@ -109,7 +107,7 @@ const HospitalMap = ({start_end}) => {
             start={legs.start}
             end={legs.end}
             start_address={legs.start_address}
-            end_address={legs.end_address}
+            end_address={hospital_detail.dutyAddr}
             warning={warning}
           />
         </DetailContainerView>
@@ -119,5 +117,6 @@ const HospitalMap = ({start_end}) => {
 };
 
 export default connect(state => ({
+  hospital_detail: state.common.hospital_detail,
   start_end: state.common.start_end,
 }))(HospitalMap);

@@ -130,17 +130,42 @@ const DetailList = styled.FlatList`
 // 상세 길찾기 정보 헤더 뷰
 const ListHeaderView = styled(Leg)`
   margin-top: 0;
-  margin-bottom: 10;
+  margin-bottom: 0;
   margin-left: 0;
   align-items: flex-start;
 `;
 const ListFooterView = styled(Leg)`
-  margin-top: 10;
+  margin-top: 0;
   margin-left: 0;
   align-items: flex-start;
 `;
 
-// 상세 길찾기 정보 이동수단(도보 or 버스) 단위별 뷰
+//
+const CircleView = styled(StandardView)`
+  width: ${widthPercentageToDP(10)};
+  height: ${widthPercentageToDP(10)};
+  border-width: ${widthPercentageToDP(1)};
+  border-radius: ${widthPercentageToDP(5)};
+  border-color: black;
+`;
+
+const StartView = styled(StandardView)`
+  flex-direction: row;
+  align-items: center;
+`;
+
+const EndView = styled(StartView)``;
+
+const DivisionView = styled(StandardView)`
+  height: ${({height}) =>
+    height ? widthPercentageToDP(height) : widthPercentageToDP(30)};
+  margin-left: ${widthPercentageToDP(3.5)};
+  border-left-width: ${widthPercentageToDP(2)};
+  border-left-color: #24a0fa;
+  padding-left: ${widthPercentageToDP(15)};
+  justify-content: ${({justifyContent}) =>
+    justifyContent ? justifyContent : 'flex-start'};
+`;
 
 export const DetailView = ({
   detail,
@@ -153,8 +178,15 @@ export const DetailView = ({
   const _headerView = () => {
     return (
       <ListHeaderView>
-        <NBGBText>출발시간: {start}</NBGBText>
-        <NBGBText>출발지: {start_address}</NBGBText>
+        <StartView>
+          <CircleView />
+          <NBGBText fontSize={10} marginLeft={10}>
+            출발 시간: {start}
+          </NBGBText>
+        </StartView>
+        <DivisionView>
+          <NBGBText fontSize={10}>출발지: {start_address}</NBGBText>
+        </DivisionView>
       </ListHeaderView>
     );
   };
@@ -163,16 +195,22 @@ export const DetailView = ({
     // 다시 파싱
     let items = JSON.parse(item);
     return items.travel_mode === 'WALKING' ? (
-      <StandardView>
-        <Img
-          width={24}
-          height={24}
-          source={require('../../../assets/image/home/walk.png')}
-        />
-        <NBGBText>이동 거리: {items.distance}</NBGBText>
-        <NBGBText>이동 시간: {items.duration}</NBGBText>
-        <NBGBText>{items.html_instructions}</NBGBText>
-      </StandardView>
+      <DivisionView height={100} justifyContent={'center'}>
+        <StandardView alignItems={'center'} flexDirection={'row'}>
+          <Img
+            width={24}
+            height={24}
+            source={require('../../../assets/image/home/walk.png')}
+          />
+          <StandardView
+            marginLeft={40}
+            style={{width: widthPercentageToDP(250)}}>
+            <NBGBText fontSize={13}>이동 거리: {items.distance}</NBGBText>
+            <NBGBText fontSize={13}>이동 시간: {items.duration}</NBGBText>
+            <NBGBText fontSize={13}>{items.html_instructions}</NBGBText>
+          </StandardView>
+        </StandardView>
+      </DivisionView>
     ) : items.html_instructions.indexOf('버스') !== -1 ? (
       <StandardView>
         <Img
@@ -221,8 +259,15 @@ export const DetailView = ({
   const _footerView = () => {
     return (
       <ListFooterView>
-        <NBGBText>도착 시간: {end}</NBGBText>
-        <NBGBText>도착지: {end_address}</NBGBText>
+        <DivisionView justifyContent={'flex-end'}>
+          <NBGBText fontSize={10}>도착지: {end_address}</NBGBText>
+        </DivisionView>
+        <EndView>
+          <CircleView />
+          <NBGBText fontSize={10} marginLeft={10}>
+            도착 시간: {end}
+          </NBGBText>
+        </EndView>
         <NBGLText marginTop={10} color={'red'} fontSize={10}>
           {warning}
         </NBGLText>
