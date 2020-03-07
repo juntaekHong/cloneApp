@@ -120,6 +120,11 @@ export const LegView = ({legs}) => {
 // 간략정보 출발&도착 주소 뷰
 export const AddressView = styled(LegInnerView)``;
 
+// 간략정보 출발&도착 주소 뷰
+export const DetailContainerView = styled(StandardView)``;
+
+export const DetailTitleView = styled(LegInnerView)``;
+
 // 하위 상세 길찾기 정보 뷰
 const DetailList = styled.FlatList`
   flex-grow: 1;
@@ -131,15 +136,32 @@ const DetailList = styled.FlatList`
 `;
 
 // 상세 길찾기 정보 헤더 뷰
-const ListHeaderView = styled(Leg)``;
+const ListHeaderView = styled(Leg)`
+  margin-bottom: 0;
+  margin-left: 0;
+  align-items: flex-start;
+`;
+const ListFooterView = styled(Leg)`
+  margin-top: 0;
+  margin-left: 0;
+  align-items: flex-start;
+`;
 
 // 상세 길찾기 정보 이동수단(도보 or 버스) 단위별 뷰
 
-export const DetailView = ({detail}) => {
+export const DetailView = ({
+  detail,
+  start,
+  end,
+  start_address,
+  end_address,
+  warning,
+}) => {
   const _headerView = () => {
     return (
       <ListHeaderView>
-        <NBGBText>상세 길찾기 정보</NBGBText>
+        <NBGBText>{start}</NBGBText>
+        <NBGBText>{start_address}</NBGBText>
       </ListHeaderView>
     );
   };
@@ -176,12 +198,25 @@ export const DetailView = ({detail}) => {
     );
   };
 
+  const _footerView = () => {
+    return (
+      <ListFooterView>
+        <NBGBText>{end}</NBGBText>
+        <NBGBText>{end_address}</NBGBText>
+        <NBGLText marginTop={10} color={'red'} fontSize={10}>
+          {warning}
+        </NBGLText>
+      </ListFooterView>
+    );
+  };
+
   return (
     <DetailList
       scrollEnabled={false}
       data={detail}
       keyExtractor={(item, index) => index.toString()}
       ListHeaderComponent={_headerView}
+      ListFooterComponent={_footerView}
       renderItem={_renderItem}
     />
   );

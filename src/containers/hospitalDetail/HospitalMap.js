@@ -7,6 +7,8 @@ import {widthPercentageToDP} from '../../utils/util';
 import {
   LegView,
   AddressView,
+  DetailContainerView,
+  DetailTitleView,
   DetailView,
 } from '../../components/homeDetail/View';
 
@@ -17,7 +19,7 @@ const HospitalMap = ({start_end}) => {
   const [detailData, setDetailData] = useState();
   // 유의사항 문구
   const warning =
-    '도보 경로는 베타 서비스입니다. 주의 – 이 경로에는 인도 또는 보행 경로가 누락되었을 수도 있습니다';
+    '* 도보 경로는 베타 서비스입니다.\n   주의 – 이 경로에는 인도 또는 보행 경로가 누락되었을 수도 있습니다';
 
   useEffect(() => {}, [detailData]);
 
@@ -95,15 +97,21 @@ const HospitalMap = ({start_end}) => {
         </AddressView>
       ) : null}
       {/* 상세 길찾기 정보 뷰*/}
-      <DetailView detail={detailData} />
-      <NBGLText
-        marginTop={10}
-        marginLeft={10}
-        marginRight={10}
-        color={'red'}
-        fontSize={10}>
-        * {warning}
-      </NBGLText>
+      {legs !== null ? (
+        <DetailContainerView>
+          <DetailTitleView>
+            <NBGBText>상세 길찾기 정보</NBGBText>
+          </DetailTitleView>
+          <DetailView
+            detail={detailData}
+            start={legs.start}
+            end={legs.end}
+            start_address={legs.start_address}
+            end_address={legs.end_address}
+            warning={warning}
+          />
+        </DetailContainerView>
+      ) : null}
     </TopContainerView>
   );
 };
