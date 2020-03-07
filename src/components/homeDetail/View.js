@@ -150,8 +150,9 @@ const CircleView = styled(StandardView)`
 `;
 
 const StartView = styled(StandardView)`
-  flex-direction: row;
-  align-items: center;
+  flex-direction: ${({flexDirection}) =>
+    flexDirection ? flexDirection : 'row'};
+  align-items: ${({alignItems}) => (alignItems ? alignItems : 'center')};
 `;
 
 const EndView = styled(StartView)``;
@@ -161,7 +162,8 @@ const DivisionView = styled(StandardView)`
     height ? widthPercentageToDP(height) : widthPercentageToDP(30)};
   margin-left: ${widthPercentageToDP(3.5)};
   border-left-width: ${widthPercentageToDP(2)};
-  border-left-color: #24a0fa;
+  border-left-color: ${({borderColor}) =>
+    borderColor ? borderColor : '#8be38c'};
   padding-left: ${widthPercentageToDP(15)};
   justify-content: ${({justifyContent}) =>
     justifyContent ? justifyContent : 'flex-start'};
@@ -195,7 +197,7 @@ export const DetailView = ({
     // 다시 파싱
     let items = JSON.parse(item);
     return items.travel_mode === 'WALKING' ? (
-      <DivisionView height={100} justifyContent={'center'}>
+      <DivisionView height={120} justifyContent={'center'}>
         <StandardView alignItems={'center'} flexDirection={'row'}>
           <Img
             width={24}
@@ -204,55 +206,155 @@ export const DetailView = ({
           />
           <StandardView
             marginLeft={40}
-            style={{width: widthPercentageToDP(250)}}>
-            <NBGBText fontSize={13}>이동 거리: {items.distance}</NBGBText>
-            <NBGBText fontSize={13}>이동 시간: {items.duration}</NBGBText>
-            <NBGBText fontSize={13}>{items.html_instructions}</NBGBText>
+            style={{width: widthPercentageToDP(270)}}>
+            <NBGBText fontSize={12}>이동 거리: {items.distance}</NBGBText>
+            <NBGBText fontSize={12}>이동 시간: {items.duration}</NBGBText>
+            <NBGBText marginTop={10} fontSize={12}>
+              {items.html_instructions}
+            </NBGBText>
           </StandardView>
         </StandardView>
       </DivisionView>
     ) : items.html_instructions.indexOf('버스') !== -1 ? (
       <StandardView>
-        <Img
-          width={24}
-          height={24}
-          source={require('../../../assets/image/home/bus-stop.png')}
-        />
-        <NBGBText>출발 정류장: {items.departure_stop_name}</NBGBText>
-        <NBGBText>출발 시간: {items.departure_time_text}</NBGBText>
-        <NBGBText>이동 거리: {items.distance}</NBGBText>
-        <NBGBText>이동 시간: {items.duration}</NBGBText>
-        <NBGBText>{items.html_instructions}</NBGBText>
-        <NBGBText>
-          예상 대기시간: {items.headway > 60 ? items.headway / 60 : 0}분(이동
-          시간에 제외된 시간)
-        </NBGBText>
-        <NBGBText>버스 도착: {items.num_stops} 정류장 전</NBGBText>
-        <NBGBText>도착 정류장: {items.arrival_stop_name}</NBGBText>
-        <NBGBText>도착 시간: {items.arrival_time_text}</NBGBText>
-        <NBGBText>버스번호: {items.short_name}</NBGBText>
+        <DivisionView />
+        <StartView>
+          <CircleView />
+          <StartView flexDirection={'column'} alignItems={'flex-start'}>
+            <NBGBText fontSize={10} marginLeft={10}>
+              환승 시간: {items.departure_time_text}
+            </NBGBText>
+            <NBGBText fontSize={10} marginLeft={10}>
+              출발 정류장: {items.departure_stop_name}
+            </NBGBText>
+          </StartView>
+        </StartView>
+        <DivisionView
+          height={200}
+          justifyContent={'center'}
+          borderColor={'#24a0fa'}>
+          <StandardView alignItems={'center'} flexDirection={'row'}>
+            <StandardView>
+              <Img
+                width={24}
+                height={24}
+                source={require('../../../assets/image/home/bus-stop.png')}
+              />
+              <NBGBText marginTop={10} fontSize={10}>
+                {items.html_instructions.substring(
+                  3,
+                  items.html_instructions.length,
+                )}
+              </NBGBText>
+              <NBGBText fontSize={10}>{items.short_name}번 버스</NBGBText>
+            </StandardView>
+            <StandardView
+              marginLeft={30}
+              style={{width: widthPercentageToDP(210)}}>
+              <NBGBText fontSize={12}>이동 거리: {items.distance}</NBGBText>
+              <NBGBText fontSize={12}>이동 시간: {items.duration}</NBGBText>
+              <NBGBText fontSize={12}>
+                예상 대기시간: {items.headway > 60 ? items.headway / 60 : 0}
+                분(이동시간 제외)
+              </NBGBText>
+              <NBGBText fontSize={12}>
+                버스 도착: {items.num_stops} 정류장 전
+              </NBGBText>
+            </StandardView>
+          </StandardView>
+        </DivisionView>
+        <StartView>
+          <CircleView />
+          <EndView flexDirection={'column'} alignItems={'flex-start'}>
+            <NBGBText fontSize={10} marginLeft={10}>
+              환승 시간: {items.arrival_time_text}
+            </NBGBText>
+            <NBGBText fontSize={10} marginLeft={10}>
+              도착 정류장: {items.arrival_stop_name}
+            </NBGBText>
+          </EndView>
+        </StartView>
       </StandardView>
     ) : (
       <StandardView>
-        <Img
-          width={24}
-          height={24}
-          source={require('../../../assets/image/home/bus-stop.png')}
-        />
-        <NBGBText>출발 정거장: {items.departure_stop_name}</NBGBText>
-        <NBGBText>출발 시간: {items.departure_time_text}</NBGBText>
-        <NBGBText>이동 거리: {items.distance}</NBGBText>
-        <NBGBText>이동 시간: {items.duration}</NBGBText>
-        <NBGBText>{items.html_instructions}</NBGBText>
-        <NBGBText>
-          예상 대기시간: {items.headway > 60 ? items.headway / 60 : 0}분(이동
-          시간에 제외된 시간)
-        </NBGBText>
-        <NBGBText>전철 도착: {items.num_stops} 정류장 전</NBGBText>
-        <NBGBText>도착 정거장: {items.arrival_stop_name}</NBGBText>
-        <NBGBText>도착 시간: {items.arrival_time_text}</NBGBText>
-        <NBGBText>전철 호선: {items.short_name}</NBGBText>
+        <DivisionView />
+        <StartView>
+          <CircleView />
+          <StartView flexDirection={'column'} alignItems={'flex-start'}>
+            <NBGBText fontSize={10} marginLeft={10}>
+              환승 시간: {items.departure_time_text}
+            </NBGBText>
+            <NBGBText fontSize={10} marginLeft={10}>
+              출발 정거장: {items.departure_stop_name}
+            </NBGBText>
+          </StartView>
+        </StartView>
+        <DivisionView
+          height={200}
+          justifyContent={'center'}
+          borderColor={'#24a0fa'}>
+          <StandardView alignItems={'center'} flexDirection={'row'}>
+            <StandardView>
+              <Img
+                width={24}
+                height={24}
+                source={require('../../../assets/image/home/bus-stop.png')}
+              />
+              <NBGBText marginTop={10} fontSize={10}>
+                {items.html_instructions.substring(
+                  4,
+                  items.html_instructions.length,
+                )}
+              </NBGBText>
+              <NBGBText fontSize={10}>{items.short_name}번 지하철</NBGBText>
+            </StandardView>
+            <StandardView
+              marginLeft={30}
+              style={{width: widthPercentageToDP(210)}}>
+              <NBGBText fontSize={12}>이동 거리: {items.distance}</NBGBText>
+              <NBGBText fontSize={12}>이동 시간: {items.duration}</NBGBText>
+              <NBGBText fontSize={12}>
+                예상 대기시간: {items.headway > 60 ? items.headway / 60 : 0}
+                분(이동시간 제외)
+              </NBGBText>
+              <NBGBText fontSize={12}>
+                지하철 도착: {items.num_stops} 정거장 전
+              </NBGBText>
+            </StandardView>
+          </StandardView>
+        </DivisionView>
+        <StartView>
+          <CircleView />
+          <EndView flexDirection={'column'} alignItems={'flex-start'}>
+            <NBGBText fontSize={10} marginLeft={10}>
+              환승 시간: {items.arrival_time_text}
+            </NBGBText>
+            <NBGBText fontSize={10} marginLeft={10}>
+              도착 지하철: {items.arrival_stop_name}
+            </NBGBText>
+          </EndView>
+        </StartView>
       </StandardView>
+      // <StandardView>
+      //   <Img
+      //     width={24}
+      //     height={24}
+      //     source={require('../../../assets/image/home/bus-stop.png')}
+      //   />
+      //   <NBGBText>출발 정거장: {items.departure_stop_name}</NBGBText>
+      //   <NBGBText>출발 시간: {items.departure_time_text}</NBGBText>
+      //   <NBGBText>이동 거리: {items.distance}</NBGBText>
+      //   <NBGBText>이동 시간: {items.duration}</NBGBText>
+      //   <NBGBText>{items.html_instructions}</NBGBText>
+      //   <NBGBText>
+      //     예상 대기시간: {items.headway > 60 ? items.headway / 60 : 0}분(이동
+      //     시간에 제외된 시간)
+      //   </NBGBText>
+      //   <NBGBText>전철 도착: {items.num_stops} 정류장 전</NBGBText>
+      //   <NBGBText>도착 정거장: {items.arrival_stop_name}</NBGBText>
+      //   <NBGBText>도착 시간: {items.arrival_time_text}</NBGBText>
+      //   <NBGBText>전철 호선: {items.short_name}</NBGBText>
+      // </StandardView>
     );
   };
 
