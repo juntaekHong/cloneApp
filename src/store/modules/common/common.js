@@ -153,6 +153,8 @@ export const getHospitalDetail = hpid => async dispatch => {
 
 // 좌표 주소 변환
 export const getMyAddress = (Long, Lat) => async dispatch => {
+  let customAddress = '';
+
   try {
     const jsonData = await axios.get(
       `${config.toAddress_url}?x=${Long}&y=${Lat}&output=json&epsg=epsg:4326&apiKey=${config.toAddress_ServiceKey}`,
@@ -167,10 +169,23 @@ export const getMyAddress = (Long, Lat) => async dispatch => {
           config.googleMaps_ServiceKey
         }`,
       );
-      await dispatch(
-        addressAction(jsonData2.data.routes[0].legs[0].start_address),
-      );
-    } else await dispatch(addressAction(jsonData.data.NEW_JUSO));
+
+      let address = jsonData2.data.routes[0].legs[0].start_address.split(' ');
+
+      for (let i = 2; i < address.length; i++) {
+        customAddress += address[i] + ' ';
+      }
+
+      await dispatch(addressAction(customAddress));
+    } else {
+      let address = jsonData.data.NEW_JUSO.split(' ');
+
+      for (let i = 2; i < address.length; i++) {
+        customAddress += address[i] + ' ';
+      }
+
+      await dispatch(addressAction(customAddress));
+    }
   } catch (e) {
     // 내 도로명 주소 공공 api 요청 실패 => 서버 연동 실패
     await dispatch(addressAction('error'));
