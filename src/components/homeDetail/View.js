@@ -7,6 +7,7 @@ import {widthPercentageToDP} from '../../utils/util';
 import colors from '../../configs/colors';
 import Communications from 'react-native-communications';
 import {StartImg, ConnectionImg, FinishImg} from '../home/Image';
+import {Img} from '../common/Image';
 
 // 길찾기 페이지 - 대략적 길 정보 뷰
 const Leg = styled(StandardView)`
@@ -123,7 +124,10 @@ export const AddressView = styled(LegInnerView)``;
 // 간략정보 출발&도착 주소 뷰
 export const DetailContainerView = styled(StandardView)``;
 
-export const DetailTitleView = styled(LegInnerView)``;
+export const DetailTitleView = styled(LegInnerView)`
+  margin-top: ${widthPercentageToDP(30)};
+  align-items: center;
+`;
 
 // 하위 상세 길찾기 정보 뷰
 const DetailList = styled.FlatList`
@@ -137,6 +141,7 @@ const DetailList = styled.FlatList`
 
 // 상세 길찾기 정보 헤더 뷰
 const ListHeaderView = styled(Leg)`
+  margin-top: 0;
   margin-bottom: 0;
   margin-left: 0;
   align-items: flex-start;
@@ -171,6 +176,11 @@ export const DetailView = ({
     let items = JSON.parse(item);
     return items.travel_mode === 'WALKING' ? (
       <StandardView>
+        <Img
+          width={24}
+          height={24}
+          source={require('../../../assets/image/home/walk.png')}
+        />
         <NBGBText>{items.travel_mode}</NBGBText>
         <NBGBText>{items.distance}</NBGBText>
         <NBGBText>{items.duration}</NBGBText>
@@ -178,6 +188,11 @@ export const DetailView = ({
       </StandardView>
     ) : (
       <StandardView>
+        <Img
+          width={24}
+          height={24}
+          source={require('../../../assets/image/home/bus-stop.png')}
+        />
         <NBGBText>{items.travel_mode}</NBGBText>
         {/* 거리, 소요 시간, xx행 */}
         <NBGBText>{items.distance}</NBGBText>
