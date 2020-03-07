@@ -253,10 +253,10 @@ export const DetailView = ({
               style={{width: widthPercentageToDP(210)}}>
               <NBGBText fontSize={12}>이동 거리: {items.distance}</NBGBText>
               <NBGBText fontSize={12}>이동 시간: {items.duration}</NBGBText>
-              <NBGBText fontSize={12}>
+              {/* <NBGBText fontSize={12}>
                 예상 대기시간: {items.headway > 60 ? items.headway / 60 : 0}
                 분(이동시간 제외)
-              </NBGBText>
+              </NBGBText> */}
               <NBGBText fontSize={12}>
                 버스 도착: {items.num_stops} 정류장 전
               </NBGBText>
@@ -313,10 +313,10 @@ export const DetailView = ({
               style={{width: widthPercentageToDP(210)}}>
               <NBGBText fontSize={12}>이동 거리: {items.distance}</NBGBText>
               <NBGBText fontSize={12}>이동 시간: {items.duration}</NBGBText>
-              <NBGBText fontSize={12}>
+              {/* <NBGBText fontSize={12}>
                 예상 대기시간: {items.headway > 60 ? items.headway / 60 : 0}
                 분(이동시간 제외)
-              </NBGBText>
+              </NBGBText> */}
               <NBGBText fontSize={12}>
                 지하철 도착: {items.num_stops} 정거장 전
               </NBGBText>
