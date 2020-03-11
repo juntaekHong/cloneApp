@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {connect} from 'react-redux';
+import {View, Text} from 'react-native';
 import {TopContainerView} from '../../components/common/View';
 import {CommonActions} from '../../store/actionCreator';
 import {NBGBText, NBGLText} from '../../components/common/Text';
@@ -10,9 +11,27 @@ import {
   DetailContainerView,
   DetailTitleView,
   DetailView,
+  Map,
 } from '../../components/homeDetail/View';
+import {Img} from '../../components/common/Image';
 
-const HospitalMap = ({start_end, hospital_detail}) => {
+const HospitalMap = ({
+  start_end,
+  hospital_detail,
+  startLat,
+  startLong,
+  endLat,
+  endLong,
+}) => {
+  // 시작, 도착 위도&경도
+  const [origin, setOrigin] = useState({
+    latitude: startLat,
+    longitude: startLong,
+  });
+  const [destination, setDestination] = useState({
+    latitude: endLat,
+    longitude: endLong,
+  });
   // 간략 데이터
   const [legs, setLegs] = useState(null);
   // 상세 데이터
@@ -84,6 +103,14 @@ const HospitalMap = ({start_end, hospital_detail}) => {
 
   return (
     <TopContainerView marginTop={10} marginBottom={100}>
+      {/* 지도 뷰 */}
+      {legs !== null ? (
+        <Map
+          distance={legs.distance}
+          origin={origin}
+          destination={destination}
+        />
+      ) : null}
       {/* 간략 길찾기 정보 뷰 */}
       <LegView legs={legs} />
       {legs !== null ? (

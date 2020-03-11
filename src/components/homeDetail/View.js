@@ -1,6 +1,8 @@
 import React, {useCallback, useState, useEffect} from 'react';
 import {View, Text, Platform} from 'react-native';
 import styled from 'styled-components/native';
+import MapView, {Marker} from 'react-native-maps';
+import MapViewDirections from 'react-native-maps-directions';
 import {StandardView, BTN} from '../common/View';
 import {NBGBText, NBGText, NBGLText} from '../common/Text';
 import {widthPercentageToDP} from '../../utils/util';
@@ -8,6 +10,83 @@ import colors from '../../configs/colors';
 import Communications from 'react-native-communications';
 import {StartImg, ConnectionImg, FinishImg} from '../home/Image';
 import {Img} from '../common/Image';
+
+// 지도 뷰
+export const Map = ({distance, origin, destination}) => {
+  const customDistance = distance => {
+    let custom = distance.split(' ');
+
+    custom = parseFloat(custom[0]);
+
+    return custom;
+  };
+
+  return (
+    <MapView
+      style={{
+        width: widthPercentageToDP(375),
+        height: widthPercentageToDP(207),
+      }}
+      initialRegion={{
+        latitude: parseFloat(origin.latitude + destination.latitude) / 2,
+        longitude: parseFloat(origin.longitude + destination.longitude) / 2,
+        latitudeDelta: customDistance(distance) / 100,
+        longitudeDelta: customDistance(distance) / 100,
+      }}>
+      {/* 출발 위치 */}
+      <Marker
+        coordinate={{
+          latitude: parseFloat(origin.latitude),
+          longitude: parseFloat(origin.longitude),
+        }}>
+        <View
+          style={{
+            backgroundColor: 'transparent',
+            alignItems: 'center',
+            padding: 10,
+          }}>
+          <Img
+            style={{backgroundColor: 'transparent'}}
+            width={16}
+            height={16}
+            source={require('../../../assets/image/home/pin.png')}
+          />
+          <NBGBText fontSize={10}>출발지</NBGBText>
+        </View>
+      </Marker>
+      {/* 도착 위치 */}
+      <Marker
+        coordinate={{
+          latitude: parseFloat(destination.latitude),
+          longitude: parseFloat(destination.longitude),
+        }}>
+        <View
+          style={{
+            backgroundColor: 'transparent',
+            alignItems: 'center',
+            padding: 10,
+          }}>
+          <Img
+            style={{backgroundColor: 'transparent'}}
+            width={16}
+            height={16}
+            source={require('../../../assets/image/home/pin.png')}
+          />
+          <NBGBText fontSize={10}>도착지</NBGBText>
+        </View>
+      </Marker>
+      <MapViewDirections
+        mode={'TRANSIT'}
+        origin={origin}
+        destination={destination}
+        apikey={'AIzaSyDgBRnXW2cAmBWKGd-EFo-P0cZ_zKKp5As'}
+        optimizeWaypoints={true}
+        strokeWidth={3}
+        strokeColor={'#24a0fa'}
+      />
+    </MapView>
+  );
+};
 
 // 길찾기 페이지 - 대략적 길 정보 뷰
 const Leg = styled(StandardView)`
