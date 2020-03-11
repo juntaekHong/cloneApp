@@ -39,6 +39,7 @@ const MyLocationSetting = props => {
         data={props.search_address}
         totalCount={props.search_total}
         searchText={searchText}
+        navigation={props.navigation}
       />
     </TopContainerView>
   );

@@ -35,10 +35,10 @@ export const handleSearchAddressInit = () => dispatch => {
 };
 
 // 주소 검색
-export const searchAddress = (place, count, page) => async dispatch => {
+export const searchAddress = (place, page, count) => async dispatch => {
   try {
     const jsonData = await axios.get(
-      `${config.searchAddress_url}query=${place}`,
+      `${config.searchAddress_url}query=${place}&page=${page}&size=${count}`,
       {
         headers: {
           Accept: 'application/json',
@@ -48,11 +48,9 @@ export const searchAddress = (place, count, page) => async dispatch => {
       },
     );
 
-    console.log(jsonData.data.documents);
-
-    // await dispatch(searchAddressAction(jsonData.data.LIST));
-
-    // await dispatch(searchTotalAction(jsonData.data.Poi));
+    console.log(jsonData.data);
+    await dispatch(searchAddressAction(jsonData.data.documents));
+    await dispatch(searchTotalAction(jsonData.data.meta.total_count));
   } catch (e) {
     console.log('fail');
     // 주소 검색 공공 api 요청 실패 => 서버 연동 실패

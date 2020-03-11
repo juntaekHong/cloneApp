@@ -41,7 +41,7 @@ export const SearchInput = ({marginTop, fontSize, search}) => {
       await LocationActions.handleSearchAddressInit();
 
       await search(searchText);
-      await LocationActions.searchAddress(searchText, 10, 0);
+      await LocationActions.searchAddress(searchText, 0, 10);
     }
   };
 

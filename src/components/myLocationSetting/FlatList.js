@@ -17,7 +17,7 @@ const SearchResultList = styled.FlatList`
   margin-bottom: ${widthPercentageToDP(10)};
 `;
 
-export const SearchResult = ({data, totalCount, searchText}) => {
+export const SearchResult = ({data, totalCount, searchText, navigation}) => {
   // 검색결과 개수
   const [resultCount, setResultCount] = useState(0);
 
@@ -37,10 +37,15 @@ export const SearchResult = ({data, totalCount, searchText}) => {
     return (
       <ListView
         style={{flexDirection: 'column', alignItems: 'flex-start'}}
-        padding={15}>
-        <Text>{item.nameFull}</Text>
-        <Text>{item.juso}</Text>
-        <Text>{item.njuso}</Text>
+        padding={15}
+        onPress={() => {
+          navigation.navigate('LocationSearch', {
+            x: parseFloat(item.x),
+            y: parseFloat(item.y),
+            address: item.address_name,
+          });
+        }}>
+        <NBGBText fontSize={13}>주소: {item.address_name}</NBGBText>
       </ListView>
     );
   };
@@ -67,8 +72,8 @@ export const SearchResult = ({data, totalCount, searchText}) => {
           await setLoading(true);
           await LocationActions.searchAddress(
             searchText,
+            data.length / 10 + 1,
             10,
-            resultCount / 10 + 1,
           );
           await setLoading(false);
         }
