@@ -1,7 +1,7 @@
 import React, {useCallback, useState, useEffect} from 'react';
-import {View, Text, Platform} from 'react-native';
+import {View, Text, Platform, TouchableHighlight} from 'react-native';
 import styled from 'styled-components/native';
-import MapView, {Marker} from 'react-native-maps';
+import MapView, {Marker, Callout} from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
 import {StandardView, BTN} from '../common/View';
 import {NBGBText, NBGText, NBGLText} from '../common/Text';
@@ -9,10 +9,26 @@ import {widthPercentageToDP} from '../../utils/util';
 import colors from '../../configs/colors';
 import Communications from 'react-native-communications';
 import {StartImg, ConnectionImg, FinishImg} from '../home/Image';
-import {Img} from '../common/Image';
+import {Img, CloseImg} from '../common/Image';
 
 // 지도 뷰
-export const Map = ({distance, origin, destination}) => {
+export const Map = ({
+  distance,
+  origin,
+  destination,
+  start_address,
+  end_address,
+}) => {
+  // 시작, 도착 위도&경도
+  const [start, setStart] = useState({
+    latitude: parseFloat(origin.latitude),
+    longitude: parseFloat(origin.longitude),
+  });
+  const [end, setEnd] = useState({
+    latitude: parseFloat(destination.latitude),
+    longitude: parseFloat(destination.longitude),
+  });
+
   const customDistance = distance => {
     let custom = distance.split(' ');
 
@@ -21,6 +37,14 @@ export const Map = ({distance, origin, destination}) => {
     return custom;
   };
 
+  const customAddress = useCallback(address => {
+    let custom = address.split(' ');
+
+    custom = custom[custom.length - 2] + custom[custom.length - 1];
+
+    return custom;
+  }, []);
+
   return (
     <MapView
       style={{
@@ -28,22 +52,21 @@ export const Map = ({distance, origin, destination}) => {
         height: widthPercentageToDP(207),
       }}
       initialRegion={{
-        latitude: parseFloat(origin.latitude + destination.latitude) / 2,
-        longitude: parseFloat(origin.longitude + destination.longitude) / 2,
+        latitude: (start.latitude + end.latitude) / 2,
+        longitude: (start.longitude + end.longitude) / 2,
         latitudeDelta: customDistance(distance) / 100,
         longitudeDelta: customDistance(distance) / 100,
       }}>
       {/* 출발 위치 */}
       <Marker
         coordinate={{
-          latitude: parseFloat(origin.latitude),
-          longitude: parseFloat(origin.longitude),
+          latitude: start.latitude,
+          longitude: start.longitude,
         }}>
         <View
           style={{
             backgroundColor: 'transparent',
             alignItems: 'center',
-            padding: 10,
           }}>
           <Img
             style={{backgroundColor: 'transparent'}}
@@ -53,18 +76,29 @@ export const Map = ({distance, origin, destination}) => {
           />
           <NBGBText fontSize={10}>출발지</NBGBText>
         </View>
+        <Callout>
+          <View
+            style={{
+              backgroundColor: 'white',
+              width: widthPercentageToDP(120),
+              height: widthPercentageToDP(30),
+            }}>
+            <NBGLText fontSize={10}>
+              주소: {customAddress(start_address)}
+            </NBGLText>
+          </View>
+        </Callout>
       </Marker>
       {/* 도착 위치 */}
       <Marker
         coordinate={{
-          latitude: parseFloat(destination.latitude),
-          longitude: parseFloat(destination.longitude),
+          latitude: end.latitude,
+          longitude: end.longitude,
         }}>
         <View
           style={{
             backgroundColor: 'transparent',
             alignItems: 'center',
-            padding: 10,
           }}>
           <Img
             style={{backgroundColor: 'transparent'}}
@@ -74,11 +108,23 @@ export const Map = ({distance, origin, destination}) => {
           />
           <NBGBText fontSize={10}>도착지</NBGBText>
         </View>
+        <Callout>
+          <View
+            style={{
+              backgroundColor: 'white',
+              width: widthPercentageToDP(120),
+              height: widthPercentageToDP(30),
+            }}>
+            <NBGLText fontSize={10}>
+              주소: {customAddress(end_address)}
+            </NBGLText>
+          </View>
+        </Callout>
       </Marker>
       <MapViewDirections
         mode={'TRANSIT'}
-        origin={origin}
-        destination={destination}
+        origin={start}
+        destination={end}
         apikey={'AIzaSyDgBRnXW2cAmBWKGd-EFo-P0cZ_zKKp5As'}
         optimizeWaypoints={true}
         strokeWidth={3}

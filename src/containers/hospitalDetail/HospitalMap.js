@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {connect} from 'react-redux';
 import {View, Text} from 'react-native';
-import {TopContainerView} from '../../components/common/View';
+import {TopContainerView, StandardView} from '../../components/common/View';
 import {CommonActions} from '../../store/actionCreator';
 import {NBGBText, NBGLText} from '../../components/common/Text';
 import {widthPercentageToDP} from '../../utils/util';
@@ -14,6 +14,7 @@ import {
   Map,
 } from '../../components/homeDetail/View';
 import {Img} from '../../components/common/Image';
+import {UIActivityIndicator} from 'react-native-indicators';
 
 const HospitalMap = ({
   start_end,
@@ -103,42 +104,45 @@ const HospitalMap = ({
 
   return (
     <TopContainerView marginTop={10} marginBottom={100}>
-      {/* 지도 뷰 */}
-      {legs !== null ? (
-        <Map
-          distance={legs.distance}
-          origin={origin}
-          destination={destination}
-        />
-      ) : null}
-      {/* 간략 길찾기 정보 뷰 */}
-      <LegView legs={legs} />
-      {legs !== null ? (
-        <AddressView marginLeft={10} marginRight={10}>
-          <NBGBText marginTop={10} fontSize={12} numberOfLines={2}>
-            출발지: {legs.start_address}
-          </NBGBText>
-          <NBGBText marginTop={10} fontSize={12} numberOfLines={2}>
-            도착지: {hospital_detail.dutyAddr}
-          </NBGBText>
-        </AddressView>
-      ) : null}
-      {/* 상세 길찾기 정보 뷰*/}
-      {legs !== null ? (
-        <DetailContainerView>
-          <DetailTitleView>
-            <NBGBText>상세 길찾기 정보</NBGBText>
-          </DetailTitleView>
-          <DetailView
-            detail={detailData}
-            start={legs.start}
-            end={legs.end}
+      {legs === null ? (
+        <UIActivityIndicator size={widthPercentageToDP(30)} color={'gray'} />
+      ) : (
+        <StandardView>
+          {/* 지도 뷰 */}
+          <Map
+            distance={legs.distance}
+            origin={origin}
+            destination={destination}
+            // 마커 표시
             start_address={legs.start_address}
             end_address={hospital_detail.dutyAddr}
-            warning={warning}
           />
-        </DetailContainerView>
-      ) : null}
+          {/* 간략 길찾기 정보 뷰 */}
+          <LegView legs={legs} />
+          <AddressView marginLeft={10} marginRight={10}>
+            <NBGBText marginTop={10} fontSize={12} numberOfLines={2}>
+              출발지: {legs.start_address}
+            </NBGBText>
+            <NBGBText marginTop={10} fontSize={12} numberOfLines={2}>
+              도착지: {hospital_detail.dutyAddr}
+            </NBGBText>
+          </AddressView>
+          {/* 상세 길찾기 정보 뷰*/}
+          <DetailContainerView>
+            <DetailTitleView>
+              <NBGBText>상세 길찾기 정보</NBGBText>
+            </DetailTitleView>
+            <DetailView
+              detail={detailData}
+              start={legs.start}
+              end={legs.end}
+              start_address={legs.start_address}
+              end_address={hospital_detail.dutyAddr}
+              warning={warning}
+            />
+          </DetailContainerView>
+        </StandardView>
+      )}
     </TopContainerView>
   );
 };
