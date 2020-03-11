@@ -43,8 +43,8 @@ const config = {
   toAddress_url: 'http://apis.vworld.kr/coord2new.do',
   toAddress_ServiceKey: '597B78FF-588A-39E2-9559-6E64981C808F',
   // 위치 설정 페이지 주소 검색 api
-  searchAddress_url: 'http://map.vworld.kr/search.do?',
-  searchAddress_ServiceKey: '1024C3D6-E691-3ADA-B8CD-8FF2406FC102',
+  searchAddress_url: 'https://dapi.kakao.com/v2/local/search/address.json?',
+  searchAddress_ServiceKey: 'KakaoAK fe71634c5b50df5707cc477469a282a5',
   // 병원 상세페이지 길찾기에 사용되는 api
   googleMaps_url: 'https://maps.googleapis.com/maps/api/directions/json?',
   googleMaps_ServiceKey: 'AIzaSyDgBRnXW2cAmBWKGd-EFo-P0cZ_zKKp5As',

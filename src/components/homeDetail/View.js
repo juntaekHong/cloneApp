@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {useCallback, useState, useEffect} from 'react';
 import {View, Text, Platform, TouchableHighlight} from 'react-native';
 import styled from 'styled-components/native';

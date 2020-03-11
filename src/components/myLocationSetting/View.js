@@ -18,7 +18,7 @@ const Search = styled(StandardView)`
 export const SearchView = ({marginTop, search}) => {
   return (
     <Search>
-      <NBGBText fontSize={18}>지번, 도로명, 건물명을 입력하세요</NBGBText>
+      <NBGBText fontSize={18}>지번, 도로명을 입력하세요</NBGBText>
       <SearchInput marginTop={marginTop} fontSize={13} search={search} />
       <AutoBtn
         marginTop={10}

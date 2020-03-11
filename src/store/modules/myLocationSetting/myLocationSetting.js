@@ -37,25 +37,24 @@ export const handleSearchAddressInit = () => dispatch => {
 // 주소 검색
 export const searchAddress = (place, count, page) => async dispatch => {
   try {
-    // 장소 검색
     const jsonData = await axios.get(
-      `${config.searchAddress_url}category=poi&q=${place}&pageunit=${count}&output=json&pageindex=${page}&apiKey=${config.searchAddress_ServiceKey}`,
+      `${config.searchAddress_url}query=${place}`,
+      {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          Authorization: config.searchAddress_ServiceKey,
+        },
+      },
     );
-    // // 지번 검색
-    // const jsonData2 = await axios.get(
-    //   `${config.searchAddress_url}category=jibun&q=성남시 분당구 삼평동 624-1&pageunit=10&output=json&pageindex=1&apiKey=${config.searchAddress_ServiceKey}`,
-    // );
-    // // 도로명 검색
-    // const jsonData3 = await axios.get(
-    //   `${config.searchAddress_url}category=juso&q=성남시 분당구 판교로 242&pageunit=10&output=json&pageindex=1&apiKey=${config.searchAddress_ServiceKey}`,
-    // );
 
-    await dispatch(searchAddressAction(jsonData.data.LIST));
+    console.log(jsonData.data.documents);
 
-    await dispatch(searchTotalAction(jsonData.data.Poi));
+    // await dispatch(searchAddressAction(jsonData.data.LIST));
 
-    console.log('123');
+    // await dispatch(searchTotalAction(jsonData.data.Poi));
   } catch (e) {
+    console.log('fail');
     // 주소 검색 공공 api 요청 실패 => 서버 연동 실패
     await dispatch(searchAddressAction([]));
   }

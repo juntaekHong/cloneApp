@@ -51,7 +51,7 @@ export const SearchInput = ({marginTop, fontSize, search}) => {
         <Input
           fontSize={fontSize}
           underlineColorAndroid="transparent"
-          placeholder={'예) 병원동 12-3 또는 병원아파트'}
+          placeholder={'예) 병원동 12-3 또는 병원로 235'}
           placeholderTextColor={'gray'}
           returnKeyType={'search'}
           onChangeText={text => setSearchText(text)}
