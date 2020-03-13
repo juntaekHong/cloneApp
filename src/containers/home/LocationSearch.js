@@ -24,7 +24,11 @@ import {NBGBText, NBGLText} from '../../components/common/Text';
 const LocationSearch = props => {
   const [lat, setLat] = useState(props.navigation.state.params.y);
   const [long, setLong] = useState(props.navigation.state.params.x);
-  const [address, setAddress] = useState(props.navigation.state.params.address);
+  const [address, setAddress] = useState(
+    props.navigation.state.params.address === ''
+      ? props.extra_address
+      : props.navigation.state.params.address,
+  );
 
   useEffect(() => {
     return async () => {
@@ -182,4 +186,6 @@ const LocationSearch = props => {
   );
 };
 
-export default connect(state => ({}))(LocationSearch);
+export default connect(state => ({
+  extra_address: state.common.extra_address,
+}))(LocationSearch);

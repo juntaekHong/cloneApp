@@ -196,7 +196,7 @@ export const getMyAddress = (Long, Lat, boolean) => async dispatch => {
 
         await dispatch(addressAction(customAddress));
       } else {
-        dispatch(
+        await dispatch(
           extraAddressAction(jsonData2.data.routes[0].legs[0].start_address),
         );
       }
@@ -210,7 +210,7 @@ export const getMyAddress = (Long, Lat, boolean) => async dispatch => {
 
         await dispatch(addressAction(customAddress));
       } else {
-        dispatch(extraAddressAction(jsonData.data.NEW_JUSO));
+        await dispatch(extraAddressAction(jsonData.data.NEW_JUSO));
       }
     }
   } catch (e) {

@@ -41,8 +41,9 @@ const MyLocationSetting = props => {
           await props.navigation.navigate('LocationSearch', {
             x: parseFloat(longitude),
             y: parseFloat(latitude),
-            address: props.extra_address,
+            address: '',
           });
+          await CommonActions.handleLoading(false);
         });
       },
       error => {
@@ -56,7 +57,6 @@ const MyLocationSetting = props => {
       // enableHighAccuracy: true 시, 실제 디바이스에서 내 위치 설정 요청 오류남.
       {enableHighAccuracy: false, timeout: 10000, maximumAge: 10000},
     );
-    await CommonActions.handleLoading(false);
   }, []);
 
   // 페이지 unMount되면, 검색 데이터 삭제
@@ -120,8 +120,8 @@ const MyLocationSetting = props => {
       <SearchView
         marginTop={10}
         search={value => setSearchText(value)}
-        autoOnpress={() => {
-          nowLocationSetting();
+        autoOnpress={async () => {
+          await nowLocationSetting();
         }}
       />
       <SearchResult
@@ -136,7 +136,6 @@ const MyLocationSetting = props => {
 
 export default connect(state => ({
   address: state.common.address,
-  extra_address: state.common.extra_address,
   latitude: state.common.latitude,
   longitude: state.common.longitude,
   hospitalList: state.common.hospitalList,
