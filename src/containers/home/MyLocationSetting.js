@@ -26,7 +26,7 @@ const MyLocationSetting = props => {
   // 현 위치 설정 버튼 클릭 시, 위치(GPS) 켜져있지 않으면 모달 띄우기
   const [errorModal, setErrorModal] = useState(false);
 
-  const nowLocationSetting = useCallback(async () => {
+  const nowLocationSetting = async () => {
     Geolocation.getCurrentPosition(
       position => {
         const {latitude, longitude} = position.coords;
@@ -51,7 +51,7 @@ const MyLocationSetting = props => {
       // enableHighAccuracy: true 시, 실제 디바이스에서 내 위치 설정 요청 오류남.
       {enableHighAccuracy: false, timeout: 10000, maximumAge: 10000},
     );
-  }, []);
+  };
 
   // 페이지 unMount되면, 검색 데이터 삭제
   useEffect(() => {
