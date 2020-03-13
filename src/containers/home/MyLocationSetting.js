@@ -27,7 +27,7 @@ const MyLocationSetting = props => {
   const [errorModal, setErrorModal] = useState(false);
 
   const nowLocationSetting = async () => {
-    Geolocation.getCurrentPosition(
+    await Geolocation.getCurrentPosition(
       position => {
         const {latitude, longitude} = position.coords;
         setLocation({
@@ -62,25 +62,23 @@ const MyLocationSetting = props => {
 
   return (
     <TopContainerView>
-      {/* <CustomModal
+      <CustomModal
         width={300}
         height={180}
         visible={alertModal}
         close={false}
         children={
           <StandardView style={{marginLeft: widthPercentageToDP(20)}}>
-            <NBGBText fontSize={20}>위치 재설정 확인 알림!</NBGBText>
+            <NBGBText fontSize={20}>위치 재설정 알림</NBGBText>
             <NBGLText fontSize={15} marginTop={30}>
-              {
-                '위치가 변경되었습니다!\n\n홈으로 돌아가 위치 설정 주소를 확인해 보세요!'
-              }
+              {'현 위치로 주소 설정중입니다!\n\n잠시만 기다려주세요.'}
             </NBGLText>
           </StandardView>
         }
         renderFooter={() => {
           return <StandardView />;
         }}
-      /> */}
+      />
       <CustomModal
         width={300}
         height={180}
@@ -91,7 +89,7 @@ const MyLocationSetting = props => {
             <NBGBText fontSize={20}>현위치 재설정 알림</NBGBText>
             <NBGLText fontSize={15} marginTop={30}>
               {
-                '위치(GPS) 설정이 꺼져있습니다!\n\n위치 권한을 켜주신 후 이용해주시 바랍니다.'
+                '위치(GPS) 설정이 꺼져있습니다!\n위치 권한을 켜주신 후 이용해주시 바랍니다.'
               }
             </NBGLText>
           </StandardView>
@@ -128,7 +126,16 @@ const MyLocationSetting = props => {
         marginTop={10}
         search={value => setSearchText(value)}
         autoOnpress={async () => {
-          await nowLocationSetting();
+          await setAlertModal(true);
+
+          const promise1 = nowLocationSetting();
+
+          Promise.all([promise1]).then(() => {
+            let timeout = setInterval(async () => {
+              await setAlertModal(false);
+              clearInterval(timeout);
+            }, 2000);
+          });
         }}
       />
       <SearchResult
