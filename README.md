@@ -68,17 +68,12 @@ Project< ios Folder 안에 pod --version 으로 pod 설치 확인
 ```
 
 ### 실행 화면들
-![KakaoTalk_Photo_2020-03-02-16-38-56](https://user-images.githubusercontent.com/50249009/75655098-7d9c2b00-5ca4-11ea-96a5-5936648d5aca.jpeg)
+<img width="382" alt="스크린샷 2020-03-14 오전 7 33 36" src="https://user-images.githubusercontent.com/50249009/76664039-5dcf0600-65c6-11ea-9a0e-488fd60fcc58.png">
 
+<img width="386" alt="스크린샷 2020-03-14 오전 7 31 31" src="https://user-images.githubusercontent.com/50249009/76664052-64f61400-65c6-11ea-9690-94c3aade7bd0.png">
 
-![KakaoTalk_Photo_2020-03-02-16-39-06](https://user-images.githubusercontent.com/50249009/75655110-82f97580-5ca4-11ea-901f-8e6efae7a527.jpeg)
+<img width="382" alt="스크린샷 2020-03-14 오전 7 32 11" src="https://user-images.githubusercontent.com/50249009/76664067-6cb5b880-65c6-11ea-997b-44f2d276ea49.png">
 
+<img width="382" alt="스크린샷 2020-03-14 오전 7 33 43" src="https://user-images.githubusercontent.com/50249009/76664076-72130300-65c6-11ea-8d1b-6d2d80da9671.png">
 
-![KakaoTalk_Photo_2020-03-02-16-39-11](https://user-images.githubusercontent.com/50249009/75655115-868cfc80-5ca4-11ea-8f4b-f84f6122780e.jpeg)
-
-
-![KakaoTalk_Photo_2020-03-02-16-39-23](https://user-images.githubusercontent.com/50249009/75655122-8a208380-5ca4-11ea-9213-1f3573fac76c.jpeg)
-
-![KakaoTalk_Photo_2020-03-02-16-39-32](https://user-images.githubusercontent.com/50249009/75655142-9573af00-5ca4-11ea-9469-a193626d0c70.jpeg)
-
-
+<img width="386" alt="스크린샷 2020-03-14 오전 7 31 16" src="https://user-images.githubusercontent.com/50249009/76664084-77704d80-65c6-11ea-9311-9862a0c28c42.png">
