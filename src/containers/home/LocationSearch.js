@@ -92,11 +92,18 @@ const LocationSearch = props => {
               <Callout>
                 <View
                   style={{
-                    backgroundColor: 'white',
-                    width: widthPercentageToDP(120),
-                    height: widthPercentageToDP(30),
+                    flexDirection: 'row',
+                    width: widthPercentageToDP(140),
+                    minHeight: widthPercentageToDP(20),
                   }}>
-                  <NBGLText fontSize={13}>주소: {address}</NBGLText>
+                  <NBGBText fontSize={12}>주소: </NBGBText>
+                  <NBGLText
+                    fontSize={13}
+                    style={{
+                      marginRight: widthPercentageToDP(20),
+                    }}>
+                    {address}
+                  </NBGLText>
                 </View>
               </Callout>
             </Marker>
@@ -108,7 +115,7 @@ const LocationSearch = props => {
               bottom: 10,
               alignItems: 'center',
             }}>
-            <TextInput
+            {/* <TextInput
               style={{
                 width: widthPercentageToDP(335),
                 height: widthPercentageToDP(50),
@@ -127,7 +134,24 @@ const LocationSearch = props => {
               onSubmitEditing={() => {
                 Keyboard.dismiss();
               }}
-            />
+            /> */}
+            <StandardView
+              style={{
+                flexDirection: 'row',
+                width: widthPercentageToDP(335),
+                minHeight: widthPercentageToDP(50),
+                alignItems: 'center',
+                borderWidth: widthPercentageToDP(2),
+                borderRadius: widthPercentageToDP(10),
+                borderColor: '#dbdbdb',
+                paddingHorizontal: widthPercentageToDP(15),
+                marginBottom: widthPercentageToDP(20),
+              }}>
+              <NBGBText fontSize={13}>주소: </NBGBText>
+              <NBGLText marginRight={20} fontSize={13}>
+                {address}
+              </NBGLText>
+            </StandardView>
             <BTN
               onPress={async () => {
                 Keyboard.dismiss();

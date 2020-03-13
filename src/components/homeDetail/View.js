@@ -38,14 +38,6 @@ export const Map = ({
     return custom;
   };
 
-  const customAddress = useCallback(address => {
-    let custom = address.split(' ');
-
-    custom = custom[custom.length - 2] + custom[custom.length - 1];
-
-    return custom;
-  }, []);
-
   return (
     <MapView
       style={{
@@ -81,11 +73,13 @@ export const Map = ({
           <View
             style={{
               backgroundColor: 'white',
+              flexDirection: 'row',
               width: widthPercentageToDP(120),
-              height: widthPercentageToDP(30),
+              minHeight: widthPercentageToDP(30),
             }}>
-            <NBGLText fontSize={10}>
-              주소: {customAddress(start_address)}
+            <NBGBText fontSize={10}>주소: </NBGBText>
+            <NBGLText fontSize={10} marginRight={20}>
+              {start_address}
             </NBGLText>
           </View>
         </Callout>
@@ -113,11 +107,13 @@ export const Map = ({
           <View
             style={{
               backgroundColor: 'white',
+              flexDirection: 'row',
               width: widthPercentageToDP(120),
-              height: widthPercentageToDP(30),
+              minHeight: widthPercentageToDP(30),
             }}>
-            <NBGLText fontSize={10}>
-              주소: {customAddress(end_address)}
+            <NBGBText fontSize={10}>주소: </NBGBText>
+            <NBGLText fontSize={10} marginRight={20}>
+              {end_address}
             </NBGLText>
           </View>
         </Callout>
