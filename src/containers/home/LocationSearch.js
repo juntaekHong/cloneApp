@@ -2,12 +2,19 @@
 import React, {useEffect, useState} from 'react';
 import {SafeAreaView, Text, View} from 'react-native';
 import {connect} from 'react-redux';
-import {TopView, TopContainerView} from '../../components/common/View';
+import {CommonActions} from '../../store/actionCreator';
+import {
+  TopView,
+  TopContainerView,
+  StandardView,
+  BTN,
+} from '../../components/common/View';
 import MapView, {Marker, Callout} from 'react-native-maps';
 import {widthPercentageToDP} from '../../utils/util';
 import {UIActivityIndicator} from 'react-native-indicators';
 import {Img} from '../../components/common/Image';
 import {NBGBText, NBGLText} from '../../components/common/Text';
+import {handleAlertModal} from '../../store/modules/myLocationSetting/myLocationSetting';
 
 const LocationSearch = props => {
   const [lat, setLat] = useState(props.navigation.state.params.y);
@@ -36,13 +43,6 @@ const LocationSearch = props => {
           latitudeDelta: 0.00121,
           longitudeDelta: 0.00121,
         }}>
-        {/* <Marker
-          coordinate={{
-            latitude: lat,
-            longitude: long,
-          }}
-        />
-         */}
         <Marker
           coordinate={{
             latitude: lat,
@@ -73,6 +73,35 @@ const LocationSearch = props => {
           </Callout>
         </Marker>
       </MapView>
+      <StandardView
+        style={{
+          width: '100%',
+          position: 'absolute',
+          bottom: 10,
+          alignItems: 'center',
+        }}>
+        <BTN
+          onPress={async () => {
+            // 위치 재설정 및 병원 리스트 새로 요청
+            await CommonActions.handleLoading(true);
+            await CommonActions.resetMyLocation(lat, long);
+            await CommonActions.getMyAddress(long, lat);
+            await CommonActions.getHospitalList(long, lat, 500);
+            await CommonActions.handleLoading(false);
+            await props.navigation.goBack(null);
+          }}
+          style={{
+            width: widthPercentageToDP(335),
+            height: widthPercentageToDP(50),
+            alignItems: 'center',
+            justifyContent: 'center',
+            borderWidth: widthPercentageToDP(2),
+            borderRadius: widthPercentageToDP(10),
+            borderColor: '#dbdbdb',
+          }}>
+          <NBGBText>위치 설정 확인</NBGBText>
+        </BTN>
+      </StandardView>
     </TopContainerView>
   );
 };

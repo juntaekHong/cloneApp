@@ -96,7 +96,7 @@ export const handlePageIndex = number => dispatch => {
 //   });
 // };
 
-// 처음 들어왔을 때, Init
+// 앱 실행하여 들어왔을 때, Init
 export const locationInit = () => async dispatch => {
   const location_lat = await getData('location_lat');
   const location_long = await getData('location_long');
@@ -122,6 +122,14 @@ export const myLocation = (Lat, Long) => async dispatch => {
     await dispatch(locationLatitudeAction(parseFloat(location_lat)));
     await dispatch(locationLongitudeAction(parseFloat(location_long)));
   }
+};
+
+// 위치 설정 페이지를 통한 내 위치 재설정
+export const resetMyLocation = (Lat, Long) => async dispatch => {
+  await removeData('location_lat');
+  await removeData('location_long');
+
+  await myLocation(Lat, Long);
 };
 
 // 병원 리스트 호출
