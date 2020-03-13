@@ -113,23 +113,6 @@ const LocationSearch = props => {
                 />
                 <NBGBText fontSize={13}>설정 위치</NBGBText>
               </View>
-              <Callout>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    width: widthPercentageToDP(140),
-                    minHeight: widthPercentageToDP(20),
-                  }}>
-                  <NBGBText fontSize={12}>주소: </NBGBText>
-                  <NBGLText
-                    fontSize={13}
-                    style={{
-                      marginRight: widthPercentageToDP(20),
-                    }}>
-                    {address}
-                  </NBGLText>
-                </View>
-              </Callout>
             </Marker>
           </MapView>
           <StandardView
