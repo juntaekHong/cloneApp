@@ -26,7 +26,7 @@ const MyLocationSetting = props => {
   const [errorModal, setErrorModal] = useState(false);
 
   const nowLocationSetting = useCallback(async () => {
-    await Geolocation.getCurrentPosition(
+    Geolocation.getCurrentPosition(
       position => {
         const {latitude, longitude} = position.coords;
         setLocation({
