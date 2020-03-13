@@ -130,12 +130,10 @@ const MyLocationSetting = props => {
           const promise1 = nowLocationSetting();
 
           Promise.all([promise1]).then(() => {
-            if (alertModal === true) {
-              let timeout = setInterval(async () => {
-                await setAlertModal(false);
-                clearInterval(timeout);
-              }, 2000);
-            }
+            let timeout = setInterval(async () => {
+              await setAlertModal(false);
+              clearInterval(timeout);
+            }, 2000);
           });
         }}
       />
