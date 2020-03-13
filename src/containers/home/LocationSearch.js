@@ -20,6 +20,7 @@ import MapView, {Marker, Callout} from 'react-native-maps';
 import {widthPercentageToDP} from '../../utils/util';
 import {Img} from '../../components/common/Image';
 import {NBGBText, NBGLText} from '../../components/common/Text';
+import {UIActivityIndicator} from 'react-native-indicators';
 
 const LocationSearch = props => {
   const [lat, setLat] = useState(props.navigation.state.params.y);
@@ -29,6 +30,8 @@ const LocationSearch = props => {
       ? props.extra_address
       : props.navigation.state.params.address,
   );
+  // 위치 이동 시, 로딩
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     props.navigation.state.params.test !== undefined
@@ -81,6 +84,16 @@ const LocationSearch = props => {
               longitude: long,
               latitudeDelta: 0.00121,
               longitudeDelta: 0.00121,
+            }}
+            onRegionChange={async region => {
+              await setLoading(true);
+              await setLat(region.latitude);
+              await setLong(region.longitude);
+            }}
+            onRegionChangeComplete={async () => {
+              await CommonActions.getMyAddress(long, lat, true);
+              await setAddress(props.extra_address);
+              await setLoading(false);
             }}>
             <Marker
               coordinate={{
@@ -161,9 +174,13 @@ const LocationSearch = props => {
                 backgroundColor: 'white',
               }}>
               <NBGBText fontSize={13}>주소: </NBGBText>
-              <NBGLText marginRight={20} fontSize={13}>
-                {address}
-              </NBGLText>
+              {loading ? (
+                <UIActivityIndicator size={15} color={'gray'} />
+              ) : (
+                <NBGLText marginRight={20} fontSize={13}>
+                  {address}
+                </NBGLText>
+              )}
             </StandardView>
             <BTN
               onPress={async () => {
