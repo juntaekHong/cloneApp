@@ -48,7 +48,7 @@ const LocationSearch = props => {
     await CommonActions.handleHospitalListInit();
     await CommonActions.getHospitalList(long, lat, 500);
     await CommonActions.handleLoading(false);
-    await props.navigation.goBack(null);
+    await props.navigation.navigate('home');
   };
 
   return (
