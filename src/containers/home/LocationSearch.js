@@ -31,6 +31,8 @@ const LocationSearch = props => {
   );
 
   useEffect(() => {
+    props.navigation.state.params.test();
+
     return async () => {
       await Keyboard.dismiss();
     };

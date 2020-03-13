@@ -16,11 +16,12 @@ import {LocationActions} from '../../store/actionCreator';
 import {SearchResult} from '../../components/myLocationSetting/FlatList';
 import {NBGLText, NBGBText, NBGText} from '../../components/common/Text';
 import {widthPercentageToDP} from '../../utils/util';
+import {UIActivityIndicator} from 'react-native-indicators';
 
 const MyLocationSetting = props => {
   const [searchText, setSearchText] = useState();
   // 위치 설정 확인 페이지에서 위치 재설정 후, 돌와왔을 때, 실행 => 작업 대기
-  const [alertModal, setAlertModal] = useState(false);
+  const [alert, setAlert] = useState(false);
   // 현 위치 설정 데이터
   const [location, setLocation] = useState();
   // 현 위치 설정 버튼 클릭 시, 위치(GPS) 켜져있지 않으면 모달 띄우기
@@ -35,7 +36,7 @@ const MyLocationSetting = props => {
           longitude,
         });
 
-        setAlertModal(true);
+        setAlert(true);
 
         const promise1 = CommonActions.getMyAddress(longitude, latitude, true);
 
@@ -44,6 +45,9 @@ const MyLocationSetting = props => {
             x: parseFloat(longitude),
             y: parseFloat(latitude),
             address: '',
+            test: () => {
+              setAlert(false);
+            },
           });
         });
       },
@@ -53,11 +57,6 @@ const MyLocationSetting = props => {
       // enableHighAccuracy: true 시, 실제 디바이스에서 내 위치 설정 요청 오류남.
       {enableHighAccuracy: false, timeout: 10000, maximumAge: 10000},
     );
-
-    let timeout = setInterval(async () => {
-      await setAlertModal(false);
-      clearInterval(timeout);
-    }, 2000);
   };
 
   // 페이지 unMount되면, 검색 데이터 삭제
@@ -69,23 +68,6 @@ const MyLocationSetting = props => {
 
   return (
     <TopContainerView>
-      <CustomModal
-        width={300}
-        height={180}
-        visible={alertModal}
-        close={false}
-        children={
-          <StandardView style={{marginLeft: widthPercentageToDP(20)}}>
-            <NBGBText fontSize={20}>위치 재설정 알림</NBGBText>
-            <NBGLText fontSize={15} marginTop={30}>
-              {'현 위치로 주소 설정중입니다!\n\n잠시만 기다려주세요.'}
-            </NBGLText>
-          </StandardView>
-        }
-        renderFooter={() => {
-          return <StandardView />;
-        }}
-      />
       <CustomModal
         width={300}
         height={180}
@@ -129,19 +111,39 @@ const MyLocationSetting = props => {
           props.navigation.goBack(null);
         }}
       />
-      <SearchView
-        marginTop={10}
-        search={value => setSearchText(value)}
-        autoOnpress={async () => {
-          await nowLocationSetting();
-        }}
-      />
-      <SearchResult
-        data={props.search_address}
-        totalCount={props.search_total}
-        searchText={searchText}
-        navigation={props.navigation}
-      />
+      {alert === true ? (
+        <StandardView
+          style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+          <StandardView>
+            <UIActivityIndicator
+              style={{
+                maxHeight: widthPercentageToDP(30),
+              }}
+              size={30}
+              color={'gray'}
+            />
+            <NBGBText fontSize={14} align={'center'} marginTop={10}>
+              {'현재 위치를 불러오고 있는 중입니다!\n잠시만 기다려주세요.'}
+            </NBGBText>
+          </StandardView>
+        </StandardView>
+      ) : (
+        <StandardView>
+          <SearchView
+            marginTop={10}
+            search={value => setSearchText(value)}
+            autoOnpress={async () => {
+              await nowLocationSetting();
+            }}
+          />
+          <SearchResult
+            data={props.search_address}
+            totalCount={props.search_total}
+            searchText={searchText}
+            navigation={props.navigation}
+          />
+        </StandardView>
+      )}
     </TopContainerView>
   );
 };
