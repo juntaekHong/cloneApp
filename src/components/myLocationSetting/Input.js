@@ -46,27 +46,25 @@ export const SearchInput = ({marginTop, fontSize, search}) => {
   };
 
   return (
-    <TouchableWithoutFeedback>
-      <InputView marginTop={marginTop}>
-        <Input
-          fontSize={fontSize}
-          underlineColorAndroid="transparent"
-          placeholder={'예) 병원동 12-3 또는 병원로 235'}
-          placeholderTextColor={'gray'}
-          returnKeyType={'search'}
-          onChangeText={text => setSearchText(text)}
-          value={searchText}
-          onSubmitEditing={() => {
-            submit();
-          }}
-        />
-        <SearchBtn
-          marginLeft={10}
-          onPress={() => {
-            submit();
-          }}
-        />
-      </InputView>
-    </TouchableWithoutFeedback>
+    <InputView marginTop={marginTop}>
+      <Input
+        fontSize={fontSize}
+        underlineColorAndroid="transparent"
+        placeholder={'예) 병원동 12-3 또는 병원로 235'}
+        placeholderTextColor={'gray'}
+        returnKeyType={'search'}
+        onChangeText={text => setSearchText(text)}
+        value={searchText}
+        onSubmitEditing={() => {
+          submit();
+        }}
+      />
+      <SearchBtn
+        marginLeft={10}
+        onPress={() => {
+          submit();
+        }}
+      />
+    </InputView>
   );
 };

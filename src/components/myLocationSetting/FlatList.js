@@ -1,6 +1,6 @@
 import React, {useCallback, useState, useEffect} from 'react';
 import styled from 'styled-components/native';
-import {View, Text, FlatList} from 'react-native';
+import {TouchableWithoutFeedback, Keyboard} from 'react-native';
 import {StandardView, BTN, ListView} from '../common/View';
 import {NBGBText, NBGText, NBGLText} from '../common/Text';
 import {widthPercentageToDP} from '../../utils/util';
@@ -61,24 +61,26 @@ export const SearchResult = ({data, totalCount, searchText, navigation}) => {
   };
 
   return (
-    <SearchResultList
-      data={data}
-      keyExtractor={(item, index) => index.toString()}
-      ListHeaderComponent={_headerView}
-      renderItem={_renderItem}
-      onEndReachedThreshold={0.01}
-      onEndReached={async () => {
-        if (totalCount > resultCount) {
-          await setLoading(true);
-          await LocationActions.searchAddress(
-            searchText,
-            data.length / 10 + 1,
-            10,
-          );
-          await setLoading(false);
-        }
-      }}
-      ListFooterComponent={_footerView}
-    />
+    <TouchableWithoutFeedback onPressIn={() => Keyboard.dismiss()}>
+      <SearchResultList
+        data={data}
+        keyExtractor={(item, index) => index.toString()}
+        ListHeaderComponent={_headerView}
+        renderItem={_renderItem}
+        onEndReachedThreshold={0.01}
+        onEndReached={async () => {
+          if (totalCount > resultCount) {
+            await setLoading(true);
+            await LocationActions.searchAddress(
+              searchText,
+              data.length / 10 + 1,
+              10,
+            );
+            await setLoading(false);
+          }
+        }}
+        ListFooterComponent={_footerView}
+      />
+    </TouchableWithoutFeedback>
   );
 };

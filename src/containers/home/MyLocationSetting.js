@@ -1,16 +1,8 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useEffect, useRef, useState} from 'react';
-import Styled from 'styled-components/native';
-import {View, TouchableOpacity, Text, ScrollView} from 'react-native';
 import {connect} from 'react-redux';
 import {CustomModal} from '../../components/common/Modal';
-import {
-  TopContainerView,
-  TopView,
-  StandardView,
-} from '../../components/common/View';
-import {NBGBText, NBGLText} from '../../components/common/Text';
-import {widthPercentageToDP} from '../../utils/util';
+import {TopContainerView, TopView} from '../../components/common/View';
 // 내 위치 정보 확인
 import {SearchView} from '../../components/myLocationSetting/View';
 import {LocationActions} from '../../store/actionCreator';
