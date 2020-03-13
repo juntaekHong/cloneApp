@@ -43,7 +43,6 @@ const MyLocationSetting = props => {
           await props.navigation.navigate('LocationSearch', {
             x: parseFloat(longitude),
             y: parseFloat(latitude),
-            address: '',
             test: () => {
               setAlert(false);
             },

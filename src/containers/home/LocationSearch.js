@@ -26,7 +26,7 @@ const LocationSearch = props => {
   const [lat, setLat] = useState(props.navigation.state.params.y);
   const [long, setLong] = useState(props.navigation.state.params.x);
   const [address, setAddress] = useState(
-    props.navigation.state.params.address === ''
+    props.navigation.state.params.address === undefined
       ? props.extra_address
       : props.navigation.state.params.address,
   );
@@ -40,6 +40,7 @@ const LocationSearch = props => {
 
     return async () => {
       await Keyboard.dismiss();
+      await CommonActions.handleExtraAddressInit();
     };
   }, []);
 
@@ -90,9 +91,8 @@ const LocationSearch = props => {
               await setLat(region.latitude);
               await setLong(region.longitude);
             }}
-            onRegionChangeComplete={async () => {
-              await CommonActions.getMyAddress(long, lat, true);
-              await setAddress(props.extra_address);
+            onRegionChangeComplete={async region => {
+              await CommonActions.getMyAddress(long, lat, true, address);
               await setLoading(false);
             }}>
             <Marker
@@ -161,7 +161,7 @@ const LocationSearch = props => {
                 <UIActivityIndicator size={15} color={'gray'} />
               ) : (
                 <NBGLText marginRight={20} fontSize={13}>
-                  {address}
+                  {props.extra_address === null ? address : props.extra_address}
                 </NBGLText>
               )}
             </StandardView>

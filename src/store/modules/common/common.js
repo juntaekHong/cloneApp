@@ -23,6 +23,7 @@ const COMMON_LOADING = 'common/COMMON_LOADING';
 const LOCATION_LATITUDE = 'common/LOCATION_LATITUDE';
 const LOCATION_LONGITUDE = 'common/LOCATION_LONGITUDE';
 const ADDRESS = 'common/ADDRESS';
+const EXTRA_ADDRESS_INIT = 'common/EXTRA_ADDRESS_INIT';
 const EXTRA_ADDRESS = 'common/EXTRA_ADDRESS';
 const HOSPITAL_LIST_INIT = 'common/HOSPITAL_LIST_INIT';
 const HOSPITAL_LIST = 'common/HOSPITAL_LIST';
@@ -40,6 +41,7 @@ export const loadingAction = createAction(COMMON_LOADING);
 const locationLatitudeAction = createAction(LOCATION_LATITUDE);
 const locationLongitudeAction = createAction(LOCATION_LONGITUDE);
 const addressAction = createAction(ADDRESS);
+const extraAddressInitAction = createAction(EXTRA_ADDRESS_INIT);
 const extraAddressAction = createAction(EXTRA_ADDRESS);
 const hospitalListInitAction = createAction(HOSPITAL_LIST_INIT);
 const hospitalListAction = createAction(HOSPITAL_LIST);
@@ -84,6 +86,10 @@ export const handlePageIndex = number => dispatch => {
 
 export const handleHospitalListInit = () => dispatch => {
   dispatch(hospitalListInitAction());
+};
+
+export const handleExtraAddressInit = () => dispatch => {
+  dispatch(extraAddressInitAction());
 };
 
 // export const getAppVersion = () => async dispatch => {
@@ -169,7 +175,12 @@ export const getHospitalDetail = hpid => async dispatch => {
 };
 
 // 좌표 주소 변환
-export const getMyAddress = (Long, Lat, boolean) => async dispatch => {
+export const getMyAddress = (
+  Long,
+  Lat,
+  boolean,
+  const_address,
+) => async dispatch => {
   let customAddress = '';
 
   try {
@@ -215,7 +226,11 @@ export const getMyAddress = (Long, Lat, boolean) => async dispatch => {
     }
   } catch (e) {
     // 내 도로명 주소 공공 api 요청 실패 => 서버 연동 실패
-    await dispatch(addressAction('error'));
+    if (const_address !== undefined) {
+      await dispatch(addressAction(const_address));
+    } else {
+      await dispatch(addressAction('주소 지정할 수 없습니다.'));
+    }
   }
 };
 
@@ -263,6 +278,10 @@ export default handleActions(
     [ADDRESS]: (state, {payload}) =>
       produce(state, draft => {
         draft.address = payload;
+      }),
+    [EXTRA_ADDRESS_INIT]: (state, {payload}) =>
+      produce(state, draft => {
+        draft.extra_address = null;
       }),
     [EXTRA_ADDRESS]: (state, {payload}) =>
       produce(state, draft => {
