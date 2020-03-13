@@ -26,7 +26,6 @@ const MyLocationSetting = props => {
   const [errorModal, setErrorModal] = useState(false);
 
   const nowLocationSetting = useCallback(async () => {
-    await CommonActions.handleLoading(true);
     await Geolocation.getCurrentPosition(
       position => {
         const {latitude, longitude} = position.coords;
@@ -43,7 +42,6 @@ const MyLocationSetting = props => {
             y: parseFloat(latitude),
             address: '',
           });
-          await CommonActions.handleLoading(false);
         });
       },
       error => {
@@ -57,7 +55,6 @@ const MyLocationSetting = props => {
       // enableHighAccuracy: true 시, 실제 디바이스에서 내 위치 설정 요청 오류남.
       {enableHighAccuracy: false, timeout: 10000, maximumAge: 10000},
     );
-    await CommonActions.handleLoading(false);
   }, []);
 
   // 페이지 unMount되면, 검색 데이터 삭제
