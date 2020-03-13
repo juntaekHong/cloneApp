@@ -35,10 +35,11 @@ const MyLocationSetting = props => {
           longitude,
         });
 
+        setAlertModal(true);
+
         const promise1 = CommonActions.getMyAddress(longitude, latitude, true);
 
         Promise.all([promise1]).then(async () => {
-          await setAlertModal(true);
           await props.navigation.navigate('LocationSearch', {
             x: parseFloat(longitude),
             y: parseFloat(latitude),
@@ -52,6 +53,11 @@ const MyLocationSetting = props => {
       // enableHighAccuracy: true 시, 실제 디바이스에서 내 위치 설정 요청 오류남.
       {enableHighAccuracy: false, timeout: 10000, maximumAge: 10000},
     );
+
+    let timeout = setInterval(async () => {
+      await setAlertModal(false);
+      clearInterval(timeout);
+    }, 2000);
   };
 
   // 페이지 unMount되면, 검색 데이터 삭제
@@ -127,14 +133,7 @@ const MyLocationSetting = props => {
         marginTop={10}
         search={value => setSearchText(value)}
         autoOnpress={async () => {
-          const promise1 = nowLocationSetting();
-
-          Promise.all([promise1]).then(() => {
-            let timeout = setInterval(async () => {
-              await setAlertModal(false);
-              clearInterval(timeout);
-            }, 2000);
-          });
+          await nowLocationSetting();
         }}
       />
       <SearchResult
