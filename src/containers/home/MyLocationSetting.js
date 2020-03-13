@@ -38,6 +38,7 @@ const MyLocationSetting = props => {
         const promise1 = CommonActions.getMyAddress(longitude, latitude, true);
 
         Promise.all([promise1]).then(async () => {
+          await setAlertModal(true);
           await props.navigation.navigate('LocationSearch', {
             x: parseFloat(longitude),
             y: parseFloat(latitude),
@@ -126,15 +127,15 @@ const MyLocationSetting = props => {
         marginTop={10}
         search={value => setSearchText(value)}
         autoOnpress={async () => {
-          await setAlertModal(true);
-
           const promise1 = nowLocationSetting();
 
           Promise.all([promise1]).then(() => {
-            let timeout = setInterval(async () => {
-              await setAlertModal(false);
-              clearInterval(timeout);
-            }, 2000);
+            if (alertModal === true) {
+              let timeout = setInterval(async () => {
+                await setAlertModal(false);
+                clearInterval(timeout);
+              }, 2000);
+            }
           });
         }}
       />
