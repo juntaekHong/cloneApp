@@ -1,5 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useEffect, useState, useRef, useCallback} from 'react';
+import {connect} from 'react-redux';
 import {
   View,
   TextInput,
@@ -31,14 +32,16 @@ const LocationSearch = props => {
     };
   }, []);
 
-  const submit = useCallback(async () => {
+  const submit = async () => {
     await CommonActions.handleLoading(true);
-    await CommonActions.resetMyLocation(lat, long);
+    await CommonActions.resetMyLocation();
+    await CommonActions.myLocation(lat, long);
     await CommonActions.getMyAddress(long, lat);
+    await CommonActions.handleHospitalListInit();
     await CommonActions.getHospitalList(long, lat, 500);
     await CommonActions.handleLoading(false);
     await props.navigation.goBack(null);
-  }, [lat, long, props.navigation]);
+  };
 
   return (
     <KeyboardAvoidingView
@@ -115,6 +118,7 @@ const LocationSearch = props => {
               bottom: 10,
               alignItems: 'center',
             }}>
+            {/* 추후 추가 예정 부분들 */}
             {/* <TextInput
               style={{
                 width: widthPercentageToDP(335),
@@ -176,4 +180,4 @@ const LocationSearch = props => {
   );
 };
 
-export default LocationSearch;
+export default connect(state => ({}))(LocationSearch);

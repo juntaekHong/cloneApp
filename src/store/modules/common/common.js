@@ -23,6 +23,7 @@ const COMMON_LOADING = 'common/COMMON_LOADING';
 const LOCATION_LATITUDE = 'common/LOCATION_LATITUDE';
 const LOCATION_LONGITUDE = 'common/LOCATION_LONGITUDE';
 const ADDRESS = 'common/ADDRESS';
+const HOSPITAL_LIST_INIT = 'common/HOSPITAL_LIST_INIT';
 const HOSPITAL_LIST = 'common/HOSPITAL_LIST';
 const HOSPITAL_DETAIL = 'common/HOSPITAL_DETAIL';
 const PAGE_INDEX = 'common/Page_INDEX';
@@ -38,6 +39,7 @@ export const loadingAction = createAction(COMMON_LOADING);
 const locationLatitudeAction = createAction(LOCATION_LATITUDE);
 const locationLongitudeAction = createAction(LOCATION_LONGITUDE);
 const addressAction = createAction(ADDRESS);
+const hospitalListInitAction = createAction(HOSPITAL_LIST_INIT);
 const hospitalListAction = createAction(HOSPITAL_LIST);
 const hospitalDetailAction = createAction(HOSPITAL_DETAIL);
 const pageIndexAction = createAction(PAGE_INDEX);
@@ -74,6 +76,10 @@ export const handleLoading = value => dispatch => {
 
 export const handlePageIndex = number => dispatch => {
   dispatch(pageIndexAction(number));
+};
+
+export const handleHospitalListInit = () => dispatch => {
+  dispatch(hospitalListInitAction());
 };
 
 // export const getAppVersion = () => async dispatch => {
@@ -125,11 +131,9 @@ export const myLocation = (Lat, Long) => async dispatch => {
 };
 
 // 위치 설정 페이지를 통한 내 위치 재설정
-export const resetMyLocation = (Lat, Long) => async dispatch => {
+export const resetMyLocation = () => async dispatch => {
   await removeData('location_lat');
   await removeData('location_long');
-
-  await myLocation(Lat, Long);
 };
 
 // 병원 리스트 호출
@@ -141,7 +145,8 @@ export const getHospitalList = (Long, Lat, rows) => async dispatch => {
     await dispatch(hospitalListAction(jsonData.data.response.body.items.item));
   } catch (e) {
     // 병원 리스트 공공 api 요청 실패 => 서버 연동 실패
-    await dispatch(hospitalListAction([]));
+    await dispatch(hospitalListInitAction());
+    console.log('hospital list insert fail');
   }
 };
 
@@ -244,6 +249,10 @@ export default handleActions(
     [ADDRESS]: (state, {payload}) =>
       produce(state, draft => {
         draft.address = payload;
+      }),
+    [HOSPITAL_LIST_INIT]: (state, {payload}) =>
+      produce(state, draft => {
+        draft.hospitalList = [];
       }),
     [HOSPITAL_LIST]: (state, {payload}) =>
       produce(state, draft => {

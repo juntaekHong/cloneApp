@@ -48,11 +48,10 @@ export const searchAddress = (place, page, count) => async dispatch => {
       },
     );
 
-    console.log(jsonData.data);
     await dispatch(searchAddressAction(jsonData.data.documents));
     await dispatch(searchTotalAction(jsonData.data.meta.total_count));
   } catch (e) {
-    console.log('fail');
+    console.log('search Address fail');
     // 주소 검색 공공 api 요청 실패 => 서버 연동 실패
     await dispatch(searchAddressAction([]));
   }
