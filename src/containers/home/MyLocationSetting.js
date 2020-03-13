@@ -8,12 +8,13 @@ import {
   TopContainerView,
   TopView,
   StandardView,
+  BTN,
 } from '../../components/common/View';
 // 내 위치 정보 확인
 import {SearchView} from '../../components/myLocationSetting/View';
 import {LocationActions} from '../../store/actionCreator';
 import {SearchResult} from '../../components/myLocationSetting/FlatList';
-import {NBGLText, NBGBText} from '../../components/common/Text';
+import {NBGLText, NBGBText, NBGText} from '../../components/common/Text';
 import {widthPercentageToDP} from '../../utils/util';
 
 const MyLocationSetting = props => {
@@ -46,11 +47,6 @@ const MyLocationSetting = props => {
       },
       error => {
         setErrorModal(true);
-
-        let timeout = setInterval(() => {
-          setErrorModal(false);
-          clearInterval(timeout);
-        }, 2000);
       },
       // enableHighAccuracy: true 시, 실제 디바이스에서 내 위치 설정 요청 오류남.
       {enableHighAccuracy: false, timeout: 10000, maximumAge: 10000},
@@ -92,16 +88,29 @@ const MyLocationSetting = props => {
         close={false}
         children={
           <StandardView style={{marginLeft: widthPercentageToDP(20)}}>
-            <NBGBText fontSize={20}>현위치 재설정 알림!</NBGBText>
+            <NBGBText fontSize={20}>현위치 재설정 알림</NBGBText>
             <NBGLText fontSize={15} marginTop={30}>
               {
-                '위치(GPS) 설정이 꺼져있습니다!\n\n위치 권한을 켜주신 후 이용해주시 바랍니다!'
+                '위치(GPS) 설정이 꺼져있습니다!\n\n위치 권한을 켜주신 후 이용해주시 바랍니다.'
               }
             </NBGLText>
           </StandardView>
         }
         renderFooter={() => {
-          return <StandardView />;
+          return (
+            <StandardView style={{alignItems: 'flex-end'}}>
+              <BTN
+                style={{
+                  marginRight: widthPercentageToDP(30),
+                  marginBottom: widthPercentageToDP(20),
+                }}
+                onPress={async () => {
+                  await setErrorModal(false);
+                }}>
+                <NBGText fontSize={15}>닫기</NBGText>
+              </BTN>
+            </StandardView>
+          );
         }}
       />
       <TopView
