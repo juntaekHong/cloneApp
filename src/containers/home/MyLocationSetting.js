@@ -28,6 +28,7 @@ const MyLocationSetting = props => {
   const [errorModal, setErrorModal] = useState(false);
 
   const nowLocationSetting = async () => {
+    setAlert(true);
     await Geolocation.getCurrentPosition(
       position => {
         const {latitude, longitude} = position.coords;
@@ -35,8 +36,6 @@ const MyLocationSetting = props => {
           latitude,
           longitude,
         });
-
-        setAlert(true);
 
         const promise1 = CommonActions.getMyAddress(longitude, latitude, true);
 
@@ -53,6 +52,7 @@ const MyLocationSetting = props => {
       },
       error => {
         setErrorModal(true);
+        setAlert(false);
       },
       // enableHighAccuracy: true 시, 실제 디바이스에서 내 위치 설정 요청 오류남.
       {enableHighAccuracy: false, timeout: 10000, maximumAge: 10000},
