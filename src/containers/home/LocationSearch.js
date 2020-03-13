@@ -66,7 +66,7 @@ const LocationSearch = props => {
           <MapView
             style={{
               width: widthPercentageToDP(375),
-              height: widthPercentageToDP(207),
+              height: '100%',
             }}
             initialRegion={{
               latitude: lat,
@@ -150,6 +150,7 @@ const LocationSearch = props => {
                 borderColor: '#dbdbdb',
                 paddingHorizontal: widthPercentageToDP(15),
                 marginBottom: widthPercentageToDP(20),
+                backgroundColor: 'white',
               }}>
               <NBGBText fontSize={13}>주소: </NBGBText>
               <NBGLText marginRight={20} fontSize={13}>
@@ -170,8 +171,9 @@ const LocationSearch = props => {
                 borderWidth: widthPercentageToDP(2),
                 borderRadius: widthPercentageToDP(10),
                 borderColor: '#dbdbdb',
+                backgroundColor: 'white',
               }}>
-              <NBGBText>위치 설정 확인</NBGBText>
+              <NBGBText>위치 설정 완료하기</NBGBText>
             </BTN>
           </StandardView>
         </TopContainerView>

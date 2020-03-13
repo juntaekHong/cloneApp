@@ -23,6 +23,7 @@ const COMMON_LOADING = 'common/COMMON_LOADING';
 const LOCATION_LATITUDE = 'common/LOCATION_LATITUDE';
 const LOCATION_LONGITUDE = 'common/LOCATION_LONGITUDE';
 const ADDRESS = 'common/ADDRESS';
+const EXTRA_ADDRESS = 'common/EXTRA_ADDRESS';
 const HOSPITAL_LIST_INIT = 'common/HOSPITAL_LIST_INIT';
 const HOSPITAL_LIST = 'common/HOSPITAL_LIST';
 const HOSPITAL_DETAIL = 'common/HOSPITAL_DETAIL';
@@ -39,6 +40,7 @@ export const loadingAction = createAction(COMMON_LOADING);
 const locationLatitudeAction = createAction(LOCATION_LATITUDE);
 const locationLongitudeAction = createAction(LOCATION_LONGITUDE);
 const addressAction = createAction(ADDRESS);
+const extraAddressAction = createAction(EXTRA_ADDRESS);
 const hospitalListInitAction = createAction(HOSPITAL_LIST_INIT);
 const hospitalListAction = createAction(HOSPITAL_LIST);
 const hospitalDetailAction = createAction(HOSPITAL_DETAIL);
@@ -56,6 +58,8 @@ const initState = {
   latitude: null,
   longitude: null,
   address: null,
+  // 임시 현 위치 주소 저장
+  extra_address: null,
   // 병원 리스트 불러오기
   hospitalList: [],
   // 병원 상세 정보 불러오기
@@ -165,7 +169,7 @@ export const getHospitalDetail = hpid => async dispatch => {
 };
 
 // 좌표 주소 변환
-export const getMyAddress = (Long, Lat) => async dispatch => {
+export const getMyAddress = (Long, Lat, boolean) => async dispatch => {
   let customAddress = '';
 
   try {
@@ -183,21 +187,31 @@ export const getMyAddress = (Long, Lat) => async dispatch => {
         }`,
       );
 
-      let address = jsonData2.data.routes[0].legs[0].start_address.split(' ');
+      if (boolean === undefined) {
+        let address = jsonData2.data.routes[0].legs[0].start_address.split(' ');
 
-      for (let i = 2; i < address.length; i++) {
-        customAddress += address[i] + ' ';
+        for (let i = 2; i < address.length; i++) {
+          customAddress += address[i] + ' ';
+        }
+
+        await dispatch(addressAction(customAddress));
+      } else {
+        dispatch(
+          extraAddressAction(jsonData2.data.routes[0].legs[0].start_address),
+        );
       }
-
-      await dispatch(addressAction(customAddress));
     } else {
-      let address = jsonData.data.NEW_JUSO.split(' ');
+      if (boolean === undefined) {
+        let address = jsonData.data.NEW_JUSO.split(' ');
 
-      for (let i = 2; i < address.length; i++) {
-        customAddress += address[i] + ' ';
+        for (let i = 2; i < address.length; i++) {
+          customAddress += address[i] + ' ';
+        }
+
+        await dispatch(addressAction(customAddress));
+      } else {
+        dispatch(extraAddressAction(jsonData.data.NEW_JUSO));
       }
-
-      await dispatch(addressAction(customAddress));
     }
   } catch (e) {
     // 내 도로명 주소 공공 api 요청 실패 => 서버 연동 실패
@@ -249,6 +263,10 @@ export default handleActions(
     [ADDRESS]: (state, {payload}) =>
       produce(state, draft => {
         draft.address = payload;
+      }),
+    [EXTRA_ADDRESS]: (state, {payload}) =>
+      produce(state, draft => {
+        draft.extra_address = payload;
       }),
     [HOSPITAL_LIST_INIT]: (state, {payload}) =>
       produce(state, draft => {

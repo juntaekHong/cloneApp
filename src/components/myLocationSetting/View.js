@@ -5,7 +5,6 @@ import {StandardView, BTN} from '../common/View';
 import {NBGBText, NBGText, NBGLText} from '../common/Text';
 import {widthPercentageToDP} from '../../utils/util';
 import colors from '../../configs/colors';
-import Communications from 'react-native-communications';
 import {Text} from 'react-native';
 import {SearchInput} from './Input';
 import {AutoBtn} from './Button';
@@ -15,7 +14,7 @@ const Search = styled(StandardView)`
   margin-horizontal: ${widthPercentageToDP(14)};
 `;
 
-export const SearchView = ({marginTop, search}) => {
+export const SearchView = ({marginTop, search, autoOnpress}) => {
   return (
     <Search>
       <NBGBText fontSize={18}>지번, 도로명을 입력하세요</NBGBText>
@@ -23,8 +22,9 @@ export const SearchView = ({marginTop, search}) => {
       <AutoBtn
         marginTop={10}
         title={'현 위치로 주소 설정'}
-        onPress={() => {
+        onPress={async () => {
           Keyboard.dismiss();
+          await autoOnpress();
         }}
       />
     </Search>
