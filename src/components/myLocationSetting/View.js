@@ -47,3 +47,23 @@ export const ResultCountView = ({resultCount}) => {
 };
 
 // 위치 설정 확인 페이지(지도뷰있는 것) 뷰
+export const BottomView = styled(StandardView)`
+  width: 100%;
+  position: absolute;
+  bottom: ${widthPercentageToDP(10)};
+  align-items: center;
+`;
+
+export const InnerBottomView = styled(StandardView)`
+  flex-direction: row;
+  width: ${widthPercentageToDP(335)};
+  min-height: ${widthPercentageToDP(50)};
+  align-items: center;
+  border-width: ${widthPercentageToDP(2)};
+  border-radius: ${widthPercentageToDP(10)};
+  border-color: #dbdbdb;
+  padding-left: ${widthPercentageToDP(15)};
+  padding-right: ${widthPercentageToDP(15)};
+  margin-bottom: ${widthPercentageToDP(20)};
+  background-color: white;
+`;

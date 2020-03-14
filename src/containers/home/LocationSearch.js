@@ -12,8 +12,11 @@ import {
   TopView,
   TopContainerView,
   StandardView,
-  BTN,
 } from '../../components/common/View';
+import {
+  BottomView,
+  InnerBottomView,
+} from '../../components/myLocationSetting/View';
 import MapView, {Marker} from 'react-native-maps';
 import {widthPercentageToDP} from '../../utils/util';
 import {Img} from '../../components/common/Image';
@@ -114,27 +117,8 @@ const LocationSearch = props => {
               </StandardView>
             </Marker>
           </MapView>
-          {/* 이부분 정리 */}
-          <StandardView
-            style={{
-              width: '100%',
-              position: 'absolute',
-              bottom: 10,
-              alignItems: 'center',
-            }}>
-            <StandardView
-              style={{
-                flexDirection: 'row',
-                width: widthPercentageToDP(335),
-                minHeight: widthPercentageToDP(50),
-                alignItems: 'center',
-                borderWidth: widthPercentageToDP(2),
-                borderRadius: widthPercentageToDP(10),
-                borderColor: '#dbdbdb',
-                paddingHorizontal: widthPercentageToDP(15),
-                marginBottom: widthPercentageToDP(20),
-                backgroundColor: 'white',
-              }}>
+          <BottomView>
+            <InnerBottomView>
               <NBGBText fontSize={13}>주소: </NBGBText>
               {loading ? (
                 <UIActivityIndicator size={15} color={'gray'} />
@@ -143,7 +127,7 @@ const LocationSearch = props => {
                   {props.extra_address === null ? address : props.extra_address}
                 </NBGLText>
               )}
-            </StandardView>
+            </InnerBottomView>
             <LatSetBTN
               title={'위치 설정 완료하기'}
               onPress={async () => {
@@ -152,7 +136,7 @@ const LocationSearch = props => {
                 await submit();
               }}
             />
-          </StandardView>
+          </BottomView>
         </TopContainerView>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
