@@ -1,6 +1,5 @@
 import React from 'react';
 import {Text} from 'react-native';
-import {widthPercentageToDP} from '../../utils/util';
 import {TopContainerView} from '../../components/common/View';
 
 const OfficeHours = props => {

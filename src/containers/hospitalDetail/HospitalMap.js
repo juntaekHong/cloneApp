@@ -1,9 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {connect} from 'react-redux';
-import {View, Text} from 'react-native';
 import {TopContainerView, StandardView} from '../../components/common/View';
-import {CommonActions} from '../../store/actionCreator';
-import {NBGBText, NBGLText} from '../../components/common/Text';
+import {NBGBText} from '../../components/common/Text';
 import {widthPercentageToDP} from '../../utils/util';
 import {
   LegView,
@@ -13,7 +11,6 @@ import {
   DetailView,
   Map,
 } from '../../components/homeDetail/View';
-import {Img} from '../../components/common/Image';
 import {UIActivityIndicator} from 'react-native-indicators';
 
 const HospitalMap = ({
