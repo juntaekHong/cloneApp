@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import {BTN} from '../common/View';
-import {NBGLText} from '../common/Text';
+import {NBGLText, NBGBText} from '../common/Text';
 import {widthPercentageToDP} from '../../utils/util';
 import {Img} from '../common/Image';
 
@@ -48,5 +48,28 @@ export const AutoBtn = ({marginTop, title, onPress}) => {
       }}>
       <NBGLText fontSize={12}>{title}</NBGLText>
     </AutoLocationSetting>
+  );
+};
+
+// 하위 위치 설정 확인 페이지에서 위치 설정 완료 버튼
+const LatSetting = styled(BTN)`
+  width: ${widthPercentageToDP(335)};
+  height: ${widthPercentageToDP(50)};
+  align-items: center;
+  justify-content: center;
+  border-width: ${widthPercentageToDP(2)};
+  border-radius: ${widthPercentageToDP(10)};
+  border-color: #dbdbdb;
+  background-color: white;
+`;
+
+export const LatSetBTN = ({title, onPress}) => {
+  return (
+    <LatSetting
+      onPress={async () => {
+        await onPress();
+      }}>
+      <NBGBText>{title}</NBGBText>
+    </LatSetting>
   );
 };

@@ -2,7 +2,6 @@
 import React, {useEffect, useState} from 'react';
 import {connect} from 'react-redux';
 import {
-  View,
   KeyboardAvoidingView,
   Platform,
   Keyboard,
@@ -20,6 +19,7 @@ import {widthPercentageToDP} from '../../utils/util';
 import {Img} from '../../components/common/Image';
 import {NBGBText, NBGLText} from '../../components/common/Text';
 import {UIActivityIndicator} from 'react-native-indicators';
+import {LatSetBTN} from '../../components/myLocationSetting/Button';
 
 const LocationSearch = props => {
   const [lat, setLat] = useState(props.navigation.state.params.y);
@@ -99,7 +99,7 @@ const LocationSearch = props => {
                 latitude: lat,
                 longitude: long,
               }}>
-              <View
+              <StandardView
                 style={{
                   backgroundColor: 'transparent',
                   alignItems: 'center',
@@ -111,9 +111,10 @@ const LocationSearch = props => {
                   source={require('../../../assets/image/home/pin.png')}
                 />
                 <NBGBText fontSize={13}>설정 위치</NBGBText>
-              </View>
+              </StandardView>
             </Marker>
           </MapView>
+          {/* 이부분 정리 */}
           <StandardView
             style={{
               width: '100%',
@@ -143,24 +144,14 @@ const LocationSearch = props => {
                 </NBGLText>
               )}
             </StandardView>
-            <BTN
+            <LatSetBTN
+              title={'위치 설정 완료하기'}
               onPress={async () => {
                 Keyboard.dismiss();
                 // 위치 재설정 및 병원 리스트 새로 요청
                 await submit();
               }}
-              style={{
-                width: widthPercentageToDP(335),
-                height: widthPercentageToDP(50),
-                alignItems: 'center',
-                justifyContent: 'center',
-                borderWidth: widthPercentageToDP(2),
-                borderRadius: widthPercentageToDP(10),
-                borderColor: '#dbdbdb',
-                backgroundColor: 'white',
-              }}>
-              <NBGBText>위치 설정 완료하기</NBGBText>
-            </BTN>
+            />
           </StandardView>
         </TopContainerView>
       </TouchableWithoutFeedback>

@@ -45,3 +45,5 @@ export const ResultCountView = ({resultCount}) => {
     </ResultCount>
   );
 };
+
+// 위치 설정 확인 페이지(지도뷰있는 것) 뷰
