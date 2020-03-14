@@ -1,16 +1,14 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useCallback, useState, useEffect} from 'react';
-import {View, Text, Platform, TouchableHighlight} from 'react-native';
+import React, {useState} from 'react';
+import {View} from 'react-native';
 import styled from 'styled-components/native';
 import MapView, {Marker, Callout} from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
-import {StandardView, BTN} from '../common/View';
-import {NBGBText, NBGText, NBGLText} from '../common/Text';
+import {StandardView} from '../common/View';
+import {NBGBText, NBGLText} from '../common/Text';
 import {widthPercentageToDP} from '../../utils/util';
-import colors from '../../configs/colors';
-import Communications from 'react-native-communications';
 import {StartImg, ConnectionImg, FinishImg} from '../home/Image';
-import {Img, CloseImg} from '../common/Image';
+import {Img} from '../common/Image';
 
 // 지도 뷰
 export const Map = ({

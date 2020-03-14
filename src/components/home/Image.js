@@ -2,7 +2,6 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import {Img} from '../common/Image';
-import {widthPercentageToDP} from '../../utils/util';
 
 export const SelectImg = () => {
   return (

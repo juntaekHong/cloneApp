@@ -1,10 +1,8 @@
 import React, {useState} from 'react';
 import styled from 'styled-components/native';
-import {TouchableWithoutFeedback, Keyboard} from 'react-native';
-import {StandardView, BTN} from '../common/View';
-import {NBGBText, NBGText, NBGLText} from '../common/Text';
+import {Keyboard} from 'react-native';
+import {StandardView} from '../common/View';
 import {widthPercentageToDP, showMessage} from '../../utils/util';
-import colors from '../../configs/colors';
 import {SearchBtn} from './Button';
 import {LocationActions} from '../../store/actionCreator';
 

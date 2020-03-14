@@ -1,9 +1,8 @@
 /* eslint-disable react/react-in-jsx-scope */
 import React from 'react';
-import {View, Text} from 'react-native';
 import styled from 'styled-components/native';
 import {ListView, ContentDataView, EvaluationView} from './View';
-import {PhotoImg, StarImg} from './Image';
+import {PhotoImg} from './Image';
 import {NBGBText, NBGLText, NBGText} from './Text';
 import {widthPercentageToDP} from '../../utils/util';
 import {CommonActions} from '../../store/actionCreator';

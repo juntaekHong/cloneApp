@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react/react-in-jsx-scope */
 import React, {useCallback, useState, useEffect} from 'react';
-import {View, Text} from 'react-native';
+import {View} from 'react-native';
 import styled from 'styled-components/native';
 import {StandardView, BTN} from '../common/View';
 import {BackImg, StarImg, MapImg} from '../common/Image';

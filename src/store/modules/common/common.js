@@ -8,7 +8,6 @@ import api from '../../../utils/api';
 import axios from 'axios';
 import {parseString} from 'xml2js';
 import config from '../../../configs/config';
-import {Platform} from 'react-native';
 import {
   getData,
   storeData,

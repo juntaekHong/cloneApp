@@ -1,10 +1,8 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react/react-in-jsx-scope */
-import React, {useCallback, useState, useEffect} from 'react';
-import {View, Text} from 'react-native';
+import React from 'react';
 import styled from 'styled-components/native';
 import {widthPercentageToDP} from '../../utils/util';
-import colors from '../../configs/colors';
 import {BTN} from '../common/View';
 import {NBGBText} from '../common/Text';
 

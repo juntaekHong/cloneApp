@@ -1,11 +1,9 @@
-import React, {useCallback, useState, useEffect} from 'react';
+import React from 'react';
 import styled from 'styled-components/native';
-import {View, Keyboard} from 'react-native';
-import {StandardView, BTN} from '../common/View';
-import {NBGBText, NBGText, NBGLText} from '../common/Text';
+import {Keyboard} from 'react-native';
+import {StandardView} from '../common/View';
+import {NBGBText, NBGText} from '../common/Text';
 import {widthPercentageToDP} from '../../utils/util';
-import colors from '../../configs/colors';
-import {Text} from 'react-native';
 import {SearchInput} from './Input';
 import {AutoBtn} from './Button';
 

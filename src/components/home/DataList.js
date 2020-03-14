@@ -1,13 +1,10 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState} from 'react';
-import {View} from 'react-native';
-import styled from 'styled-components/native';
+import React from 'react';
 import {widthPercentageToDP} from '../../utils/util';
 import {FlatList} from 'react-native';
 import {BTN} from '../common/View';
 import {Img} from '../common/Image';
 import {NBGBText} from '../common/Text';
-import {CommonActions} from '../../store/actionCreator';
 
 export const DataList = props => {
   const _renderItem = ({item, index}) => {
