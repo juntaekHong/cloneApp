@@ -1,11 +1,8 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {SafeAreaView} from 'react-native';
 import {WebView} from 'react-native-webview';
-import {connect} from 'react-redux';
-import {TopView, TopContainerView} from '../../components/common/View';
-import {widthPercentageToDP} from '../../utils/util';
-import {UIActivityIndicator} from 'react-native-indicators';
+import {TopView} from '../../components/common/View';
 
 const KakaoMap = props => {
   return (

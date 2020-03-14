@@ -1,14 +1,11 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useEffect, useRef, useState} from 'react';
-import {View, TouchableOpacity, Text} from 'react-native';
+import React, {useRef} from 'react';
 import {NavigationEvents} from 'react-navigation';
 // import LottieView from 'lottie-react-native';
-import {widthPercentageToDP} from '../../utils/util';
 import {connect} from 'react-redux';
 import {TopContainerView} from '../../components/common/View';
 import {TopView, HomeAd} from '../../components/home/View';
 import {DataList} from '../../components/home/DataList';
-import {CommonActions} from '../../store/actionCreator';
 
 // 병원별 이미지 및 타이틀
 const DATA = [

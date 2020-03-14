@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useEffect, useRef, useState, useCallback} from 'react';
+import React, {useEffect, useState} from 'react';
 import {connect} from 'react-redux';
 import Geolocation from '@react-native-community/geolocation';
 import {CommonActions} from '../../store/actionCreator';

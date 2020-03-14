@@ -1,9 +1,8 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useEffect, useState, useRef, useCallback} from 'react';
+import React, {useEffect, useState} from 'react';
 import {connect} from 'react-redux';
 import {
   View,
-  TextInput,
   KeyboardAvoidingView,
   Platform,
   Keyboard,
@@ -16,7 +15,7 @@ import {
   StandardView,
   BTN,
 } from '../../components/common/View';
-import MapView, {Marker, Callout} from 'react-native-maps';
+import MapView, {Marker} from 'react-native-maps';
 import {widthPercentageToDP} from '../../utils/util';
 import {Img} from '../../components/common/Image';
 import {NBGBText, NBGLText} from '../../components/common/Text';
@@ -122,27 +121,6 @@ const LocationSearch = props => {
               bottom: 10,
               alignItems: 'center',
             }}>
-            {/* 추후 추가 예정 부분들 */}
-            {/* <TextInput
-              style={{
-                width: widthPercentageToDP(335),
-                height: widthPercentageToDP(50),
-                alignItems: 'center',
-                justifyContent: 'center',
-                borderWidth: widthPercentageToDP(2),
-                borderRadius: widthPercentageToDP(10),
-                borderColor: '#dbdbdb',
-                paddingHorizontal: widthPercentageToDP(20),
-                marginBottom: widthPercentageToDP(20),
-              }}
-              autoFocus={true}
-              keyboardType={'default'}
-              returnKeyType={'done'}
-              placeholder={'상세 주소를 입력하세요.'}
-              onSubmitEditing={() => {
-                Keyboard.dismiss();
-              }}
-            /> */}
             <StandardView
               style={{
                 flexDirection: 'row',

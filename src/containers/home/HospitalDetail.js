@@ -1,13 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useEffect, useState, useRef, useCallback} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  Text,
-  Platform,
-  View,
-  Linking,
-} from 'react-native';
+import {ScrollView, Platform, View, Linking} from 'react-native';
 import {connect} from 'react-redux';
 import {
   TopView,
@@ -18,7 +11,6 @@ import {
 import {NBGText, NBGBText} from '../../components/common/Text';
 import {Card, BottomView} from '../../components/home/View';
 import {widthPercentageToDP} from '../../utils/util';
-import {UIActivityIndicator} from 'react-native-indicators';
 import {CustomModal} from '../../components/common/Modal';
 import Swiper from 'react-native-swiper';
 import OfficeHours from '../hospitalDetail/OfficeHours';
