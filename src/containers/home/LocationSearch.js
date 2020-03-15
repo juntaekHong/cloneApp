@@ -36,6 +36,8 @@ const LocationSearch = props => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    // "현 위치로 주소 설정" 버튼 클릭하여 들어왔을 때, 실행됨.
+    // 위치 설정 페이지 로딩(alert) false
     props.navigation.state.params.test !== undefined
       ? props.navigation.state.params.test()
       : null;
@@ -117,6 +119,7 @@ const LocationSearch = props => {
               </StandardView>
             </Marker>
           </MapView>
+          {/* 하단 고정 버튼 뷰 */}
           <BottomView>
             <InnerBottomView>
               <NBGBText fontSize={13}>주소: </NBGBText>

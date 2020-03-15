@@ -27,6 +27,7 @@ const MyLocationSetting = props => {
   // 현 위치 설정 버튼 클릭 시, 위치(GPS) 켜져있지 않으면 모달 띄우기
   const [errorModal, setErrorModal] = useState(false);
 
+  // 현 위치로 주소 설정
   const nowLocationSetting = async () => {
     setAlert(true);
     await Geolocation.getCurrentPosition(
