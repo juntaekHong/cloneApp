@@ -22,6 +22,7 @@ const DATA = [
 
 const Community = props => {
   const [searchInputText, setSearchInputText] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const [DATA2, setDATA2] = useState([
     {title: '두통', content: '두통'},
@@ -147,7 +148,7 @@ const Community = props => {
           );
         }}
         ListFooterComponent={() => {
-          return (
+          return loading === true ? (
             <View
               style={{
                 width: widthPercentageToDP(100),
@@ -159,10 +160,11 @@ const Community = props => {
                 color={'gray'}
               />
             </View>
-          );
+          ) : null;
         }}
         onEndReachedThreshold={0.01}
         onEndReached={() => {
+          setLoading(true);
           setDATA2([
             ...DATA2,
             {title: 'asd', content: 'asd'},
@@ -178,6 +180,7 @@ const Community = props => {
             {title: 'asd', content: 'asd'},
             {title: '123', content: '123'},
           ]);
+          setLoading(false);
         }}
       />
     </SafeAreaView>
