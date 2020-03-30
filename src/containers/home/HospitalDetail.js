@@ -285,7 +285,7 @@ const HospitalDetail = props => {
             loop={false}
             showsPagination={false}>
             {/* 진료시간 정보 페이지(간략 병원 소개 포함) */}
-            <OfficeHours />
+            <OfficeHours detailData={detailData} />
             {/* 길찾기 페이지 */}
             <HospitalMap
               startLat={props.latitude}

@@ -1,11 +1,12 @@
+/* eslint-disable no-fallthrough */
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState} from 'react';
-import {View} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {View, FlatList} from 'react-native';
 import styled from 'styled-components/native';
 import MapView, {Marker, Callout} from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
 import {StandardView} from '../common/View';
-import {NBGBText, NBGLText} from '../common/Text';
+import {NBGBText, NBGLText, NBGText} from '../common/Text';
 import {widthPercentageToDP} from '../../utils/util';
 import {StartImg, ConnectionImg, FinishImg} from '../home/Image';
 import {Img} from '../common/Image';
@@ -486,5 +487,133 @@ export const DetailView = ({
       ListFooterComponent={_footerView}
       renderItem={_renderItem}
     />
+  );
+};
+
+// 진료시간 페이지 뷰
+const Container = styled(StandardView)``;
+
+const InnerContainer = styled(StandardView)`
+  flex-direction: row;
+`;
+
+const Hours = styled(StandardView)`
+  flex: 1;
+  border-left-width: ${({borderLeftWidth}) =>
+    borderLeftWidth ? widthPercentageToDP(2) : 0};
+  border-left-color: ${({borderLeftColor}) =>
+    borderLeftColor ? borderLeftColor : '#ffffff'};
+`;
+
+const colors = [
+  'red',
+  'orange',
+  'yellow',
+  'green',
+  'blue',
+  '000080',
+  '#8B00FF',
+  '#000000',
+];
+
+// 진료시간 페이지 - 진료시간 데이터 부분 뷰
+const InfoView = ({index, hInfo}) => {
+  // 시간 포맷
+  const timeFormat = time => {
+    let toStringFormat =
+      String(time).substring(0, 2) + ':' + String(time).substring(2, 4);
+    return toStringFormat;
+  };
+
+  return (
+    <Hours
+      marginTop={30}
+      paddingLeft={10}
+      borderLeftWidth={2}
+      borderLeftColor={colors[index]}>
+      <NBGText fontSize={12}>{hInfo.today}</NBGText>
+      <Container>
+        {hInfo.start !== undefined ? (
+          <NBGText marginTop={3} fontSize={12}>
+            {timeFormat(hInfo.start)} ~ {timeFormat(hInfo.end)}
+          </NBGText>
+        ) : (
+          <NBGText marginTop={3} fontSize={12}>
+            휴진
+          </NBGText>
+        )}
+      </Container>
+    </Hours>
+  );
+};
+
+// 진료시간 뷰 => 전체 뷰
+export const HourView = ({hoursInfo}) => {
+  const [data, setData] = useState([]);
+
+  // 작업 이어서 하기. 현재 문제: 1. 첫 렌더 시, 데이터 안들어옴 2. 요일별 데이터 변경 안됨(마지막 데이터만 삽입됨;;)
+  useEffect(() => {
+    setData([
+      ...data,
+      {
+        today: '월요일',
+        start: hoursInfo.dutyTime1s,
+        end: hoursInfo.dutyTime1c,
+      },
+      {
+        today: '화요일',
+        start: hoursInfo.dutyTime2s,
+        end: hoursInfo.dutyTime2c,
+      },
+      {
+        today: '수요일',
+        start: hoursInfo.dutyTime3s,
+        end: hoursInfo.dutyTime3c,
+      },
+      {
+        today: '목요일',
+        start: hoursInfo.dutyTime4s,
+        end: hoursInfo.dutyTime4c,
+      },
+      {
+        today: '금요일',
+        start: hoursInfo.dutyTime5s,
+        end: hoursInfo.dutyTime5c,
+      },
+      {
+        today: '토요일',
+        start: hoursInfo.dutyTime6s,
+        end: hoursInfo.dutyTime6c,
+      },
+      {
+        today: '일요일',
+        start: hoursInfo.dutyTime7s,
+        end: hoursInfo.dutyTime7c,
+      },
+      {
+        today: '공휴일',
+        start: hoursInfo.dutyTime8s,
+        end: hoursInfo.dutyTime8c,
+      },
+    ]);
+  }, []);
+
+  return (
+    <Container margin={20}>
+      <NBGBText fontSize={15}>진료시간</NBGBText>
+      <InnerContainer>
+        {/* 반복되는 뷰 */}
+        <DetailList
+          style={{paddingTop: 0}}
+          scrollEnabled={false}
+          numColumns={2}
+          data={data}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={({item, index}) => {
+            return <InfoView index={index} hInfo={item} />;
+          }}
+        />
+      </InnerContainer>
+    </Container>
   );
 };
