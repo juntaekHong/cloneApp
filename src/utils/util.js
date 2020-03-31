@@ -167,19 +167,19 @@ export const scheduleTime = time => {
 export const dayToString = value => {
   switch (value) {
     case 0:
-      return 'sunday';
+      return '일요일';
     case 1:
-      return 'monday';
+      return '월요일';
     case 2:
-      return 'tuesday';
+      return '화요일';
     case 3:
-      return 'wednesday';
+      return '수요일';
     case 4:
-      return 'thursday';
+      return '목요일';
     case 5:
-      return 'friday';
+      return '금요일';
     case 6:
-      return 'saturday';
+      return '토요일';
   }
 };
 

@@ -8,11 +8,11 @@ import values from './values';
 const init = {
   type: 'dev',
   server: {
-    dev: '',
+    dev: 'http://ec2-15-164-221-39.ap-northeast-2.compute.amazonaws.com',
     prod: '',
   },
   mailServer: {
-    dev: '',
+    dev: 'http://ec2-15-164-221-39.ap-northeast-2.compute.amazonaws.com',
     prod: '',
   },
 };

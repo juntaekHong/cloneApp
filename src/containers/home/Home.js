@@ -12,12 +12,10 @@ const DATA = [
   {
     image: require('../../../assets/image/home/hospital.png'),
     title: '상급)\n종합병원',
-    dutyDiv: 'A',
   },
   {
     image: require('../../../assets/image/home/hospital.png'),
     title: '군)\n병원',
-    dutyDiv: 'B',
   },
   {
     image: require('../../../assets/image/home/fetus.png'),
@@ -28,7 +26,6 @@ const DATA = [
   {
     image: require('../../../assets/image/home/acupuncture.png'),
     title: '한의원',
-    dutyDiv: 'G',
   },
   {image: require('../../../assets/image/home/tooth.png'), title: '치과'},
   {
@@ -50,7 +47,6 @@ const DATA = [
   {
     image: require('../../../assets/image/home/pill.png'),
     title: '약국',
-    dutyDiv: 'H',
   },
 ];
 

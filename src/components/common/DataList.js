@@ -4,31 +4,8 @@ import styled from 'styled-components/native';
 import {ListView, ContentDataView, EvaluationView} from './View';
 import {PhotoImg} from './Image';
 import {NBGBText, NBGLText, NBGText} from './Text';
-import {widthPercentageToDP} from '../../utils/util';
+import {widthPercentageToDP, dayToString} from '../../utils/util';
 import {CommonActions} from '../../store/actionCreator';
-
-// 데이터 형식
-// const DATA = [
-//     {
-//       hospitalName: '서울정형외과',
-//       image: 'image',
-//       rating: 5,
-//       reviewCount: 10,
-//       location: '서울 강남',
-//       time: '5분',
-//     },
-//  ]
-// 변경될 데이터 형식
-// {
-//   distance: 0,
-//   dutyAddr: '주소',
-//   dutyDivName: '의원',
-//   dutyName: '병원이름',
-//   dutyTel1: '전화번호',
-//   startTime: '시작시간',
-//   endTime: '종료시간',
-//   이외에 다른 데이터들도 있긴함. 적어놓지 않는 것
-// },
 
 const DataList = styled.FlatList`
   flex-grow: 1;
@@ -37,10 +14,17 @@ const DataList = styled.FlatList`
 `;
 
 // 진료시간 포맷 커스텀
-const TimeFormat = time => {
-  let toStringFormat =
-    String(time).substring(0, 2) + ':' + String(time).substring(2, 4);
-  return toStringFormat;
+const TimeFormat = () => {
+  let day = 'dutyTime';
+  let index = new Date().getDay();
+
+  if (index !== 0) {
+    day = day + index;
+  } else {
+    day = day + '7';
+  }
+
+  return day;
 };
 
 export const List = props => {
@@ -66,10 +50,12 @@ export const List = props => {
             {item.dutyName}
           </NBGBText>
           <EvaluationView marginTop={3} marginBottom={3}>
-            <NBGBText fontSize={12}>전화번호: {item.dutyTel1}</NBGBText>
+            <NBGBText fontSize={12}>전화번호: {item.dutyTel}</NBGBText>
             <NBGLText>
-              진료시간: {TimeFormat(item.startTime)} ~{' '}
-              {TimeFormat(item.endTime)}
+              오늘 진료시간:{' '}
+              {item[TimeFormat()].indexOf('null') !== -1
+                ? '휴진'
+                : item[TimeFormat()]}
             </NBGLText>
           </EvaluationView>
           <NBGText
@@ -80,7 +66,7 @@ export const List = props => {
             장소: {item.dutyAddr}
           </NBGText>
           <NBGText fontSize={13} color={'gray'}>
-            거리: {item.distance} km
+            거리: {item.distance.toFixed(2)} km
           </NBGText>
         </ContentDataView>
       </ListView>
