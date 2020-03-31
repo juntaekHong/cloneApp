@@ -228,7 +228,11 @@ export const LegView = ({legs}) => {
 };
 
 // 간략정보 출발&도착 주소 뷰
-export const AddressView = styled(LegInnerView)``;
+export const AddressView = styled(LegInnerView)`
+  padding-bottom: ${widthPercentageToDP(20)};
+  border-bottom-width: ${widthPercentageToDP(1)};
+  border-bottom-color: #dbdbdb;
+`;
 
 // 간략정보 출발&도착 주소 뷰
 export const DetailContainerView = styled(StandardView)``;
@@ -551,7 +555,6 @@ const InfoView = ({index, hInfo}) => {
 export const HourView = ({hoursInfo}) => {
   const [data, setData] = useState([]);
 
-  // 작업 이어서 하기. 현재 문제: 1. 첫 렌더 시, 데이터 안들어옴 2. 요일별 데이터 변경 안됨(마지막 데이터만 삽입됨;;)
   useEffect(() => {
     setData([
       ...data,

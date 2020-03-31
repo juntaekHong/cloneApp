@@ -1,12 +1,12 @@
 import {createStackNavigator} from 'react-navigation-stack';
-import MedicalHistory from '../../containers/medicalHistory/MedicalHistory';
+import MedicalHistoryTab from './MedicalHistoryTab';
 
 const MedicalHistoryStack = createStackNavigator(
   {
-    MedicalHistory: {screen: MedicalHistory},
+    Medicals: {screen: MedicalHistoryTab},
   },
   {
-    initialRouteName: 'MedicalHistory',
+    initialRouteName: 'Medicals',
     defaultNavigationOptions: {
       header: null,
     },

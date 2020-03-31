@@ -151,6 +151,7 @@ export const getHospitalList = (Long, Lat, rows) => async dispatch => {
     const jsonData = await axios.get(
       `${config.hospital_url}?WGS84_LON=${Long}&WGS84_LAT=${Lat}&pageNo=1&numOfRows=${rows}&ServiceKey=${config.hospital_ServiceKey}`,
     );
+
     await dispatch(hospitalListAction(jsonData.data.response.body.items.item));
   } catch (e) {
     // 병원 리스트 공공 api 요청 실패 => 서버 연동 실패
@@ -158,6 +159,20 @@ export const getHospitalList = (Long, Lat, rows) => async dispatch => {
     console.log('hospital list insert fail');
   }
 };
+
+// Test
+// export const getTest = (Long, Lat) => async dispatch => {
+//   try {
+//     const jsonData = await api.get(`/hospital`, {
+//       body: {lon: Long, lat: Lat},
+//     });
+//     await dispatch(hospitalListAction(jsonData.result));
+//   } catch (e) {
+//     // 병원 리스트 공공 api 요청 실패 => 서버 연동 실패
+//     await dispatch(hospitalListInitAction());
+//     console.log('hospital list insert fail');
+//   }
+// };
 
 // 병원 상세페이지 정보 요청
 export const getHospitalDetail = hpid => async dispatch => {

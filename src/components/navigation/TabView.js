@@ -59,8 +59,8 @@ const TabBar = ({active, onPress, source, label = '', style}) => (
   </TabBarButton>
 );
 export const TabView = ({navigationState}) => {
-  const navigateHistroy = useCallback(() => {
-    navigators.navigate('MedicalHistoryStack');
+  const Medicals = useCallback(() => {
+    navigators.navigate('Medicals');
   }, []);
   const navigateSearch = useCallback(() => {
     navigators.navigate('SearchStack');
@@ -77,7 +77,7 @@ export const TabView = ({navigationState}) => {
   return (
     <TabBarView style={shadow}>
       <TabBar
-        onPress={navigateHistroy}
+        onPress={Medicals}
         source={
           navigationState.index === 0
             ? require('cloneApp/assets/image/navigation/report.png')
