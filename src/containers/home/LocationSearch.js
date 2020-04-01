@@ -73,6 +73,7 @@ const LocationSearch = props => {
           <TopView
             marginBottom={5}
             title={'위치 설정 확인'}
+            backBtn={true}
             backHandler={() => {
               props.navigation.goBack(null);
             }}

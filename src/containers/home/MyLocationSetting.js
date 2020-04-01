@@ -103,6 +103,7 @@ const MyLocationSetting = props => {
       <TopView
         marginBottom={5}
         title={'위치 설정'}
+        backBtn={true}
         backHandler={() => {
           props.navigation.goBack(null);
         }}

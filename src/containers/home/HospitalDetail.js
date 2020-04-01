@@ -237,6 +237,7 @@ const HospitalDetail = props => {
       <TopView
         marginBottom={5}
         title={detailData.dutyName}
+        backBtn={true}
         backHandler={() => {
           props.navigation.goBack(null);
         }}

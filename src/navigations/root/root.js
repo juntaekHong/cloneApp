@@ -5,6 +5,7 @@ import NaverMap from '../../containers/home/NaverMap';
 import KakaoMap from '../../containers/home/KakaoMap';
 import MyLocationSetting from '../../containers/home/MyLocationSetting';
 import LocationSearch from '../../containers/home/LocationSearch';
+import MyPage_noTab from '../myPage/MyPage_noTab';
 
 const RootStack = createStackNavigator(
   {
@@ -14,6 +15,7 @@ const RootStack = createStackNavigator(
     KakaoMap: {screen: KakaoMap},
     MyLocationSetting: {screen: MyLocationSetting},
     LocationSearch: {screen: LocationSearch},
+    MyPage_noTab: {screen: MyPage_noTab},
   },
   {
     initialRouteName: 'main',

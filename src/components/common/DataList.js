@@ -34,10 +34,9 @@ export const List = props => {
         index={index}
         padding={10}
         onPress={async () => {
-          // await CommonActions.loadingAction(true);
-          // await CommonActions.getHospitalDetail(item.hpid);
-          props.navigation.navigate('HospitalDetail', {object: item});
-          // await CommonActions.loadingAction(false);
+          await CommonActions.loadingAction(true);
+          await props.navigation.navigate('HospitalDetail', {object: item});
+          await CommonActions.loadingAction(false);
         }}>
         <PhotoImg
           source={require('../../../assets/image/navigation/homeblue.png')}

@@ -6,7 +6,7 @@ import {
   BTN,
   StandardView,
 } from '../../components/common/View';
-import {NBGBText, NBGText} from '../../components/common/Text';
+import {NBGBText} from '../../components/common/Text';
 import {widthPercentageToDP} from '../../utils/util';
 import {CustomModal} from '../../components/common/Modal';
 import colors from '../../configs/colors';
@@ -27,7 +27,7 @@ const MyPage = props => {
     <TopContainerView>
       <CustomModal
         width={300}
-        height={500}
+        height={350}
         visible={loginModal}
         closeHandler={() => {
           setId('');
@@ -121,6 +121,7 @@ const MyPage = props => {
                   await setLoginModal(false);
                   setId('');
                   setPass('');
+                  await props.navigation.navigate('SignUp');
                 }}>
                 <NBGBText fontSize={15} color={'white'}>
                   회원가입
