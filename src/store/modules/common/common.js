@@ -146,27 +146,25 @@ export const resetMyLocation = () => async dispatch => {
 };
 
 // 병원 리스트 호출
-export const getHospitalList = (Long, Lat, rows) => async dispatch => {
-  try {
-    const jsonData = await axios.get(
-      `${config.hospital_url}?WGS84_LON=${Long}&WGS84_LAT=${Lat}&pageNo=1&numOfRows=${rows}&ServiceKey=${config.hospital_ServiceKey}`,
-    );
+// export const getHospitalList = (Long, Lat, rows) => async dispatch => {
+//   try {
+//     const jsonData = await axios.get(
+//       `${config.hospital_url}?WGS84_LON=${Long}&WGS84_LAT=${Lat}&pageNo=1&numOfRows=${rows}&ServiceKey=${config.hospital_ServiceKey}`,
+//     );
 
-    await dispatch(hospitalListAction(jsonData.data.response.body.items.item));
-  } catch (e) {
-    // 병원 리스트 공공 api 요청 실패 => 서버 연동 실패
-    await dispatch(hospitalListInitAction());
-    console.log('hospital list insert fail');
-  }
-};
+//     await dispatch(hospitalListAction(jsonData.data.response.body.items.item));
+//   } catch (e) {
+//     // 병원 리스트 공공 api 요청 실패 => 서버 연동 실패
+//     await dispatch(hospitalListInitAction());
+//     console.log('hospital list insert fail');
+//   }
+// };
 
-// Test
-export const getTest = (Long, Lat) => async dispatch => {
+// 병원 리스트 호출
+export const getHospitalList = (Long, Lat) => async dispatch => {
   let filter = {lon: Long, lat: Lat};
 
   filter = JSON.stringify(filter);
-
-  console.log(filter);
 
   try {
     const jsonData = await api.get(`/hospital/?filter=${filter}`);
@@ -174,7 +172,7 @@ export const getTest = (Long, Lat) => async dispatch => {
     console.log(jsonData.result);
     await dispatch(hospitalListAction(jsonData.result));
   } catch (e) {
-    // 병원 리스트 공공 api 요청 실패 => 서버 연동 실패
+    // 서버 연동 실패
     await dispatch(hospitalListInitAction());
     console.log('hospital list insert fail');
   }

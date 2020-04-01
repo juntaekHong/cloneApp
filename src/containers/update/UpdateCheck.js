@@ -117,8 +117,7 @@ const UpdateCheck = props => {
             const lat = latitude === null ? location.latitude : latitude;
 
             await CommonActions.loadingAction(true);
-            const promise1 = CommonActions.getTest(long, lat);
-            // const promise1 = CommonActions.getHospitalList(long, lat, 500);
+            const promise1 = CommonActions.getHospitalList(long, lat);
             const promise2 = CommonActions.getMyAddress(long, lat);
             Promise.all([promise1, promise2]).then(async () => {
               props.navigation.navigate('home');

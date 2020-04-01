@@ -11,38 +11,60 @@ import {DataList} from '../../components/home/DataList';
 const DATA = [
   {
     image: require('../../../assets/image/home/hospital.png'),
-    title: '상급)\n종합병원',
+    // 일단 임시
+    title: '모든 병원',
+    // 추가 필요
   },
   {
     image: require('../../../assets/image/home/hospital.png'),
     title: '군)\n병원',
+    // 추가 필요
+    hospitalCategoryName: '보건(의료원)소',
   },
   {
     image: require('../../../assets/image/home/fetus.png'),
     title: '산부인과',
+    hospitalCategoryName: '산부인과',
   },
-  {image: require('../../../assets/image/home/stomach.png'), title: '내과'},
-  {image: require('../../../assets/image/home/doctor.png'), title: '외과'},
+  {
+    image: require('../../../assets/image/home/stomach.png'),
+    title: '내과',
+    hospitalCategoryName: '내과',
+  },
+  {
+    image: require('../../../assets/image/home/doctor.png'),
+    title: '외과',
+    hospitalCategoryName: '외과',
+  },
   {
     image: require('../../../assets/image/home/acupuncture.png'),
     title: '한의원',
+    // 추가 필요
   },
-  {image: require('../../../assets/image/home/tooth.png'), title: '치과'},
+  {
+    image: require('../../../assets/image/home/tooth.png'),
+    title: '치과',
+    hospitalCategoryName: '치과',
+  },
   {
     image: require('../../../assets/image/home/ear.png'),
     title: '이비인후과',
+    hospitalCategoryName: '이비인후과',
   },
   {
     image: require('../../../assets/image/home/injury.png'),
     title: '정형외과',
+    hospitalCategoryName: '정형외과',
   },
   {
     image: require('../../../assets/image/home/healthcare-and-medical.png'),
     title: '성형외과',
+    hospitalCategoryName: '성형외과',
   },
   {
     image: require('../../../assets/image/home/mental-health.png'),
-    title: '정신병원',
+    title: '정신건강의학과',
+    hospitalCategoryName: '정신건강의학과',
   },
   {
     image: require('../../../assets/image/home/pill.png'),

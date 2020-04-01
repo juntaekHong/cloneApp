@@ -54,7 +54,7 @@ const LocationSearch = props => {
     await CommonActions.myLocation(lat, long);
     await CommonActions.getMyAddress(long, lat);
     await CommonActions.handleHospitalListInit();
-    await CommonActions.getHospitalList(long, lat, 500);
+    await CommonActions.getHospitalList(long, lat);
     await CommonActions.handleLoading(false);
     await props.navigation.navigate('home');
   };

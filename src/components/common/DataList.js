@@ -52,7 +52,7 @@ export const List = props => {
           <EvaluationView marginTop={3} marginBottom={3}>
             <NBGBText fontSize={12}>전화번호: {item.dutyTel}</NBGBText>
             <NBGLText>
-              오늘 진료시간:{' '}
+              {dayToString(new Date().getDay())}:{' '}
               {item[TimeFormat()].indexOf('null') !== -1
                 ? '휴진'
                 : item[TimeFormat()]}

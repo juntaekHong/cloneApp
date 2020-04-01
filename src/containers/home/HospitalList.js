@@ -7,7 +7,9 @@ import {List} from '../../components/common/DataList';
 
 const HospitalList = props => {
   const [data, setData] = useState(props.hospitalList);
-  const [name, setName] = useState(props.navigation.state.params.object);
+  const [name, setName] = useState(
+    props.navigation.state.params.hospitalCategoryName,
+  );
 
   // 홈(메인) 페이지에서 항목에 맞는 병원 리스트만 보여지는 것으로 가정.
 
@@ -16,10 +18,12 @@ const HospitalList = props => {
       let searchData = [];
 
       let MatchingData = data.map((item, index) => {
-        if (item.dutyName.indexOf(findData) !== -1) {
+        if (item.hospitalCategoryName.indexOf(findData) !== -1) {
           return searchData.push(item);
         }
       });
+
+      if (searchData.length === 0) return props.hospitalList;
 
       return searchData;
     };
