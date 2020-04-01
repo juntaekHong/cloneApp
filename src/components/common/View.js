@@ -38,16 +38,25 @@ export const BTN = styled.TouchableOpacity``;
 export const TopView = props => {
   return (
     <TopContainer marginBottom={props.marginBottom}>
-      <BTN
-        onPress={() => {
-          props.backHandler();
-        }}>
-        <BackImg
-          width={28}
-          height={28}
-          source={require('../../../assets/image/common/back.png')}
+      {props.backBtn ? (
+        <BTN
+          onPress={() => {
+            props.backHandler();
+          }}>
+          <BackImg
+            width={28}
+            height={28}
+            source={require('../../../assets/image/common/back.png')}
+          />
+        </BTN>
+      ) : (
+        <View
+          style={{
+            width: widthPercentageToDP(28),
+            height: widthPercentageToDP(28),
+          }}
         />
-      </BTN>
+      )}
 
       {props.title ? (
         <NBGBText

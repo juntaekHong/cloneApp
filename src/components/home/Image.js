@@ -13,6 +13,16 @@ export const SelectImg = () => {
   );
 };
 
+export const UnSelectImg = () => {
+  return (
+    <Img
+      width={26}
+      height={26}
+      source={require('../../../assets/image/home/noncheck.png')}
+    />
+  );
+};
+
 const RatingImg = props => {
   return (
     <Img

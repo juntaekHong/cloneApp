@@ -169,7 +169,6 @@ export const getHospitalList = (Long, Lat) => async dispatch => {
   try {
     const jsonData = await api.get(`/hospital/?filter=${filter}`);
 
-    console.log(jsonData.result);
     await dispatch(hospitalListAction(jsonData.result));
   } catch (e) {
     // 서버 연동 실패
