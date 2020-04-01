@@ -20,7 +20,9 @@ import HospitalMap from '../hospitalDetail/HospitalMap';
 import HospitalReview from '../hospitalDetail/HospitalReview';
 
 const HospitalDetail = props => {
-  const [detailData, setDetailData] = useState(props.hospital_detail);
+  const [detailData, setDetailData] = useState(
+    props.navigation.state.params.object,
+  );
 
   const [NameEncoding, setNameEncoding] = useState();
   // 길찾기 클릭 시, 길찾기 모달(알림창) visible
@@ -124,7 +126,7 @@ const HospitalDetail = props => {
 
     await focusing.current.scrollTo({
       x: 0,
-      y: widthPercentageToDP(290),
+      y: widthPercentageToDP(260),
       animated: true,
     });
   }, []);
@@ -249,9 +251,9 @@ const HospitalDetail = props => {
           rating={4.0}
           reviewCount={50}
           dutyAddr={detailData.dutyAddr}
-          dutyMapimg={detailData.dutyMapimg}
+          // dutyMapimg={detailData.dutyMapimg}
           isSrap={false}
-          phoneNumber={detailData.dutyTel1}
+          phoneNumber={detailData.dutyTel}
           naviModal={async () => {
             await setRoadMapModal(true);
           }}
@@ -288,6 +290,7 @@ const HospitalDetail = props => {
             <OfficeHours detailData={detailData} />
             {/* 길찾기 페이지 */}
             <HospitalMap
+              end_address={detailData.dutyAddr}
               startLat={props.latitude}
               startLong={props.longitude}
               endLat={detailData.wgs84Lat}

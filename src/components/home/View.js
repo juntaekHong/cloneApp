@@ -181,7 +181,7 @@ export const Card = ({
   rating,
   reviewCount,
   dutyAddr,
-  dutyMapimg,
+  // dutyMapimg,
   phoneNumber,
   isScrap,
   naviModal,
@@ -248,7 +248,7 @@ export const Card = ({
         color={'black'}>
         위치: {dutyAddr}
       </NBGText>
-      <NBGText
+      {/* <NBGText
         fontSize={13}
         numberOfLines={2}
         style={{
@@ -257,7 +257,7 @@ export const Card = ({
         }}
         color={'black'}>
         인근 위치: {dutyMapimg ? dutyMapimg : '정보없음'}
-      </NBGText>
+      </NBGText> */}
       <BTNView>
         <CustomBTN
           onPress={() => {

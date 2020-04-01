@@ -12,6 +12,12 @@ const OfficeHours = ({detailData}) => {
         {' '}
         병원소개 내용{' '}
       </NBGText>
+      <NBGText marginTop={30} fontSize={15}>
+        content:{' '}
+        {detailData.dutyInfo === undefined
+          ? '서버 데이터 수정중...'
+          : detailData.dutyInfo}
+      </NBGText>
     </TopContainerView>
   );
 };

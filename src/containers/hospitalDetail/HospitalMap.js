@@ -16,6 +16,7 @@ import {UIActivityIndicator} from 'react-native-indicators';
 const HospitalMap = ({
   start_end,
   hospital_detail,
+  end_address,
   startLat,
   startLong,
   endLat,
@@ -112,7 +113,7 @@ const HospitalMap = ({
             destination={destination}
             // 마커 표시
             start_address={legs.start_address}
-            end_address={hospital_detail.dutyAddr}
+            end_address={end_address}
           />
           {/* 간략 길찾기 정보 뷰 */}
           <LegView legs={legs} />
@@ -121,7 +122,7 @@ const HospitalMap = ({
               출발지: {legs.start_address}
             </NBGBText>
             <NBGBText marginTop={10} fontSize={12} numberOfLines={2}>
-              도착지: {hospital_detail.dutyAddr}
+              도착지: {end_address}
             </NBGBText>
           </AddressView>
           {/* 상세 길찾기 정보 뷰*/}
@@ -134,7 +135,7 @@ const HospitalMap = ({
               start={legs.start}
               end={legs.end}
               start_address={legs.start_address}
-              end_address={hospital_detail.dutyAddr}
+              end_address={end_address}
               warning={warning}
             />
           </DetailContainerView>

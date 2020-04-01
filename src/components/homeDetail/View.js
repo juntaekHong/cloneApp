@@ -537,13 +537,13 @@ const InfoView = ({index, hInfo}) => {
       borderLeftColor={colors[index]}>
       <NBGText fontSize={12}>{hInfo.today}</NBGText>
       <Container>
-        {hInfo.start !== undefined ? (
+        {hInfo.time.indexOf('null') !== -1 ? (
           <NBGText marginTop={3} fontSize={12}>
-            {timeFormat(hInfo.start)} ~ {timeFormat(hInfo.end)}
+            휴진
           </NBGText>
         ) : (
           <NBGText marginTop={3} fontSize={12}>
-            휴진
+            {hInfo.time}
           </NBGText>
         )}
       </Container>
@@ -560,43 +560,35 @@ export const HourView = ({hoursInfo}) => {
       ...data,
       {
         today: '월요일',
-        start: hoursInfo.dutyTime1s,
-        end: hoursInfo.dutyTime1c,
+        time: hoursInfo.dutyTime1,
       },
       {
         today: '화요일',
-        start: hoursInfo.dutyTime2s,
-        end: hoursInfo.dutyTime2c,
+        time: hoursInfo.dutyTime2,
       },
       {
         today: '수요일',
-        start: hoursInfo.dutyTime3s,
-        end: hoursInfo.dutyTime3c,
+        time: hoursInfo.dutyTime3,
       },
       {
         today: '목요일',
-        start: hoursInfo.dutyTime4s,
-        end: hoursInfo.dutyTime4c,
+        time: hoursInfo.dutyTime4,
       },
       {
         today: '금요일',
-        start: hoursInfo.dutyTime5s,
-        end: hoursInfo.dutyTime5c,
+        time: hoursInfo.dutyTime5,
       },
       {
         today: '토요일',
-        start: hoursInfo.dutyTime6s,
-        end: hoursInfo.dutyTime6c,
+        time: hoursInfo.dutyTime6,
       },
       {
         today: '일요일',
-        start: hoursInfo.dutyTime7s,
-        end: hoursInfo.dutyTime7c,
+        time: hoursInfo.dutyTime7,
       },
       {
         today: '공휴일',
-        start: hoursInfo.dutyTime8s,
-        end: hoursInfo.dutyTime8c,
+        time: hoursInfo.dutyTime8,
       },
     ]);
   }, []);

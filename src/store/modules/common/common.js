@@ -179,18 +179,18 @@ export const getHospitalList = (Long, Lat) => async dispatch => {
 };
 
 // 병원 상세페이지 정보 요청
-export const getHospitalDetail = hpid => async dispatch => {
-  try {
-    const jsonData = await axios.get(
-      `${config.hospital_detail_url}?HPID=${hpid}&ServiceKey=${config.hospital_ServiceKey}`,
-    );
-    await dispatch(
-      hospitalDetailAction(jsonData.data.response.body.items.item),
-    );
-  } catch (e) {
-    // 병원 상세 정보 공공 api 요청 실패 => 서버 연동 실패
-  }
-};
+// export const getHospitalDetail = hpid => async dispatch => {
+//   try {
+//     const jsonData = await axios.get(
+//       `${config.hospital_detail_url}?HPID=${hpid}&ServiceKey=${config.hospital_ServiceKey}`,
+//     );
+//     await dispatch(
+//       hospitalDetailAction(jsonData.data.response.body.items.item),
+//     );
+//   } catch (e) {
+//     // 병원 상세 정보 공공 api 요청 실패 => 서버 연동 실패
+//   }
+// };
 
 // 좌표 주소 변환
 export const getMyAddress = (
