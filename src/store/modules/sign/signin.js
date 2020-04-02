@@ -2,7 +2,12 @@ import {createAction, handleActions} from 'redux-actions';
 import {produce} from 'immer';
 import api from '../../../utils/api';
 import axios from 'axios';
-import {getData, storeData, removeAllData} from '../../../utils/util';
+import {
+  getData,
+  storeData,
+  removeAllData,
+  removeData,
+} from '../../../utils/util';
 import config from '../../../configs/config';
 
 const SIGNIN_USER_DATA = 'signin/SIGNIN_USER_DATA';
@@ -14,6 +19,10 @@ const initState = {
   user: null,
 };
 
+export const handleLoginData = value => dispatch => {
+  dispatch(userDataAction(value));
+};
+
 export const signIn = (userId, userPw) => async dispatch => {
   try {
     let userData = {
@@ -21,15 +30,14 @@ export const signIn = (userId, userPw) => async dispatch => {
       userPw,
     };
 
-    console.log(userData);
-
     // 수정 필요
-    const jsonData = await axios.post(`http://15.164.233.87:8001/signIn`, {
-      headers: {Accept: 'application/json', 'Content-Type': 'application/json'},
+    const jsonData = await api.post(`/signIn`, {
       body: userData,
     });
-    await storeData('token', jsonData.data.result.token);
-    await dispatch(userDataAction(jsonData.data.result.token));
+
+    await storeData('token', jsonData.result.token);
+    await storeData('user_id', jsonData.result.userId);
+    await dispatch(userDataAction({userId: jsonData.result.userId}));
     return true;
   } catch (err) {
     console.log('error');

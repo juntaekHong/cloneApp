@@ -395,6 +395,7 @@ const SignUp = props => {
                 onPress={() => {
                   setGender('여자');
                 }}
+                activeOpacity={1}
                 style={{
                   flexDirection: 'row',
                   marginRight: widthPercentageToDP(30),
@@ -424,6 +425,7 @@ const SignUp = props => {
                 onPress={() => {
                   setGender('남자');
                 }}
+                activeOpacity={1}
                 style={{
                   flexDirection: 'row',
                   marginRight: widthPercentageToDP(30),
