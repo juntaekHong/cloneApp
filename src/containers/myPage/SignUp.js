@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState, useRef, useEffect} from 'react';
-import {widthPercentageToDP} from '../../utils/util';
+import {widthPercentageToDP, showMessage} from '../../utils/util';
 import {
   TopContainerView,
   TopView,
@@ -20,7 +20,9 @@ import {
   checkNickName,
   checkEmail,
   checkPhoneNumber,
+  checkAge,
 } from '../../utils/validation';
+import {SignupActions} from '../../store/actionCreator';
 // import {WheelPicker} from '../../components/signUp/modal';
 
 const SignUp = props => {
@@ -111,9 +113,10 @@ const SignUp = props => {
   }, [nickName]);
 
   useEffect(() => {
-    let valid = parseInt(age);
+    let valid1 = parseInt(age);
+    let valid2 = checkAge(age);
 
-    (age.length !== 0 && valid <= 0) || valid >= 150
+    age.length !== 0 && (valid1 <= 0 || valid1 > 150 || !valid2)
       ? setAgeValid('올바르는지 않는 나이입니다.')
       : setAgeValid('');
   }, [age]);
@@ -390,7 +393,7 @@ const SignUp = props => {
               }}>
               <BTN
                 onPress={() => {
-                  setGender(1);
+                  setGender('여자');
                 }}
                 style={{
                   flexDirection: 'row',
@@ -411,7 +414,7 @@ const SignUp = props => {
                       width: widthPercentageToDP(10),
                       height: widthPercentageToDP(10),
                       borderRadius: widthPercentageToDP(5),
-                      backgroundColor: gender !== 1 ? 'white' : '#53A6EC',
+                      backgroundColor: gender !== '여자' ? 'white' : '#53A6EC',
                     }}
                   />
                 </View>
@@ -419,7 +422,7 @@ const SignUp = props => {
               </BTN>
               <BTN
                 onPress={() => {
-                  setGender(2);
+                  setGender('남자');
                 }}
                 style={{
                   flexDirection: 'row',
@@ -440,7 +443,7 @@ const SignUp = props => {
                       width: widthPercentageToDP(10),
                       height: widthPercentageToDP(10),
                       borderRadius: widthPercentageToDP(5),
-                      backgroundColor: gender !== 2 ? 'white' : '#53A6EC',
+                      backgroundColor: gender !== '남자' ? 'white' : '#53A6EC',
                     }}
                   />
                 </View>
@@ -556,8 +559,37 @@ const SignUp = props => {
             <BTN
               onPress={async () => {
                 // 가입
+                Keyboard.dismiss();
 
-                props.navigation.goBack(null);
+                if (
+                  idValid.length !== 0 ||
+                  passValid.length !== 0 ||
+                  nameValid.length !== 0 ||
+                  nickNameValid.length !== 0 ||
+                  ageValid.length !== 0 ||
+                  gender !== null ||
+                  phoneNumberValid.length !== 0 ||
+                  emailValid.length !== 0
+                ) {
+                  let userData = {
+                    userId: id,
+                    userPw: pass,
+                    userName: name,
+                    userNickName: nickName,
+                    age: age,
+                    gender: gender,
+                    tel: phoneNumber,
+                    email: email,
+                  };
+
+                  await SignupActions.signUp(userData);
+
+                  props.navigation.goBack(null);
+                } else {
+                  showMessage(
+                    '입력하지 않은 항목이 있거나 잘못된 입력한 항목이 있습니다.',
+                  );
+                }
               }}
               style={{
                 width: widthPercentageToDP(50),

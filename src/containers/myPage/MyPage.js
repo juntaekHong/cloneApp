@@ -1,5 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState, useRef} from 'react';
+import {connect} from 'react-redux';
 import {
   TopContainerView,
   TopView,
@@ -12,6 +13,7 @@ import {CustomModal} from '../../components/common/Modal';
 import colors from '../../configs/colors';
 import {TextInput, Keyboard} from 'react-native';
 import {SelectImg, UnSelectImg} from '../../components/home/Image';
+import {SigninActions} from '../../store/actionCreator';
 
 const MyPage = props => {
   const [loginModal, setLoginModal] = useState(false);
@@ -39,69 +41,75 @@ const MyPage = props => {
             style={{
               marginHorizontal: widthPercentageToDP(20),
             }}>
-            <NBGBText fontSize={20} align={'center'}>
-              로그인
-            </NBGBText>
-            <TextInput
-              style={{
-                marginTop: widthPercentageToDP(30),
-                height: widthPercentageToDP(40),
-                borderWidth: widthPercentageToDP(1),
-                borderColor: id.length === 0 ? '#dbdbdb' : '#53A6EC',
-                borderRadius: widthPercentageToDP(15),
-                paddingLeft: widthPercentageToDP(20),
-              }}
-              placeholder={'아이디'}
-              value={id}
-              onChangeText={text => setId(text)}
-              onSubmitEditing={() => {
-                passRef.current.focus();
-              }}
-              returnKeyType={'next'}
-            />
+            {props.user === null ? (
+              <StandardView>
+                <NBGBText fontSize={20} align={'center'}>
+                  로그인
+                </NBGBText>
+                <TextInput
+                  style={{
+                    marginTop: widthPercentageToDP(30),
+                    height: widthPercentageToDP(40),
+                    borderWidth: widthPercentageToDP(1),
+                    borderColor: id.length === 0 ? '#dbdbdb' : '#53A6EC',
+                    borderRadius: widthPercentageToDP(15),
+                    paddingLeft: widthPercentageToDP(20),
+                  }}
+                  placeholder={'아이디'}
+                  value={id}
+                  onChangeText={text => setId(text)}
+                  onSubmitEditing={() => {
+                    passRef.current.focus();
+                  }}
+                  returnKeyType={'next'}
+                />
 
-            <StandardView
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                marginTop: widthPercentageToDP(30),
-                height: widthPercentageToDP(40),
-                borderWidth: widthPercentageToDP(1),
-                borderColor: pass.length === 0 ? '#dbdbdb' : '#53A6EC',
-                borderRadius: widthPercentageToDP(15),
-                paddingLeft: widthPercentageToDP(20),
-                paddingRight: widthPercentageToDP(5),
-              }}>
-              <TextInput
-                style={{
-                  width: widthPercentageToDP(200),
-                }}
-                ref={passRef}
-                placeholder={'비밀번호'}
-                secureTextEntry={passVisible}
-                value={pass}
-                onChangeText={text => setPass(text)}
-                onSubmitEditing={() => {
-                  Keyboard.dismiss();
+                <StandardView
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    marginTop: widthPercentageToDP(30),
+                    height: widthPercentageToDP(40),
+                    borderWidth: widthPercentageToDP(1),
+                    borderColor: pass.length === 0 ? '#dbdbdb' : '#53A6EC',
+                    borderRadius: widthPercentageToDP(15),
+                    paddingLeft: widthPercentageToDP(20),
+                    paddingRight: widthPercentageToDP(5),
+                  }}>
+                  <TextInput
+                    style={{
+                      width: widthPercentageToDP(200),
+                    }}
+                    ref={passRef}
+                    placeholder={'비밀번호'}
+                    secureTextEntry={passVisible}
+                    value={pass}
+                    onChangeText={text => setPass(text)}
+                    onSubmitEditing={() => {
+                      Keyboard.dismiss();
 
-                  // setId('');
-                  // setPass('');
-                }}
-                returnKeyType={'done'}
-              />
-              {passVisible ? (
-                <BTN onPress={() => setPassVisible(!passVisible)}>
-                  <UnSelectImg />
-                </BTN>
-              ) : (
-                <BTN
-                  onPress={() => setPassVisible(!passVisible)}
-                  style={{paddingRight: widthPercentageToDP(3)}}>
-                  <SelectImg />
-                </BTN>
-              )}
-            </StandardView>
+                      // setId('');
+                      // setPass('');
+                    }}
+                    returnKeyType={'done'}
+                  />
+                  {passVisible ? (
+                    <BTN onPress={() => setPassVisible(!passVisible)}>
+                      <UnSelectImg />
+                    </BTN>
+                  ) : (
+                    <BTN
+                      onPress={() => setPassVisible(!passVisible)}
+                      style={{paddingRight: widthPercentageToDP(3)}}>
+                      <SelectImg />
+                    </BTN>
+                  )}
+                </StandardView>
+              </StandardView>
+            ) : (
+              <NBGBText>이미 로그인하였습니다.</NBGBText>
+            )}
           </StandardView>
         }
         renderFooter={() => {
@@ -142,6 +150,7 @@ const MyPage = props => {
                 }}
                 disabled={id.length === 0 || pass.length === 0 ? true : false}
                 onPress={async () => {
+                  await SigninActions.signIn(id, pass);
                   await setLoginModal(false);
                   setId('');
                   setPass('');
@@ -177,4 +186,6 @@ const MyPage = props => {
   );
 };
 
-export default MyPage;
+export default connect(state => ({
+  user: state.signin.user,
+}))(MyPage);

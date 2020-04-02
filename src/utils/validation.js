@@ -38,6 +38,12 @@ export const checkEmoji = value => {
   else return true;
 };
 
+export const checkAge = age => {
+  const reg = /([1-9]{1}[0-9]{0,2})$/;
+  if (reg.test(age)) return true;
+  else return false;
+};
+
 export const checkPhoneNumber = phoneNumber => {
   const reg = /(01[016789])([1-9]{1}[0-9]{2,3})([0-9]{4})$/;
   if (reg.test(phoneNumber)) return true;
