@@ -23,19 +23,38 @@ export const signIn = (userId, userPw) => async dispatch => {
 
     console.log(userData);
 
-    const jsonData = await axios.get(`${config.server}/signIn`, {
+    // 수정 필요
+    const jsonData = await axios.post(`http://15.164.233.87:8001/signIn`, {
       headers: {Accept: 'application/json', 'Content-Type': 'application/json'},
       body: userData,
     });
-
-    console.log(jsonData);
-    // const result = jsonData.result;
-    // await storeData('token', result.token);
+    await storeData('token', jsonData.data.result.token);
+    await dispatch(userDataAction(jsonData.data.result.token));
     return true;
   } catch (err) {
+    console.log('error');
     return false;
   }
 };
+
+// token 테스트 임시 생성
+// export const updateHospitalSubscriber = () => async dispatch => {
+//   try {
+//     let hpid = 'A1110103';
+//     let token = await getData('token');
+
+//     console.log(token);
+
+//     const jsonData = await api.put(`/hospitalSubscriber/hpid/${hpid}`, {
+//       token: token,
+//     });
+//     console.log(jsonData);
+//     return true;
+//   } catch (err) {
+//     console.log('error');
+//     return false;
+//   }
+// };
 
 export default handleActions(
   {

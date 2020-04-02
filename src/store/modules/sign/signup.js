@@ -13,6 +13,8 @@ export const signUp = userData => async dispatch => {
     const jsonData = await api.post(`/signUp`, {
       body: userData,
     });
+
+    console.log(jsonData.result);
   } catch (e) {
     // 서버 연동 실패
     console.log('회원가입 실패...');
