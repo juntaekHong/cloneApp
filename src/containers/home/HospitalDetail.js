@@ -10,7 +10,7 @@ import {
 } from '../../components/common/View';
 import {NBGText, NBGBText} from '../../components/common/Text';
 import {Card, BottomView} from '../../components/home/View';
-import {widthPercentageToDP} from '../../utils/util';
+import {widthPercentageToDP, getData} from '../../utils/util';
 import {CustomModal} from '../../components/common/Modal';
 import Swiper from 'react-native-swiper';
 import OfficeHours from '../hospitalDetail/OfficeHours';
@@ -29,6 +29,8 @@ const HospitalDetail = props => {
   const [roadMapModal, setRoadMapModal] = useState(false);
   // 택시 모달
   const [taxiModal, setTaxiModal] = useState(false);
+  // 예약 모달
+  const [reservationModal, setReservationModal] = useState(false);
 
   // 병원 상세 데이터가 들어오면 네이버 길찾기에 대한 한글 인코딩 해주는 것.
   useEffect(() => {
@@ -133,6 +135,28 @@ const HospitalDetail = props => {
 
   return (
     <TopContainerView>
+      <CustomModal
+        width={300}
+        height={220}
+        visible={reservationModal}
+        close={true}
+        closeHandler={() => {
+          setReservationModal(false);
+        }}
+        children={
+          <StandardView alignItems={'center'} justifyContent={'center'}>
+            <NBGBText align={'center'}>
+              {
+                '예약을 하시려면 로그인 후, 사용해주시기 바랍니다.\n확인을 누르시면, 마이페이지로 이동합니다!'
+              }
+            </NBGBText>
+          </StandardView>
+        }
+        footerHandler={async () => {
+          await setReservationModal(false);
+          props.navigation.navigate('MyPage', {autoLoginModal: true});
+        }}
+      />
       <CustomModal
         width={300}
         height={220}
@@ -303,7 +327,13 @@ const HospitalDetail = props => {
         </View>
       </ScrollView>
       {/* 예약 페이지로 이동 */}
-      <BottomView reservation={() => {}} />
+      <BottomView
+        reservation={() => {
+          props.user !== null
+            ? props.navigation.navigate('Reservation')
+            : setReservationModal(true);
+        }}
+      />
     </TopContainerView>
   );
 };
@@ -314,4 +344,6 @@ export default connect(state => ({
 
   latitude: state.common.latitude,
   longitude: state.common.longitude,
+
+  user: state.signin.user,
 }))(HospitalDetail);

@@ -31,6 +31,22 @@ const MyPage = props => {
 
   const passRef = useRef(null);
 
+  // 병원 상세페이지에서 예약버튼을 통한 자동으로 로그인 창 뜨기.
+  useEffect(() => {
+    let promise1;
+
+    if (props.navigation.state.params !== undefined) {
+      promise1 = props.navigation.state.params.autoLoginModal;
+
+      Promise.all([promise1]).then(async () => {
+        let timeout = setInterval(async () => {
+          await setLoginModal(props.navigation.state.params.autoLoginModal);
+          clearInterval(timeout);
+        }, 500);
+      });
+    }
+  }, [props.navigation]);
+
   return (
     <TopContainerView>
       <CustomModal

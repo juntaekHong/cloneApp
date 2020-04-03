@@ -67,7 +67,13 @@ const SignUp = props => {
 
   // 아바타
 
-  const swipe = useRef();
+  // 스와이프 ref
+  const swipe = useRef(null);
+
+  // inputRef
+  const input1 = useRef(null);
+  const input2 = useRef(null);
+  const input3 = useRef(null);
 
   // 아이디 입력시, 아이디 유효성 체크
   useEffect(() => {
@@ -183,6 +189,7 @@ const SignUp = props => {
               borderRadius: widthPercentageToDP(5),
             }}>
             <TextInput
+              ref={input1}
               style={{
                 marginTop: widthPercentageToDP(10),
                 height: widthPercentageToDP(40),
@@ -201,6 +208,7 @@ const SignUp = props => {
               onChangeText={text => setId(text)}
               onSubmitEditing={() => {
                 // passRef.current.focus();
+                input2.current.focus();
               }}
               returnKeyType={'next'}
             />
@@ -226,6 +234,7 @@ const SignUp = props => {
                 paddingRight: widthPercentageToDP(5),
               }}>
               <TextInput
+                ref={input2}
                 style={{
                   width: widthPercentageToDP(200),
                 }}
@@ -238,7 +247,7 @@ const SignUp = props => {
                 }}
                 onSubmitEditing={() => {
                   Keyboard.dismiss();
-
+                  input3.current.focus();
                   // setId('');
                   // setPass('');
                 }}
@@ -260,6 +269,7 @@ const SignUp = props => {
               {passValid}
             </NBGBText>
             <TextInput
+              ref={input3}
               style={{
                 marginTop: widthPercentageToDP(15),
                 marginBottom: widthPercentageToDP(0),
@@ -280,13 +290,12 @@ const SignUp = props => {
               onChangeText={async text => {
                 await setPassCheck(text);
               }}
-              onSubmitEditing={() => {
+              onSubmitEditing={async () => {
                 Keyboard.dismiss();
-
                 // setId('');
                 // setPass('');
               }}
-              returnKeyType={'next'}
+              returnKeyType={'done'}
             />
             <NBGBText marginLeft={5} marginTop={5} fontSize={10} color={'red'}>
               {passSame}
@@ -510,6 +519,7 @@ const SignUp = props => {
                 height: widthPercentageToDP(25),
               }}
             />
+            {/* 아바타 데이터 추가해야 함. */}
             {/* <TextInput
               style={{
                 marginTop: widthPercentageToDP(30),
@@ -564,13 +574,13 @@ const SignUp = props => {
                 Keyboard.dismiss();
 
                 if (
-                  idValid.length !== 0 ||
-                  passValid.length !== 0 ||
-                  nameValid.length !== 0 ||
-                  nickNameValid.length !== 0 ||
-                  ageValid.length !== 0 ||
-                  gender !== null ||
-                  phoneNumberValid.length !== 0 ||
+                  idValid.length !== 0 &&
+                  passValid.length !== 0 &&
+                  nameValid.length !== 0 &&
+                  nickNameValid.length !== 0 &&
+                  ageValid.length !== 0 &&
+                  gender !== null &&
+                  phoneNumberValid.length !== 0 &&
                   emailValid.length !== 0
                 ) {
                   let userData = {
