@@ -19,6 +19,7 @@ import {
 import Carousel from 'react-native-looped-carousel';
 import FastImage from 'react-native-fast-image';
 import Communications from 'react-native-communications';
+import {CommonActions} from '../../store/actionCreator';
 
 const LocationView = styled(StandardView)`
   flex-direction: row;
@@ -181,8 +182,9 @@ export const Card = ({
   rating,
   reviewCount,
   dutyAddr,
-  // dutyMapimg,
+  dutyMapimg,
   phoneNumber,
+  hospitalId,
   isScrap,
   naviModal,
   taxiModal,
@@ -256,17 +258,18 @@ export const Card = ({
           height: widthPercentageToDP(33),
         }}
         color={'black'}>
-        인근 위치: {dutyMapimg ? dutyMapimg : '정보없음'}
+        인근 위치: {dutyMapimg !== null ? dutyMapimg : '정보없음'}
       </NBGText> */}
       <BTNView>
         <CustomBTN
-          onPress={() => {
+          onPress={async () => {
             // 실제 서버 연동해야 함.
-            myScrap ? setMyScrap(false) : setMyScrap(true);
+            // myScrap ? setMyScrap(false) : setMyScrap(true);
+            await CommonActions.updateHospitalSubscriber(hospitalId);
           }}>
           {myScrap ? (
             <StarImg
-              style={{marginRight: widthPercentageToDP(5)}}
+              style={{marginRight: widthㅇPercentageToDP(5)}}
               width={21}
               height={21}
               source={require('../../../assets/image/home/star-0.png')}

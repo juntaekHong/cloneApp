@@ -12,18 +12,25 @@ const HospitalList = props => {
   );
 
   // 홈(메인) 페이지에서 항목에 맞는 병원 리스트만 보여지는 것으로 가정.
-
   useEffect(() => {
     const Matching = findData => {
       let searchData = [];
 
       data.map((item, index) => {
-        if (item.hospitalCategoryName.indexOf(findData) !== -1) {
-          return searchData.push(item);
-        }
+        item.category.map(categorys => {
+          if (categorys.indexOf(findData) !== -1) {
+            searchData.push(item);
+          } else {
+            return;
+          }
+        });
       });
 
-      if (searchData.length === 0) return props.hospitalList;
+      if (findData === '모두') {
+        return props.hospitalList;
+      } else {
+        if (searchData.length === 0) return;
+      }
 
       return searchData;
     };

@@ -14,9 +14,9 @@ const OfficeHours = ({detailData}) => {
       </NBGText>
       <NBGText marginTop={30} fontSize={15}>
         content:{' '}
-        {detailData.dutyInfo === undefined
+        {detailData.dutyInf === null
           ? '서버 데이터 수정중...'
-          : detailData.dutyInfo}
+          : detailData.dutyInf}
       </NBGText>
     </TopContainerView>
   );

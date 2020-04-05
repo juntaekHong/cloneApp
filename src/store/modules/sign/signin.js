@@ -45,25 +45,6 @@ export const signIn = (userId, userPw) => async dispatch => {
   }
 };
 
-// token 테스트 임시 생성
-// export const updateHospitalSubscriber = () => async dispatch => {
-//   try {
-//     let hpid = 'A1110103';
-//     let token = await getData('token');
-
-//     console.log(token);
-
-//     const jsonData = await api.put(`/hospitalSubscriber/hpid/${hpid}`, {
-//       token: token,
-//     });
-//     console.log(jsonData);
-//     return true;
-//   } catch (err) {
-//     console.log('error');
-//     return false;
-//   }
-// };
-
 export default handleActions(
   {
     [SIGNIN_USER_DATA]: (state, {payload}) =>

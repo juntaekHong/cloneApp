@@ -14,6 +14,7 @@ const DATA = [
     // 일단 임시
     title: '모든 병원',
     // 추가 필요
+    hospitalCategoryName: '모두',
   },
   {
     image: require('../../../assets/image/home/hospital.png'),

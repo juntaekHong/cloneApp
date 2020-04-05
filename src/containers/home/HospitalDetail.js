@@ -276,7 +276,8 @@ const HospitalDetail = props => {
           rating={4.0}
           reviewCount={50}
           dutyAddr={detailData.dutyAddr}
-          // dutyMapimg={detailData.dutyMapimg}
+          dutyMapimg={detailData.dutyMapimg}
+          hospitalId={detailData.hpid}
           isSrap={false}
           phoneNumber={detailData.dutyTel}
           naviModal={async () => {
