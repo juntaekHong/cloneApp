@@ -23,6 +23,8 @@ import {
   checkAge,
 } from '../../utils/validation';
 import {SignupActions} from '../../store/actionCreator';
+import {SignUpView} from '../../components/myPage/View';
+import {SignUpTI} from '../../components/myPage/TextInput';
 // import {WheelPicker} from '../../components/signUp/modal';
 
 const SignUp = props => {
@@ -164,15 +166,22 @@ const SignUp = props => {
           }}
           loop={false}
           showsPagination={true}>
-          <StandardView
-            margin={20}
-            padding={15}
-            style={{
-              borderWidth: widthPercentageToDP(1),
-              borderColor: '#53A6EC',
-              borderRadius: widthPercentageToDP(5),
-            }}>
-            <TextInput
+          <SignUpView>
+            <SignUpTI
+              inputValue={id}
+              inputValueValid={idValid}
+              placeholder={'아이디'}
+              value={id}
+              onChangeText={text => {
+                setId(text);
+              }}
+              onSubmitEditing={() => {
+                // passRef.current.focus();
+                input2.current.focus();
+              }}
+              returnKeyType={'next'}
+            />
+            {/* <TextInput
               ref={input1}
               style={{
                 marginTop: widthPercentageToDP(10),
@@ -195,7 +204,7 @@ const SignUp = props => {
                 input2.current.focus();
               }}
               returnKeyType={'next'}
-            />
+            /> */}
             <NBGBText marginLeft={5} marginTop={5} fontSize={10} color={'red'}>
               {idValid}
             </NBGBText>
@@ -284,15 +293,8 @@ const SignUp = props => {
             <NBGBText marginLeft={5} marginTop={5} fontSize={10} color={'red'}>
               {passSame}
             </NBGBText>
-          </StandardView>
-          <StandardView
-            margin={20}
-            padding={15}
-            style={{
-              borderWidth: widthPercentageToDP(1),
-              borderColor: '#53A6EC',
-              borderRadius: widthPercentageToDP(5),
-            }}>
+          </SignUpView>
+          <SignUpView>
             <TextInput
               style={{
                 marginTop: widthPercentageToDP(15),
@@ -369,7 +371,7 @@ const SignUp = props => {
             <NBGBText marginLeft={5} marginTop={5} fontSize={10} color={'red'}>
               {ageValid}
             </NBGBText>
-          </StandardView>
+          </SignUpView>
           <StandardView
             padding={15}
             style={{

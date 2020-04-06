@@ -26,3 +26,18 @@ export const LoginView = ({user}) => {
     </Login>
   );
 };
+
+// 회원가입 뷰(회원가입 각 3페이지 공통)
+const SignUp = styled(StandardView)`
+  border-width: ${widthPercentageToDP(1)};
+  border-color: #53a6ec;
+  border-radius: ${widthPercentageToDP(5)};
+`;
+
+export const SignUpView = props => {
+  return (
+    <SignUp margin={20} padding={20}>
+      {props.children}
+    </SignUp>
+  );
+};
