@@ -25,6 +25,7 @@ import {
 import {SignupActions} from '../../store/actionCreator';
 import {SignUpView} from '../../components/myPage/View';
 import {SignUpTI} from '../../components/myPage/TextInput';
+import {AlertText} from '../../components/myPage/Text';
 // import {WheelPicker} from '../../components/signUp/modal';
 
 const SignUp = props => {
@@ -181,33 +182,7 @@ const SignUp = props => {
               }}
               returnKeyType={'next'}
             />
-            {/* <TextInput
-              ref={input1}
-              style={{
-                marginTop: widthPercentageToDP(10),
-                height: widthPercentageToDP(40),
-                borderWidth: widthPercentageToDP(1),
-                borderColor:
-                  id.length === 0
-                    ? '#dbdbdb'
-                    : idValid.length === 0
-                    ? '#53A6EC'
-                    : 'red',
-                borderRadius: widthPercentageToDP(15),
-                paddingLeft: widthPercentageToDP(20),
-              }}
-              placeholder={'아이디'}
-              value={id}
-              onChangeText={text => setId(text)}
-              onSubmitEditing={() => {
-                // passRef.current.focus();
-                input2.current.focus();
-              }}
-              returnKeyType={'next'}
-            /> */}
-            <NBGBText marginLeft={5} marginTop={5} fontSize={10} color={'red'}>
-              {idValid}
-            </NBGBText>
+            <AlertText>{idValid}</AlertText>
             <StandardView
               style={{
                 flexDirection: 'row',
@@ -258,25 +233,13 @@ const SignUp = props => {
                 </BTN>
               )}
             </StandardView>
-            <NBGBText marginLeft={5} marginTop={5} fontSize={10} color={'red'}>
-              {passValid}
-            </NBGBText>
-            <TextInput
+            <AlertText>{passValid}</AlertText>
+            <SignUpTI
               ref={input3}
-              style={{
-                marginTop: widthPercentageToDP(15),
-                marginBottom: widthPercentageToDP(0),
-                height: widthPercentageToDP(40),
-                borderWidth: widthPercentageToDP(1),
-                borderColor:
-                  passCheck.length === 0
-                    ? '#dbdbdb'
-                    : passSame.length === 0
-                    ? '#53A6EC'
-                    : 'red',
-                borderRadius: widthPercentageToDP(15),
-                paddingLeft: widthPercentageToDP(20),
-              }}
+              marginTop={15}
+              marginBottom={0}
+              inputValue={passCheck}
+              inputValueValid={passSame}
               placeholder={'비밀번호 재확인'}
               secureTextEntry={true}
               value={passCheck}
@@ -290,25 +253,12 @@ const SignUp = props => {
               }}
               returnKeyType={'done'}
             />
-            <NBGBText marginLeft={5} marginTop={5} fontSize={10} color={'red'}>
-              {passSame}
-            </NBGBText>
+            <AlertText>{passSame}</AlertText>
           </SignUpView>
           <SignUpView>
-            <TextInput
-              style={{
-                marginTop: widthPercentageToDP(15),
-                height: widthPercentageToDP(40),
-                borderWidth: widthPercentageToDP(1),
-                borderColor:
-                  name.length === 0
-                    ? '#dbdbdb'
-                    : nameValid.length === 0
-                    ? '#53A6EC'
-                    : 'red',
-                borderRadius: widthPercentageToDP(15),
-                paddingLeft: widthPercentageToDP(20),
-              }}
+            <SignUpTI
+              inputValue={name}
+              inputValueValid={nameValid}
               placeholder={'이름'}
               value={name}
               onChangeText={text => setName(text)}
@@ -317,23 +267,10 @@ const SignUp = props => {
               }}
               returnKeyType={'next'}
             />
-            <NBGBText marginLeft={5} marginTop={5} fontSize={10} color={'red'}>
-              {nameValid}
-            </NBGBText>
-            <TextInput
-              style={{
-                marginTop: widthPercentageToDP(15),
-                height: widthPercentageToDP(40),
-                borderWidth: widthPercentageToDP(1),
-                borderColor:
-                  nickName.length === 0
-                    ? '#dbdbdb'
-                    : nickNameValid.length === 0
-                    ? '#53A6EC'
-                    : 'red',
-                borderRadius: widthPercentageToDP(15),
-                paddingLeft: widthPercentageToDP(20),
-              }}
+            <AlertText>{nameValid}</AlertText>
+            <SignUpTI
+              inputValue={nickName}
+              inputValueValid={nickNameValid}
               placeholder={'닉네임'}
               value={nickName}
               onChangeText={text => setNickName(text)}
@@ -342,24 +279,11 @@ const SignUp = props => {
               }}
               returnKeyType={'next'}
             />
-            <NBGBText marginLeft={5} marginTop={5} fontSize={10} color={'red'}>
-              {nickNameValid}
-            </NBGBText>
-            <TextInput
-              style={{
-                marginTop: widthPercentageToDP(15),
-                width: widthPercentageToDP(70),
-                height: widthPercentageToDP(40),
-                borderWidth: widthPercentageToDP(1),
-                borderColor:
-                  age.length === 0
-                    ? '#dbdbdb'
-                    : ageValid.length === 0
-                    ? '#53A6EC'
-                    : 'red',
-                borderRadius: widthPercentageToDP(15),
-                paddingLeft: widthPercentageToDP(20),
-              }}
+            <AlertText>{nickNameValid}</AlertText>
+            <SignUpTI
+              width={70}
+              inputValue={age}
+              inputValueValid={ageValid}
               placeholder={'나이'}
               keyboardType={'number-pad'}
               value={age}
@@ -368,9 +292,7 @@ const SignUp = props => {
                 // passRef.current.focus();
               }}
             />
-            <NBGBText marginLeft={5} marginTop={5} fontSize={10} color={'red'}>
-              {ageValid}
-            </NBGBText>
+            <AlertText>{ageValid}</AlertText>
           </SignUpView>
           <StandardView
             padding={15}
@@ -447,20 +369,10 @@ const SignUp = props => {
                 <NBGBText>남자</NBGBText>
               </BTN>
             </StandardView>
-            <TextInput
-              style={{
-                marginTop: widthPercentageToDP(30),
-                height: widthPercentageToDP(40),
-                borderWidth: widthPercentageToDP(1),
-                borderColor:
-                  phoneNumber.length === 0
-                    ? '#dbdbdb'
-                    : phoneNumberValid.length === 0
-                    ? '#53A6EC'
-                    : 'red',
-                borderRadius: widthPercentageToDP(15),
-                paddingLeft: widthPercentageToDP(20),
-              }}
+            <SignUpTI
+              marginTop={30}
+              inputValue={phoneNumber}
+              inputValueValid={phoneNumberValid}
               placeholder={'전화번호 ( "-" 제외 )'}
               keyboardType={'number-pad'}
               value={phoneNumber}
@@ -470,25 +382,13 @@ const SignUp = props => {
               }}
               returnKeyType={'next'}
             />
-            <NBGBText marginLeft={5} marginTop={5} fontSize={10} color={'red'}>
-              {phoneNumberValid}
-            </NBGBText>
-            <TextInput
-              style={{
-                marginTop: widthPercentageToDP(15),
-                height: widthPercentageToDP(40),
-                borderWidth: widthPercentageToDP(1),
-                borderColor:
-                  email.length === 0
-                    ? '#dbdbdb'
-                    : emailValid.length === 0
-                    ? '#53A6EC'
-                    : 'red',
-                borderRadius: widthPercentageToDP(15),
-                paddingLeft: widthPercentageToDP(20),
-              }}
+            <AlertText>{phoneNumberValid}</AlertText>
+            <SignUpTI
+              marginTop={15}
+              inputValue={email}
+              inputValueValid={emailValid}
               placeholder={'이메일'}
-              keyboardType={'email-address'}
+              keyboardTAlertTextype={'email-address'}
               value={email}
               onChangeText={text => setEmail(text)}
               onSubmitEditing={() => {
@@ -496,28 +396,14 @@ const SignUp = props => {
               }}
               returnKeyType={'done'}
             />
-            <NBGBText marginLeft={5} marginTop={5} fontSize={10} color={'red'}>
-              {emailValid}
-            </NBGBText>
+            <AlertText>{emailValid}</AlertText>
+            {/* 아바타 데이터 추가해야 함. */}
             <View
               style={{
                 marginTop: widthPercentageToDP(30),
                 height: widthPercentageToDP(25),
               }}
             />
-            {/* 아바타 데이터 추가해야 함. */}
-            {/* <TextInput
-              style={{
-                marginTop: widthPercentageToDP(30),
-                height: widthPercentageToDP(40),
-                borderWidth: widthPercentageToDP(1),
-                borderColor: id.length === 0 ? '#dbdbdb' : '#53A6EC',
-                borderRadius: widthPercentageToDP(15),
-                paddingLeft: widthPercentageToDP(20),
-              }}
-              placeholder={'아바타'}
-              returnKeyType={'next'}
-            /> */}
           </StandardView>
         </Swiper>
         <StandardView style={{flexDirection: 'row', justifyContent: 'center'}}>
@@ -560,14 +446,14 @@ const SignUp = props => {
                 Keyboard.dismiss();
 
                 if (
-                  idValid.length !== 0 &&
-                  passValid.length !== 0 &&
-                  nameValid.length !== 0 &&
-                  nickNameValid.length !== 0 &&
-                  ageValid.length !== 0 &&
+                  idValid.length === 0 &&
+                  passValid.length === 0 &&
+                  nameValid.length === 0 &&
+                  nickNameValid.length === 0 &&
+                  ageValid.length === 0 &&
                   gender !== null &&
-                  phoneNumberValid.length !== 0 &&
-                  emailValid.length !== 0
+                  phoneNumberValid.length === 0 &&
+                  emailValid.length === 0
                 ) {
                   let userData = {
                     userId: id,

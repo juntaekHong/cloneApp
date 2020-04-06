@@ -23,6 +23,7 @@ const SignUp = styled.TextInput`
 `;
 
 export const SignUpTI = ({
+  width,
   marginTop,
   marginBottom,
   inputValue,
@@ -30,11 +31,13 @@ export const SignUpTI = ({
   placeholder,
   onChangeText,
   onSubmitEditing,
+  keyboardType,
   returnKeyType,
+  secureTextEntry,
 }) => {
-  console.log(inputValue.length, inputValueValid.length);
   return (
     <SignUp
+      style={width !== undefined ? {width: widthPercentageToDP(70)} : null}
       marginTop={marginTop}
       marginBottom={marginBottom}
       inputValue={inputValue}
@@ -48,6 +51,8 @@ export const SignUpTI = ({
         // passRef.current.focus();
         onSubmitEditing();
       }}
+      keyboardType={keyboardType}
+      secureTextEntry={secureTextEntry === undefined ? false : true}
       returnKeyType={returnKeyType}
     />
   );
