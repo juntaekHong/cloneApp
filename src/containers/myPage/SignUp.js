@@ -25,7 +25,7 @@ import {
 import {SignupActions} from '../../store/actionCreator';
 // import {WheelPicker} from '../../components/signUp/modal';
 
-const SignUp = props => {
+const SignUp = (props) => {
   const [index, setIndex] = useState(0);
 
   // 아이디, 아이디 유효성
@@ -159,7 +159,7 @@ const SignUp = props => {
           scrollEnabled={false}
           height={'100%'}
           index={index}
-          onIndexChanged={async index => {
+          onIndexChanged={async (index) => {
             await setIndex(index);
           }}
           loop={false}
@@ -189,7 +189,7 @@ const SignUp = props => {
               }}
               placeholder={'아이디'}
               value={id}
-              onChangeText={text => setId(text)}
+              onChangeText={(text) => setId(text)}
               onSubmitEditing={() => {
                 // passRef.current.focus();
                 input2.current.focus();
@@ -226,7 +226,7 @@ const SignUp = props => {
                 placeholder={'비밀번호'}
                 secureTextEntry={passVisible}
                 value={pass}
-                onChangeText={text => {
+                onChangeText={(text) => {
                   setPass(text);
                 }}
                 onSubmitEditing={() => {
@@ -271,7 +271,7 @@ const SignUp = props => {
               placeholder={'비밀번호 재확인'}
               secureTextEntry={true}
               value={passCheck}
-              onChangeText={async text => {
+              onChangeText={async (text) => {
                 await setPassCheck(text);
               }}
               onSubmitEditing={async () => {
@@ -309,7 +309,7 @@ const SignUp = props => {
               }}
               placeholder={'이름'}
               value={name}
-              onChangeText={text => setName(text)}
+              onChangeText={(text) => setName(text)}
               onSubmitEditing={() => {
                 // passRef.current.focus();
               }}
@@ -334,7 +334,7 @@ const SignUp = props => {
               }}
               placeholder={'닉네임'}
               value={nickName}
-              onChangeText={text => setNickName(text)}
+              onChangeText={(text) => setNickName(text)}
               onSubmitEditing={() => {
                 // passRef.current.focus();
               }}
@@ -361,7 +361,7 @@ const SignUp = props => {
               placeholder={'나이'}
               keyboardType={'number-pad'}
               value={age}
-              onChangeText={text => setAge(text)}
+              onChangeText={(text) => setAge(text)}
               onSubmitEditing={() => {
                 // passRef.current.focus();
               }}
@@ -462,7 +462,7 @@ const SignUp = props => {
               placeholder={'전화번호 ( "-" 제외 )'}
               keyboardType={'number-pad'}
               value={phoneNumber}
-              onChangeText={text => setPhoneNumber(text)}
+              onChangeText={(text) => setPhoneNumber(text)}
               onSubmitEditing={() => {
                 // passRef.current.focus();
               }}
@@ -488,7 +488,7 @@ const SignUp = props => {
               placeholder={'이메일'}
               keyboardType={'email-address'}
               value={email}
-              onChangeText={text => setEmail(text)}
+              onChangeText={(text) => setEmail(text)}
               onSubmitEditing={() => {
                 // passRef.current.focus();
               }}
@@ -558,14 +558,14 @@ const SignUp = props => {
                 Keyboard.dismiss();
 
                 if (
-                  idValid.length !== 0 &&
-                  passValid.length !== 0 &&
-                  nameValid.length !== 0 &&
-                  nickNameValid.length !== 0 &&
-                  ageValid.length !== 0 &&
+                  idValid.length === 0 &&
+                  passValid.length === 0 &&
+                  nameValid.length === 0 &&
+                  nickNameValid.length === 0 &&
+                  ageValid.length === 0 &&
                   gender !== null &&
-                  phoneNumberValid.length !== 0 &&
-                  emailValid.length !== 0
+                  phoneNumberValid.length === 0 &&
+                  emailValid.length === 0
                 ) {
                   let userData = {
                     userId: id,
