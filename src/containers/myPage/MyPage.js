@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState, useRef, useEffect} from 'react';
 import {connect} from 'react-redux';
@@ -17,7 +18,7 @@ import {SigninActions} from '../../store/actionCreator';
 import {LoginView} from '../../components/myPage/View';
 import {LoginBtn} from '../../components/myPage/Button';
 
-const MyPage = props => {
+const MyPage = (props) => {
   // 로그인 모달
   const [loginModal, setLoginModal] = useState(false);
 
@@ -78,7 +79,7 @@ const MyPage = props => {
                 }}
                 placeholder={'아이디'}
                 value={id}
-                onChangeText={text => setId(text)}
+                onChangeText={(text) => setId(text)}
                 onSubmitEditing={() => {
                   passRef.current.focus();
                 }}
@@ -106,7 +107,7 @@ const MyPage = props => {
                   placeholder={'비밀번호'}
                   secureTextEntry={passVisible}
                   value={pass}
-                  onChangeText={text => setPass(text)}
+                  onChangeText={(text) => setPass(text)}
                   onSubmitEditing={() => {
                     Keyboard.dismiss();
 
@@ -201,6 +202,6 @@ const MyPage = props => {
   );
 };
 
-export default connect(state => ({
+export default connect((state) => ({
   user: state.signin.user,
 }))(MyPage);

@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState, useRef, useEffect} from 'react';
 import {widthPercentageToDP, showMessage} from '../../utils/util';
@@ -97,7 +98,7 @@ const SignUp = (props) => {
     let same = checkPassCompare(pass, passCheck);
 
     !same ? setPassSame('* 비밀번호가 일치하지 않습니다.') : setPassSame('');
-  }, [passCheck]);
+  }, [pass, passCheck]);
 
   useEffect(() => {
     let valid = checkName(name);

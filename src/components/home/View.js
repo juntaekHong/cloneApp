@@ -24,10 +24,10 @@ import {CommonActions} from '../../store/actionCreator';
 const LocationView = styled(StandardView)`
   flex-direction: row;
   align-items: center;
-  justify-content: ${props =>
+  justify-content: ${(props) =>
     props.justifyContent ? props.justifyContent : 'flex-start'};
   width: 100%;
-  height: ${props =>
+  height: ${(props) =>
     props.height ? widthPercentageToDP(props.height) : widthPercentageToDP(60)};
 `;
 

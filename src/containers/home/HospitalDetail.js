@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 /* eslint-disable react-native/no-inline-styles */
 import React, {useEffect, useState, useRef, useCallback} from 'react';
 import {ScrollView, Platform, View, Linking} from 'react-native';
@@ -10,7 +11,7 @@ import {
 } from '../../components/common/View';
 import {NBGText, NBGBText} from '../../components/common/Text';
 import {Card, BottomView} from '../../components/home/View';
-import {widthPercentageToDP, getData} from '../../utils/util';
+import {widthPercentageToDP} from '../../utils/util';
 import {CustomModal} from '../../components/common/Modal';
 import Swiper from 'react-native-swiper';
 import OfficeHours from '../hospitalDetail/OfficeHours';
@@ -19,7 +20,7 @@ import {CommonActions} from '../../store/actionCreator';
 import HospitalMap from '../hospitalDetail/HospitalMap';
 import HospitalReview from '../hospitalDetail/HospitalReview';
 
-const HospitalDetail = props => {
+const HospitalDetail = (props) => {
   const [detailData, setDetailData] = useState(
     props.navigation.state.params.object,
   );
@@ -48,6 +49,7 @@ const HospitalDetail = props => {
     return async () => {
       await CommonActions.handlePageIndex(0);
       await CommonActions.startEndInitAction();
+      await CommonActions.handleTimeInfo(null);
     };
   }, []);
 
@@ -123,7 +125,7 @@ const HospitalDetail = props => {
         });
   }, []);
 
-  const changPageIndex = useCallback(async index => {
+  const changPageIndex = useCallback(async (index) => {
     await CommonActions.handlePageIndex(index);
 
     await focusing.current.scrollTo({
@@ -132,6 +134,8 @@ const HospitalDetail = props => {
       animated: true,
     });
   }, []);
+
+  // console.log(detailData);
 
   return (
     <TopContainerView>
@@ -278,7 +282,7 @@ const HospitalDetail = props => {
           dutyAddr={detailData.dutyAddr}
           dutyMapimg={detailData.dutyMapimg}
           hospitalId={detailData.hpid}
-          isSrap={false}
+          isScrap={false}
           phoneNumber={detailData.dutyTel}
           naviModal={async () => {
             await setRoadMapModal(true);
@@ -292,7 +296,7 @@ const HospitalDetail = props => {
           page1={{title: '진료시간 정보', index: 0}}
           page2={{title: '길찾기', index: 1}}
           page3={{title: '리뷰', index: 2}}
-          onPress={async index => {
+          onPress={async (index) => {
             if (props.page_index !== index) {
               await swipe.current.scrollBy(index - props.page_index);
             }
@@ -307,7 +311,7 @@ const HospitalDetail = props => {
             ref={swipe}
             height={'100%'}
             index={props.page_index}
-            onIndexChanged={async index => {
+            onIndexChanged={async (index) => {
               await changPageIndex(index);
             }}
             loop={false}
@@ -329,18 +333,29 @@ const HospitalDetail = props => {
       </ScrollView>
       {/* 예약 페이지로 이동 */}
       <BottomView
-        reservation={() => {
+        reservation={async () => {
+          await CommonActions.handleTimeInfo({
+            dutyTime1: detailData.dutyTime1,
+            dutyTime2: detailData.dutyTime2,
+            dutyTime3: detailData.dutyTime3,
+            dutyTime4: detailData.dutyTime4,
+            dutyTime5: detailData.dutyTime5,
+            dutyTime6: detailData.dutyTime6,
+            dutyTime7: detailData.dutyTime7,
+            dutyTime8: detailData.dutyTime8,
+          });
+
           props.user !== null
             ? props.navigation.navigate('Reservation')
             : setReservationModal(true);
         }}
+        navigation={props.navigation}
       />
     </TopContainerView>
   );
 };
 
-export default connect(state => ({
-  hospital_detail: state.common.hospital_detail,
+export default connect((state) => ({
   page_index: state.common.page_index,
 
   latitude: state.common.latitude,
