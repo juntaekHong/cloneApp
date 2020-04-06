@@ -150,22 +150,6 @@ const SignUp = props => {
         backBtn={true}
         backHandler={() => props.navigation.goBack(null)}
       />
-      {/* <WheelPicker
-        width={316}
-        height={344}
-        visible={ageModal}
-        data={}
-        value={}
-        closeHandler={async () => {
-          await this.setState({trackFilter: false});
-
-          let timeout = setInterval(() => {
-            this.setState({filter: true});
-            clearTimeout(timeout);
-          }, 500);
-        }}
-        footerHandler={}
-      /> */}
       <ScrollView
         style={{
           flex: 1,

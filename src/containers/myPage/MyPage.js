@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState, useRef, useEffect, useCallback} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import {connect} from 'react-redux';
 import {
   TopContainerView,
@@ -8,27 +8,27 @@ import {
   StandardView,
 } from '../../components/common/View';
 import {NBGBText} from '../../components/common/Text';
-import {
-  widthPercentageToDP,
-  getData,
-  removeData,
-  showMessage,
-} from '../../utils/util';
+import {widthPercentageToDP, getData, showMessage} from '../../utils/util';
 import {CustomModal} from '../../components/common/Modal';
 import colors from '../../configs/colors';
 import {TextInput, Keyboard} from 'react-native';
 import {SelectImg, UnSelectImg} from '../../components/home/Image';
 import {SigninActions} from '../../store/actionCreator';
-import {handleLoginData} from '../../store/modules/sign/signin';
+import {LoginView} from '../../components/myPage/View';
+import {LoginBtn} from '../../components/myPage/Button';
 
 const MyPage = props => {
+  // 로그인 모달
   const [loginModal, setLoginModal] = useState(false);
 
+  // 아이디, 패스워드
   const [id, setId] = useState('');
   const [pass, setPass] = useState('');
 
+  // 비밀번호 보이기
   const [passVisible, setPassVisible] = useState(true);
 
+  // 아이디 입력 후, 패스워드 포커싱
   const passRef = useRef(null);
 
   // 병원 상세페이지에서 예약버튼을 통한 자동으로 로그인 창 뜨기.
@@ -188,58 +188,14 @@ const MyPage = props => {
         }}
       />
       <TopView title="마이 페이지" />
-      {/* 예약, 리뷰, 즐겨찾기(찜?) 등 앞으로 해야할 기능들 - 로그인 필요로 인하여 먼저 임시 구현 */}
       {props.user === null ? (
-        <BTN
-          onPress={() => {
+        <LoginBtn
+          loginModal={() => {
             setLoginModal(true);
           }}
-          style={{
-            width: widthPercentageToDP(200),
-            marginLeft: widthPercentageToDP(30),
-            padding: widthPercentageToDP(10),
-            borderWidth: widthPercentageToDP(1),
-            borderColor: '#dbdbdb',
-            borderRadius: widthPercentageToDP(15),
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginVertical: widthPercentageToDP(30),
-          }}>
-          <NBGBText>로그인 및 회원가입</NBGBText>
-        </BTN>
+        />
       ) : (
-        <StandardView>
-          <NBGBText
-            style={{
-              marginLeft: widthPercentageToDP(30),
-              padding: widthPercentageToDP(10),
-
-              marginVertical: widthPercentageToDP(30),
-            }}>
-            {props.user !== null ? props.user.userId : ''}님 안녕하세요~
-          </NBGBText>
-          <BTN
-            onPress={async () => {
-              await removeData('token');
-              await removeData('user_id');
-
-              // await setUserData(null);
-              await SigninActions.handleLoginData(null);
-            }}
-            style={{
-              width: widthPercentageToDP(200),
-              marginLeft: widthPercentageToDP(30),
-              padding: widthPercentageToDP(10),
-              borderWidth: widthPercentageToDP(1),
-              borderColor: '#dbdbdb',
-              borderRadius: widthPercentageToDP(15),
-              justifyContent: 'center',
-              alignItems: 'center',
-              marginVertical: widthPercentageToDP(30),
-            }}>
-            <NBGBText>로그아웃</NBGBText>
-          </BTN>
-        </StandardView>
+        <LoginView user={props.user} />
       )}
     </TopContainerView>
   );
