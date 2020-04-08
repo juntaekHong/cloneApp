@@ -23,8 +23,6 @@ const Reservation = styled(BTN)`
     paddingBottom
       ? widthPercentageToDP(paddingBottom)
       : widthPercentageToDP(0)};
-  border-bottom-width: ${widthPercentageToDP(10)}
-  border-bottom-color: #F6F7F9;
 `;
 
 // 예약하기 페이지 - 커스텀 버튼

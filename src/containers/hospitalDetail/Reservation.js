@@ -9,9 +9,9 @@ import {
   BTN,
   StandardView,
 } from '../../components/common/View';
-import {NBGBText, NBGLText} from '../../components/common/Text';
-import {Img} from '../../components/common/Image';
-import {ReservationBtn} from '../../components/reservation.js/Button';
+import {DivisionView} from '../../components/reservation/View';
+import {NBGBText} from '../../components/common/Text';
+import {ReservationBtn} from '../../components/reservation/Button';
 
 const Reservation = (props) => {
   const [MedicalOffice, setMedicalOffice] = useState();
@@ -34,16 +34,15 @@ const Reservation = (props) => {
       <StandardView>
         <ReservationBtn
           paddingHorizontal={20}
-          paddingBottom={20}
           title={'진료대상'}
           noClick={true}
           necessary={false}
           value={props.user.userName}
         />
+        <DivisionView />
         <ReservationBtn
           noClick={false}
           paddingHorizontal={20}
-          paddingBottom={20}
           title={'진료실'}
           necessary={true}
           value={MedicalOffice}
@@ -52,6 +51,7 @@ const Reservation = (props) => {
             setMedicalOfficeSelected(!medicalOfficeSelected);
           }}
         />
+        <DivisionView />
       </StandardView>
       {/* 날짜 / 시간 선택 임시 버튼 */}
       <BTN
