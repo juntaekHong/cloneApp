@@ -32,7 +32,7 @@ const Comment = styled(StandardView)`
       : widthPercentageToDP(0)};
 `;
 
-export const CommentView = ({paddingHorizontal}) => {
+export const CommentView = ({paddingHorizontal, onChangeText, value}) => {
   return (
     <Comment paddingHorizontal={paddingHorizontal}>
       <StandardView marginBottom={20} style={{flexDirection: 'row'}}>
@@ -41,7 +41,14 @@ export const CommentView = ({paddingHorizontal}) => {
           [선택]
         </NBGLText>
       </StandardView>
-      <CommentTI marginBottom={20} placeholder={'ex) 어제부터 열이 나요.'} />
+      <CommentTI
+        marginBottom={20}
+        placeholder={'ex) 어제부터 열이 나요.'}
+        onChangeText={(text) => {
+          onChangeText(text);
+        }}
+        value={value}
+      />
       <NBGLText marginLeft={5}>
         ※ 병원에 도착하시면 데스크에 도착여부를 알려주세요.
       </NBGLText>

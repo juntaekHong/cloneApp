@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {connect} from 'react-redux';
 import {widthPercentageToDP, showMessage} from '../../utils/util';
 import {
@@ -21,6 +21,8 @@ const Reservation = (props) => {
 
   const [medicalObject, setMedicalObject] = useState();
   const [medicalObjectSelected, setMedicalObjectSelected] = useState(false);
+
+  const [comment, setComment] = useState('');
 
   return (
     <TopContainerView>
@@ -79,7 +81,13 @@ const Reservation = (props) => {
           />
           <DivisionView />
           {/* 원장님께 하고싶은 말 */}
-          <CommentView paddingHorizontal={20} />
+          <CommentView
+            paddingHorizontal={20}
+            onChangeText={(text) => {
+              setComment(text);
+            }}
+            value={comment}
+          />
         </StandardView>
         <DateBTN
           height={60}

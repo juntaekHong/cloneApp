@@ -19,11 +19,15 @@ const Comment = styled(TextInput)`
     marginBottom ? widthPercentageToDP(marginBottom) : 0};
 `;
 
-export const CommentTI = ({marginBottom, placeholder}) => {
+export const CommentTI = ({marginBottom, placeholder, onChangeText, value}) => {
   return (
     <Comment
       marginBottom={marginBottom}
       placeholder={placeholder}
+      onChangeText={(text) => {
+        onChangeText(text);
+      }}
+      value={value}
       returnKeyType={'done'}
     />
   );
