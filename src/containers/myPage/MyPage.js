@@ -55,6 +55,7 @@ const MyPage = (props) => {
         height={350}
         visible={loginModal}
         closeHandler={() => {
+          setPassVisible(true);
           setId('');
           setPass('');
           setLoginModal(false);
@@ -146,8 +147,10 @@ const MyPage = (props) => {
                 }}
                 onPress={async () => {
                   await setLoginModal(false);
+                  await setPassVisible(true);
                   setId('');
                   setPass('');
+
                   await props.navigation.navigate('SignUp');
                 }}>
                 <NBGBText fontSize={15} color={'white'}>
@@ -172,6 +175,7 @@ const MyPage = (props) => {
                   await SigninActions.signIn(id, pass);
 
                   await setLoginModal(false);
+                  await setPassVisible(true);
                   await setId('');
                   await setPass('');
 
