@@ -6,7 +6,7 @@ import {BTN} from '../common/View';
 import {Img} from '../common/Image';
 import {NBGBText} from '../common/Text';
 
-export const DataList = props => {
+export const DataList = (props) => {
   const _renderItem = ({item, index}) => {
     return (
       <BTN
@@ -25,7 +25,7 @@ export const DataList = props => {
           });
         }}>
         <Img width={60} height={60} source={item.image} />
-        <NBGBText marginTop={7} align={'center'}>
+        <NBGBText marginTop={7} align={'center'} fontSize={13}>
           {item.title}
         </NBGBText>
       </BTN>

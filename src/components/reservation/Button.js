@@ -70,7 +70,7 @@ export const ReservationBtn = ({
           <NBGBText marginTop={15} fontSize={15}>
             {value === undefined ? title + ' 선택' : value}
           </NBGBText>
-          {!selected ? (
+          {selected ? (
             <UpArrowImg width={16} height={16} />
           ) : (
             <DownArrowImg width={16} height={16} />
@@ -78,5 +78,34 @@ export const ReservationBtn = ({
         </StandardView>
       )}
     </Reservation>
+  );
+};
+
+// 날짜/시간 선택 버튼
+const Date = styled(Reservation)`
+  height: ${({height}) =>
+    height ? widthPercentageToDP(height) : widthPercentageToDP(100)};
+  justify-content: center;
+  margin-left: ${({marginHorizontal}) =>
+    marginHorizontal ? widthPercentageToDP(marginHorizontal) : 0};
+  margin-right: ${({marginHorizontal}) =>
+    marginHorizontal ? widthPercentageToDP(marginHorizontal) : 0};
+  border-radius: ${widthPercentageToDP(15)};
+  background-color: ${({bgColor}) => (bgColor ? bgColor : 'white')};
+`;
+
+export const DateBTN = ({height, marginHorizontal, bgColor, onPress}) => {
+  return (
+    <Date
+      height={height}
+      marginHorizontal={marginHorizontal}
+      bgColor={bgColor}
+      onPress={() => {
+        onPress();
+      }}>
+      <NBGBText fontSize={17} align={'center'}>
+        날짜/시간 선택
+      </NBGBText>
+    </Date>
   );
 };

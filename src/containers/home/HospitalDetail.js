@@ -346,7 +346,7 @@ const HospitalDetail = (props) => {
             dutyTime8: detailData.dutyTime8,
           });
 
-          props.user !== null
+          props.user === null
             ? props.navigation.navigate('Reservation')
             : setReservationModal(true);
         }}
