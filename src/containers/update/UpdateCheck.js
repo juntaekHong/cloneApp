@@ -53,13 +53,14 @@ const UpdateCheck = (props) => {
         setLatitude(lat);
         setLongitude(long);
 
-        const innerPromise1 = CommonActions.getHospitalList(long, lat);
-        const innerPromise2 = CommonActions.getMyAddress(long, lat);
-
-        Promise.all([innerPromise1, innerPromise2]).then(async () => {
+        let timeout = setInterval(async () => {
+          await CommonActions.getHospitalList(long, lat);
+          await CommonActions.getMyAddress(long, lat);
           await CommonActions.handleFirstScreenLoading(false);
           await props.navigation.navigate('home');
-        });
+
+          clearInterval(timeout);
+        }, 2000);
       }
     });
   }, []);
