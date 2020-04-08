@@ -1,12 +1,22 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
+import React, {useState} from 'react';
 import {connect} from 'react-redux';
 import {widthPercentageToDP} from '../../utils/util';
-import {TopContainerView, TopView, BTN} from '../../components/common/View';
-import {NBGBText} from '../../components/common/Text';
+import {
+  TopContainerView,
+  TopView,
+  BTN,
+  StandardView,
+} from '../../components/common/View';
+import {NBGBText, NBGLText} from '../../components/common/Text';
+import {Img} from '../../components/common/Image';
+import {ReservationBtn} from '../../components/reservation.js/Button';
 
 const Reservation = (props) => {
+  const [MedicalOffice, setMedicalOffice] = useState();
+  const [medicalOfficeSelected, setMedicalOfficeSelected] = useState(false);
+
   return (
     <TopContainerView>
       <TopView
@@ -21,7 +31,28 @@ const Reservation = (props) => {
         sharedBtn={false}
       />
       {/* 주요 내용 들어올 곳 뷰 */}
-
+      <StandardView>
+        <ReservationBtn
+          paddingHorizontal={20}
+          paddingBottom={20}
+          title={'진료대상'}
+          noClick={true}
+          necessary={false}
+          value={props.user.userName}
+        />
+        <ReservationBtn
+          noClick={false}
+          paddingHorizontal={20}
+          paddingBottom={20}
+          title={'진료실'}
+          necessary={true}
+          value={MedicalOffice}
+          selected={medicalOfficeSelected}
+          onPress={() => {
+            setMedicalOfficeSelected(!medicalOfficeSelected);
+          }}
+        />
+      </StandardView>
       {/* 날짜 / 시간 선택 임시 버튼 */}
       <BTN
         style={{
@@ -42,5 +73,6 @@ const Reservation = (props) => {
 };
 
 export default connect((state) => ({
+  user: state.signin.user,
   hospital_detail: state.common.hospital_detail,
 }))(Reservation);

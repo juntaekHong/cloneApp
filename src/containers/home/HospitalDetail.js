@@ -135,7 +135,7 @@ const HospitalDetail = (props) => {
     });
   }, []);
 
-  // console.log(detailData);
+  console.log(detailData);
 
   return (
     <TopContainerView>

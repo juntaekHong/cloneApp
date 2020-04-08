@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import {createAction, handleActions} from 'redux-actions';
 import {produce} from 'immer';
 import api from '../../../utils/api';
@@ -19,11 +20,11 @@ const initState = {
   user: null,
 };
 
-export const handleLoginData = value => dispatch => {
+export const handleLoginData = (value) => (dispatch) => {
   dispatch(userDataAction(value));
 };
 
-export const signIn = (userId, userPw) => async dispatch => {
+export const signIn = (userId, userPw) => async (dispatch) => {
   try {
     let userData = {
       userId,
@@ -35,9 +36,14 @@ export const signIn = (userId, userPw) => async dispatch => {
       body: userData,
     });
 
-    await storeData('token', jsonData.result.token);
-    await storeData('user_id', jsonData.result.userId);
-    await dispatch(userDataAction({userId: jsonData.result.userId}));
+    const result = jsonData.result;
+
+    await storeData('token', result.token);
+    await storeData('user_id', result.userId);
+    await storeData('user_name', result.userName);
+    await dispatch(
+      userDataAction({userId: result.userId, userName: result.userName}),
+    );
     return true;
   } catch (err) {
     console.log('error');
@@ -48,7 +54,7 @@ export const signIn = (userId, userPw) => async dispatch => {
 export default handleActions(
   {
     [SIGNIN_USER_DATA]: (state, {payload}) =>
-      produce(state, draft => {
+      produce(state, (draft) => {
         draft.user = payload;
       }),
   },

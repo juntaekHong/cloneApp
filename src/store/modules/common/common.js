@@ -121,14 +121,15 @@ export const locationInit = () => async (dispatch) => {
   const location_lat = await getData('location_lat');
   const location_long = await getData('location_long');
   const user_id = await getData('user_id');
+  const user_name = await getData('user_name');
 
   if (location_lat !== null || location_long !== null) {
     await dispatch(locationLatitudeAction(parseFloat(location_lat)));
     await dispatch(locationLongitudeAction(parseFloat(location_long)));
   }
 
-  if (user_id !== null) {
-    await dispatch(handleLoginData({userId: user_id}));
+  if (user_id !== null && user_name !== null) {
+    await dispatch(handleLoginData({userId: user_id, userName: user_name}));
   }
 };
 
