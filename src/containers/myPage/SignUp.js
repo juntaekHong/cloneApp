@@ -559,33 +559,46 @@ const SignUp = (props) => {
                 Keyboard.dismiss();
 
                 if (
-                  idValid.length === 0 &&
-                  passValid.length === 0 &&
-                  nameValid.length === 0 &&
-                  nickNameValid.length === 0 &&
-                  ageValid.length === 0 &&
+                  id.length !== 0 &&
+                  pass.length !== 0 &&
+                  passCheck.length !== 0 &&
+                  name.length !== 0 &&
+                  nickName.length !== 0 &&
+                  age.length !== 0 &&
                   gender !== null &&
-                  phoneNumberValid.length === 0 &&
-                  emailValid.length === 0
+                  phoneNumber.length !== 0 &&
+                  email.length !== 0
                 ) {
-                  let userData = {
-                    userId: id,
-                    userPw: pass,
-                    userName: name,
-                    userNickName: nickName,
-                    age: age,
-                    gender: gender,
-                    tel: phoneNumber,
-                    email: email,
-                  };
+                  if (
+                    idValid.length === 0 &&
+                    passValid.length === 0 &&
+                    passSame.length === 0 &&
+                    nameValid.length === 0 &&
+                    nickNameValid.length === 0 &&
+                    ageValid.length === 0 &&
+                    gender !== null &&
+                    phoneNumberValid.length === 0 &&
+                    emailValid.length === 0
+                  ) {
+                    let userData = {
+                      userId: id,
+                      userPw: pass,
+                      userName: name,
+                      userNickName: nickName,
+                      age: age,
+                      gender: gender,
+                      tel: phoneNumber,
+                      email: email,
+                    };
 
-                  await SignupActions.signUp(userData);
+                    await SignupActions.signUp(userData);
 
-                  props.navigation.goBack(null);
+                    props.navigation.goBack(null);
+                  } else {
+                    showMessage('잘못된 입력한 항목이 있습니다.');
+                  }
                 } else {
-                  showMessage(
-                    '입력하지 않은 항목이 있거나 잘못된 입력한 항목이 있습니다.',
-                  );
+                  showMessage('입력하지 않은 항목이 있습니다.');
                 }
               }}
               style={{
