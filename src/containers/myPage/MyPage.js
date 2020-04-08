@@ -17,6 +17,7 @@ import {SelectImg, UnSelectImg} from '../../components/home/Image';
 import {SigninActions} from '../../store/actionCreator';
 import {LoginView} from '../../components/myPage/View';
 import {LoginBtn} from '../../components/myPage/Button';
+import Toast from 'react-native-root-toast';
 
 const MyPage = (props) => {
   // 로그인 모달
@@ -181,7 +182,9 @@ const MyPage = (props) => {
 
                   const user_id = await getData('user_id');
                   user_id === null
-                    ? showMessage('잘못된 아이디 또는 비밀번호입니다.')
+                    ? showMessage('잘못된 아이디 또는 비밀번호입니다.', {
+                        position: Toast.positions.CENTER,
+                      })
                     : null;
                 }}>
                 <NBGBText fontSize={15} color={'white'}>

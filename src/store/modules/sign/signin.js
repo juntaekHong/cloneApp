@@ -31,7 +31,6 @@ export const signIn = (userId, userPw) => async (dispatch) => {
       userPw,
     };
 
-    // 수정 필요
     const jsonData = await api.post(`/signIn`, {
       body: userData,
     });

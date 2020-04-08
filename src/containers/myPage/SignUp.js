@@ -24,6 +24,7 @@ import {
   checkAge,
 } from '../../utils/validation';
 import {SignupActions} from '../../store/actionCreator';
+import Toast from 'react-native-root-toast';
 // import {WheelPicker} from '../../components/signUp/modal';
 
 const SignUp = (props) => {
@@ -595,10 +596,14 @@ const SignUp = (props) => {
 
                     props.navigation.goBack(null);
                   } else {
-                    showMessage('잘못된 입력한 항목이 있습니다.');
+                    showMessage('잘못된 입력한 항목이 있습니다.', {
+                      position: Toast.positions.CENTER,
+                    });
                   }
                 } else {
-                  showMessage('입력하지 않은 항목이 있습니다.');
+                  showMessage('입력하지 않은 항목이 있습니다.', {
+                    position: Toast.positions.CENTER,
+                  });
                 }
               }}
               style={{

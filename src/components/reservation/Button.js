@@ -30,6 +30,7 @@ export const ReservationBtn = ({
   paddingHorizontal,
   paddingBottom,
   noClick,
+  activeOpacity,
   title,
   necessary,
   value,
@@ -41,6 +42,7 @@ export const ReservationBtn = ({
       disabled={noClick}
       paddingHorizontal={paddingHorizontal}
       paddingBottom={paddingBottom}
+      activeOpacity={activeOpacity}
       onPress={() => {
         onPress();
       }}>
@@ -66,9 +68,9 @@ export const ReservationBtn = ({
         <StandardView
           style={{flexDirection: 'row', justifyContent: 'space-between'}}>
           <NBGBText marginTop={15} fontSize={15}>
-            {value === undefined ? '진료실 선택' : value}
+            {value === undefined ? title + ' 선택' : value}
           </NBGBText>
-          {selected ? (
+          {!selected ? (
             <UpArrowImg width={16} height={16} />
           ) : (
             <DownArrowImg width={16} height={16} />

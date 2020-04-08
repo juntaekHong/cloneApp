@@ -2,7 +2,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
 import {connect} from 'react-redux';
-import {widthPercentageToDP} from '../../utils/util';
+import {widthPercentageToDP, showMessage} from '../../utils/util';
 import {
   TopContainerView,
   TopView,
@@ -12,10 +12,14 @@ import {
 import {DivisionView} from '../../components/reservation/View';
 import {NBGBText} from '../../components/common/Text';
 import {ReservationBtn} from '../../components/reservation/Button';
+import Toast from 'react-native-root-toast';
 
 const Reservation = (props) => {
-  const [MedicalOffice, setMedicalOffice] = useState();
+  const [medicalOffice, setMedicalOffice] = useState();
   const [medicalOfficeSelected, setMedicalOfficeSelected] = useState(false);
+
+  const [medicalObject, setMedicalObject] = useState();
+  const [medicalObjectSelected, setMedicalObjectSelected] = useState(false);
 
   return (
     <TopContainerView>
@@ -41,14 +45,32 @@ const Reservation = (props) => {
         />
         <DivisionView />
         <ReservationBtn
+          activeOpacity={0.3}
           noClick={false}
           paddingHorizontal={20}
           title={'진료실'}
           necessary={true}
-          value={MedicalOffice}
+          value={medicalOffice}
           selected={medicalOfficeSelected}
           onPress={() => {
             setMedicalOfficeSelected(!medicalOfficeSelected);
+          }}
+        />
+        <DivisionView />
+        <ReservationBtn
+          noClick={false}
+          activeOpacity={medicalOffice === undefined ? 1 : 0.3}
+          paddingHorizontal={20}
+          title={'진료항목'}
+          necessary={true}
+          value={medicalObject}
+          selected={medicalObjectSelected}
+          onPress={() => {
+            medicalOffice === undefined
+              ? showMessage('진료실을 선택하여 주세요!', {
+                  position: Toast.positions.CENTER,
+                })
+              : setMedicalObjectSelected(!medicalObjectSelected);
           }}
         />
         <DivisionView />
