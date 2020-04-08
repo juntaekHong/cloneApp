@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState} from 'react';
+import React, {useState, useRef} from 'react';
 import {connect} from 'react-redux';
 import {
   TopContainerView,
@@ -31,10 +31,18 @@ const Calendars = (props) => {
 
   const [selectedIndex, setSelectedIndex] = useState(null);
 
+  const hourListRef = useRef(null);
+
   const onSelectedChange = (day) => {
     let date = day.dateString;
 
     setMarkedDate({[date]: {selected: true, marked: false}});
+
+    hourListRef.current.scrollToOffset({
+      x: 0,
+      y: 0,
+      animated: true,
+    });
   };
 
   const selectedDays = (day) => {
@@ -66,8 +74,6 @@ const Calendars = (props) => {
       setHourData([]);
     }
   };
-
-  console.log(props.hospital_detail);
 
   return (
     <TopContainerView>
@@ -161,6 +167,7 @@ const Calendars = (props) => {
           marginHorizontal: widthPercentageToDP(10),
         }}>
         <FlatList
+          ref={hourListRef}
           style={{flexGrow: 1, width: '100%', height: '100%'}}
           horizontal={true}
           data={hourData}

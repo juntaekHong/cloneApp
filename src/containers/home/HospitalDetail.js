@@ -335,6 +335,7 @@ const HospitalDetail = (props) => {
       <BottomView
         reservation={async () => {
           await CommonActions.handleTimeInfo({
+            hospitalName: detailData.dutyName,
             dutyTime1: detailData.dutyTime1,
             dutyTime2: detailData.dutyTime2,
             dutyTime3: detailData.dutyTime3,
