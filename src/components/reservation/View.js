@@ -5,7 +5,7 @@ import React from 'react';
 import styled from 'styled-components/native';
 import {widthPercentageToDP} from '../../utils/util';
 import {StandardView} from '../common/View';
-import {NBGBText, NBGLText} from '../common/Text';
+import {NBGLText} from '../common/Text';
 import {CommentTI} from './TextInput';
 
 // 구분선

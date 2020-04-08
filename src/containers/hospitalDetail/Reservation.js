@@ -1,16 +1,14 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {connect} from 'react-redux';
-import {widthPercentageToDP, showMessage} from '../../utils/util';
+import {showMessage} from '../../utils/util';
 import {
   TopContainerView,
   TopView,
-  BTN,
   StandardView,
 } from '../../components/common/View';
 import {DivisionView, CommentView} from '../../components/reservation/View';
-import {NBGBText} from '../../components/common/Text';
 import {ReservationBtn, DateBTN} from '../../components/reservation/Button';
 import Toast from 'react-native-root-toast';
 import {ScrollView} from 'react-native';
@@ -29,8 +27,7 @@ const Reservation = (props) => {
       <ScrollView>
         <TopView
           marginBottom={5}
-          // title={`접수하기(${props.hospital_detail.hospitalName})`}
-          title={`접수하기()`}
+          title={`접수하기(${props.hospital_detail.hospitalName})`}
           backBtn={true}
           backHandler={() => {
             props.navigation.goBack(null);
@@ -39,15 +36,13 @@ const Reservation = (props) => {
           searchBtn={false}
           sharedBtn={false}
         />
-        {/* 주요 내용 들어올 곳 뷰 */}
         <StandardView>
           <ReservationBtn
             paddingHorizontal={20}
             title={'진료대상'}
             noClick={true}
             necessary={false}
-            // value={props.user.userName}
-            value={'홍길동'}
+            value={props.user.userName}
           />
           <DivisionView />
           <ReservationBtn
@@ -89,6 +84,7 @@ const Reservation = (props) => {
             value={comment}
           />
         </StandardView>
+        {/* 날짜/시간 선택 뷰 */}
         <DateBTN
           height={60}
           marginHorizontal={20}

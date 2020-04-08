@@ -4,7 +4,6 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import {widthPercentageToDP} from '../../utils/util';
-import {NBGBText, NBGLText} from '../common/Text';
 import {TextInput} from 'react-native';
 
 // 원장님께 하고 싶은 말 텍스트인풋
