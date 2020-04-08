@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState, useEffect} from 'react';
 import {View, TouchableOpacity, Text} from 'react-native';
@@ -12,14 +13,12 @@ import {BTN} from '../../components/common/View';
 import {NBGBText, NBGText} from '../../components/common/Text';
 import {UIActivityIndicator} from 'react-native-indicators';
 
-const UpdateCheck = props => {
+const UpdateCheck = (props) => {
   // 초기 처음 사용시, 내 위치 설정
   const [location, setLocation] = useState();
   // 초기 내 위치 설정 이후 내 위치 불러오기
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
-  // 첫 위치 권한 허용 전, 위치정보 키라고 알림창(모달) 띄우기.
-  const [alertModal, setAlertModal] = useState(false);
 
   const [error, setError] = useState(null);
 
@@ -32,7 +31,7 @@ const UpdateCheck = props => {
 
       if (lat === null || long === null) {
         Geolocation.getCurrentPosition(
-          position => {
+          (position) => {
             const {latitude, longitude} = position.coords;
             setLocation({
               latitude,
@@ -40,7 +39,7 @@ const UpdateCheck = props => {
             });
             CommonActions.myLocation(latitude, longitude);
           },
-          error => {
+          (error) => {
             setError(error.message);
           },
           // enableHighAccuracy: true 시, 실제 디바이스에서 내 위치 설정 요청 오류남.
@@ -50,16 +49,17 @@ const UpdateCheck = props => {
           await CommonActions.handleFirstScreenLoading(false);
           clearInterval(timeout);
         }, 2000);
-
-        // await setAlertModal(true);
       } else {
         setLatitude(lat);
         setLongitude(long);
 
-        let timeout = setInterval(async () => {
+        const innerPromise1 = CommonActions.getHospitalList(long, lat);
+        const innerPromise2 = CommonActions.getMyAddress(long, lat);
+
+        Promise.all([innerPromise1, innerPromise2]).then(async () => {
           await CommonActions.handleFirstScreenLoading(false);
-          clearInterval(timeout);
-        }, 2000);
+          await props.navigation.navigate('home');
+        });
       }
     });
   }, []);
@@ -80,58 +80,38 @@ const UpdateCheck = props => {
     </CenterView>
   ) : (
     <>
-      <CenterView>
-        {/* <CustomModal
-          width={300}
-          height={220}
-          visible={alertModal}
-          close={true}
-          closeHandler={() => setAlertModal(false)}
-          children={
-            <View
-              style={{
-                marginLeft: widthPercentageToDP(20),
-                marginRight: widthPercentageToDP(50),
-              }}>
-              <NBGBText fontSize={15}>
-                {'GPS 키지 않으셨다면 켜고 재실행해야 주세요!'}
-              </NBGBText>
-            </View>
-          }
-          renderFooter={() => {
-            return <View />;
-          }}
-        /> */}
-        <Text>Version Check Page</Text>
-        <View style={{marginBottom: widthPercentageToDP(60)}} />
-        <TouchableOpacity
-          style={{
-            margin: widthPercentageToDP(2),
-            padding: widthPercentageToDP(5),
-            borderWidth: widthPercentageToDP(2),
-            borderRadius: widthPercentageToDP(6),
-            borderColor: 'blue',
-          }}
-          onPress={async () => {
-            const long = longitude === null ? location.longitude : longitude;
-            const lat = latitude === null ? location.latitude : latitude;
-
-            await CommonActions.loadingAction(true);
-            const promise1 = CommonActions.getHospitalList(long, lat);
-            const promise2 = CommonActions.getMyAddress(long, lat);
-            Promise.all([promise1, promise2]).then(async () => {
-              props.navigation.navigate('home');
-              await CommonActions.loadingAction(false);
-            });
-          }}>
-          <Text>홈 화면으로 이동</Text>
-        </TouchableOpacity>
-      </CenterView>
+      {props.firstScreenLoading === true ? null : (
+        <CenterView>
+          <Text>Version Check Page</Text>
+          <View style={{marginBottom: widthPercentageToDP(60)}} />
+          <TouchableOpacity
+            style={{
+              margin: widthPercentageToDP(2),
+              padding: widthPercentageToDP(5),
+              borderWidth: widthPercentageToDP(2),
+              borderRadius: widthPercentageToDP(6),
+              borderColor: 'blue',
+            }}
+            onPress={async () => {
+              const long = longitude === null ? location.longitude : longitude;
+              const lat = latitude === null ? location.latitude : latitude;
+              await CommonActions.loadingAction(true);
+              const promise1 = CommonActions.getHospitalList(long, lat);
+              const promise2 = CommonActions.getMyAddress(long, lat);
+              Promise.all([promise1, promise2]).then(async () => {
+                props.navigation.navigate('home');
+                await CommonActions.loadingAction(false);
+              });
+            }}>
+            <Text>홈 화면으로 이동</Text>
+          </TouchableOpacity>
+        </CenterView>
+      )}
     </>
   );
 };
 
-export default connect(state => ({
+export default connect((state) => ({
   firstScreenLoading: state.common.firstScreenLoading,
   loading: state.common.loading,
   latitude: state.common.latitude,
