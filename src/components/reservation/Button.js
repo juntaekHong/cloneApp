@@ -112,17 +112,30 @@ export const OfficesBtn = ({data, selectedValue, onPress}) => {
 
 // 진료항목 선택 버튼
 const Objects = styled(BTN)`
-  flex: 1;
+  width: ${widthPercentageToDP(300) / 3};
   justify-content: center;
+  border-width: ${widthPercentageToDP(1)};
+  border-color: #dbdbdb;
+  border-radius: ${widthPercentageToDP(15)};
+  margin-left: ${widthPercentageToDP(5)};
+  margin-right: ${widthPercentageToDP(5)};
+  margin-top: ${widthPercentageToDP(5)};
+  margin-bottom: ${widthPercentageToDP(5)};
+  padding-top: ${widthPercentageToDP(10)};
+  padding-bottom: ${widthPercentageToDP(10)};
+  padding-right: ${widthPercentageToDP(10)};
 `;
 
-export const ObjectsBtn = ({data, selectedValue, onPress}) => {
+export const ObjectsBtn = ({index, data, selectedValue, onPress}) => {
   return (
     <Objects
+      index={index}
       onPress={() => {
         onPress();
       }}>
-      <NBGText marginLeft={10}>{data}</NBGText>
+      <NBGText align={'center'} marginLeft={10}>
+        {data}
+      </NBGText>
     </Objects>
   );
 };

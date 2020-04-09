@@ -10,6 +10,10 @@ import {OfficesBtn, ObjectsBtn} from './Button';
 const Objects = styled(FlatList)`
   flex-grow: 1;
   width: 100%;
+  margin-left: ${({marginLeft}) =>
+    marginLeft ? widthPercentageToDP(marginLeft) : 0};
+  margin-right: ${({marginRight}) =>
+    marginRight ? widthPercentageToDP(marginRight) : 0};
 `;
 
 // 진료실 선택 리스트
@@ -38,13 +42,16 @@ export const OfficeList = ({data, onPress, selectedValue}) => {
 export const ObjectList = ({data, onPress, selectedValue}) => {
   return (
     <Objects
-      scrollEnabled={false}
+      marginLeft={20}
+      marginRight={20}
       numColumns={3}
+      scrollEnabled={false}
       keyExtractor={(item, index) => index.toString()}
       data={data}
-      renderItem={({item}) => {
+      renderItem={({item, index}) => {
         return (
           <ObjectsBtn
+            index={index}
             data={item.treatment}
             selectedValue={selectedValue}
             onPress={() => {

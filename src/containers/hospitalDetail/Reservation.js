@@ -94,6 +94,8 @@ const Reservation = props => {
               onPress={async value => {
                 await setMedicalOffice(value);
                 await setMedicalOfficeSelected(!medicalOfficeSelected);
+                await setMedicalObjectSelected(false);
+                await setMedicalObject();
 
                 await getObjectList(value);
               }}
@@ -122,6 +124,7 @@ const Reservation = props => {
               data={medicalObjectList}
               selectedValue={medicalObject}
               onPress={async value => {
+                await setMedicalObject(value);
                 await setMedicalObjectSelected(!medicalObjectSelected);
               }}
             />
