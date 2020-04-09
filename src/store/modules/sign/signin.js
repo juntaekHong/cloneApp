@@ -45,7 +45,7 @@ export const signIn = (email, userPw) => async dispatch => {
       userDataAction({
         email: result.email,
         userName: result.userName,
-        token: token,
+        token: result.token,
       }),
     );
     return true;
