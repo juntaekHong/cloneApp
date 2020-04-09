@@ -13,7 +13,7 @@ import {ReservationBtn, DateBTN} from '../../components/reservation/Button';
 import Toast from 'react-native-root-toast';
 import {ScrollView} from 'react-native';
 
-const Reservation = (props) => {
+const Reservation = props => {
   const [medicalOffice, setMedicalOffice] = useState();
   const [medicalOfficeSelected, setMedicalOfficeSelected] = useState(false);
 
@@ -78,7 +78,7 @@ const Reservation = (props) => {
           {/* 원장님께 하고싶은 말 */}
           <CommentView
             paddingHorizontal={20}
-            onChangeText={(text) => {
+            onChangeText={text => {
               setComment(text);
             }}
             value={comment}
@@ -90,7 +90,11 @@ const Reservation = (props) => {
           marginHorizontal={20}
           bgColor={'#FCEE69'}
           onPress={() => {
-            props.navigation.navigate('Calendars');
+            medicalObject === undefined
+              ? showMessage('진료항목을 선택하여 주세요!', {
+                  position: Toast.positions.CENTER,
+                })
+              : props.navigation.navigate('Calendars');
           }}
         />
       </ScrollView>
@@ -98,7 +102,7 @@ const Reservation = (props) => {
   );
 };
 
-export default connect((state) => ({
+export default connect(state => ({
   user: state.signin.user,
   hospital_detail: state.common.hospital_detail,
 }))(Reservation);

@@ -8,6 +8,7 @@ import {
   storeData,
   removeAllData,
   removeData,
+  showMessage,
 } from '../../../utils/util';
 import config from '../../../configs/config';
 
@@ -41,7 +42,11 @@ export const signIn = (email, userPw) => async dispatch => {
     await storeData('email', result.email);
     await storeData('user_name', result.userName);
     await dispatch(
-      userDataAction({email: result.email, userName: result.userName}),
+      userDataAction({
+        email: result.email,
+        userName: result.userName,
+        token: token,
+      }),
     );
     return true;
   } catch (err) {
