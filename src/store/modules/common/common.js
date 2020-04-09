@@ -72,27 +72,27 @@ const initState = {
   page_index: 0,
 };
 
-export const handleFirstScreenLoading = (bool) => (dispatch) => {
+export const handleFirstScreenLoading = bool => dispatch => {
   dispatch(firstScreenLoadingAction(bool));
 };
 
-export const handleLoading = (value) => (dispatch) => {
+export const handleLoading = value => dispatch => {
   dispatch(loadingAction(value));
 };
 
-export const handlePageIndex = (number) => (dispatch) => {
+export const handlePageIndex = number => dispatch => {
   dispatch(pageIndexAction(number));
 };
 
-export const handleHospitalListInit = () => (dispatch) => {
+export const handleHospitalListInit = () => dispatch => {
   dispatch(hospitalListInitAction());
 };
 
-export const handleExtraAddressInit = () => (dispatch) => {
+export const handleExtraAddressInit = () => dispatch => {
   dispatch(extraAddressInitAction());
 };
 
-export const handleTimeInfo = (value) => (dispatch) => {
+export const handleTimeInfo = value => dispatch => {
   dispatch(hospitalDetailAction(value));
 };
 
@@ -117,10 +117,10 @@ export const handleTimeInfo = (value) => (dispatch) => {
 // };
 
 // 앱 실행하여 들어왔을 때, Init
-export const locationInit = () => async (dispatch) => {
+export const locationInit = () => async dispatch => {
   const location_lat = await getData('location_lat');
   const location_long = await getData('location_long');
-  const user_id = await getData('user_id');
+  const email = await getData('email');
   const user_name = await getData('user_name');
 
   if (location_lat !== null || location_long !== null) {
@@ -128,13 +128,13 @@ export const locationInit = () => async (dispatch) => {
     await dispatch(locationLongitudeAction(parseFloat(location_long)));
   }
 
-  if (user_id !== null && user_name !== null) {
-    await dispatch(handleLoginData({userId: user_id, userName: user_name}));
+  if (email !== null && user_name !== null) {
+    await dispatch(handleLoginData({email: email, userName: user_name}));
   }
 };
 
 // 내 위치 설정
-export const myLocation = (Lat, Long) => async (dispatch) => {
+export const myLocation = (Lat, Long) => async dispatch => {
   const location_lat = await getData('location_lat');
   const location_long = await getData('location_long');
 
@@ -151,7 +151,7 @@ export const myLocation = (Lat, Long) => async (dispatch) => {
 };
 
 // 위치 설정 페이지를 통한 내 위치 재설정
-export const resetMyLocation = () => async (dispatch) => {
+export const resetMyLocation = () => async dispatch => {
   await removeData('location_lat');
   await removeData('location_long');
 };
@@ -172,7 +172,7 @@ export const resetMyLocation = () => async (dispatch) => {
 // };
 
 // 병원 리스트 호출
-export const getHospitalList = (Long, Lat) => async (dispatch) => {
+export const getHospitalList = (Long, Lat) => async dispatch => {
   let filter = {lon: Long, lat: Lat};
 
   filter = JSON.stringify(filter);
@@ -189,7 +189,7 @@ export const getHospitalList = (Long, Lat) => async (dispatch) => {
 };
 
 // 병원 즐겨찾기 추가 및 삭제
-export const updateHospitalSubscriber = (hpid) => async (dispatch) => {
+export const updateHospitalSubscriber = hpid => async dispatch => {
   try {
     const token = await getData('token');
 
@@ -220,14 +220,21 @@ export const updateHospitalSubscriber = (hpid) => async (dispatch) => {
 // };
 
 // 좌표 주소 변환
-export const getMyAddress = (Long, Lat, boolean, const_address) => async (
-  dispatch,
-) => {
+export const getMyAddress = (
+  Long,
+  Lat,
+  boolean,
+  const_address,
+) => async dispatch => {
   let customAddress = '';
 
   try {
     const jsonData = await axios.get(
-      `${config.toAddress_url}?x=${Long}&y=${Lat}&output=json&epsg=epsg:4326&apiKey=${config.toAddress_ServiceKey}`,
+      `${
+        config.toAddress_url
+      }?x=${Long}&y=${Lat}&output=json&epsg=epsg:4326&apiKey=${
+        config.toAddress_ServiceKey
+      }`,
     );
 
     // 좌표를 통해 주소 찾는 결과에 따라 주는 key 값이 달라져서 이렇게 처리.
@@ -277,12 +284,19 @@ export const getMyAddress = (Long, Lat, boolean, const_address) => async (
 };
 
 // 병원 상세 페이지에서 길찾기
-export const getDirection = (startLat, startLong, endLat, endLong) => async (
-  dispatch,
-) => {
+export const getDirection = (
+  startLat,
+  startLong,
+  endLat,
+  endLong,
+) => async dispatch => {
   try {
     const jsonData = await axios.get(
-      `${config.googleMaps_url}origin=${startLat},${startLong}&destination=${endLat},${endLong}&mode=transit&departure_time=now&language=ko&key=${config.googleMaps_ServiceKey}`,
+      `${
+        config.googleMaps_url
+      }origin=${startLat},${startLong}&destination=${endLat},${endLong}&mode=transit&departure_time=now&language=ko&key=${
+        config.googleMaps_ServiceKey
+      }`,
     );
 
     await dispatch(startEndAction(jsonData.data.routes));
@@ -293,13 +307,13 @@ export const getDirection = (startLat, startLong, endLat, endLong) => async (
 
 export default handleActions(
   {
-    [COMMON_INIT]: (state, {payload}) => produce(state, (draft) => {}),
+    [COMMON_INIT]: (state, {payload}) => produce(state, draft => {}),
     [COMMON_FIRST_SCREEN_LOADING]: (state, {payload}) =>
-      produce(state, (draft) => {
+      produce(state, draft => {
         draft.firstScreenLoading = payload;
       }),
     [COMMON_LOADING]: (state, {payload}) =>
-      produce(state, (draft) => {
+      produce(state, draft => {
         draft.loading = payload;
       }),
     // [COMMON_APP_VERSION]: (state, {payload}) =>
@@ -307,49 +321,49 @@ export default handleActions(
     //     draft.appVersion = payload;
     //   }),
     [LOCATION_LATITUDE]: (state, {payload}) =>
-      produce(state, (draft) => {
+      produce(state, draft => {
         draft.latitude = payload;
       }),
     [LOCATION_LONGITUDE]: (state, {payload}) =>
-      produce(state, (draft) => {
+      produce(state, draft => {
         draft.longitude = payload;
       }),
     [ADDRESS]: (state, {payload}) =>
-      produce(state, (draft) => {
+      produce(state, draft => {
         draft.address = payload;
       }),
     [EXTRA_ADDRESS_INIT]: (state, {payload}) =>
-      produce(state, (draft) => {
+      produce(state, draft => {
         draft.extra_address = null;
       }),
     [EXTRA_ADDRESS]: (state, {payload}) =>
-      produce(state, (draft) => {
+      produce(state, draft => {
         draft.extra_address = payload;
       }),
     [HOSPITAL_LIST_INIT]: (state, {payload}) =>
-      produce(state, (draft) => {
+      produce(state, draft => {
         draft.hospitalList = [];
       }),
     [HOSPITAL_LIST]: (state, {payload}) =>
-      produce(state, (draft) => {
-        payload.map((item) => {
+      produce(state, draft => {
+        payload.map(item => {
           draft.hospitalList.push(item);
         });
       }),
     [HOSPITAL_DETAIL]: (state, {payload}) =>
-      produce(state, (draft) => {
+      produce(state, draft => {
         draft.hospital_detail = payload;
       }),
     [PAGE_INDEX]: (state, {payload}) =>
-      produce(state, (draft) => {
+      produce(state, draft => {
         draft.page_index = payload;
       }),
     [START_END_INIT]: (state, {payload}) =>
-      produce(state, (draft) => {
+      produce(state, draft => {
         draft.start_end = null;
       }),
     [START_END]: (state, {payload}) =>
-      produce(state, (draft) => {
+      produce(state, draft => {
         draft.start_end = payload;
       }),
   },

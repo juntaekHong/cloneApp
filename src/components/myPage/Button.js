@@ -31,12 +31,12 @@ export const LoginBtn = ({loginModal}) => {
 };
 
 // 로그아웃 버튼
-export const LogoutBtn = (props) => {
+export const LogoutBtn = props => {
   return (
     <BTN
       onPress={async () => {
         await removeData('token');
-        await removeData('user_id');
+        await removeData('email');
         await removeData('user_name');
 
         // await setUserData(null);

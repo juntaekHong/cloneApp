@@ -27,12 +27,9 @@ import {SignupActions} from '../../store/actionCreator';
 import Toast from 'react-native-root-toast';
 // import {WheelPicker} from '../../components/signUp/modal';
 
-const SignUp = (props) => {
+const SignUp = props => {
   const [index, setIndex] = useState(0);
 
-  // 아이디, 아이디 유효성
-  const [id, setId] = useState('');
-  const [idValid, setIdValid] = useState('');
   // 비밀번호, 비밀번호 유효성
   const [pass, setPass] = useState('');
   const [passValid, setPassValid] = useState('');
@@ -76,15 +73,6 @@ const SignUp = (props) => {
   const input1 = useRef(null);
   const input2 = useRef(null);
   const input3 = useRef(null);
-
-  // 아이디 입력시, 아이디 유효성 체크
-  useEffect(() => {
-    if (id.length !== 0 && id.length < 3) {
-      setIdValid('* 3글자 이상 입력해주세요.');
-    } else {
-      setIdValid('');
-    }
-  }, [id]);
 
   // 비밀번호 입력시, 비밀번호 유효성 체크
   useEffect(() => {
@@ -161,7 +149,7 @@ const SignUp = (props) => {
           scrollEnabled={false}
           height={'100%'}
           index={index}
-          onIndexChanged={async (index) => {
+          onIndexChanged={async index => {
             await setIndex(index);
           }}
           loop={false}
@@ -177,21 +165,22 @@ const SignUp = (props) => {
             <TextInput
               ref={input1}
               style={{
-                marginTop: widthPercentageToDP(10),
+                marginTop: widthPercentageToDP(15),
                 height: widthPercentageToDP(40),
                 borderWidth: widthPercentageToDP(1),
                 borderColor:
-                  id.length === 0
+                  email.length === 0
                     ? '#dbdbdb'
-                    : idValid.length === 0
+                    : emailValid.length === 0
                     ? '#53A6EC'
                     : 'red',
                 borderRadius: widthPercentageToDP(15),
                 paddingLeft: widthPercentageToDP(20),
               }}
-              placeholder={'아이디'}
-              value={id}
-              onChangeText={(text) => setId(text)}
+              placeholder={'이메일'}
+              keyboardType={'email-address'}
+              value={email}
+              onChangeText={text => setEmail(text)}
               onSubmitEditing={() => {
                 // passRef.current.focus();
                 input2.current.focus();
@@ -199,7 +188,7 @@ const SignUp = (props) => {
               returnKeyType={'next'}
             />
             <NBGBText marginLeft={5} marginTop={5} fontSize={10} color={'red'}>
-              {idValid}
+              {emailValid}
             </NBGBText>
             <StandardView
               style={{
@@ -228,7 +217,7 @@ const SignUp = (props) => {
                 placeholder={'비밀번호'}
                 secureTextEntry={passVisible}
                 value={pass}
-                onChangeText={(text) => {
+                onChangeText={text => {
                   setPass(text);
                 }}
                 onSubmitEditing={() => {
@@ -273,7 +262,7 @@ const SignUp = (props) => {
               placeholder={'비밀번호 재확인'}
               secureTextEntry={true}
               value={passCheck}
-              onChangeText={async (text) => {
+              onChangeText={async text => {
                 await setPassCheck(text);
               }}
               onSubmitEditing={async () => {
@@ -311,7 +300,7 @@ const SignUp = (props) => {
               }}
               placeholder={'이름'}
               value={name}
-              onChangeText={(text) => setName(text)}
+              onChangeText={text => setName(text)}
               onSubmitEditing={() => {
                 // passRef.current.focus();
               }}
@@ -336,7 +325,7 @@ const SignUp = (props) => {
               }}
               placeholder={'닉네임'}
               value={nickName}
-              onChangeText={(text) => setNickName(text)}
+              onChangeText={text => setNickName(text)}
               onSubmitEditing={() => {
                 // passRef.current.focus();
               }}
@@ -363,7 +352,7 @@ const SignUp = (props) => {
               placeholder={'나이'}
               keyboardType={'number-pad'}
               value={age}
-              onChangeText={(text) => setAge(text)}
+              onChangeText={text => setAge(text)}
               onSubmitEditing={() => {
                 // passRef.current.focus();
               }}
@@ -464,7 +453,7 @@ const SignUp = (props) => {
               placeholder={'전화번호 ( "-" 제외 )'}
               keyboardType={'number-pad'}
               value={phoneNumber}
-              onChangeText={(text) => setPhoneNumber(text)}
+              onChangeText={text => setPhoneNumber(text)}
               onSubmitEditing={() => {
                 // passRef.current.focus();
               }}
@@ -473,36 +462,10 @@ const SignUp = (props) => {
             <NBGBText marginLeft={5} marginTop={5} fontSize={10} color={'red'}>
               {phoneNumberValid}
             </NBGBText>
-            <TextInput
-              style={{
-                marginTop: widthPercentageToDP(15),
-                height: widthPercentageToDP(40),
-                borderWidth: widthPercentageToDP(1),
-                borderColor:
-                  email.length === 0
-                    ? '#dbdbdb'
-                    : emailValid.length === 0
-                    ? '#53A6EC'
-                    : 'red',
-                borderRadius: widthPercentageToDP(15),
-                paddingLeft: widthPercentageToDP(20),
-              }}
-              placeholder={'이메일'}
-              keyboardType={'email-address'}
-              value={email}
-              onChangeText={(text) => setEmail(text)}
-              onSubmitEditing={() => {
-                // passRef.current.focus();
-              }}
-              returnKeyType={'done'}
-            />
-            <NBGBText marginLeft={5} marginTop={5} fontSize={10} color={'red'}>
-              {emailValid}
-            </NBGBText>
             <View
               style={{
                 marginTop: widthPercentageToDP(30),
-                height: widthPercentageToDP(25),
+                height: widthPercentageToDP(100),
               }}
             />
             {/* 아바타 데이터 추가해야 함. */}
@@ -560,7 +523,6 @@ const SignUp = (props) => {
                 Keyboard.dismiss();
 
                 if (
-                  id.length !== 0 &&
                   pass.length !== 0 &&
                   passCheck.length !== 0 &&
                   name.length !== 0 &&
@@ -571,7 +533,6 @@ const SignUp = (props) => {
                   email.length !== 0
                 ) {
                   if (
-                    idValid.length === 0 &&
                     passValid.length === 0 &&
                     passSame.length === 0 &&
                     nameValid.length === 0 &&
@@ -582,14 +543,15 @@ const SignUp = (props) => {
                     emailValid.length === 0
                   ) {
                     let userData = {
-                      userId: id,
+                      // 롤은 일단 디폴트로 User 지정.
+                      role: 'User',
+                      email: email,
                       userPw: pass,
                       userName: name,
                       userNickName: nickName,
                       age: age,
                       gender: gender,
                       tel: phoneNumber,
-                      email: email,
                     };
 
                     await SignupActions.signUp(userData);

@@ -19,12 +19,12 @@ import {LoginView} from '../../components/myPage/View';
 import {LoginBtn} from '../../components/myPage/Button';
 import Toast from 'react-native-root-toast';
 
-const MyPage = (props) => {
+const MyPage = props => {
   // 로그인 모달
   const [loginModal, setLoginModal] = useState(false);
 
   // 아이디, 패스워드
-  const [id, setId] = useState('');
+  const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
 
   // 비밀번호 보이기
@@ -57,7 +57,7 @@ const MyPage = (props) => {
         visible={loginModal}
         closeHandler={() => {
           setPassVisible(true);
-          setId('');
+          setEmail('');
           setPass('');
           setLoginModal(false);
         }}
@@ -75,16 +75,17 @@ const MyPage = (props) => {
                   marginTop: widthPercentageToDP(30),
                   height: widthPercentageToDP(40),
                   borderWidth: widthPercentageToDP(1),
-                  borderColor: id.length === 0 ? '#dbdbdb' : '#53A6EC',
+                  borderColor: email.length === 0 ? '#dbdbdb' : '#53A6EC',
                   borderRadius: widthPercentageToDP(15),
                   paddingLeft: widthPercentageToDP(20),
                 }}
-                placeholder={'아이디'}
-                value={id}
-                onChangeText={(text) => setId(text)}
+                placeholder={'이메일'}
+                value={email}
+                onChangeText={text => setEmail(text)}
                 onSubmitEditing={() => {
                   passRef.current.focus();
                 }}
+                keyboardType={'email-address'}
                 returnKeyType={'next'}
               />
 
@@ -109,7 +110,7 @@ const MyPage = (props) => {
                   placeholder={'비밀번호'}
                   secureTextEntry={passVisible}
                   value={pass}
-                  onChangeText={(text) => setPass(text)}
+                  onChangeText={text => setPass(text)}
                   onSubmitEditing={() => {
                     Keyboard.dismiss();
 
@@ -149,7 +150,7 @@ const MyPage = (props) => {
                 onPress={async () => {
                   await setLoginModal(false);
                   await setPassVisible(true);
-                  setId('');
+                  setEmail('');
                   setPass('');
 
                   await props.navigation.navigate('SignUp');
@@ -163,7 +164,7 @@ const MyPage = (props) => {
                   flex: 1,
                   height: widthPercentageToDP(50),
                   backgroundColor:
-                    id.length === 0 || pass.length === 0
+                    email.length === 0 || pass.length === 0
                       ? colors.notFocus
                       : colors.active,
                   margin: 0,
@@ -171,18 +172,20 @@ const MyPage = (props) => {
                   justifyContent: 'center',
                   alignItems: 'center',
                 }}
-                disabled={id.length === 0 || pass.length === 0 ? true : false}
+                disabled={
+                  email.length === 0 || pass.length === 0 ? true : false
+                }
                 onPress={async () => {
-                  await SigninActions.signIn(id, pass);
+                  await SigninActions.signIn(email, pass);
 
                   await setLoginModal(false);
                   await setPassVisible(true);
-                  await setId('');
+                  await setEmail('');
                   await setPass('');
 
-                  const user_id = await getData('user_id');
-                  user_id === null
-                    ? showMessage('잘못된 아이디 또는 비밀번호입니다.', {
+                  const userEmail = await getData('email');
+                  userEmail === null
+                    ? showMessage('잘못된 이메일 또는 비밀번호입니다.', {
                         position: Toast.positions.CENTER,
                       })
                     : null;
@@ -209,6 +212,6 @@ const MyPage = (props) => {
   );
 };
 
-export default connect((state) => ({
+export default connect(state => ({
   user: state.signin.user,
 }))(MyPage);

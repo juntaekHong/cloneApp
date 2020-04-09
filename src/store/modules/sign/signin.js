@@ -20,14 +20,14 @@ const initState = {
   user: null,
 };
 
-export const handleLoginData = (value) => (dispatch) => {
+export const handleLoginData = value => dispatch => {
   dispatch(userDataAction(value));
 };
 
-export const signIn = (userId, userPw) => async (dispatch) => {
+export const signIn = (email, userPw) => async dispatch => {
   try {
     let userData = {
-      userId,
+      email,
       userPw,
     };
 
@@ -38,10 +38,10 @@ export const signIn = (userId, userPw) => async (dispatch) => {
     const result = jsonData.result;
 
     await storeData('token', result.token);
-    await storeData('user_id', result.userId);
+    await storeData('email', result.email);
     await storeData('user_name', result.userName);
     await dispatch(
-      userDataAction({userId: result.userId, userName: result.userName}),
+      userDataAction({email: result.email, userName: result.userName}),
     );
     return true;
   } catch (err) {
@@ -53,7 +53,7 @@ export const signIn = (userId, userPw) => async (dispatch) => {
 export default handleActions(
   {
     [SIGNIN_USER_DATA]: (state, {payload}) =>
-      produce(state, (draft) => {
+      produce(state, draft => {
         draft.user = payload;
       }),
   },

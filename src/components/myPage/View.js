@@ -20,7 +20,7 @@ export const LoginView = ({user}) => {
 
           marginVertical: widthPercentageToDP(30),
         }}>
-        {user !== null ? user.userId : ''}님 안녕하세요~
+        {user !== null ? user.userName : ''}님 안녕하세요~
       </NBGBText>
       <LogoutBtn />
     </Login>
