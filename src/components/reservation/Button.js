@@ -94,12 +94,19 @@ const Dates = styled(Reservation)`
   background-color: ${({bgColor}) => (bgColor ? bgColor : 'white')};
 `;
 
-export const DateBTN = ({height, marginHorizontal, bgColor, onPress}) => {
+export const DateBTN = ({
+  height,
+  marginHorizontal,
+  bgColor,
+  disabled,
+  onPress,
+}) => {
   return (
     <Dates
       height={height}
       marginHorizontal={marginHorizontal}
       bgColor={bgColor}
+      disabled={disabled}
       onPress={() => {
         onPress();
       }}>

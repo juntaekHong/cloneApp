@@ -3,6 +3,7 @@
 import React, {useEffect, useState, useRef, useCallback} from 'react';
 import {ScrollView, Platform, View, Linking} from 'react-native';
 import {connect} from 'react-redux';
+import Toast from 'react-native-root-toast';
 import {
   TopView,
   TopContainerView,
@@ -11,7 +12,7 @@ import {
 } from '../../components/common/View';
 import {NBGText, NBGBText} from '../../components/common/Text';
 import {Card, BottomView} from '../../components/home/View';
-import {widthPercentageToDP} from '../../utils/util';
+import {widthPercentageToDP, showMessage} from '../../utils/util';
 import {CustomModal} from '../../components/common/Modal';
 import Swiper from 'react-native-swiper';
 import OfficeHours from '../hospitalDetail/OfficeHours';
@@ -134,9 +135,6 @@ const HospitalDetail = props => {
       animated: true,
     });
   }, []);
-
-  // 병원 즐겨찾기 기능 확인을 위한 테스트 로그
-  console.log(detailData);
 
   return (
     <TopContainerView>
@@ -335,21 +333,30 @@ const HospitalDetail = props => {
       {/* 예약 페이지로 이동 */}
       <BottomView
         reservation={async () => {
-          await CommonActions.handleTimeInfo({
-            hospitalName: detailData.dutyName,
-            dutyTime1: detailData.dutyTime1,
-            dutyTime2: detailData.dutyTime2,
-            dutyTime3: detailData.dutyTime3,
-            dutyTime4: detailData.dutyTime4,
-            dutyTime5: detailData.dutyTime5,
-            dutyTime6: detailData.dutyTime6,
-            dutyTime7: detailData.dutyTime7,
-            dutyTime8: detailData.dutyTime8,
-          });
+          if (props.user !== null) {
+            if (detailData.office.length !== 0) {
+              await CommonActions.handleTimeInfo({
+                hospitalName: detailData.dutyName,
+                dutyTime1: detailData.dutyTime1,
+                dutyTime2: detailData.dutyTime2,
+                dutyTime3: detailData.dutyTime3,
+                dutyTime4: detailData.dutyTime4,
+                dutyTime5: detailData.dutyTime5,
+                dutyTime6: detailData.dutyTime6,
+                dutyTime7: detailData.dutyTime7,
+                dutyTime8: detailData.dutyTime8,
+                office: detailData.office,
+              });
 
-          props.user !== null
-            ? props.navigation.navigate('Reservation')
-            : setReservationModal(true);
+              props.navigation.navigate('Reservation');
+            } else {
+              showMessage('현재 전화접수만 가능한 병원입니다!', {
+                position: Toast.positions.CENTER,
+              });
+            }
+          } else {
+            setReservationModal(true);
+          }
         }}
         navigation={props.navigation}
       />
