@@ -1,14 +1,15 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-fallthrough */
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import styled from 'styled-components/native';
 import {widthPercentageToDP} from '../../utils/util';
-import {StandardView} from '../common/View';
+import {StandardView, BTN} from '../common/View';
 import {NBGLText, NBGBText} from '../common/Text';
 import {CommentTI} from './TextInput';
 import {Calendar} from 'react-native-calendars';
 import {LeftArrowImg, RightArrowImg} from './Image';
+import {PreBtn, BottomReservationBtn} from './Button';
 
 // 구분선
 export const DivisionView = styled(StandardView)`
@@ -123,5 +124,86 @@ export const CalendarView = ({onDayPress, markedDate}) => {
         * 시간을 선택하시면 하단에 예약가능 시간대가 노출됩니다.
       </NBGBText>
     </StandardView>
+  );
+};
+
+// 예약 접수 선택 항목 뷰
+const ReservationSelects = styled(StandardView)`
+  margin-top: ${({marginTop}) =>
+    marginTop ? widthPercentageToDP(marginTop) : 0};
+  padding-left: ${({paddingVertical}) =>
+    paddingVertical ? widthPercentageToDP(paddingVertical) : 0};
+  padding-right: ${({paddingVertical}) =>
+    paddingVertical ? widthPercentageToDP(paddingVertical) : 0};
+  background-color: ${({backgroundColor}) =>
+    backgroundColor ? backgroundColor : 'white'};
+`;
+
+export const ReservationSelectView = ({
+  marginTop,
+  backgroundColor,
+  paddingVertical,
+  textColor,
+  userName,
+  selecteObjects,
+}) => {
+  return (
+    <ReservationSelects
+      marginTop={marginTop}
+      paddingVertical={paddingVertical}
+      backgroundColor={backgroundColor}>
+      <NBGBText color={textColor}>
+        {userName} / {selecteObjects.date} ({selecteObjects.day}) /{' '}
+        {selecteObjects.time}
+      </NBGBText>
+    </ReservationSelects>
+  );
+};
+
+// 예약하기 페이지(달력있는 페이지) - 이전&예약하기 버튼 뷰
+const ReservationBottom = styled(ReservationSelects)`
+  position: absolute;
+  bottom: 0;
+  flex-direction: ${({flexDirection}) =>
+    flexDirection ? flexDirection : 'column'};
+  width: 100%;
+`;
+
+export const ReservationBottomView = ({
+  flexDirection,
+  marginTop,
+  paddingVertical,
+  backHandler,
+  reservationDisabled,
+  reservationHandler,
+}) => {
+  return (
+    <ReservationBottom
+      flexDirection={flexDirection}
+      marginTop={marginTop}
+      paddingVertical={paddingVertical}>
+      <PreBtn
+        flex={1}
+        height={50}
+        title={'이전'}
+        align={'center'}
+        bgColor={'#2D3742'}
+        textColor={'white'}
+        onPress={() => {
+          backHandler();
+        }}
+      />
+      <BottomReservationBtn
+        disabled={reservationDisabled}
+        flex={2}
+        height={50}
+        title={'최종 예약하기'}
+        align={'center'}
+        bgColor={reservationDisabled ? '#dbdbdb' : '#FBEE68'}
+        onPress={() => {
+          reservationHandler();
+        }}
+      />
+    </ReservationBottom>
   );
 };

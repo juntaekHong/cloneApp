@@ -82,7 +82,7 @@ export const ReservationBtn = ({
 };
 
 // 날짜/시간 선택 버튼
-const Date = styled(Reservation)`
+const Dates = styled(Reservation)`
   height: ${({height}) =>
     height ? widthPercentageToDP(height) : widthPercentageToDP(100)};
   justify-content: center;
@@ -96,7 +96,7 @@ const Date = styled(Reservation)`
 
 export const DateBTN = ({height, marginHorizontal, bgColor, onPress}) => {
   return (
-    <Date
+    <Dates
       height={height}
       marginHorizontal={marginHorizontal}
       bgColor={bgColor}
@@ -106,6 +106,43 @@ export const DateBTN = ({height, marginHorizontal, bgColor, onPress}) => {
       <NBGBText fontSize={17} align={'center'}>
         날짜/시간 선택
       </NBGBText>
-    </Date>
+    </Dates>
   );
+};
+
+// 예약하기 페이지 - 이전 버튼
+const PRE = styled(Dates)`
+  flex: ${({flex}) => (flex ? flex : 1)};
+`;
+
+export const PreBtn = ({
+  flex,
+  height,
+  title,
+  align,
+  bgColor,
+  textColor,
+  onPress,
+  disabled,
+}) => {
+  return (
+    <PRE
+      flex={flex}
+      disabled={disabled}
+      marginHorizontal={10}
+      height={height}
+      bgColor={bgColor}
+      onPress={() => {
+        onPress();
+      }}>
+      <NBGBText align={align} color={textColor}>
+        {title}
+      </NBGBText>
+    </PRE>
+  );
+};
+
+// 예약하기 페이지 - 예약하기 버튼
+export const BottomReservationBtn = props => {
+  return <PreBtn {...props} />;
 };

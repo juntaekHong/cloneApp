@@ -10,10 +10,14 @@ import {
 } from '../../components/common/View';
 import {NBGBText} from '../../components/common/Text';
 import {Calendar, Arrow} from 'react-native-calendars';
-import {widthPercentageToDP, getData} from '../../utils/util';
+import {widthPercentageToDP, getData, dayToString} from '../../utils/util';
 import {Img} from '../../components/common/Image';
 import {FlatList} from 'react-native';
-import {CalendarView} from '../../components/reservation/View';
+import {
+  CalendarView,
+  ReservationSelectView,
+  ReservationBottomView,
+} from '../../components/reservation/View';
 
 // 포맷
 // // 날짜 선택
@@ -37,6 +41,11 @@ const Calendars = props => {
 
   // 데이터가 없을 때, 휴진 문구 텍스트는 클릭 안되게 설정
   const [closed, setClosed] = useState(false);
+
+  // 내가 선택한 항목들 유저한테 보여지게 객체 데이터
+  const [selectsData, setSelectData] = useState({
+    name: props.user.useruserName,
+  });
 
   // 자동 스크롤
   const hourListRef = useRef(null);
@@ -81,6 +90,8 @@ const Calendars = props => {
 
       await setClosed(false);
       setHourData(enabledHour);
+
+      setSelectData({...selectsData, date: day, day: dayToString(getDay)});
     } else {
       await setClosed(true);
       setHourData(['해당 날짜는 휴진입니다.']);
@@ -128,6 +139,8 @@ const Calendars = props => {
                 disabled={closed}
                 onPress={() => {
                   setSelectedIndex(index);
+
+                  setSelectData({...selectsData, time: item});
                 }}
                 style={{
                   backgroundColor:
@@ -151,9 +164,30 @@ const Calendars = props => {
           }}
         />
       </StandardView>
+      {selectedIndex !== null ? (
+        <ReservationSelectView
+          marginTop={30}
+          paddingVertical={15}
+          backgroundColor={'#515761'}
+          textColor={'white'}
+          userName={props.user.userName}
+          selecteObjects={selectsData}
+        />
+      ) : null}
+      <ReservationBottomView
+        flexDirection={'row'}
+        marginTop={15}
+        paddingVertical={15}
+        backHandler={() => {
+          props.navigation.goBack(null);
+        }}
+        reservationDisabled={selectedIndex === null ? true : false}
+        reservationHandler={() => {}}
+      />
     </TopContainerView>
   );
 };
 export default connect(state => ({
+  user: state.signin.user,
   hospital_detail: state.common.hospital_detail,
 }))(Calendars);
