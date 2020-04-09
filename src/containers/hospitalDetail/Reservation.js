@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {connect} from 'react-redux';
 import {showMessage} from '../../utils/util';
 import {
@@ -8,7 +8,11 @@ import {
   TopView,
   StandardView,
 } from '../../components/common/View';
-import {DivisionView, CommentView} from '../../components/reservation/View';
+import {
+  DivisionView,
+  CommentView,
+  SelectListView,
+} from '../../components/reservation/View';
 import {ReservationBtn, DateBTN} from '../../components/reservation/Button';
 import Toast from 'react-native-root-toast';
 import {ScrollView} from 'react-native';
@@ -21,6 +25,8 @@ const Reservation = props => {
   const [medicalObjectSelected, setMedicalObjectSelected] = useState(false);
 
   const [comment, setComment] = useState('');
+
+  console.log(props.hospital_detail);
 
   return (
     <TopContainerView>
@@ -44,7 +50,6 @@ const Reservation = props => {
             necessary={false}
             value={props.user.userName}
           />
-          <DivisionView />
           <ReservationBtn
             activeOpacity={0.3}
             noClick={false}
@@ -57,6 +62,16 @@ const Reservation = props => {
               setMedicalOfficeSelected(!medicalOfficeSelected);
             }}
           />
+          {medicalOfficeSelected ? (
+            <SelectListView
+              data={props.hospital_detail.office}
+              selectedValue={medicalOffice}
+              onPress={value => {
+                setMedicalOffice(value);
+                setMedicalOfficeSelected(!medicalOfficeSelected);
+              }}
+            />
+          ) : null}
           <DivisionView />
           <ReservationBtn
             noClick={false}
@@ -74,7 +89,9 @@ const Reservation = props => {
                 : setMedicalObjectSelected(!medicalObjectSelected);
             }}
           />
+
           <DivisionView />
+          {/* 진료항목 항목 뷰*/}
           {/* 원장님께 하고싶은 말 */}
           <CommentView
             paddingHorizontal={20}
@@ -88,7 +105,8 @@ const Reservation = props => {
         <DateBTN
           height={60}
           marginHorizontal={20}
-          bgColor={'#FCEE69'}
+          bgColor={medicalObject === undefined ? '#dbdbdb' : '#FCEE69'}
+          disabled={medicalObject === undefined ? true : false}
           onPress={() => {
             medicalObject === undefined
               ? showMessage('진료항목을 선택하여 주세요!', {

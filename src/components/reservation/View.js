@@ -10,6 +10,7 @@ import {CommentTI} from './TextInput';
 import {Calendar} from 'react-native-calendars';
 import {LeftArrowImg, RightArrowImg} from './Image';
 import {PreBtn, BottomReservationBtn} from './Button';
+import {ObjectList} from './FlatList';
 
 // 구분선
 export const DivisionView = styled(StandardView)`
@@ -157,6 +158,25 @@ export const ReservationSelectView = ({
         {selecteObjects.time}
       </NBGBText>
     </ReservationSelects>
+  );
+};
+
+// 예약선택 항목별 뷰
+const SelectList = styled(StandardView)`
+  margin-bottom: ${widthPercentageToDP(20)};
+`;
+
+export const SelectListView = ({data, onPress, selectedValue}) => {
+  return (
+    <SelectList>
+      <ObjectList
+        data={data}
+        selectedValue={selectedValue}
+        onPress={value => {
+          onPress(value);
+        }}
+      />
+    </SelectList>
   );
 };
 

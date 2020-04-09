@@ -4,7 +4,32 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import {widthPercentageToDP} from '../../utils/util';
-import {StandardView, BTN} from '../common/View';
-import {NBGLText, NBGBText} from '../common/Text';
 import {FlatList} from 'react-native';
-import {DayItems} from './Button';
+import {ObjectsBtn} from './Button';
+
+// 예약선택 항목별 리스트
+const Objects = styled(FlatList)`
+  flex-grow: 1;
+  width: 100%;
+`;
+
+export const ObjectList = ({data, onPress, selectedValue}) => {
+  return (
+    <Objects
+      scrollEnabled={false}
+      keyExtractor={(item, index) => index.toString()}
+      data={data}
+      renderItem={({item}) => {
+        return (
+          <ObjectsBtn
+            data={item.officeName}
+            selectedValue={selectedValue}
+            onPress={() => {
+              onPress(item.officeName);
+            }}
+          />
+        );
+      }}
+    />
+  );
+};

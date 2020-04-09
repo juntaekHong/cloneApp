@@ -3,9 +3,10 @@ import React from 'react';
 import styled from 'styled-components/native';
 import {Img} from '../common/Image';
 
-export const SelectImg = () => {
+export const SelectImg = ({marginLeft}) => {
   return (
     <Img
+      marginLeft={marginLeft}
       width={21}
       height={21}
       source={require('../../../assets/image/home/selection.png')}

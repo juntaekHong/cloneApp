@@ -5,10 +5,11 @@ import React from 'react';
 import styled from 'styled-components/native';
 import {widthPercentageToDP} from '../../utils/util';
 import {StandardView, BTN} from '../common/View';
-import {NBGLText, NBGBText} from '../common/Text';
+import {NBGLText, NBGBText, NBGText} from '../common/Text';
 import {UpArrowImg, DownArrowImg} from './Image';
+import {SelectImg, UnSelectImg} from '../home/Image';
 
-// 예약페이지 - 접수하기에서 선택하는 항목들 선택 버튼
+// 예약페이지 - 접수하기에서 항목들 선택 버튼
 const Reservation = styled(BTN)`
   margin-bottom: ${widthPercentageToDP(20)};
   padding-left: ${({paddingHorizontal}) =>
@@ -78,6 +79,34 @@ export const ReservationBtn = ({
         </StandardView>
       )}
     </Reservation>
+  );
+};
+
+// 항목별 리스트 버튼
+const Objects = styled(BTN)`
+  flex-direction: row;
+  align-items: center;
+
+  padding-top: ${widthPercentageToDP(15)};
+  padding-left: ${widthPercentageToDP(15)};
+  padding-bottom: ${widthPercentageToDP(15)};
+  border-bottom-width: ${widthPercentageToDP(1)};
+  border-bottom-color: #dbdbdb;
+`;
+
+export const ObjectsBtn = ({data, selectedValue, onPress}) => {
+  return (
+    <Objects
+      onPress={() => {
+        onPress();
+      }}>
+      {data !== selectedValue ? (
+        <UnSelectImg />
+      ) : (
+        <SelectImg marginLeft={1.8} />
+      )}
+      <NBGText marginLeft={10}>{data}</NBGText>
+    </Objects>
   );
 };
 

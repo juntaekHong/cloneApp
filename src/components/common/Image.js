@@ -11,6 +11,8 @@ export const Img = styled.Image`
   border-radius: ${props =>
     props.radius ? widthPercentageToDP(props.radius) : 0};
   background-color: ${props => (props.radius ? 'gray' : 'white')};
+  margin-left: ${props =>
+    props.marginLeft ? widthPercentageToDP(props.marginLeft) : 0};
   margin-right: ${props =>
     props.marginRight ? widthPercentageToDP(props.marginRight) : 0};
 `;
