@@ -10,7 +10,7 @@ import {CommentTI} from './TextInput';
 import {Calendar} from 'react-native-calendars';
 import {LeftArrowImg, RightArrowImg} from './Image';
 import {PreBtn, BottomReservationBtn} from './Button';
-import {ObjectList} from './FlatList';
+import {OfficeList, ObjectList} from './FlatList';
 
 // 구분선
 export const DivisionView = styled(StandardView)`
@@ -18,6 +18,39 @@ export const DivisionView = styled(StandardView)`
   border-bottom-color: #F6F7F9;
   margin-bottom: ${widthPercentageToDP(20)};
 `;
+
+// 진료실 선택 리스트 뷰
+const SelectList = styled(StandardView)`
+  margin-bottom: ${widthPercentageToDP(20)};
+`;
+
+export const SelectOfficeListView = ({data, onPress, selectedValue}) => {
+  return (
+    <SelectList>
+      <OfficeList
+        data={data}
+        selectedValue={selectedValue}
+        onPress={value => {
+          onPress(value);
+        }}
+      />
+    </SelectList>
+  );
+};
+
+export const SelectObjectListView = ({data, onPress, selectedValue}) => {
+  return (
+    <SelectList>
+      <ObjectList
+        data={data}
+        selectedValue={selectedValue}
+        onPress={value => {
+          onPress(value);
+        }}
+      />
+    </SelectList>
+  );
+};
 
 // 예약 시, 코멘트 뷰
 const Comment = styled(StandardView)`
@@ -158,25 +191,6 @@ export const ReservationSelectView = ({
         {selecteObjects.time}
       </NBGBText>
     </ReservationSelects>
-  );
-};
-
-// 예약선택 항목별 뷰
-const SelectList = styled(StandardView)`
-  margin-bottom: ${widthPercentageToDP(20)};
-`;
-
-export const SelectListView = ({data, onPress, selectedValue}) => {
-  return (
-    <SelectList>
-      <ObjectList
-        data={data}
-        selectedValue={selectedValue}
-        onPress={value => {
-          onPress(value);
-        }}
-      />
-    </SelectList>
   );
 };
 

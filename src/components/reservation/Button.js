@@ -71,7 +71,7 @@ export const ReservationBtn = ({
           <NBGBText marginTop={15} fontSize={15}>
             {value === undefined ? title + ' 선택' : value}
           </NBGBText>
-          {selected ? (
+          {!selected ? (
             <UpArrowImg width={16} height={16} />
           ) : (
             <DownArrowImg width={16} height={16} />
@@ -82,8 +82,8 @@ export const ReservationBtn = ({
   );
 };
 
-// 항목별 리스트 버튼
-const Objects = styled(BTN)`
+// 진료실 선택 버튼
+const Offices = styled(BTN)`
   flex-direction: row;
   align-items: center;
 
@@ -94,9 +94,9 @@ const Objects = styled(BTN)`
   border-bottom-color: #dbdbdb;
 `;
 
-export const ObjectsBtn = ({data, selectedValue, onPress}) => {
+export const OfficesBtn = ({data, selectedValue, onPress}) => {
   return (
-    <Objects
+    <Offices
       onPress={() => {
         onPress();
       }}>
@@ -105,6 +105,23 @@ export const ObjectsBtn = ({data, selectedValue, onPress}) => {
       ) : (
         <SelectImg marginLeft={1.8} />
       )}
+      <NBGText marginLeft={10}>{data}</NBGText>
+    </Offices>
+  );
+};
+
+// 진료항목 선택 버튼
+const Objects = styled(BTN)`
+  flex: 1;
+  justify-content: center;
+`;
+
+export const ObjectsBtn = ({data, selectedValue, onPress}) => {
+  return (
+    <Objects
+      onPress={() => {
+        onPress();
+      }}>
       <NBGText marginLeft={10}>{data}</NBGText>
     </Objects>
   );

@@ -11,7 +11,8 @@ import {
 import {
   DivisionView,
   CommentView,
-  SelectListView,
+  SelectOfficeListView,
+  SelectObjectListView,
 } from '../../components/reservation/View';
 import {ReservationBtn, DateBTN} from '../../components/reservation/Button';
 import Toast from 'react-native-root-toast';
@@ -24,9 +25,32 @@ const Reservation = props => {
   const [medicalObject, setMedicalObject] = useState();
   const [medicalObjectSelected, setMedicalObjectSelected] = useState(false);
 
+  // 진료실 선택 후, 선택한 진료실에 해당하는 진료항목 데이터
+  const [medicalObjectList, setMedicalObjectList] = useState([]);
+
   const [comment, setComment] = useState('');
 
-  console.log(props.hospital_detail);
+  // 선택한 진료실에 맞는 진료항목 데이터 저장
+  const getObjectList = async value => {
+    if (value !== undefined) {
+      let objectList = [];
+
+      await props.hospital_detail.office.map(item => {
+        if (item.officeName === value) {
+          objectList.push(item.treatment);
+        }
+      });
+
+      await setMedicalObjectList([]);
+
+      for (let i = 0; i < objectList[0].length; i++) {
+        let dataToObject = new Object();
+
+        dataToObject.treatment = objectList[0][i];
+        await setMedicalObjectList(pre => [...pre, dataToObject]);
+      }
+    }
+  };
 
   return (
     <TopContainerView>
@@ -62,13 +86,16 @@ const Reservation = props => {
               setMedicalOfficeSelected(!medicalOfficeSelected);
             }}
           />
+          {/* 진료실 선택 리스트 뷰 */}
           {medicalOfficeSelected ? (
-            <SelectListView
+            <SelectOfficeListView
               data={props.hospital_detail.office}
               selectedValue={medicalOffice}
-              onPress={value => {
-                setMedicalOffice(value);
-                setMedicalOfficeSelected(!medicalOfficeSelected);
+              onPress={async value => {
+                await setMedicalOffice(value);
+                await setMedicalOfficeSelected(!medicalOfficeSelected);
+
+                await getObjectList(value);
               }}
             />
           ) : null}
@@ -89,9 +116,17 @@ const Reservation = props => {
                 : setMedicalObjectSelected(!medicalObjectSelected);
             }}
           />
-
+          {/* 진료항목 선택 리스트 뷰 */}
+          {medicalObjectSelected ? (
+            <SelectObjectListView
+              data={medicalObjectList}
+              selectedValue={medicalObject}
+              onPress={async value => {
+                await setMedicalObjectSelected(!medicalObjectSelected);
+              }}
+            />
+          ) : null}
           <DivisionView />
-          {/* 진료항목 항목 뷰*/}
           {/* 원장님께 하고싶은 말 */}
           <CommentView
             paddingHorizontal={20}
