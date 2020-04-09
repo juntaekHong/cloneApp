@@ -21,3 +21,23 @@ export const DownArrowImg = ({width, height}) => {
     />
   );
 };
+
+export const LeftArrowImg = ({width, height}) => {
+  return (
+    <BackImg
+      width={width}
+      height={height}
+      source={require('../../../assets/image/reservation/left-arrow.png')}
+    />
+  );
+};
+
+export const RightArrowImg = ({width, height}) => {
+  return (
+    <BackImg
+      width={width}
+      height={height}
+      source={require('../../../assets/image/reservation/next.png')}
+    />
+  );
+};

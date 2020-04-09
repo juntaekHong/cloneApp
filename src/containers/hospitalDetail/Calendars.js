@@ -13,6 +13,7 @@ import {Calendar, Arrow} from 'react-native-calendars';
 import {widthPercentageToDP, getData} from '../../utils/util';
 import {Img} from '../../components/common/Image';
 import {FlatList} from 'react-native';
+import {CalendarView} from '../../components/reservation/View';
 
 // 포맷
 // // 날짜 선택
@@ -24,16 +25,24 @@ import {FlatList} from 'react-native';
 
 // {"dateString": "2020-04-06", "day": 6, "month": 4, "timestamp": 1586131200000, "year": 2020}
 
-const Calendars = (props) => {
+const Calendars = props => {
+  // 내가 선택한 날짜 데이터
   const [markedDate, setMarkedDate] = useState({});
 
+  // 선택한 날짜의 예약 가능한 시간 리스트
   const [hourData, setHourData] = useState([]);
 
+  // 내가 예약할 시간으로 선택한 번호
   const [selectedIndex, setSelectedIndex] = useState(null);
 
+  // 데이터가 없을 때, 휴진 문구 텍스트는 클릭 안되게 설정
+  const [closed, setClosed] = useState(false);
+
+  // 자동 스크롤
   const hourListRef = useRef(null);
 
-  const onSelectedChange = (day) => {
+  // 예약 날짜 선택 로직
+  const onSelectedChange = day => {
     let date = day.dateString;
 
     setMarkedDate({[date]: {selected: true, marked: false}});
@@ -45,7 +54,8 @@ const Calendars = (props) => {
     });
   };
 
-  const selectedDays = (day) => {
+  // 선택할 수 있는 시간 리스트 커스텀
+  const selectedDays = async day => {
     let getDay = new Date(day).getDay();
 
     let enabledHour = [];
@@ -69,9 +79,11 @@ const Calendars = (props) => {
         enabledHour.push(i + ':00');
       }
 
+      await setClosed(false);
       setHourData(enabledHour);
     } else {
-      setHourData([]);
+      await setClosed(true);
+      setHourData(['해당 날짜는 휴진입니다.']);
     }
   };
 
@@ -88,79 +100,16 @@ const Calendars = (props) => {
         searchBtn={false}
         sharedBtn={false}
       />
-      <Calendar
-        style={{
-          paddingBottom: widthPercentageToDP(10),
-          borderBottomWidth: widthPercentageToDP(1),
-          borderBottomColor: '#dbdbdb',
-        }}
-        // Initially visible month. Default = Date()
-
-        // Minimum date that can be selected, dates before minDate will be grayed out. Default = undefined
-        minDate={new Date()}
-        // Maximum date that can be selected, dates after maxDate will be grayed out. Default = undefined
-        maxDate={'2020-05-30'}
-        // Handler which gets executed on day press. Default = undefined
-        onDayPress={(day) => {
-          console.log('selected day', day);
+      {/* 달력 뷰 */}
+      <CalendarView
+        onDayPress={day => {
           onSelectedChange(day);
 
           setSelectedIndex(null);
           selectedDays(day.dateString);
         }}
-        // Handler which gets executed on day long press. Default = undefined
-        onDayLongPress={(day) => {
-          console.log('selected day', day);
-        }}
-        // Month format in calendar title. Formatting values: http://arshaw.com/xdate/#Formatting
-        monthFormat={'yyyy MM'}
-        // Handler which gets executed when visible month changes in calendar. Default = undefined
-        onMonthChange={(month) => {
-          console.log('month changed', month);
-        }}
-        // Hide month navigation arrows. Default = false
-
-        hideArrows={false}
-        // Replace default arrows with custom ones (direction can be 'left' or 'right')
-        renderArrow={(direction) =>
-          direction === 'left' ? (
-            <Img
-              width={16}
-              height={16}
-              source={require('../../../assets/image/reservation/left-arrow.png')}
-            />
-          ) : (
-            <Img
-              width={16}
-              height={16}
-              source={require('../../../assets/image/reservation/next.png')}
-            />
-          )
-        }
-        // Do not show days of other months in month page. Default = false
-        hideExtraDays={true}
-        // If hideArrows=false and hideExtraDays=false do not switch month when tapping on greyed out
-        // day from another month that is visible in calendar page. Default = false
-        disableMonthChange={false}
-        // If firstDay=1 week starts from Monday. Note that dayNames and dayNamesShort should still start from Sunday.
-        firstDay={0}
-        // Hide day names. Default = false
-        hideDayNames={false}
-        // Show week numbers to the left. Default = false
-        showWeekNumbers={false}
-        // Handler which gets executed when press arrow icon left. It receive a callback can go back month
-        onPressArrowLeft={(substractMonth) => substractMonth(-1)}
-        // Handler which gets executed when press arrow icon right. It receive a callback can go next month
-        onPressArrowRight={(addMonth) => addMonth(1)}
-        // Disable left arrow. Default = false
-        disableArrowLeft={false}
-        // Disable right arrow. Default = false
-        disableArrowRight={false}
-        markedDates={markedDate}
+        markedDate={markedDate}
       />
-      <NBGBText color={'red'} marginLeft={5} marginTop={10} fontSize={12}>
-        * 시간을 선택하시면 하단에 예약가능 시간대가 노출됩니다.
-      </NBGBText>
       <StandardView
         style={{
           height: widthPercentageToDP(70),
@@ -176,6 +125,7 @@ const Calendars = (props) => {
             return (
               <BTN
                 index={index}
+                disabled={closed}
                 onPress={() => {
                   setSelectedIndex(index);
                 }}
@@ -183,11 +133,11 @@ const Calendars = (props) => {
                   backgroundColor:
                     selectedIndex === index ? '#54B8ED' : 'white',
                   marginTop: widthPercentageToDP(20),
-                  width: widthPercentageToDP(70),
+                  minWidth: widthPercentageToDP(70),
                   height: widthPercentageToDP(30),
                   padding: widthPercentageToDP(5),
                   marginRight: widthPercentageToDP(10),
-                  borderWidth: widthPercentageToDP(1),
+                  borderWidth: !closed ? widthPercentageToDP(1) : 0,
                   borderColor: '#dbdbdb',
                   borderRadius: widthPercentageToDP(15),
                 }}>
@@ -204,6 +154,6 @@ const Calendars = (props) => {
     </TopContainerView>
   );
 };
-export default connect((state) => ({
+export default connect(state => ({
   hospital_detail: state.common.hospital_detail,
 }))(Calendars);

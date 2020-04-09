@@ -20,7 +20,7 @@ import {CommonActions} from '../../store/actionCreator';
 import HospitalMap from '../hospitalDetail/HospitalMap';
 import HospitalReview from '../hospitalDetail/HospitalReview';
 
-const HospitalDetail = (props) => {
+const HospitalDetail = props => {
   const [detailData, setDetailData] = useState(
     props.navigation.state.params.object,
   );
@@ -125,7 +125,7 @@ const HospitalDetail = (props) => {
         });
   }, []);
 
-  const changPageIndex = useCallback(async (index) => {
+  const changPageIndex = useCallback(async index => {
     await CommonActions.handlePageIndex(index);
 
     await focusing.current.scrollTo({
@@ -135,6 +135,7 @@ const HospitalDetail = (props) => {
     });
   }, []);
 
+  // 병원 즐겨찾기 기능 확인을 위한 테스트 로그
   console.log(detailData);
 
   return (
@@ -296,7 +297,7 @@ const HospitalDetail = (props) => {
           page1={{title: '진료시간 정보', index: 0}}
           page2={{title: '길찾기', index: 1}}
           page3={{title: '리뷰', index: 2}}
-          onPress={async (index) => {
+          onPress={async index => {
             if (props.page_index !== index) {
               await swipe.current.scrollBy(index - props.page_index);
             }
@@ -311,7 +312,7 @@ const HospitalDetail = (props) => {
             ref={swipe}
             height={'100%'}
             index={props.page_index}
-            onIndexChanged={async (index) => {
+            onIndexChanged={async index => {
               await changPageIndex(index);
             }}
             loop={false}
@@ -356,7 +357,7 @@ const HospitalDetail = (props) => {
   );
 };
 
-export default connect((state) => ({
+export default connect(state => ({
   page_index: state.common.page_index,
 
   latitude: state.common.latitude,

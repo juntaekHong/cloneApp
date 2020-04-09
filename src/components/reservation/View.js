@@ -5,8 +5,10 @@ import React from 'react';
 import styled from 'styled-components/native';
 import {widthPercentageToDP} from '../../utils/util';
 import {StandardView} from '../common/View';
-import {NBGLText} from '../common/Text';
+import {NBGLText, NBGBText} from '../common/Text';
 import {CommentTI} from './TextInput';
+import {Calendar} from 'react-native-calendars';
+import {LeftArrowImg, RightArrowImg} from './Image';
 
 // 구분선
 export const DivisionView = styled(StandardView)`
@@ -44,7 +46,7 @@ export const CommentView = ({paddingHorizontal, onChangeText, value}) => {
       <CommentTI
         marginBottom={20}
         placeholder={'ex) 어제부터 열이 나요.'}
-        onChangeText={(text) => {
+        onChangeText={text => {
           onChangeText(text);
         }}
         value={value}
@@ -59,5 +61,67 @@ export const CommentView = ({paddingHorizontal, onChangeText, value}) => {
         ※ 병원 사정으로 예약이 취소되는 경우 Push 메시지로 알려드립니다.
       </NBGLText> */}
     </Comment>
+  );
+};
+
+// 달력 뷰
+export const CalendarView = ({onDayPress, markedDate}) => {
+  return (
+    <StandardView>
+      <Calendar
+        style={{
+          paddingBottom: widthPercentageToDP(10),
+          borderBottomWidth: widthPercentageToDP(1),
+          borderBottomColor: '#dbdbdb',
+        }}
+        // 선택 가능한 제일 오래된 날짜
+        minDate={new Date()}
+        // 최대 선택 가능한 날짜
+        maxDate={'2020-05-30'}
+        // 날짜 선택 시 이벤트
+        onDayPress={day => {
+          onDayPress(day);
+        }}
+        // 날짜 포맷
+        monthFormat={'yyyy MM'}
+        // 월(달)이 바뀌었을 때
+        onMonthChange={month => {
+          console.log('month changed', month);
+        }}
+        // 달력 넘기는 좌우 화살표 보이기 유무
+        hideArrows={false}
+        // 달력 좌우 이미지
+        renderArrow={direction =>
+          direction === 'left' ? (
+            <LeftArrowImg width={16} height={16} />
+          ) : (
+            <RightArrowImg width={16} height={16} />
+          )
+        }
+        // Do not show days of other months in month page. Default = false
+        hideExtraDays={true}
+        //
+        disableMonthChange={false}
+        // 요일 시작 기준 - 인덱스로 기입
+        firstDay={0}
+        // 요일 표시 보이기 유무
+        hideDayNames={false}
+        // 해당 년도의 몇주차인지 표시 보이기 유무
+        showWeekNumbers={false}
+        // 지난달 달력으로 이동
+        onPressArrowLeft={substractMonth => substractMonth(-1)}
+        // 다음 달 달력으로 이동
+        onPressArrowRight={addMonth => addMonth(1)}
+        // 보이기 유무
+        disableArrowLeft={false}
+        // 보이기 유무
+        disableArrowRight={false}
+        // 해당 날짜 선택 마크 표시
+        markedDates={markedDate}
+      />
+      <NBGBText color={'red'} marginLeft={5} marginTop={10} fontSize={12}>
+        * 시간을 선택하시면 하단에 예약가능 시간대가 노출됩니다.
+      </NBGBText>
+    </StandardView>
   );
 };
