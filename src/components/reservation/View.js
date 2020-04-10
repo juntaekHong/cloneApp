@@ -24,10 +24,18 @@ const SelectList = styled(StandardView)`
   margin-bottom: ${widthPercentageToDP(20)};
 `;
 
-export const SelectOfficeListView = ({data, onPress, selectedValue}) => {
+export const SelectOfficeListView = ({
+  officeIndex,
+  data,
+  onPress,
+  selectedValue,
+}) => {
   return (
     <SelectList>
       <OfficeList
+        officeIndex={index => {
+          officeIndex(index);
+        }}
         data={data}
         selectedValue={selectedValue}
         onPress={value => {
@@ -196,30 +204,33 @@ export const ReservationSelectView = ({
 
 // 예약하기 페이지(달력있는 페이지) - 이전&예약하기 버튼 뷰
 const ReservationBottom = styled(ReservationSelects)`
-  position: absolute;
-  bottom: 0;
   flex-direction: ${({flexDirection}) =>
     flexDirection ? flexDirection : 'column'};
   width: 100%;
 `;
 
 export const ReservationBottomView = ({
+  positionValue,
   flexDirection,
   marginTop,
   paddingVertical,
+  backTitle,
   backHandler,
+  confirmTitle,
   reservationDisabled,
   reservationHandler,
 }) => {
   return (
     <ReservationBottom
+      positionValue={positionValue}
       flexDirection={flexDirection}
       marginTop={marginTop}
-      paddingVertical={paddingVertical}>
+      paddingVertical={paddingVertical}
+      style={positionValue ? {position: 'absolute', bottom: 0} : {}}>
       <PreBtn
         flex={1}
         height={50}
-        title={'이전'}
+        title={backTitle}
         align={'center'}
         bgColor={'#2D3742'}
         textColor={'white'}
@@ -231,7 +242,7 @@ export const ReservationBottomView = ({
         disabled={reservationDisabled}
         flex={2}
         height={50}
-        title={'최종 예약하기'}
+        title={confirmTitle}
         align={'center'}
         bgColor={reservationDisabled ? '#dbdbdb' : '#FBEE68'}
         onPress={() => {

@@ -17,7 +17,7 @@ const Objects = styled(FlatList)`
 `;
 
 // 진료실 선택 리스트
-export const OfficeList = ({data, onPress, selectedValue}) => {
+export const OfficeList = ({officeIndex, data, onPress, selectedValue}) => {
   return (
     <Objects
       scrollEnabled={false}
@@ -26,10 +26,12 @@ export const OfficeList = ({data, onPress, selectedValue}) => {
       renderItem={({item}) => {
         return (
           <OfficesBtn
+            officeIndex={item.officeIndex}
             data={item.officeName}
             selectedValue={selectedValue}
             onPress={() => {
               onPress(item.officeName);
+              officeIndex(item.officeIndex);
             }}
           />
         );

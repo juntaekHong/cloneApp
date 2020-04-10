@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import {connect} from 'react-redux';
 import {
   TopContainerView,
@@ -16,6 +16,8 @@ import {
   ReservationSelectView,
   ReservationBottomView,
 } from '../../components/reservation/View';
+import {ReservationActions} from '../../store/actionCreator';
+import {ReservationModal} from '../../components/reservation/Modal';
 
 const Calendars = props => {
   // 내가 선택한 날짜 데이터
@@ -38,9 +40,13 @@ const Calendars = props => {
   // 접수하기(이전 페이지로 진료실, 진료항목, 코멘트 데이터
   // 서버에서 진료실 데이터 안보내길래 일단 주석처리함. office: props.navigation.state.params.office,
   const [reservationData, setReservationData] = useState({
+    office: props.navigation.state.params.office,
+    officeIndex: props.navigation.state.params.officeIndex,
     treatmentName: props.navigation.state.params.object,
     comment: props.navigation.state.params.comment,
   });
+
+  const [reservationModal, setReservationModal] = useState(false);
 
   // 자동 스크롤
   const hourListRef = useRef(null);
@@ -57,6 +63,14 @@ const Calendars = props => {
       animated: true,
     });
   };
+
+  useEffect(() => {
+    setReservationData({
+      ...reservationData,
+      reservationDate: selectsData.date,
+      reservationTime: selectsData.time,
+    });
+  }, [selectsData]);
 
   // 선택할 수 있는 시간 리스트 커스텀
   const selectedDays = async day => {
@@ -95,6 +109,17 @@ const Calendars = props => {
 
   return (
     <TopContainerView>
+      {/* 예약 최종 확인 모달 */}
+      <ReservationModal
+        height={600}
+        hospitalName={props.hospital_detail.hospitalName}
+        reservationData={reservationData}
+        userData={props.user}
+        visible={reservationModal}
+        backHandler={async () => {
+          await setReservationModal(false);
+        }}
+      />
       <TopView
         marginBottom={5}
         title={'예약하기'}
@@ -121,6 +146,7 @@ const Calendars = props => {
           height: widthPercentageToDP(70),
           marginHorizontal: widthPercentageToDP(10),
         }}>
+        {/* 시간 리스트 뷰 */}
         <FlatList
           ref={hourListRef}
           style={{flexGrow: 1, width: '100%', height: '100%'}}
@@ -132,16 +158,10 @@ const Calendars = props => {
               <BTN
                 index={index}
                 disabled={closed}
-                onPress={() => {
+                onPress={async () => {
                   setSelectedIndex(index);
 
-                  setSelectData({...selectsData, time: item});
-
-                  setReservationData({
-                    ...reservationData,
-                    reservationDate: selectsData.date,
-                    reservationTime: selectsData.time,
-                  });
+                  await setSelectData({...selectsData, time: item});
                 }}
                 style={{
                   backgroundColor:
@@ -176,14 +196,20 @@ const Calendars = props => {
         />
       ) : null}
       <ReservationBottomView
+        positionValue={true}
         flexDirection={'row'}
         marginTop={15}
         paddingVertical={15}
+        backTitle={'이전'}
+        confirmTitle={'예약하기'}
         backHandler={() => {
           props.navigation.goBack(null);
         }}
         reservationDisabled={selectedIndex === null ? true : false}
-        reservationHandler={() => {}}
+        reservationHandler={() => {
+          // 현재 예약한 정보들 최종 확인 모달 띄우기
+          setReservationModal(true);
+        }}
       />
     </TopContainerView>
   );

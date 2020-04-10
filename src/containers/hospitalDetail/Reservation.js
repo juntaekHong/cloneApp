@@ -19,9 +19,12 @@ import Toast from 'react-native-root-toast';
 import {ScrollView} from 'react-native';
 
 const Reservation = props => {
+  // 진료실 관련 데이터
+  const [officeIndex, setOfficeIndex] = useState();
   const [medicalOffice, setMedicalOffice] = useState();
   const [medicalOfficeSelected, setMedicalOfficeSelected] = useState(false);
 
+  // 진료항목 관련 데이터
   const [medicalObject, setMedicalObject] = useState();
   const [medicalObjectSelected, setMedicalObjectSelected] = useState(false);
 
@@ -93,6 +96,9 @@ const Reservation = props => {
           {/* 진료실 선택 리스트 뷰 */}
           {medicalOfficeSelected ? (
             <SelectOfficeListView
+              officeIndex={index => {
+                setOfficeIndex(index);
+              }}
               data={props.hospital_detail.office}
               selectedValue={medicalOffice}
               onPress={async value => {
@@ -166,6 +172,7 @@ const Reservation = props => {
                   position: Toast.positions.CENTER,
                 })
               : props.navigation.navigate('Calendars', {
+                  officeIndex: officeIndex,
                   office: medicalOffice,
                   object: medicalObject,
                   comment: comment,

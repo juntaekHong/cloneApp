@@ -94,7 +94,7 @@ const Offices = styled(BTN)`
   border-bottom-color: #dbdbdb;
 `;
 
-export const OfficesBtn = ({data, selectedValue, onPress}) => {
+export const OfficesBtn = ({officeIndex, data, selectedValue, onPress}) => {
   return (
     <Offices
       onPress={() => {

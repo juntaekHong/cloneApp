@@ -12,37 +12,38 @@ import {
 } from '../../../utils/util';
 import config from '../../../configs/config';
 
-const OFFICE_DATA = 'reservation/OFFICE_DATA';
+const RESERVATION_LIST = 'reservation/RESERVATION_LIST';
 
-const officeDataAction = createAction(OFFICE_DATA);
+const reservationListAction = createAction(RESERVATION_LIST);
 
 const initState = {
   // 초기 사용자 정보
-  office: null,
+  reservation_list: null,
 };
 
 // 병원 측
-// export const getOfficeData = hpid => async dispatch => {
-//   try {
-//     const token = await getData('token');
+export const reserveHospital = reservationData => async dispatch => {
+  try {
+    const token = await getData('token');
 
-//     const jsonData = await api.post(`/office/hpid/${hpid}`, {
-//       token,
-//     });
-
-//     console.log(jsonData);
-//     return true;
-//   } catch (err) {
-//     console.log('error');
-//     return false;
-//   }
-// };
+    // const jsonData = await api.post(`/office/officeIndex/${officeIndex}`, {
+    //   token: token,
+    //   body: reservationData,
+    // });
+    console.log(token);
+    console.log({reservationData});
+    return true;
+  } catch (err) {
+    console.log('error');
+    return false;
+  }
+};
 
 export default handleActions(
   {
-    [OFFICE_DATA]: (state, {payload}) =>
+    [RESERVATION_LIST]: (state, {payload}) =>
       produce(state, draft => {
-        draft.office = payload;
+        draft.reservation_list = payload;
       }),
   },
   initState,
