@@ -9,7 +9,7 @@ import {
   StandardView,
 } from '../../components/common/View';
 import {NBGBText} from '../../components/common/Text';
-import {widthPercentageToDP, dayToString} from '../../utils/util';
+import {widthPercentageToDP, dayToString, showMessage} from '../../utils/util';
 import {FlatList} from 'react-native';
 import {
   CalendarView,
@@ -18,6 +18,7 @@ import {
 } from '../../components/reservation/View';
 import {ReservationActions} from '../../store/actionCreator';
 import {ReservationModal} from '../../components/reservation/Modal';
+import Toast from 'react-native-root-toast';
 
 const Calendars = props => {
   // 내가 선택한 날짜 데이터
@@ -46,7 +47,11 @@ const Calendars = props => {
     comment: props.navigation.state.params.comment,
   });
 
+  // 병원 예약 최종 확인 모달
   const [reservationModal, setReservationModal] = useState(false);
+
+  // 병원 예약 성공 또는 실패 모달
+  const [reservationAlertModal, setReservationAlertModal] = useState(false);
 
   // 자동 스크롤
   const hourListRef = useRef(null);
@@ -109,6 +114,8 @@ const Calendars = props => {
 
   return (
     <TopContainerView>
+      {/* 예약 성공 또는 실패 모달 */}
+
       {/* 예약 최종 확인 모달 */}
       <ReservationModal
         height={600}
@@ -118,6 +125,28 @@ const Calendars = props => {
         visible={reservationModal}
         backHandler={async () => {
           await setReservationModal(false);
+        }}
+        reservationHandler={async () => {
+          let success = await ReservationActions.reserveHospital(
+            reservationData,
+          );
+
+          if (success) {
+            showMessage(
+              '정상적으로 해당 병원에 예약되었습니다!\n예약상태는 진료내역 페이지에서 확인 가능합니다!',
+              {
+                position: Toast.positions.CENTER,
+              },
+            );
+            props.navigation.navigate('home');
+          } else {
+            showMessage(
+              '중복 예약은 불가 합니다!\n예약내역을 확인하여주시기 바랍니다!',
+              {
+                position: Toast.positions.CENTER,
+              },
+            );
+          }
         }}
       />
       <TopView

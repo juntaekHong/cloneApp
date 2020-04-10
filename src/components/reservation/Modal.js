@@ -78,6 +78,7 @@ export const ReservationModal = ({
   width,
   height,
   backHandler,
+  reservationHandler,
   hospitalName,
   reservationData,
   userData,
@@ -160,6 +161,7 @@ export const ReservationModal = ({
             }}
             reservationDisabled={false}
             reservationHandler={() => {
+              reservationHandler();
               backHandler();
             }}
           />

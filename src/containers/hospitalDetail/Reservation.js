@@ -175,7 +175,7 @@ const Reservation = props => {
                   officeIndex: officeIndex,
                   office: medicalOffice,
                   object: medicalObject,
-                  comment: comment,
+                  comment: comment.trim(),
                 });
           }}
         />
