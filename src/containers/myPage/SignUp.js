@@ -74,6 +74,12 @@ const SignUp = props => {
   const input2 = useRef(null);
   const input3 = useRef(null);
 
+  const input4 = useRef(null);
+  const input5 = useRef(null);
+  const input6 = useRef(null);
+
+  const input7 = useRef(null);
+
   // 비밀번호 입력시, 비밀번호 유효성 체크
   useEffect(() => {
     let valid = checkPass(pass);
@@ -267,6 +273,8 @@ const SignUp = props => {
               }}
               onSubmitEditing={async () => {
                 Keyboard.dismiss();
+                await swipe.current.scrollBy(1);
+                await input4.current.focus();
                 // setId('');
                 // setPass('');
               }}
@@ -285,6 +293,7 @@ const SignUp = props => {
               borderRadius: widthPercentageToDP(5),
             }}>
             <TextInput
+              ref={input4}
               style={{
                 marginTop: widthPercentageToDP(15),
                 height: widthPercentageToDP(40),
@@ -303,6 +312,7 @@ const SignUp = props => {
               onChangeText={text => setName(text)}
               onSubmitEditing={() => {
                 // passRef.current.focus();
+                input5.current.focus();
               }}
               returnKeyType={'next'}
             />
@@ -310,6 +320,7 @@ const SignUp = props => {
               {nameValid}
             </NBGBText>
             <TextInput
+              ref={input5}
               style={{
                 marginTop: widthPercentageToDP(15),
                 height: widthPercentageToDP(40),
@@ -327,6 +338,7 @@ const SignUp = props => {
               value={nickName}
               onChangeText={text => setNickName(text)}
               onSubmitEditing={() => {
+                input6.current.focus();
                 // passRef.current.focus();
               }}
               returnKeyType={'next'}
@@ -335,6 +347,7 @@ const SignUp = props => {
               {nickNameValid}
             </NBGBText>
             <TextInput
+              ref={input6}
               style={{
                 marginTop: widthPercentageToDP(15),
                 width: widthPercentageToDP(70),
@@ -351,9 +364,12 @@ const SignUp = props => {
               }}
               placeholder={'나이'}
               keyboardType={'number-pad'}
+              returnKeyType={'done'}
               value={age}
               onChangeText={text => setAge(text)}
-              onSubmitEditing={() => {
+              onSubmitEditing={async () => {
+                Keyboard.dismiss();
+                await swipe.current.scrollBy(1);
                 // passRef.current.focus();
               }}
             />
@@ -378,6 +394,7 @@ const SignUp = props => {
               <BTN
                 onPress={() => {
                   setGender('여자');
+                  input7.current.focus();
                 }}
                 activeOpacity={1}
                 style={{
@@ -408,6 +425,7 @@ const SignUp = props => {
               <BTN
                 onPress={() => {
                   setGender('남자');
+                  input7.current.focus();
                 }}
                 activeOpacity={1}
                 style={{
@@ -437,6 +455,7 @@ const SignUp = props => {
               </BTN>
             </StandardView>
             <TextInput
+              ref={input7}
               style={{
                 marginTop: widthPercentageToDP(30),
                 height: widthPercentageToDP(40),
@@ -457,7 +476,7 @@ const SignUp = props => {
               onSubmitEditing={() => {
                 // passRef.current.focus();
               }}
-              returnKeyType={'next'}
+              returnKeyType={'done'}
             />
             <NBGBText marginLeft={5} marginTop={5} fontSize={10} color={'red'}>
               {phoneNumberValid}
