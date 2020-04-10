@@ -124,12 +124,16 @@ const Objects = styled(BTN)`
   padding-top: ${widthPercentageToDP(10)};
   padding-bottom: ${widthPercentageToDP(10)};
   padding-right: ${widthPercentageToDP(10)};
+  background-color: ${({selectedValue, data}) =>
+    selectedValue !== data ? 'white' : '#FCEE69'};
 `;
 
 export const ObjectsBtn = ({index, data, selectedValue, onPress}) => {
   return (
     <Objects
       index={index}
+      data={data}
+      selectedValue={selectedValue}
       onPress={() => {
         onPress();
       }}>

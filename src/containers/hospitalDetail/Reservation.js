@@ -49,6 +49,10 @@ const Reservation = props => {
         dataToObject.treatment = objectList[0][i];
         await setMedicalObjectList(pre => [...pre, dataToObject]);
       }
+
+      objectList[0].length === 0
+        ? await setMedicalObject('해당 진료실은 선택 항목이 없습니다.')
+        : null;
     }
   };
 
@@ -111,11 +115,22 @@ const Reservation = props => {
             value={medicalObject}
             selected={medicalObjectSelected}
             onPress={() => {
-              medicalOffice === undefined
-                ? showMessage('진료실을 선택하여 주세요!', {
-                    position: Toast.positions.CENTER,
-                  })
-                : setMedicalObjectSelected(!medicalObjectSelected);
+              if (medicalOffice === undefined) {
+                showMessage('진료실을 선택하여 주세요!', {
+                  position: Toast.positions.CENTER,
+                });
+              } else {
+                if (medicalObjectList.length === 0) {
+                  showMessage(
+                    '선택할 수 있는 진료항목이 없습니다.\n 하단 원장님께 하고 싶은 말에 작성하세요!',
+                    {
+                      position: Toast.positions.CENTER,
+                    },
+                  );
+                } else {
+                  setMedicalObjectSelected(!medicalObjectSelected);
+                }
+              }
             }}
           />
           {/* 진료항목 선택 리스트 뷰 */}
@@ -150,7 +165,11 @@ const Reservation = props => {
               ? showMessage('진료항목을 선택하여 주세요!', {
                   position: Toast.positions.CENTER,
                 })
-              : props.navigation.navigate('Calendars');
+              : props.navigation.navigate('Calendars', {
+                  office: medicalOffice,
+                  object: medicalObject,
+                  comment: comment,
+                });
           }}
         />
       </ScrollView>

@@ -9,25 +9,13 @@ import {
   StandardView,
 } from '../../components/common/View';
 import {NBGBText} from '../../components/common/Text';
-import {Calendar, Arrow} from 'react-native-calendars';
-import {widthPercentageToDP, getData, dayToString} from '../../utils/util';
-import {Img} from '../../components/common/Image';
+import {widthPercentageToDP, dayToString} from '../../utils/util';
 import {FlatList} from 'react-native';
 import {
   CalendarView,
   ReservationSelectView,
   ReservationBottomView,
 } from '../../components/reservation/View';
-
-// 포맷
-// // 날짜 선택
-// '2020-05-16': {selected: true, marked: false},
-// // 해당 날짜 예약 꽉참
-// '2020-05-18': {marked: true, dotColor: 'red', activeOpacity: 0},
-// // 휴진
-// '2020-05-19': {disabled: true, disableTouchEvent: true},
-
-// {"dateString": "2020-04-06", "day": 6, "month": 4, "timestamp": 1586131200000, "year": 2020}
 
 const Calendars = props => {
   // 내가 선택한 날짜 데이터
@@ -45,6 +33,13 @@ const Calendars = props => {
   // 내가 선택한 항목들 유저한테 보여지게 객체 데이터
   const [selectsData, setSelectData] = useState({
     name: props.user.useruserName,
+  });
+
+  // 접수하기(이전 페이지로 진료실, 진료항목, 코멘트 데이터
+  // 서버에서 진료실 데이터 안보내길래 일단 주석처리함. office: props.navigation.state.params.office,
+  const [reservationData, setReservationData] = useState({
+    treatmentName: props.navigation.state.params.object,
+    comment: props.navigation.state.params.comment,
   });
 
   // 자동 스크롤
@@ -141,6 +136,12 @@ const Calendars = props => {
                   setSelectedIndex(index);
 
                   setSelectData({...selectsData, time: item});
+
+                  setReservationData({
+                    ...reservationData,
+                    reservationDate: selectsData.date,
+                    reservationTime: selectsData.time,
+                  });
                 }}
                 style={{
                   backgroundColor:
