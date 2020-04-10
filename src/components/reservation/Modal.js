@@ -82,6 +82,14 @@ export const ReservationModal = ({
   reservationData,
   userData,
 }) => {
+  const TodatDateFormat = () => {
+    let now = new Date();
+    let y = now.getFullYear();
+    let m = now.getMonth() + 1;
+    let d = now.getDate();
+    return '' + y + (m < 10 ? '-0' : '-') + m + (d < 10 ? '-0' : '-') + d;
+  };
+
   return (
     <Modal
       style={{
@@ -104,7 +112,7 @@ export const ReservationModal = ({
             <SelectImg />
           </StandardView>
           <NBGLText marginTop={10} fontSize={12} color={'gray'}>
-            {reservationData.reservationDate}
+            {TodatDateFormat()}
           </NBGLText>
         </HeaderView>
         <DivisionView />
