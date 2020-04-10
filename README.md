@@ -77,14 +77,3 @@ Project< ios Folder 안에 pod --version 으로 pod 설치 확인
 <img width="382" alt="스크린샷 2020-03-14 오전 7 33 43" src="https://user-images.githubusercontent.com/50249009/76664076-72130300-65c6-11ea-8d1b-6d2d80da9671.png">
 
 <img width="386" alt="스크린샷 2020-03-14 오전 7 31 16" src="https://user-images.githubusercontent.com/50249009/76664084-77704d80-65c6-11ea-9311-9862a0c28c42.png">
-
-
-![1](https://user-images.githubusercontent.com/50249009/78968174-e8ac0d80-7b3e-11ea-8946-696ecbc29dc2.png)
-
-![2](https://user-images.githubusercontent.com/50249009/78968187-eea1ee80-7b3e-11ea-98b4-8af22931369a.png)
-
-![3](https://user-images.githubusercontent.com/50249009/78968190-f06bb200-7b3e-11ea-9533-d179dfc1213f.png)
-
-![4](https://user-images.githubusercontent.com/50249009/78968200-f3ff3900-7b3e-11ea-974c-7cfb0baa7a16.png)
-
-![5](https://user-images.githubusercontent.com/50249009/78968225-f8c3ed00-7b3e-11ea-9a86-f392891b7fad.png)
