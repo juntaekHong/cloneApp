@@ -24,6 +24,10 @@ const initState = {
   subscriber_list: [],
 };
 
+export const handlerSubscriberListInit = () => dispatch => {
+  dispatch(subscriberListAction([]));
+};
+
 // 병원 즐겨찾기 추가 및 삭제
 export const updateHospitalSubscriber = hpid => async dispatch => {
   try {
@@ -33,7 +37,6 @@ export const updateHospitalSubscriber = hpid => async dispatch => {
       token: token,
     });
 
-    console.log(jsonData);
     return true;
   } catch (err) {
     console.log('error');
@@ -50,8 +53,7 @@ export const getAllHospitalSubscribers = () => async dispatch => {
       token: token,
     });
 
-    // await dispatch(subscriberListAction(jsonData.result));
-    console.log(jsonData.result.rows);
+    await dispatch(subscriberListAction(jsonData.result.rows));
     return true;
   } catch (err) {
     console.log('error');

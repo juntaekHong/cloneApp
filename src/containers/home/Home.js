@@ -14,6 +14,7 @@ const DATA = [
     // 일단 임시
     title: '즐겨찾는\n병원',
     // 추가 필요
+    hospitalCategoryName: '즐겨찾기',
   },
   {
     image: require('../../../assets/image/home/hospital.png'),

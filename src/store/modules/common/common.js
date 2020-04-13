@@ -197,7 +197,6 @@ export const getHospital = hpid => async dispatch => {
     const jsonData = await api.get(`/hospital/${hpid}`);
 
     if (jsonData.success) {
-      console.log(jsonData);
       await dispatch(hospitalDetailAction(jsonData.result));
       return true;
     } else {

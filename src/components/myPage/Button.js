@@ -5,7 +5,11 @@ import React from 'react';
 import {BTN} from '../common/View';
 import {NBGBText} from '../common/Text';
 import {widthPercentageToDP, removeData} from '../../utils/util';
-import {SigninActions, ReservationActions} from '../../store/actionCreator';
+import {
+  SigninActions,
+  ReservationActions,
+  HospitalActions,
+} from '../../store/actionCreator';
 
 // 로그인 버튼
 export const LoginBtn = ({loginModal}) => {
@@ -40,7 +44,9 @@ export const LogoutBtn = props => {
         await removeData('user_name');
 
         // await setUserData(null);
+        // 진료내역 페이지 및 즐겨찾는 병원 데이터 정보 초기화.
         await ReservationActions.handleReservationListInit();
+        await HospitalActions.handlerSubscriberListInit();
         await SigninActions.handleLoginData(null);
       }}
       style={{

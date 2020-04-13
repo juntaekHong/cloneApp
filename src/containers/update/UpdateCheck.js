@@ -7,13 +7,13 @@ import {connect} from 'react-redux';
 import {widthPercentageToDP, getData, removeData} from '../../utils/util';
 import {CenterView} from '../../components/common/Extra';
 import navigators from '../../utils/navigators';
-import {CommonActions} from '../../store/actionCreator';
+import {CommonActions, HospitalActions} from '../../store/actionCreator';
 import {CustomModal} from '../../components/common/Modal';
 import {BTN} from '../../components/common/View';
 import {NBGBText, NBGText} from '../../components/common/Text';
 import {UIActivityIndicator} from 'react-native-indicators';
 
-const UpdateCheck = (props) => {
+const UpdateCheck = props => {
   // 초기 처음 사용시, 내 위치 설정
   const [location, setLocation] = useState();
   // 초기 내 위치 설정 이후 내 위치 불러오기
@@ -31,7 +31,7 @@ const UpdateCheck = (props) => {
 
       if (lat === null || long === null) {
         Geolocation.getCurrentPosition(
-          (position) => {
+          position => {
             const {latitude, longitude} = position.coords;
             setLocation({
               latitude,
@@ -39,7 +39,7 @@ const UpdateCheck = (props) => {
             });
             CommonActions.myLocation(latitude, longitude);
           },
-          (error) => {
+          error => {
             setError(error.message);
           },
           // enableHighAccuracy: true 시, 실제 디바이스에서 내 위치 설정 요청 오류남.
@@ -58,6 +58,8 @@ const UpdateCheck = (props) => {
           await CommonActions.getMyAddress(long, lat);
           await CommonActions.handleFirstScreenLoading(false);
           await props.navigation.navigate('home');
+
+          await HospitalActions.getAllHospitalSubscribers();
 
           clearInterval(timeout);
         }, 2000);
@@ -102,6 +104,7 @@ const UpdateCheck = (props) => {
               Promise.all([promise1, promise2]).then(async () => {
                 props.navigation.navigate('home');
                 await CommonActions.loadingAction(false);
+                await HospitalActions.getAllHospitalSubscribers();
               });
             }}>
             <Text>홈 화면으로 이동</Text>
@@ -112,10 +115,12 @@ const UpdateCheck = (props) => {
   );
 };
 
-export default connect((state) => ({
+export default connect(state => ({
   firstScreenLoading: state.common.firstScreenLoading,
   loading: state.common.loading,
   latitude: state.common.latitude,
   longitude: state.common.longitude,
   hospitalList: state.common.hospitalList,
+
+  // user: state.signin.user,
 }))(UpdateCheck);

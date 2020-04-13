@@ -1,5 +1,5 @@
 /* eslint-disable react/react-in-jsx-scope */
-import React from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components/native';
 import {ListView, ContentDataView, EvaluationView} from './View';
 import {PhotoImg} from './Image';
@@ -29,13 +29,15 @@ const TimeFormat = () => {
 
 export const List = props => {
   const _renderItem = ({item, index}) => {
+    const items = item.hospital === undefined ? item : item.hospital;
+
     return (
       <ListView
         index={index}
         padding={10}
         onPress={async () => {
           await CommonActions.loadingAction(true);
-          await props.navigation.navigate('HospitalDetail', {object: item});
+          await props.navigation.navigate('HospitalDetail', {object: items});
           await CommonActions.loadingAction(false);
         }}>
         <PhotoImg
@@ -46,15 +48,15 @@ export const List = props => {
         />
         <ContentDataView>
           <NBGBText fontSize={14} numberOfLines={1}>
-            {item.dutyName}
+            {items.dutyName}
           </NBGBText>
           <EvaluationView marginTop={3} marginBottom={3}>
-            <NBGBText fontSize={12}>전화번호: {item.dutyTel}</NBGBText>
+            <NBGBText fontSize={12}>전화번호: {items.dutyTel}</NBGBText>
             <NBGLText>
               {dayToString(new Date().getDay())}:{' '}
-              {item[TimeFormat()].indexOf('null') !== -1
+              {items[TimeFormat()].indexOf('null') !== -1
                 ? '휴진'
-                : item[TimeFormat()]}
+                : items[TimeFormat()]}
             </NBGLText>
           </EvaluationView>
           <NBGText
@@ -62,10 +64,14 @@ export const List = props => {
             fontSize={13}
             color={'gray'}
             style={{width: widthPercentageToDP(250)}}>
-            장소: {item.dutyAddr}
+            장소: {items.dutyAddr}
           </NBGText>
           <NBGText fontSize={13} color={'gray'}>
-            거리: {item.distance.toFixed(2)} km
+            거리:{' '}
+            {items.distance !== undefined
+              ? items.distance.toFixed(2)
+              : '정보 없음'}{' '}
+            km
           </NBGText>
         </ContentDataView>
       </ListView>

@@ -14,7 +14,11 @@ import {CustomModal} from '../../components/common/Modal';
 import colors from '../../configs/colors';
 import {TextInput, Keyboard} from 'react-native';
 import {SelectImg, UnSelectImg} from '../../components/home/Image';
-import {SigninActions, ReservationActions} from '../../store/actionCreator';
+import {
+  SigninActions,
+  ReservationActions,
+  HospitalActions,
+} from '../../store/actionCreator';
 import {LoginView} from '../../components/myPage/View';
 import {LoginBtn} from '../../components/myPage/Button';
 import Toast from 'react-native-root-toast';
@@ -193,6 +197,8 @@ const MyPage = props => {
                     // 로그인하면, 해당 아이디의 진료내역 데이터들 가져오기.
                     await ReservationActions.getReservation();
                     await ReservationActions.getReservationLog();
+
+                    await HospitalActions.getAllHospitalSubscribers();
                   }
                 }}>
                 <NBGBText fontSize={15} color={'white'}>

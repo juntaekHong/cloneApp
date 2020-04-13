@@ -7,7 +7,11 @@ import {List} from '../../components/common/DataList';
 import {HospitalActions} from '../../store/actionCreator';
 
 const HospitalList = props => {
-  const [data, setData] = useState(props.hospitalList);
+  const [data, setData] = useState(
+    props.navigation.state.params.hospitalCategoryName === '즐겨찾기'
+      ? props.subscriber_list
+      : props.hospitalList,
+  );
   const [name, setName] = useState(
     props.navigation.state.params.hospitalCategoryName,
   );
@@ -36,7 +40,10 @@ const HospitalList = props => {
       return searchData;
     };
 
-    if (name === undefined) {
+    if (name === undefined || name === '즐겨찾기') {
+      if (name === '즐겨찾기') {
+        HospitalActions.getAllHospitalSubscribers();
+      }
     } else {
       setData(Matching(name));
     }
