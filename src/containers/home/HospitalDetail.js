@@ -131,10 +131,12 @@ const HospitalDetail = props => {
 
     await focusing.current.scrollTo({
       x: 0,
-      y: widthPercentageToDP(260),
+      y: widthPercentageToDP(293),
       animated: true,
     });
   }, []);
+
+  console.log(detailData);
 
   return (
     <TopContainerView>

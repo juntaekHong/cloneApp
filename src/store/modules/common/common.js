@@ -191,23 +191,6 @@ export const getHospitalList = (Long, Lat) => async dispatch => {
   }
 };
 
-// 병원 즐겨찾기 추가 및 삭제
-export const updateHospitalSubscriber = hpid => async dispatch => {
-  try {
-    const token = await getData('token');
-
-    const jsonData = await api.put(`/hospitalSubscriber/hpid/${hpid}`, {
-      token: token,
-    });
-
-    console.log(jsonData);
-    return true;
-  } catch (err) {
-    console.log('error');
-    return false;
-  }
-};
-
 // 병원 상세페이지 정보 요청 - 공공 API
 // export const getHospitalDetail = hpid => async dispatch => {
 //   try {

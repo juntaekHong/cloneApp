@@ -19,15 +19,15 @@ import {
 import Carousel from 'react-native-looped-carousel';
 import FastImage from 'react-native-fast-image';
 import Communications from 'react-native-communications';
-import {CommonActions} from '../../store/actionCreator';
+import {HospitalActions} from '../../store/actionCreator';
 
 const LocationView = styled(StandardView)`
   flex-direction: row;
   align-items: center;
-  justify-content: ${(props) =>
+  justify-content: ${props =>
     props.justifyContent ? props.justifyContent : 'flex-start'};
   width: 100%;
-  height: ${(props) =>
+  height: ${props =>
     props.height ? widthPercentageToDP(props.height) : widthPercentageToDP(60)};
 `;
 
@@ -250,7 +250,7 @@ export const Card = ({
         color={'black'}>
         위치: {dutyAddr}
       </NBGText>
-      {/* <NBGText
+      <NBGText
         fontSize={13}
         numberOfLines={2}
         style={{
@@ -259,17 +259,17 @@ export const Card = ({
         }}
         color={'black'}>
         인근 위치: {dutyMapimg !== null ? dutyMapimg : '정보없음'}
-      </NBGText> */}
+      </NBGText>
       <BTNView>
         <CustomBTN
           onPress={async () => {
             // 실제 서버 연동해야 함.
             // myScrap ? setMyScrap(false) : setMyScrap(true);
-            await CommonActions.updateHospitalSubscriber(hospitalId);
+            await HospitalActions.updateHospitalSubscriber(hospitalId);
           }}>
           {myScrap ? (
             <StarImg
-              style={{marginRight: widthㅇPercentageToDP(5)}}
+              style={{marginRight: widthPercentageToDP(5)}}
               width={21}
               height={21}
               source={require('../../../assets/image/home/star-0.png')}
