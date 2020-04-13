@@ -5,7 +5,7 @@ import React from 'react';
 import {BTN} from '../common/View';
 import {NBGBText} from '../common/Text';
 import {widthPercentageToDP, removeData} from '../../utils/util';
-import {SigninActions} from '../../store/actionCreator';
+import {SigninActions, ReservationActions} from '../../store/actionCreator';
 
 // 로그인 버튼
 export const LoginBtn = ({loginModal}) => {
@@ -40,6 +40,7 @@ export const LogoutBtn = props => {
         await removeData('user_name');
 
         // await setUserData(null);
+        await ReservationActions.handleReservationListInit();
         await SigninActions.handleLoginData(null);
       }}
       style={{

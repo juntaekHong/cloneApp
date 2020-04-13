@@ -19,7 +19,7 @@ export default createMaterialTopTabNavigator(
     initialRouteName: 'ReservationHistory', // 처음 보여질 탭
     tabBarPosition: 'top', // 탭 위치
     swipeEnabled: true, // Swipe 기능
-    lazy: true, // Default 값 true, 활성화 된 탭만 렌더링 할 것인지 여부.
+    lazy: false, // Default 값 true, 활성화 된 탭만 렌더링 할 것인지 여부.
     tabBarOptions: {
       showIcon: false,
       activeTintColor: 'rgb(96, 169, 243)',

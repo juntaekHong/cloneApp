@@ -3,11 +3,13 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState, useEffect} from 'react';
 import styled from 'styled-components/native';
-import {widthPercentageToDP} from '../../utils/util';
+import {widthPercentageToDP, dayToString} from '../../utils/util';
 import {StandardView, BTN} from '../common/View';
 import {NBGText, NBGLText, NBGBText} from '../common/Text';
 import {HpImg, RefreshImg} from './Image';
 import {DivisionView, ReservationItem} from '../reservation/Modal';
+import {ReservationBottomView} from '../reservation/View';
+import {CancelBtn} from './Button';
 
 // "rows": [
 //     {
@@ -52,69 +54,120 @@ const Reservation = styled(StandardView)`
   background-color: white;
 `;
 
+const HeaderView = styled(Reservation)`
+  flex-direction: row;
+  justify-content: ${({justifyContent}) =>
+    justifyContent ? justifyContent : 'flex-start'};
+`;
+
+const TitleView = styled(HeaderView)`
+  align-items: ${({alignItems}) => (alignItems ? alignItems : 'flex-start')};
+`;
+
+const FooterView = styled(TitleView)``;
+
 // 접수중(예약내역)
-export const ReservationHistoryItem = ({data}) => {
+export const ReservationHistoryItem = ({item}) => {
+  const ReservationState = status => {
+    let currentStatus;
+
+    switch (true) {
+      case status === 'PENDING':
+        currentStatus = '접수중';
+        break;
+      case status === 'ACCEPTED':
+        currentStatus = '접수 완료';
+        break;
+      case status === 'REFUSED':
+        currentStatus = '접수 거절';
+        break;
+      case status === 'TIMEOUT':
+        currentStatus = '접수 만료';
+        break;
+    }
+
+    return currentStatus;
+  };
+
   return (
     <Reservation margin={10} padding={30}>
-      {data[0].status === 'PENDING' ? (
-        <StandardView>
-          <StandardView
-            style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <StandardView style={{flexDirection: 'row', alignItems: 'center'}}>
-              <HpImg width={24} height={24} />
-              <NBGBText marginLeft={10}>
-                {data[0].user.userName}님 접수현황
-              </NBGBText>
-            </StandardView>
-            <BTN>
-              <RefreshImg width={24} height={24} />
-            </BTN>
-          </StandardView>
-          <StandardView>
-            <NBGBText marginTop={20} align={'center'} fontSize={30}>
-              접수중
+      {item.status === 'PENDING' ? (
+        <HeaderView justifyContent={'space-between'}>
+          <TitleView alignItems={'center'}>
+            <HpImg width={24} height={24} />
+            <NBGBText fontSize={15} marginLeft={10}>
+              {item.user.userName}님 접수현황
             </NBGBText>
-          </StandardView>
+          </TitleView>
+          <BTN>
+            <RefreshImg width={24} height={24} />
+          </BTN>
+        </HeaderView>
+      ) : (
+        <HeaderView justifyContent={'center'}>
+          <TitleView alignItems={'center'}>
+            <NBGBText fontSize={18}>{item.user.userName}님 진료내역</NBGBText>
+          </TitleView>
+        </HeaderView>
+      )}
+      <StandardView>
+        <NBGBText marginTop={20} align={'center'} fontSize={30}>
+          {ReservationState(item.status)}
+        </NBGBText>
+      </StandardView>
+      <DivisionView marginBottom={-5} />
+      <ReservationItem
+        align={'left'}
+        fontSize={13}
+        itemTitle={'접수일'}
+        reservationData={
+          item.reservationDate +
+          ' (' +
+          dayToString(new Date(item.reservationDate).getDay()) +
+          ') / ' +
+          item.reservationTime
+        }
+      />
+      <ReservationItem
+        align={'left'}
+        fontSize={13}
+        itemTitle={'병원명'}
+        reservationData={item.hospital.dutyName}
+      />
+      <ReservationItem
+        align={'left'}
+        fontSize={13}
+        itemTitle={'진료실'}
+        reservationData={item.hospitalOffice.officeName}
+      />
+      {item.status === 'PENDING' ? (
+        <StandardView>
           <DivisionView />
-          <ReservationItem
-            itemTitle={'접수일'}
-            reservationData={
-              data[0].reservationDate + ' / ' + data[0].reservationTime
+          <FooterView justifyContent={'space-between'} alignItems={'center'}>
+            <NBGText fontSize={13} color={'gray'}>
+              병원 내원 전
+            </NBGText>
+            <CancelBtn title={'접수 취소'} onPress={() => {}} />
+          </FooterView>
+          <DivisionView />
+          <NBGLText fontSize={12}>
+            {
+              '접수 신청이 증가하여 접수 가능 여부를 확인 중입니다.\n접수 상태 변경을 확인하시려면, 새로고침 버튼을 클릭하여 주세요!'
             }
-          />
-          <ReservationItem
-            itemTitle={'병원명'}
-            reservationData={data[0].hospital.dutyName}
-          />
-          <ReservationItem
-            itemTitle={'진료실'}
-            reservationData={data[0].hospitalOffice.officeName}
-          />
-          <DivisionView />
-          <StandardView
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-            }}>
-            <NBGText>병원 내원 전</NBGText>
-            <BTN
-              style={{
-                padding: widthPercentageToDP(10),
-                borderWidth: widthPercentageToDP(1),
-                borderColor: '#dbdbdb',
-                borderRadius: widthPercentageToDP(10),
-              }}>
-              <NBGText>접수 취소</NBGText>
-            </BTN>
-          </StandardView>
-          <DivisionView />
-          <NBGLText>
-            접수 신청이 증가하여 접수 가능 여부를 확인 중입니다. 접수 상태
-            변경을 확인하시려면, 새로고침 버튼을 클릭하여 주세요!
           </NBGLText>
         </StandardView>
-      ) : null}
+      ) : (
+        <ReservationBottomView
+          positionValue={false}
+          flexDirection={'row'}
+          marginTop={30}
+          backTitle={'전화'}
+          confirmTitle={'재접수 하기'}
+          backHandler={() => {}}
+          reservationDisabled={false}
+          reservationHandler={() => {}}
+        />
+      )}
     </Reservation>
   );
 };

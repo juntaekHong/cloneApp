@@ -7,7 +7,7 @@ import {widthPercentageToDP} from '../../utils/util';
 import {FlatList} from 'react-native';
 import {OfficesBtn, ObjectsBtn} from './Button';
 
-const Objects = styled(FlatList)`
+export const Objects = styled(FlatList)`
   flex-grow: 1;
   width: 100%;
   margin-left: ${({marginLeft}) =>

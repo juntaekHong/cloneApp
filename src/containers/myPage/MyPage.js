@@ -14,7 +14,7 @@ import {CustomModal} from '../../components/common/Modal';
 import colors from '../../configs/colors';
 import {TextInput, Keyboard} from 'react-native';
 import {SelectImg, UnSelectImg} from '../../components/home/Image';
-import {SigninActions} from '../../store/actionCreator';
+import {SigninActions, ReservationActions} from '../../store/actionCreator';
 import {LoginView} from '../../components/myPage/View';
 import {LoginBtn} from '../../components/myPage/Button';
 import Toast from 'react-native-root-toast';
@@ -184,11 +184,16 @@ const MyPage = props => {
                   await setPass('');
 
                   const userEmail = await getData('email');
-                  userEmail === null
-                    ? showMessage('잘못된 이메일 또는 비밀번호입니다.', {
-                        position: Toast.positions.CENTER,
-                      })
-                    : null;
+
+                  if (userEmail === null) {
+                    showMessage('잘못된 이메일 또는 비밀번호입니다.', {
+                      position: Toast.positions.CENTER,
+                    });
+                  } else {
+                    // 로그인하면, 해당 아이디의 진료내역 데이터들 가져오기.
+                    await ReservationActions.getReservation();
+                    await ReservationActions.getReservationLog();
+                  }
                 }}>
                 <NBGBText fontSize={15} color={'white'}>
                   로그인

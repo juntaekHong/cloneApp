@@ -1,17 +1,14 @@
 import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
-import {View, Text} from 'react-native';
 import {TopContainerView} from '../../components/common/View';
 import {ReservationActions} from '../../store/actionCreator';
 import {NBGText, NBGBText} from '../../components/common/Text';
-import {ReservationHistoryItem} from '../../components/medicalHistory/View';
+import {HistoryList} from '../../components/medicalHistory/FlatList';
 
 const ReservationHistory = props => {
   useEffect(() => {
     props.user !== null ? ReservationActions.getReservation() : null;
   }, []);
-
-  console.log(props.reservation_list);
 
   return (
     <TopContainerView
@@ -28,7 +25,7 @@ const ReservationHistory = props => {
         </NBGBText>
       ) : props.reservation_list.length !== 0 ? (
         // 로그인하면 보이는 뷰
-        <ReservationHistoryItem data={props.reservation_list} />
+        <HistoryList data={props.reservation_list} />
       ) : (
         // 예약 내역없을 때, 보이는 뷰(로그인 한 상태)
         <NBGBText align={'center'} color={'gray'} fontSize={15}>

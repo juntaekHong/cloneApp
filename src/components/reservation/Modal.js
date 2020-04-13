@@ -13,8 +13,10 @@ import {ReservationBottomView} from './View';
 // import Dialog, {SlideAnimation} from 'react-native-popup-dialog';
 
 export const DivisionView = styled.View`
-  margin-top: ${widthPercentageToDP(15)};
-  margin-bottom: ${widthPercentageToDP(20)};
+  margin-top: ${({marginTop}) =>
+    marginTop ? widthPercentageToDP(marginTop) : widthPercentageToDP(15)};
+  margin-bottom: ${({marginBottom}) =>
+    marginBottom ? widthPercentageToDP(marginBottom) : widthPercentageToDP(20)};
   margin-left: ${widthPercentageToDP(20)};
   margin-right: ${widthPercentageToDP(20)};
   height: ${widthPercentageToDP(1)};
@@ -48,21 +50,31 @@ const ReservationView = styled(NameView)``;
 const ReservationItemView = styled(StandardView)`
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
+  justify-content: ${({justiyContent}) =>
+    justiyContent ? justiyContent : 'space-between'};
   margin-top: ${widthPercentageToDP(10)};
 `;
 
-export const ReservationItem = ({itemTitle, reservationData}) => {
+export const ReservationItem = ({
+  fontSize,
+  justiyContent,
+  align,
+  itemTitle,
+  reservationData,
+}) => {
   return (
-    <ReservationItemView>
-      <NBGText marginTop={10} fontSize={15} color={'gray'}>
+    <ReservationItemView justiyContent={justiyContent}>
+      <NBGText
+        marginTop={10}
+        fontSize={fontSize ? fontSize : 15}
+        color={'gray'}>
         {itemTitle}
       </NBGText>
       <NBGBText
         marginTop={10}
-        fontSize={15}
+        fontSize={fontSize ? fontSize : 15}
         numberOfLines={2}
-        align={'right'}
+        align={align ? align : 'right'}
         style={{width: widthPercentageToDP(250)}}>
         {reservationData}
       </NBGBText>
