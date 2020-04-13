@@ -13,6 +13,10 @@ export const TopContainerView = styled.SafeAreaView`
     props.marginHorizontal ? widthPercentageToDP(props.marginHorizontal) : 0};
   margin-bottom: ${props =>
     props.marginBottom ? widthPercentageToDP(props.marginBottom) : 0};
+  justify-content: ${({justifyContent}) =>
+    justifyContent ? justifyContent : 'flex-start'};
+  background-color: ${({backgroundColor}) =>
+    backgroundColor ? backgroundColor : 'white'};
 `;
 
 export const StandardView = styled.View``;

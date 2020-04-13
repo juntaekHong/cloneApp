@@ -48,10 +48,31 @@ export const reserveHospital = reservationData => async dispatch => {
     );
 
     if (jsonData.success) {
-      await dispatch(reservationListAction(jsonData.result));
       return true;
     } else {
       // 중복 예약
+      return false;
+    }
+  } catch (err) {
+    console.log('error');
+    return false;
+  }
+};
+
+// 현재 진행중인 예약 조회
+export const getReservation = () => async dispatch => {
+  try {
+    const token = await getData('token');
+
+    const jsonData = await api.get(`/reservation`, {
+      token: token,
+    });
+
+    if (jsonData.success) {
+      await dispatch(reservationListAction(jsonData.result.rows));
+      return true;
+    } else {
+      // 불러오기 실패.
       return false;
     }
   } catch (err) {

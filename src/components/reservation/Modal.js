@@ -12,7 +12,7 @@ import {SelectImg} from '../home/Image';
 import {ReservationBottomView} from './View';
 // import Dialog, {SlideAnimation} from 'react-native-popup-dialog';
 
-const DivisionView = styled.View`
+export const DivisionView = styled.View`
   margin-top: ${widthPercentageToDP(15)};
   margin-bottom: ${widthPercentageToDP(20)};
   margin-left: ${widthPercentageToDP(20)};
