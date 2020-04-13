@@ -4,6 +4,7 @@ import {SafeAreaView} from 'react-native';
 import {connect} from 'react-redux';
 import {CustomTopView} from '../../components/home/View';
 import {List} from '../../components/common/DataList';
+import {HospitalActions} from '../../store/actionCreator';
 
 const HospitalList = props => {
   const [data, setData] = useState(props.hospitalList);
@@ -56,4 +57,6 @@ const HospitalList = props => {
 export default connect(state => ({
   address: state.common.address,
   hospitalList: state.common.hospitalList,
+
+  subscriber_list: state.hospital.subscriber_list,
 }))(HospitalList);

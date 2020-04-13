@@ -15,9 +15,13 @@ import {
   removeAllData,
 } from '../../../utils/util';
 
+const SUBSCRIBER_LIST = 'hospital/SUBSCRIBER_LIST';
+
+const subscriberListAction = createAction(SUBSCRIBER_LIST);
+
 const initState = {
   // 내가 즐겨찾는 병원(즐겨찾기 리스트)
-  mySubscriberList: [],
+  subscriber_list: [],
 };
 
 // 병원 즐겨찾기 추가 및 삭제
@@ -37,9 +41,30 @@ export const updateHospitalSubscriber = hpid => async dispatch => {
   }
 };
 
+// 병원 즐겨찾기 리스트 조회
+export const getAllHospitalSubscribers = () => async dispatch => {
+  try {
+    const token = await getData('token');
+
+    const jsonData = await api.get(`/allHospitalSubscriber`, {
+      token: token,
+    });
+
+    // await dispatch(subscriberListAction(jsonData.result));
+    console.log(jsonData.result.rows);
+    return true;
+  } catch (err) {
+    console.log('error');
+    return false;
+  }
+};
+
 export default handleActions(
   {
-    //   [COMMON_INIT]: (state, {payload}) => produce(state, draft => {}),
+    [SUBSCRIBER_LIST]: (state, {payload}) =>
+      produce(state, draft => {
+        draft.subscriber_list = payload;
+      }),
   },
   initState,
 );

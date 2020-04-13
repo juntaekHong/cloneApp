@@ -136,8 +136,6 @@ const HospitalDetail = props => {
     });
   }, []);
 
-  console.log(detailData);
-
   return (
     <TopContainerView>
       <CustomModal

@@ -5,9 +5,9 @@ import React, {useState, useEffect} from 'react';
 import styled from 'styled-components/native';
 import {widthPercentageToDP} from '../../utils/util';
 import {StandardView, BTN} from '../common/View';
-import {NBGLText, NBGBText} from '../common/Text';
+import {NBGText, NBGLText, NBGBText} from '../common/Text';
 import {HpImg, RefreshImg} from './Image';
-import {DivisionView} from '../reservation/Modal';
+import {DivisionView, ReservationItem} from '../reservation/Modal';
 
 // "rows": [
 //     {
@@ -53,7 +53,7 @@ const Reservation = styled(StandardView)`
 `;
 
 // 접수중(예약내역)
-export const ReservationItem = ({data}) => {
+export const ReservationHistoryItem = ({data}) => {
   return (
     <Reservation margin={10} padding={30}>
       {data[0].status === 'PENDING' ? (
@@ -76,6 +76,43 @@ export const ReservationItem = ({data}) => {
             </NBGBText>
           </StandardView>
           <DivisionView />
+          <ReservationItem
+            itemTitle={'접수일'}
+            reservationData={
+              data[0].reservationDate + ' / ' + data[0].reservationTime
+            }
+          />
+          <ReservationItem
+            itemTitle={'병원명'}
+            reservationData={data[0].hospital.dutyName}
+          />
+          <ReservationItem
+            itemTitle={'진료실'}
+            reservationData={data[0].hospitalOffice.officeName}
+          />
+          <DivisionView />
+          <StandardView
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}>
+            <NBGText>병원 내원 전</NBGText>
+            <BTN
+              style={{
+                padding: widthPercentageToDP(10),
+                borderWidth: widthPercentageToDP(1),
+                borderColor: '#dbdbdb',
+                borderRadius: widthPercentageToDP(10),
+              }}>
+              <NBGText>접수 취소</NBGText>
+            </BTN>
+          </StandardView>
+          <DivisionView />
+          <NBGLText>
+            접수 신청이 증가하여 접수 가능 여부를 확인 중입니다. 접수 상태
+            변경을 확인하시려면, 새로고침 버튼을 클릭하여 주세요!
+          </NBGLText>
         </StandardView>
       ) : null}
     </Reservation>

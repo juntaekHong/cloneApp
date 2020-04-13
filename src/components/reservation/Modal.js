@@ -52,7 +52,7 @@ const ReservationItemView = styled(StandardView)`
   margin-top: ${widthPercentageToDP(10)};
 `;
 
-const ReservationItem = ({itemTitle, reservationData}) => {
+export const ReservationItem = ({itemTitle, reservationData}) => {
   return (
     <ReservationItemView>
       <NBGText marginTop={10} fontSize={15} color={'gray'}>
