@@ -113,6 +113,30 @@ export const getReservationLog = () => async dispatch => {
   }
 };
 
+// 사용자 예약 취소
+export const cancelReservation = reservationIndex => async dispatch => {
+  try {
+    const token = await getData('token');
+
+    const jsonData = await api.delete(
+      `/reservation/reservationIndex/${reservationIndex}`,
+      {
+        token: token,
+      },
+    );
+
+    if (jsonData.success) {
+      return true;
+    } else {
+      // 불러오기 실패.
+      return false;
+    }
+  } catch (err) {
+    console.log('error');
+    return false;
+  }
+};
+
 export default handleActions(
   {
     [RESERVATION_LIST]: (state, {payload}) =>

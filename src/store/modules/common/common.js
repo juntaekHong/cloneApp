@@ -191,6 +191,25 @@ export const getHospitalList = (Long, Lat) => async dispatch => {
   }
 };
 
+// 병원 상세 정보 불러오기
+export const getHospital = hpid => async dispatch => {
+  try {
+    const jsonData = await api.get(`/hospital/${hpid}`);
+
+    if (jsonData.success) {
+      console.log(jsonData);
+      await dispatch(hospitalDetailAction(jsonData.result));
+      return true;
+    } else {
+      // 불러오기 실패.
+      return false;
+    }
+  } catch (err) {
+    console.log('error');
+    return false;
+  }
+};
+
 // 병원 상세페이지 정보 요청 - 공공 API
 // export const getHospitalDetail = hpid => async dispatch => {
 //   try {

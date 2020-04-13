@@ -10,6 +10,7 @@ import {HpImg, RefreshImg} from './Image';
 import {DivisionView, ReservationItem} from '../reservation/Modal';
 import {ReservationBottomView} from '../reservation/View';
 import {CancelBtn} from './Button';
+import {ReservationActions, CommonActions} from '../../store/actionCreator';
 
 // "rows": [
 //     {
@@ -147,7 +148,17 @@ export const ReservationHistoryItem = ({item}) => {
             <NBGText fontSize={13} color={'gray'}>
               병원 내원 전
             </NBGText>
-            <CancelBtn title={'접수 취소'} onPress={() => {}} />
+            <CancelBtn
+              title={'접수 취소'}
+              onPress={async () => {
+                await ReservationActions.cancelReservation(
+                  item.reservationIndex,
+                );
+                await ReservationActions.getReservation();
+                // 현재 의미없음. 예약 취소 시, 아예 삭제되어 진료내역에 데이터가 들어가지 않기 때문에
+                await ReservationActions.getReservationLog();
+              }}
+            />
           </FooterView>
           <DivisionView />
           <NBGLText fontSize={12}>
@@ -163,7 +174,9 @@ export const ReservationHistoryItem = ({item}) => {
           marginTop={30}
           backTitle={'전화'}
           confirmTitle={'재접수 하기'}
-          backHandler={() => {}}
+          backHandler={async () => {
+            await CommonActions.getHospital(item.hpid);
+          }}
           reservationDisabled={false}
           reservationHandler={() => {}}
         />

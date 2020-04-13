@@ -1,7 +1,7 @@
-import React, {useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import {connect} from 'react-redux';
 import {TopContainerView} from '../../components/common/View';
-import {ReservationActions} from '../../store/actionCreator';
+import {ReservationActions, CommonActions} from '../../store/actionCreator';
 import {NBGText, NBGBText} from '../../components/common/Text';
 import {HistoryList} from '../../components/medicalHistory/FlatList';
 
@@ -27,7 +27,7 @@ const MedicalHistory = props => {
         // 로그인하면 보이는 뷰
         <HistoryList data={props.history_list} />
       ) : (
-        // 예약 내역없을 때, 보이는 뷰(로그인 한 상태)
+        // 진료 내역없을 때, 보이는 뷰(로그인 한 상태)
         <NBGBText align={'center'} color={'gray'} fontSize={15}>
           진료한 내역이 없습니다.
         </NBGBText>
