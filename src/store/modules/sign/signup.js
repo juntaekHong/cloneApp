@@ -10,7 +10,7 @@ const initState = {};
 // 회원가입
 export const signUp = userData => async dispatch => {
   try {
-    const jsonData = await api.post(`/signUp`, {
+    const jsonData = await api.post(`/user/signUp`, {
       body: userData,
     });
 

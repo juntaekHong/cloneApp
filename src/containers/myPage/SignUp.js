@@ -562,8 +562,6 @@ const SignUp = props => {
                     emailValid.length === 0
                   ) {
                     let userData = {
-                      // 롤은 일단 디폴트로 User 지정.
-                      role: 'User',
                       email: email,
                       userPw: pass,
                       userName: name,

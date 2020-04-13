@@ -32,7 +32,7 @@ export const signIn = (email, userPw) => async dispatch => {
       userPw,
     };
 
-    const jsonData = await api.post(`/signIn`, {
+    const jsonData = await api.post(`/user/signIn`, {
       body: userData,
     });
 
