@@ -35,7 +35,10 @@ const HospitalList = props => {
       return searchData;
     };
 
-    setData(Matching(name));
+    if (name === undefined) {
+    } else {
+      setData(Matching(name));
+    }
   }, []);
 
   return (

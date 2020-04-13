@@ -284,6 +284,10 @@ const HospitalDetail = props => {
           dutyMapimg={detailData.dutyMapimg}
           hospitalId={detailData.hpid}
           isScrap={false}
+          loginInfo={props.user}
+          autoLoginModal={() => {
+            setReservationModal(true);
+          }}
           phoneNumber={detailData.dutyTel}
           naviModal={async () => {
             await setRoadMapModal(true);

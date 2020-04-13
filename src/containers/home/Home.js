@@ -10,6 +10,12 @@ import {DataList} from '../../components/home/DataList';
 // 병원별 이미지 및 타이틀
 const DATA = [
   {
+    image: require('../../../assets/image/home/star.png'),
+    // 일단 임시
+    title: '즐겨찾는\n병원',
+    // 추가 필요
+  },
+  {
     image: require('../../../assets/image/home/hospital.png'),
     // 일단 임시
     title: '모든 병원',

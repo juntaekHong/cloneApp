@@ -6,7 +6,7 @@ import styled from 'styled-components/native';
 import {StandardView, BTN} from '../common/View';
 import {BackImg, StarImg, MapImg} from '../common/Image';
 import {NBGBText, NBGText, NBGLText} from '../common/Text';
-import {widthPercentageToDP} from '../../utils/util';
+import {widthPercentageToDP, getData} from '../../utils/util';
 import colors from '../../configs/colors';
 import {
   SelectImg,
@@ -186,6 +186,8 @@ export const Card = ({
   phoneNumber,
   hospitalId,
   isScrap,
+  loginInfo,
+  autoLoginModal,
   naviModal,
   taxiModal,
 }) => {
@@ -223,7 +225,7 @@ export const Card = ({
   return (
     <CardView>
       <NBGBText
-        fontSize={20}
+        fontSize={18}
         numberOfLines={2}
         align={'center'}
         style={{
@@ -265,7 +267,10 @@ export const Card = ({
           onPress={async () => {
             // 실제 서버 연동해야 함.
             // myScrap ? setMyScrap(false) : setMyScrap(true);
-            await HospitalActions.updateHospitalSubscriber(hospitalId);
+
+            loginInfo === null
+              ? await autoLoginModal()
+              : await HospitalActions.updateHospitalSubscriber(hospitalId);
           }}>
           {myScrap ? (
             <StarImg
