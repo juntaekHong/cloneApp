@@ -17,13 +17,13 @@ const ReservationHistory = styled(FlatList)`
 `;
 
 // 진료내역 페이지 - 리스트 뷰
-export const HistoryList = ({data}) => {
+export const HistoryList = ({data, navigation}) => {
   return (
     <ReservationHistory
       keyExtractor={(item, index) => index.toString()}
       data={data}
       renderItem={({item}) => {
-        return <ReservationHistoryItem item={item} />;
+        return <ReservationHistoryItem item={item} navigation={navigation} />;
       }}
     />
   );

@@ -6,6 +6,8 @@ import KakaoMap from '../../containers/home/KakaoMap';
 import MyLocationSetting from '../../containers/home/MyLocationSetting';
 import LocationSearch from '../../containers/home/LocationSearch';
 import MyPage_noTab from '../myPage/MyPage_noTab';
+import Reservation from '../../containers/hospitalDetail/Reservation';
+import Calendars from '../../containers/hospitalDetail/Calendars';
 
 const RootStack = createStackNavigator(
   {
@@ -16,6 +18,8 @@ const RootStack = createStackNavigator(
     MyLocationSetting: {screen: MyLocationSetting},
     LocationSearch: {screen: LocationSearch},
     MyPage_noTab: {screen: MyPage_noTab},
+    Reservation: {screen: Reservation},
+    Calendars: {screen: Calendars},
   },
   {
     initialRouteName: 'main',

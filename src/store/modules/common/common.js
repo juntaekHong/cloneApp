@@ -197,8 +197,7 @@ export const getHospital = hpid => async dispatch => {
     const jsonData = await api.get(`/hospital/${hpid}`);
 
     if (jsonData.success) {
-      await dispatch(hospitalDetailAction(jsonData.result));
-      return true;
+      return jsonData.result;
     } else {
       // 불러오기 실패.
       return false;

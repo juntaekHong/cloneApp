@@ -10,6 +10,7 @@ import {HpImg, RefreshImg} from './Image';
 import {DivisionView, ReservationItem} from '../reservation/Modal';
 import {ReservationBottomView} from '../reservation/View';
 import {CancelBtn} from './Button';
+import Communications from 'react-native-communications';
 import {ReservationActions, CommonActions} from '../../store/actionCreator';
 
 // "rows": [
@@ -68,7 +69,7 @@ const TitleView = styled(HeaderView)`
 const FooterView = styled(TitleView)``;
 
 // 접수중(예약내역)
-export const ReservationHistoryItem = ({item}) => {
+export const ReservationHistoryItem = ({item, navigation}) => {
   const ReservationState = status => {
     let currentStatus;
 
@@ -173,12 +174,9 @@ export const ReservationHistoryItem = ({item}) => {
       ) : (
         <StandardView>
           <DivisionView />
-          <FooterView justifyContent={'space-between'} alignItems={'center'}>
-            <NBGText fontSize={13} color={'gray'}>
-              진료내역
-            </NBGText>
+          <FooterView justifyContent={'flex-end'} alignItems={'center'}>
             <CancelBtn
-              title={'삭제'}
+              title={'진료내역 삭제'}
               onPress={async () => {
                 await ReservationActions.deleteReservation(
                   item.reservationIndex,
@@ -196,10 +194,31 @@ export const ReservationHistoryItem = ({item}) => {
             backTitle={'전화'}
             confirmTitle={'재접수 하기'}
             backHandler={async () => {
-              await CommonActions.getHospital(item.hpid);
+              await Communications.phonecall(
+                item.hospital.dutyTel.replace(/-/gi, ''),
+                false,
+              );
             }}
             reservationDisabled={false}
-            reservationHandler={() => {}}
+            reservationHandler={async () => {
+              const detailData = await CommonActions.getHospital(item.hpid);
+
+              console.log(detailData);
+              await CommonActions.handleTimeInfo({
+                hospitalName: detailData.dutyName,
+                dutyTime1: detailData.dutyTime1,
+                dutyTime2: detailData.dutyTime2,
+                dutyTime3: detailData.dutyTime3,
+                dutyTime4: detailData.dutyTime4,
+                dutyTime5: detailData.dutyTime5,
+                dutyTime6: detailData.dutyTime6,
+                dutyTime7: detailData.dutyTime7,
+                dutyTime8: detailData.dutyTime8,
+                office: detailData.office,
+              });
+
+              navigation.navigate('Reservation');
+            }}
           />
         </StandardView>
       )}
