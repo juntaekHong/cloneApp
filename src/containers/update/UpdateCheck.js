@@ -48,7 +48,7 @@ const UpdateCheck = props => {
         let timeout = setInterval(async () => {
           await CommonActions.handleFirstScreenLoading(false);
           clearInterval(timeout);
-        }, 2000);
+        }, 1500);
       } else {
         setLatitude(lat);
         setLongitude(long);
@@ -62,7 +62,7 @@ const UpdateCheck = props => {
           await HospitalActions.getAllHospitalSubscribers();
 
           clearInterval(timeout);
-        }, 2000);
+        }, 1500);
       }
     });
   }, []);
