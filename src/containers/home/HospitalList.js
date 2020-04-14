@@ -37,6 +37,8 @@ const HospitalList = props => {
         });
       });
 
+      searchData = [...new Set(searchData)];
+
       if (findData === '모두') {
         return props.hospitalList;
       } else {

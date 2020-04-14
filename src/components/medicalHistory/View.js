@@ -104,7 +104,10 @@ export const ReservationHistoryItem = ({item, navigation}) => {
               {item.user.userName}님 접수현황
             </NBGBText>
           </TitleView>
-          <BTN>
+          <BTN
+            onPress={async () => {
+              await ReservationActions.getReservation();
+            }}>
             <RefreshImg width={24} height={24} />
           </BTN>
         </HeaderView>
@@ -186,7 +189,7 @@ export const ReservationHistoryItem = ({item, navigation}) => {
               }}
             />
           </FooterView>
-          <DivisionView />
+          <DivisionView marginBottom={-15} />
           <ReservationBottomView
             positionValue={false}
             flexDirection={'row'}
