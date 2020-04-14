@@ -51,6 +51,8 @@ const HospitalList = props => {
     if (name === undefined || name === '즐겨찾기') {
       if (name === '즐겨찾기') {
         HospitalActions.getAllHospitalSubscribers();
+      } else {
+        setData([]);
       }
     } else {
       setData(Matching(name));
