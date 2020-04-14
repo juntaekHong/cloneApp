@@ -67,7 +67,7 @@ const Reservation = props => {
           title={`접수하기(${props.hospital_detail.hospitalName})`}
           backBtn={true}
           backHandler={() => {
-            props.navigation.goBack(null);
+            props.navigation.goBack();
           }}
           closeBtn={false}
           searchBtn={false}
@@ -176,6 +176,7 @@ const Reservation = props => {
                   office: medicalOffice,
                   object: medicalObject,
                   comment: comment.trim(),
+                  navigation: props.navigation,
                 });
           }}
         />

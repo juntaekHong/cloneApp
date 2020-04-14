@@ -139,7 +139,7 @@ const Calendars = props => {
                 position: Toast.positions.CENTER,
               },
             );
-            props.navigation.navigate('home');
+            props.navigation.state.params.navigation.goBack();
           } else {
             showMessage(
               '중복 예약은 불가 합니다!\n예약내역을 확인하여주시기 바랍니다!',
