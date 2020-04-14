@@ -76,6 +76,9 @@ export const ReservationHistoryItem = ({item}) => {
       case status === 'PENDING':
         currentStatus = '접수중';
         break;
+      case status === 'CANCELED':
+        currentStatus = '접수 취소';
+        break;
       case status === 'ACCEPTED':
         currentStatus = '접수 완료';
         break;
@@ -168,18 +171,37 @@ export const ReservationHistoryItem = ({item}) => {
           </NBGLText>
         </StandardView>
       ) : (
-        <ReservationBottomView
-          positionValue={false}
-          flexDirection={'row'}
-          marginTop={30}
-          backTitle={'전화'}
-          confirmTitle={'재접수 하기'}
-          backHandler={async () => {
-            await CommonActions.getHospital(item.hpid);
-          }}
-          reservationDisabled={false}
-          reservationHandler={() => {}}
-        />
+        <StandardView>
+          <DivisionView />
+          <FooterView justifyContent={'space-between'} alignItems={'center'}>
+            <NBGText fontSize={13} color={'gray'}>
+              진료내역
+            </NBGText>
+            <CancelBtn
+              title={'삭제'}
+              onPress={async () => {
+                await ReservationActions.deleteReservation(
+                  item.reservationIndex,
+                );
+                // 현재 의미없음. 예약 취소 시, 아예 삭제되어 진료내역에 데이터가 들어가지 않기 때문에
+                await ReservationActions.getReservationLog();
+              }}
+            />
+          </FooterView>
+          <DivisionView />
+          <ReservationBottomView
+            positionValue={false}
+            flexDirection={'row'}
+            marginTop={30}
+            backTitle={'전화'}
+            confirmTitle={'재접수 하기'}
+            backHandler={async () => {
+              await CommonActions.getHospital(item.hpid);
+            }}
+            reservationDisabled={false}
+            reservationHandler={() => {}}
+          />
+        </StandardView>
       )}
     </Reservation>
   );

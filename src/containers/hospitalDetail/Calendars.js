@@ -73,7 +73,7 @@ const Calendars = props => {
     setReservationData({
       ...reservationData,
       reservationDate: selectsData.date,
-      reservationTime: selectsData.time,
+      reservationTime: selectsData.time + ':00',
     });
   }, [selectsData]);
 

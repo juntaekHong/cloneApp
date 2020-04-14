@@ -66,6 +66,7 @@ const api = {
   post: rest('POST'),
   put: rest('PUT'),
   delete: rest('DELETE'),
+  patch: rest('PATCH'),
 };
 
 export default api;

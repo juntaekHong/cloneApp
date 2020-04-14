@@ -118,6 +118,30 @@ export const cancelReservation = reservationIndex => async dispatch => {
   try {
     const token = await getData('token');
 
+    const jsonData = await api.patch(
+      `/cancel/reservationIndex/${reservationIndex}`,
+      {
+        token: token,
+      },
+    );
+
+    if (jsonData.success) {
+      return true;
+    } else {
+      // 불러오기 실패.
+      return false;
+    }
+  } catch (err) {
+    console.log('error');
+    return false;
+  }
+};
+
+// 사용자 내역 삭제
+export const deleteReservation = reservationIndex => async dispatch => {
+  try {
+    const token = await getData('token');
+
     const jsonData = await api.delete(
       `/reservation/reservationIndex/${reservationIndex}`,
       {
