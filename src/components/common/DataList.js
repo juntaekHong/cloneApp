@@ -37,7 +37,8 @@ export const List = props => {
         padding={10}
         onPress={async () => {
           await CommonActions.loadingAction(true);
-          await props.navigation.navigate('HospitalDetail', {object: items});
+          let object = await CommonActions.getHospital(items.hpid);
+          await props.navigation.navigate('HospitalDetail', {object: object});
           await CommonActions.loadingAction(false);
         }}>
         <PhotoImg

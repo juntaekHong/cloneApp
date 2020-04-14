@@ -16,6 +16,12 @@ const HospitalList = props => {
     props.navigation.state.params.hospitalCategoryName,
   );
 
+  useEffect(() => {
+    if (props.navigation.state.params.hospitalCategoryName === '즐겨찾기') {
+      setData(props.subscriber_list);
+    }
+  }, [props.subscriber_list]);
+
   // 홈(메인) 페이지에서 항목에 맞는 병원 리스트만 보여지는 것으로 가정.
   useEffect(() => {
     const Matching = findData => {

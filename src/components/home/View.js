@@ -193,11 +193,10 @@ export const Card = ({
 }) => {
   const [myScrap, setMyScrap] = useState(isScrap);
   // 현재 찜(스크랩) 수에서 내 찜에 따라 수 변경
-  const [myScrapCount, setMyScrapCount] = useState(myScrap ? 1 : 0);
 
   useEffect(() => {
-    setMyScrapCount(myScrap ? 1 : 0);
-  }, [myScrap]);
+    setMyScrap(isScrap);
+  }, [isScrap]);
 
   const RatingImg = useCallback(() => {
     let ratingData = [];
@@ -265,12 +264,14 @@ export const Card = ({
       <BTNView>
         <CustomBTN
           onPress={async () => {
-            // 실제 서버 연동해야 함.
-            // myScrap ? setMyScrap(false) : setMyScrap(true);
+            myScrap ? setMyScrap(false) : setMyScrap(true);
 
-            loginInfo === null
-              ? await autoLoginModal()
-              : await HospitalActions.updateHospitalSubscriber(hospitalId);
+            if (loginInfo === null) {
+              await autoLoginModal();
+            } else {
+              await HospitalActions.updateHospitalSubscriber(hospitalId);
+              await HospitalActions.getAllHospitalSubscribers();
+            }
           }}>
           {myScrap ? (
             <StarImg
@@ -282,8 +283,6 @@ export const Card = ({
           ) : (
             <RatingEmptyImg />
           )}
-          {/* 찜 개수 임시 데이터 넣어둠(5) */}
-          <NBGLText fontSize={13}>{5 + myScrapCount}</NBGLText>
         </CustomBTN>
         <CustomBTN
           onPress={() => {

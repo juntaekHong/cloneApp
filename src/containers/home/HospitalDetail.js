@@ -26,6 +26,9 @@ const HospitalDetail = props => {
     props.navigation.state.params.object,
   );
 
+  // myScrap 데이터
+  const [myScrap, setMyScrap] = useState(false);
+
   const [NameEncoding, setNameEncoding] = useState();
   // 길찾기 클릭 시, 길찾기 모달(알림창) visible
   const [roadMapModal, setRoadMapModal] = useState(false);
@@ -40,12 +43,17 @@ const HospitalDetail = props => {
   }, [detailData]);
 
   useEffect(() => {
-    CommonActions.getDirection(
+    const promise1 = CommonActions.getDirection(
       props.latitude,
       props.longitude,
       detailData.wgs84Lat,
       detailData.wgs84Lon,
     );
+
+    // 즐겨찾기 유무
+    props.subscriber_list.map(item => {
+      item.hpid === detailData.hpid ? setMyScrap(true) : null;
+    });
 
     return async () => {
       await CommonActions.handlePageIndex(0);
@@ -281,7 +289,7 @@ const HospitalDetail = props => {
           dutyAddr={detailData.dutyAddr}
           dutyMapimg={detailData.dutyMapimg}
           hospitalId={detailData.hpid}
-          isScrap={false}
+          isScrap={myScrap}
           loginInfo={props.user}
           autoLoginModal={() => {
             setReservationModal(true);
@@ -375,4 +383,6 @@ export default connect(state => ({
   longitude: state.common.longitude,
 
   user: state.signin.user,
+
+  subscriber_list: state.hospital.subscriber_list,
 }))(HospitalDetail);
