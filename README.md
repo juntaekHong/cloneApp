@@ -88,3 +88,7 @@ Project< ios Folder 안에 pod --version 으로 pod 설치 확인
 
 ![KakaoTalk_Photo_2020-04-10-15-27-26](https://user-images.githubusercontent.com/50249009/78968575-ee562300-7b3f-11ea-87be-1535537841c5.png)
 
+![KakaoTalk_Photo_2020-04-14-13-52-57](https://user-images.githubusercontent.com/50249009/79187502-629e0880-7e57-11ea-8508-609c621a00a9.png)
+
+![KakaoTalk_Photo_2020-04-14-13-53-07](https://user-images.githubusercontent.com/50249009/79187516-67fb5300-7e57-11ea-97c3-ecaeffaea32e.png)
+
