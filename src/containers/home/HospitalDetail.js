@@ -43,21 +43,22 @@ const HospitalDetail = props => {
   }, [detailData]);
 
   useEffect(() => {
-    const promise1 = CommonActions.getDirection(
-      props.latitude,
-      props.longitude,
-      detailData.wgs84Lat,
-      detailData.wgs84Lon,
-    );
-
     // 즐겨찾기 유무
-    props.subscriber_list.map(item => {
+    const promise1 = props.subscriber_list.map(item => {
       item.hpid === detailData.hpid ? setMyScrap(true) : null;
+    });
+
+    Promise.all([promise1]).then(async () => {
+      await CommonActions.getDirection(
+        props.latitude,
+        props.longitude,
+        detailData.wgs84Lat,
+        detailData.wgs84Lon,
+      );
     });
 
     return async () => {
       await CommonActions.handlePageIndex(0);
-      await CommonActions.startEndInitAction();
       await CommonActions.handleTimeInfo(null);
     };
   }, []);
@@ -207,12 +208,6 @@ const HospitalDetail = props => {
               }}
               onPress={async () => {
                 await setRoadMapModal(false);
-                await CommonActions.getDirection(
-                  parseFloat(props.latitude),
-                  parseFloat(props.longitude),
-                  parseFloat(detailData.wgs84Lat),
-                  parseFloat(detailData.wgs84Lon),
-                );
               }}>
               <NBGText fontSize={15}>취소</NBGText>
             </BTN>

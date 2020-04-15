@@ -47,7 +47,7 @@ const hospitalListInitAction = createAction(HOSPITAL_LIST_INIT);
 const hospitalListAction = createAction(HOSPITAL_LIST);
 const hospitalDetailAction = createAction(HOSPITAL_DETAIL);
 const pageIndexAction = createAction(PAGE_INDEX);
-export const startEndInitAction = createAction(START_END_INIT);
+const startEndInitAction = createAction(START_END_INIT);
 const startEndAction = createAction(START_END);
 
 const initState = {
@@ -94,6 +94,10 @@ export const handleExtraAddressInit = () => dispatch => {
 
 export const handleTimeInfo = value => dispatch => {
   dispatch(hospitalDetailAction(value));
+};
+
+export const handleStartEndInit = () => dispatch => {
+  dispatch(startEndInitAction());
 };
 
 // export const getAppVersion = () => async dispatch => {

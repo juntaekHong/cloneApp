@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {connect} from 'react-redux';
 import {TopContainerView, StandardView} from '../../components/common/View';
-import {NBGBText} from '../../components/common/Text';
+import {NBGBText, NBGLText} from '../../components/common/Text';
 import {widthPercentageToDP} from '../../utils/util';
 import {
   LegView,
@@ -12,6 +12,7 @@ import {
   Map,
 } from '../../components/homeDetail/View';
 import {UIActivityIndicator} from 'react-native-indicators';
+import {CommonActions} from '../../store/actionCreator';
 
 const HospitalMap = ({
   start_end,
@@ -39,11 +40,10 @@ const HospitalMap = ({
   const warning =
     '* 도보 경로는 베타 서비스입니다.\n   주의 – 이 경로에는 인도 또는 보행 경로가 누락되었을 수도 있습니다';
 
-  useEffect(() => {}, [detailData]);
-
   useEffect(() => {
     // 대략적인 시간 정보
-    if (start_end !== null) {
+
+    if (start_end !== null && start_end.length !== 0) {
       // 간략 길찾기 데이터
       const Abstract = start_end[0].legs[0];
 
@@ -98,12 +98,24 @@ const HospitalMap = ({
 
       setDetailData(list);
     }
+
+    return async () => {
+      await CommonActions.handleStartEndInit();
+    };
   }, [start_end]);
 
   return (
     <TopContainerView marginTop={10} marginBottom={100}>
       {legs === null ? (
-        <UIActivityIndicator size={widthPercentageToDP(30)} color={'gray'} />
+        detailData !== undefined ? (
+          <UIActivityIndicator size={widthPercentageToDP(30)} color={'gray'} />
+        ) : (
+          <NBGLText marginTop={100} align={'center'}>
+            {
+              '* 앱 내에서 길찾기 정보를 찾을 수 없습니다.\n길찾기 버튼을 이용해주시기 바랍니다.'
+            }
+          </NBGLText>
+        )
       ) : (
         <StandardView>
           {/* 지도 뷰 */}
