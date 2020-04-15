@@ -10,6 +10,7 @@ const KakaoMap = props => {
       <TopView
         marginBottom={5}
         title={'카카오 지도'}
+        backBtn={true}
         backHandler={() => {
           props.navigation.goBack();
         }}

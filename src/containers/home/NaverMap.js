@@ -10,6 +10,7 @@ const NaverMap = props => {
       <TopView
         marginBottom={5}
         title={'네이버 지도'}
+        backBtn={true}
         backHandler={() => {
           props.navigation.goBack();
         }}
