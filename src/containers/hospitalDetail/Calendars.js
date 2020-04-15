@@ -133,7 +133,7 @@ const Calendars = props => {
 
           if (success) {
             await ReservationActions.getReservation();
-            showMessage(
+            await showMessage(
               '정상적으로 해당 병원에 예약되었습니다!\n예약상태는 진료내역 페이지에서 확인 가능합니다!',
               {
                 position: Toast.positions.CENTER,

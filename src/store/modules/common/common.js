@@ -176,6 +176,8 @@ export const resetMyLocation = () => async dispatch => {
 
 // 병원 리스트 호출
 export const getHospitalList = (Long, Lat) => async dispatch => {
+  await dispatch(hospitalListInitAction());
+
   let filter = {lon: Long, lat: Lat};
 
   filter = JSON.stringify(filter);
