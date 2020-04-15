@@ -53,16 +53,20 @@ const UpdateCheck = props => {
         setLatitude(lat);
         setLongitude(long);
 
-        let timeout = setInterval(async () => {
-          await CommonActions.getHospitalList(long, lat);
-          await CommonActions.getMyAddress(long, lat);
-          await CommonActions.handleFirstScreenLoading(false);
-          await props.navigation.navigate('home');
+        if (props.firstScreenLoading === false) {
+          await navigators.navigate('root');
+        } else {
+          let timeout = setInterval(async () => {
+            await CommonActions.getHospitalList(long, lat);
+            await CommonActions.getMyAddress(long, lat);
+            await CommonActions.handleFirstScreenLoading(false);
+            await navigators.navigate('root');
 
-          await HospitalActions.getAllHospitalSubscribers();
+            await HospitalActions.getAllHospitalSubscribers();
 
-          clearInterval(timeout);
-        }, 1500);
+            clearInterval(timeout);
+          }, 1500);
+        }
       }
     });
   }, []);
@@ -102,7 +106,7 @@ const UpdateCheck = props => {
               const promise1 = CommonActions.getHospitalList(long, lat);
               const promise2 = CommonActions.getMyAddress(long, lat);
               Promise.all([promise1, promise2]).then(async () => {
-                navigators.navigate('root');
+                await navigators.navigate('root');
                 await CommonActions.loadingAction(false);
                 await HospitalActions.getAllHospitalSubscribers();
               });
