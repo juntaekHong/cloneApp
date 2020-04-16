@@ -26,6 +26,9 @@ export const uploadImg = formData => async dispatch => {
     const token = await getData('token');
 
     const jsonData = await api.post(`/img`, {
+      header: {
+        'Content-Type': 'multipart/form-data',
+      },
       token: token,
       body: formData,
     });

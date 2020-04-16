@@ -129,7 +129,7 @@ const Home = props => {
             formData.append('img', {
               location: image.path,
               type: `${image.mime}`,
-              name: `test.${image.mime.substr(
+              name: `.${image.mime.substr(
                 image.mime.indexOf('/') + 1,
                 image.mime.length - 1,
               )}`,
@@ -184,13 +184,16 @@ const Home = props => {
         keyExtractor={(item, index) => index.toString()}
         renderItem={({item, index}) => {
           console.log(item.img);
+          console.log(typeof item.img);
           return item.img !== null ? (
             <Image
               style={{
                 width: widthPercentageToDP(50),
                 height: widthPercentageToDP(60),
               }}
-              source={{uri: item.img}}
+              source={{
+                uri: item.img,
+              }}
             />
           ) : null;
         }}
