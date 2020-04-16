@@ -9,7 +9,12 @@ import {
   StandardView,
 } from '../../components/common/View';
 import {NBGBText} from '../../components/common/Text';
-import {widthPercentageToDP, dayToString, showMessage} from '../../utils/util';
+import {
+  widthPercentageToDP,
+  dayToString,
+  showMessage,
+  todatDateFormat,
+} from '../../utils/util';
 import {FlatList} from 'react-native';
 import {
   CalendarView,
@@ -184,18 +189,31 @@ const Calendars = props => {
           data={hourData}
           keyExtractor={(item, index) => index.toString()}
           renderItem={({item, index}) => {
+            let itemDisabled;
+
+            // 당일 예약의 경우, 현재 시간보다 같거나 이전 시간 예약이 안되게 하는 코드
+            if (reservationData.reservationDate === todatDateFormat()) {
+              itemDisabled =
+                parseInt(item.split(':')[0]) <= new Date().getHours()
+                  ? true
+                  : false;
+            }
+
             return (
               <BTN
                 index={index}
-                disabled={closed}
+                disabled={closed || itemDisabled ? true : false}
                 onPress={async () => {
                   setSelectedIndex(index);
 
                   await setSelectData({...selectsData, time: item});
                 }}
                 style={{
-                  backgroundColor:
-                    selectedIndex === index ? '#54B8ED' : 'white',
+                  backgroundColor: itemDisabled
+                    ? 'gray'
+                    : selectedIndex === index
+                    ? '#54B8ED'
+                    : 'white',
                   marginTop: widthPercentageToDP(20),
                   minWidth: widthPercentageToDP(70),
                   height: widthPercentageToDP(30),
@@ -207,7 +225,13 @@ const Calendars = props => {
                 }}>
                 <NBGBText
                   align={'center'}
-                  color={selectedIndex === index ? 'white' : 'black'}>
+                  color={
+                    itemDisabled
+                      ? 'white'
+                      : selectedIndex === index
+                      ? 'white'
+                      : 'black'
+                  }>
                   {item}
                 </NBGBText>
               </BTN>

@@ -69,6 +69,14 @@ export const showMessage = (message, options) => {
   });
 };
 
+export const todatDateFormat = () => {
+  let now = new Date();
+  let y = now.getFullYear();
+  let m = now.getMonth() + 1;
+  let d = now.getDate();
+  return '' + y + (m < 10 ? '-0' : '-') + m + (d < 10 ? '-0' : '-') + d;
+};
+
 export const timeSince = date => {
   if (date === null || date === undefined || date === '') return '';
 

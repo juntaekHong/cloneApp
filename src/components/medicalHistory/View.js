@@ -206,7 +206,6 @@ export const ReservationHistoryItem = ({item, navigation}) => {
             reservationHandler={async () => {
               const detailData = await CommonActions.getHospital(item.hpid);
 
-              console.log(detailData);
               await CommonActions.handleTimeInfo({
                 hospitalName: detailData.dutyName,
                 dutyTime1: detailData.dutyTime1,
