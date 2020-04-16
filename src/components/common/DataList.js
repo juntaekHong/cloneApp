@@ -68,10 +68,7 @@ export const List = props => {
             장소: {items.dutyAddr}
           </NBGText>
           <NBGText fontSize={13} color={'gray'}>
-            거리:{' '}
-            {items.distance !== undefined
-              ? items.distance.toFixed(2)
-              : '정보 없음'}{' '}
+            거리: {item.distance.toFixed(2)}
             km
           </NBGText>
         </ContentDataView>

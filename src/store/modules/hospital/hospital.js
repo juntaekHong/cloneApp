@@ -49,11 +49,23 @@ export const getAllHospitalSubscribers = () => async dispatch => {
   try {
     const token = await getData('token');
 
-    const jsonData = await api.get(`/allHospitalSubscriber`, {
-      token: token,
-    });
+    if (token !== null) {
+      const Long = await getData('location_long');
+      const Lat = await getData('location_lat');
 
-    await dispatch(subscriberListAction(jsonData.result.rows));
+      let location = {lon: Long, lat: Lat};
+      location = JSON.stringify(location);
+
+      const jsonData = await api.get(
+        `/allHospitalSubscriber/?location=${location}`,
+        {
+          token: token,
+        },
+      );
+
+      await dispatch(subscriberListAction(jsonData.result));
+    }
+
     return true;
   } catch (err) {
     console.log('error');

@@ -45,7 +45,7 @@ const HospitalDetail = props => {
   useEffect(() => {
     // 즐겨찾기 유무
     const promise1 = props.subscriber_list.map(item => {
-      item.hpid === detailData.hpid ? setMyScrap(true) : null;
+      item.hospital.hpid === detailData.hpid ? setMyScrap(true) : null;
     });
 
     Promise.all([promise1]).then(async () => {
