@@ -107,15 +107,7 @@ const HospitalMap = ({
   return (
     <TopContainerView marginTop={10} marginBottom={100}>
       {legs === null ? (
-        detailData !== undefined ? (
-          <UIActivityIndicator size={widthPercentageToDP(30)} color={'gray'} />
-        ) : (
-          <NBGLText marginTop={100} align={'center'}>
-            {
-              '* 앱 내에서 길찾기 정보를 찾을 수 없습니다.\n길찾기 버튼을 이용해주시기 바랍니다.'
-            }
-          </NBGLText>
-        )
+        <UIActivityIndicator size={widthPercentageToDP(30)} color={'gray'} />
       ) : (
         <StandardView>
           {/* 지도 뷰 */}
