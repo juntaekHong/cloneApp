@@ -9,6 +9,7 @@ import location from './myLocationSetting/myLocationSetting';
 import signin from './sign/signin';
 import signup from './sign/signup';
 import reservation from './reservation/reservation';
+import review from './review/review';
 
 export default combineReducers({
   counter,
@@ -18,4 +19,5 @@ export default combineReducers({
   signin,
   signup,
   reservation,
+  review,
 });

@@ -7,7 +7,11 @@ import {connect} from 'react-redux';
 import {widthPercentageToDP, getData, removeData} from '../../utils/util';
 import {CenterView} from '../../components/common/Extra';
 import navigators from '../../utils/navigators';
-import {CommonActions, HospitalActions} from '../../store/actionCreator';
+import {
+  CommonActions,
+  HospitalActions,
+  ReviewActions,
+} from '../../store/actionCreator';
 import {CustomModal} from '../../components/common/Modal';
 import {BTN} from '../../components/common/View';
 import {NBGBText, NBGText} from '../../components/common/Text';
@@ -52,6 +56,8 @@ const UpdateCheck = props => {
       } else {
         setLatitude(lat);
         setLongitude(long);
+
+        await ReviewActions.getMyReview();
 
         if (props.firstScreenLoading === false) {
           await props.navigation.navigate('root');

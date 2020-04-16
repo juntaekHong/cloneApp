@@ -250,12 +250,22 @@ PODS:
     - SDWebImageWebPCoder (~> 0.2.3)
   - RNGestureHandler (1.6.1):
     - React
+  - RNImageCropPicker (0.28.0):
+    - React-Core
+    - React-RCTImage
+    - RNImageCropPicker/QBImagePickerController (= 0.28.0)
+    - RSKImageCropper
+  - RNImageCropPicker/QBImagePickerController (0.28.0):
+    - React-Core
+    - React-RCTImage
+    - RSKImageCropper
   - RNReanimated (1.7.0):
     - React
   - RNScreens (2.0.0-beta.4):
     - React
   - RNVectorIcons (6.6.0):
     - React
+  - RSKImageCropper (2.2.3)
   - SDWebImage (5.7.2):
     - SDWebImage/Core (= 5.7.2)
   - SDWebImage/Core (5.7.2)
@@ -302,6 +312,7 @@ DEPENDENCIES:
   - "RNCMaskedView (from `../node_modules/@react-native-community/masked-view`)"
   - RNFastImage (from `../node_modules/react-native-fast-image`)
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
+  - RNImageCropPicker (from `../node_modules/react-native-image-crop-picker`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
@@ -312,6 +323,7 @@ SPEC REPOS:
     - boost-for-react-native
     - libwebp
     - OneSignal
+    - RSKImageCropper
     - SDWebImage
     - SDWebImageWebPCoder
 
@@ -384,6 +396,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-fast-image"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
+  RNImageCropPicker:
+    :path: "../node_modules/react-native-image-crop-picker"
   RNReanimated:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
@@ -431,9 +445,11 @@ SPEC CHECKSUMS:
   RNCMaskedView: e5b99bc191945f157adeede68da9d424462de177
   RNFastImage: 9b0c22643872bb7494c8d87bbbb66cc4c0d9e7a2
   RNGestureHandler: 8f09cd560f8d533eb36da5a6c5a843af9f056b38
+  RNImageCropPicker: cf129d17e042ce3e96fb9ada967c28f21f977c82
   RNReanimated: 031fe8d9ea93c2bd689a40f05320ef9d96f74d7f
   RNScreens: 6053a007667bea81a69087caadf103bba04c032e
   RNVectorIcons: 0bb4def82230be1333ddaeee9fcba45f0b288ed4
+  RSKImageCropper: a446db0e8444a036b34f3c43db01b2373baa4b2a
   SDWebImage: d9ea4959d99c52276dfada481987018fcaea3d58
   SDWebImageWebPCoder: 947093edd1349d820c40afbd9f42acb6cdecd987
   Yoga: f2a7cd4280bfe2cca5a7aed98ba0eb3d1310f18b
