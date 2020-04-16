@@ -126,8 +126,8 @@ const Home = props => {
             // });
 
             const formData = new FormData();
-            formData.append('upload', {
-              uri: image.path,
+            formData.append('img', {
+              location: image.path,
               type: `${image.mime}`,
               name: `test.${image.mime.substr(
                 image.mime.indexOf('/') + 1,
@@ -135,7 +135,8 @@ const Home = props => {
               )}`,
             });
 
-            await ReviewActions.postReview(formData);
+            const ImageFormat = await ReviewActions.uploadImg(formData);
+            await ReviewActions.postReview(ImageFormat);
           } catch (err) {
             console.log(err);
           } finally {
@@ -177,7 +178,7 @@ const Home = props => {
         }}>
         <NBGText>사진찍고 선택</NBGText>
       </BTN> */}
-      {/* <FlatList
+      <FlatList
         style={{flexGrow: 1, width: '100%', height: '100%'}}
         data={props.my_review_list}
         keyExtractor={(item, index) => index.toString()}
@@ -189,11 +190,11 @@ const Home = props => {
                 width: widthPercentageToDP(50),
                 height: widthPercentageToDP(60),
               }}
-              source={{uri: `${item.img}`}}
+              source={{uri: item.img}}
             />
           ) : null;
         }}
-      /> */}
+      />
       {/* 광고 배너 뷰 작업 */}
       <NavigationEvents
         onWillFocus={() => {
