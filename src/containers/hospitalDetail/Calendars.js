@@ -189,7 +189,7 @@ const Calendars = props => {
           data={hourData}
           keyExtractor={(item, index) => index.toString()}
           renderItem={({item, index}) => {
-            let itemDisabled;
+            let itemDisabled = false;
 
             // 당일 예약의 경우, 현재 시간보다 같거나 이전 시간 예약이 안되게 하는 코드
             if (reservationData.reservationDate === todatDateFormat()) {
