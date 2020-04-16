@@ -138,7 +138,6 @@ const Home = props => {
             const ImageFormat = await ReviewActions.uploadImg(formData);
 
             Promise.all([ImageFormat]).then(async () => {
-              console.log(ImageFormat);
               await ReviewActions.postReview(ImageFormat);
               await ReviewActions.getMyReview();
             });
