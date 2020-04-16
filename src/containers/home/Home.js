@@ -127,7 +127,7 @@ const Home = props => {
 
             const formData = new FormData();
             formData.append('img', {
-              location: image.path,
+              uri: image.path,
               type: `${image.mime}`,
               name: `.${image.mime.substr(
                 image.mime.indexOf('/') + 1,
@@ -136,7 +136,12 @@ const Home = props => {
             });
 
             const ImageFormat = await ReviewActions.uploadImg(formData);
-            await ReviewActions.postReview(ImageFormat);
+
+            Promise.all([ImageFormat]).then(async () => {
+              console.log(ImageFormat);
+              await ReviewActions.postReview(ImageFormat);
+              await ReviewActions.getMyReview();
+            });
           } catch (err) {
             console.log(err);
           } finally {
@@ -183,8 +188,6 @@ const Home = props => {
         data={props.my_review_list}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({item, index}) => {
-          console.log(item.img);
-          console.log(typeof item.img);
           return item.img !== null ? (
             <Image
               style={{

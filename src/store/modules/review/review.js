@@ -33,6 +33,8 @@ export const uploadImg = formData => async dispatch => {
       body: formData,
     });
 
+    console.log(jsonData);
+
     return jsonData.url;
   } catch (err) {
     console.log('error');
