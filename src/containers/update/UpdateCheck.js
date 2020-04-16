@@ -97,11 +97,12 @@ const UpdateCheck = props => {
           <TouchableOpacity
             style={{
               margin: widthPercentageToDP(2),
-              height: widthPercentageToDP(45),
+              height: widthPercentageToDP(50),
               padding: widthPercentageToDP(5),
               borderWidth: widthPercentageToDP(2),
               borderRadius: widthPercentageToDP(6),
               borderColor: '#dbdbdb',
+              justifyContent: 'center',
             }}
             onPress={async () => {
               const long = longitude === null ? location.longitude : longitude;
