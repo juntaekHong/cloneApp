@@ -87,7 +87,7 @@ const UpdateCheck = props => {
     </CenterView>
   ) : (
     <>
-      {props.firstScreenLoading === true ||
+      {props.firstScreenLoading === true &&
       (latitude !== null && longitude !== null) ? null : (
         <CenterView>
           <Text>Version Check Page</Text>
