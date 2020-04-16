@@ -43,15 +43,14 @@ export const uploadImg = () => async dispatch => {
 };
 
 // 사진 업로드 테스트 - 업로드 정상
-export const postReview = () => async dispatch => {
+export const postReview = formData => async dispatch => {
   try {
     const token = await getData('token');
 
-    let reviewData = {
-      cotents: '이미지 테스트',
-      url:
-        '/Users/juntaekhong/Library/Developer/CoreSimulator/Devices/57F4429A-C0CD-479F-A88E-9550E2F6A250/data/Containers/Data/Application/82B6E83C-E26C-4D3D-9927-C8C9088D589B/tmp/react-native-image-crop-picker/336C79C4-532A-4690-976D-15AF6791060F.jpg',
-      rating: 4,
+    const reviewData = {
+      contents: '이미지 테스트',
+      url: formData._parts[0][1].uri,
+      rating: '5',
     };
 
     const jsonData = await api.post(`/review/hpid/A1100008`, {
@@ -60,10 +59,10 @@ export const postReview = () => async dispatch => {
     });
 
     if (jsonData.success) {
-      //   console.log('success');
-      //   console.log(jsonData.result);
+      console.log('success');
+      console.log(jsonData.result);
     } else {
-      //   console.log('fail');
+      console.log('fail');
     }
 
     return true;
