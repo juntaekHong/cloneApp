@@ -60,7 +60,7 @@ const TabBar = ({active, onPress, source, label = '', style}) => (
 );
 export const TabView = ({navigationState}) => {
   const Medicals = useCallback(() => {
-    navigators.navigate('Medicals');
+    navigators.navigate('MedicalHistoryStack');
   }, []);
   const navigateSearch = useCallback(() => {
     navigators.navigate('SearchStack');

@@ -6,7 +6,6 @@ const MedicalHistoryStack = createStackNavigator(
     Medicals: {screen: MedicalHistoryTab},
   },
   {
-    initialRouteName: 'Medicals',
     defaultNavigationOptions: {
       header: null,
     },

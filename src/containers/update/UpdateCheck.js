@@ -54,13 +54,13 @@ const UpdateCheck = props => {
         setLongitude(long);
 
         if (props.firstScreenLoading === false) {
-          await navigators.navigate('root');
+          await props.navigation.navigate('root');
         } else {
           let timeout = setInterval(async () => {
             await CommonActions.getHospitalList(long, lat);
             await CommonActions.getMyAddress(long, lat);
             await CommonActions.handleFirstScreenLoading(false);
-            await navigators.navigate('root');
+            await props.navigation.navigate('root');
 
             await HospitalActions.getAllHospitalSubscribers();
 
@@ -106,7 +106,7 @@ const UpdateCheck = props => {
               const promise1 = CommonActions.getHospitalList(long, lat);
               const promise2 = CommonActions.getMyAddress(long, lat);
               Promise.all([promise1, promise2]).then(async () => {
-                await navigators.navigate('root');
+                await props.navigation.navigate('root');
                 await CommonActions.loadingAction(false);
                 await HospitalActions.getAllHospitalSubscribers();
               });
