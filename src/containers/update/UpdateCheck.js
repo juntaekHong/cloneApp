@@ -90,15 +90,18 @@ const UpdateCheck = props => {
       {props.firstScreenLoading === true &&
       (latitude !== null && longitude !== null) ? null : (
         <CenterView>
-          <Text>Version Check Page</Text>
+          <NBGText color={'gray'}>
+            {'데이터를 키고 버튼을 클릭하여주세요!'}
+          </NBGText>
           <View style={{marginBottom: widthPercentageToDP(60)}} />
           <TouchableOpacity
             style={{
               margin: widthPercentageToDP(2),
+              height: widthPercentageToDP(45),
               padding: widthPercentageToDP(5),
               borderWidth: widthPercentageToDP(2),
               borderRadius: widthPercentageToDP(6),
-              borderColor: 'blue',
+              borderColor: '#dbdbdb',
             }}
             onPress={async () => {
               const long = longitude === null ? location.longitude : longitude;
@@ -112,7 +115,7 @@ const UpdateCheck = props => {
                 await HospitalActions.getAllHospitalSubscribers();
               });
             }}>
-            <Text>홈 화면으로 이동</Text>
+            <NBGText>홈 화면으로 이동</NBGText>
           </TouchableOpacity>
         </CenterView>
       )}
