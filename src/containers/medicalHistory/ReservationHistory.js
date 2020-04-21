@@ -26,10 +26,15 @@ const ReservationHistory = props => {
       ) : props.reservation_list.length !== 0 ? (
         // 로그인하면 보이는 뷰
         <HistoryList data={props.reservation_list} />
-      ) : (
+      ) : props.user.token ? (
         // 예약 내역없을 때, 보이는 뷰(로그인 한 상태)
         <NBGBText align={'center'} color={'gray'} fontSize={15}>
           예약한 내역이 없습니다.
+        </NBGBText>
+      ) : (
+        // 이메일 미인증 상태 시, 보이는 뷰
+        <NBGBText align={'center'} color={'gray'} fontSize={15}>
+          이메일 인증 후, 사용하실 수 있습니다.
         </NBGBText>
       )}
     </TopContainerView>

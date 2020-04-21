@@ -341,23 +341,29 @@ const HospitalDetail = props => {
       <BottomView
         reservation={async () => {
           if (props.user !== null) {
-            if (detailData.office.length !== 0) {
-              await CommonActions.handleTimeInfo({
-                hospitalName: detailData.dutyName,
-                dutyTime1: detailData.dutyTime1,
-                dutyTime2: detailData.dutyTime2,
-                dutyTime3: detailData.dutyTime3,
-                dutyTime4: detailData.dutyTime4,
-                dutyTime5: detailData.dutyTime5,
-                dutyTime6: detailData.dutyTime6,
-                dutyTime7: detailData.dutyTime7,
-                dutyTime8: detailData.dutyTime8,
-                office: detailData.office,
-              });
+            if (props.user.token) {
+              if (detailData.office.length !== 0) {
+                await CommonActions.handleTimeInfo({
+                  hospitalName: detailData.dutyName,
+                  dutyTime1: detailData.dutyTime1,
+                  dutyTime2: detailData.dutyTime2,
+                  dutyTime3: detailData.dutyTime3,
+                  dutyTime4: detailData.dutyTime4,
+                  dutyTime5: detailData.dutyTime5,
+                  dutyTime6: detailData.dutyTime6,
+                  dutyTime7: detailData.dutyTime7,
+                  dutyTime8: detailData.dutyTime8,
+                  office: detailData.office,
+                });
 
-              props.navigation.navigate('Reservation');
+                props.navigation.navigate('Reservation');
+              } else {
+                showMessage('현재 전화접수만 가능한 병원입니다!', {
+                  position: Toast.positions.CENTER,
+                });
+              }
             } else {
-              showMessage('현재 전화접수만 가능한 병원입니다!', {
+              showMessage('이메일 인증 후, 사용할 수 있습니다.', {
                 position: Toast.positions.CENTER,
               });
             }

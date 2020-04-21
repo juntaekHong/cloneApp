@@ -6,7 +6,7 @@ import styled from 'styled-components/native';
 import {StandardView, BTN} from '../common/View';
 import {BackImg, StarImg, MapImg} from '../common/Image';
 import {NBGBText, NBGText, NBGLText} from '../common/Text';
-import {widthPercentageToDP, getData} from '../../utils/util';
+import {widthPercentageToDP, getData, showMessage} from '../../utils/util';
 import colors from '../../configs/colors';
 import {
   SelectImg,
@@ -20,6 +20,7 @@ import Carousel from 'react-native-looped-carousel';
 import FastImage from 'react-native-fast-image';
 import Communications from 'react-native-communications';
 import {HospitalActions} from '../../store/actionCreator';
+import Toast from 'react-native-root-toast';
 
 const LocationView = styled(StandardView)`
   flex-direction: row;
@@ -264,13 +265,18 @@ export const Card = ({
       <BTNView>
         <CustomBTN
           onPress={async () => {
-            myScrap ? setMyScrap(false) : setMyScrap(true);
-
             if (loginInfo === null) {
               await autoLoginModal();
             } else {
-              await HospitalActions.updateHospitalSubscriber(hospitalId);
-              await HospitalActions.getAllHospitalSubscribers();
+              if (loginInfo.token) {
+                myScrap ? setMyScrap(false) : setMyScrap(true);
+                await HospitalActions.updateHospitalSubscriber(hospitalId);
+                await HospitalActions.getAllHospitalSubscribers();
+              } else {
+                showMessage('이메일 인증 후, 사용할 수 있습니다.', {
+                  position: Toast.positions.CENTER,
+                });
+              }
             }
           }}>
           {myScrap ? (
