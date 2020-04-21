@@ -12,7 +12,7 @@ import {NBGBText} from '../../components/common/Text';
 import {widthPercentageToDP, getData, showMessage} from '../../utils/util';
 import {CustomModal} from '../../components/common/Modal';
 import colors from '../../configs/colors';
-import {TextInput, Keyboard} from 'react-native';
+import {TextInput, Keyboard, Linking} from 'react-native';
 import {SelectImg, UnSelectImg} from '../../components/home/Image';
 import {
   SigninActions,
@@ -33,6 +33,9 @@ const MyPage = props => {
 
   // 비밀번호 보이기
   const [passVisible, setPassVisible] = useState(true);
+
+  // 로그인 시, 이메일 인증안되어 있으면, 이메일 인증 문구
+  const [resultMessage, setResultMessage] = useState();
 
   // 아이디 입력 후, 패스워드 포커싱
   const passRef = useRef(null);
@@ -180,7 +183,7 @@ const MyPage = props => {
                   email.length === 0 || pass.length === 0 ? true : false
                 }
                 onPress={async () => {
-                  await SigninActions.signIn(email, pass);
+                  const result = await SigninActions.signIn(email, pass);
 
                   await setLoginModal(false);
                   await setPassVisible(true);
@@ -189,10 +192,17 @@ const MyPage = props => {
 
                   const userEmail = await getData('email');
 
-                  if (userEmail === null) {
-                    showMessage('잘못된 이메일 또는 비밀번호입니다.', {
-                      position: Toast.positions.CENTER,
-                    });
+                  if (result !== true && userEmail === null) {
+                    if (result) {
+                      showMessage(result, {
+                        position: Toast.positions.CENTER,
+                      });
+                      await setResultMessage(result);
+                    } else {
+                      showMessage('잘못된 이메일 또는 비밀번호입니다.', {
+                        position: Toast.positions.CENTER,
+                      });
+                    }
                   } else {
                     // 로그인하면, 해당 아이디의 진료내역 데이터들 가져오기.
                     await ReservationActions.getReservation();
@@ -217,7 +227,33 @@ const MyPage = props => {
           }}
         />
       ) : (
-        <LoginView user={props.user} />
+        <StandardView>
+          {/* 이메일 인증 전 보이는 링크 뷰 */}
+          {props.user.result ? (
+            <StandardView style={{marginLeft: widthPercentageToDP(30)}}>
+              <StandardView flexDirection={'row'}>
+                <BTN
+                  style={{
+                    borderBottomWidth: widthPercentageToDP(1),
+                    borderColor: '#2980b9',
+                  }}
+                  onPress={async () => {
+                    let siteUrl = props.user.email.split('@')[1];
+
+                    await Linking.openURL('https://' + siteUrl);
+                  }}>
+                  <NBGBText color={'#2980b9'}>{props.user.email}</NBGBText>
+                </BTN>
+                <NBGBText>을 인증해주세요!</NBGBText>
+              </StandardView>
+              <NBGBText marginTop={5}>인증 후, 재로그인이 필요합니다.</NBGBText>
+              <NBGBText marginTop={5} color={'red'} fontSize={12}>
+                * 이메일 미인증 시, 일부 기능이 제한됩니다.
+              </NBGBText>
+            </StandardView>
+          ) : null}
+          <LoginView user={props.user} />
+        </StandardView>
       )}
     </TopContainerView>
   );

@@ -97,7 +97,7 @@ const Home = props => {
         justifyContent={'center'}
         navigation={props.navigation}
       />
-      <BTN
+      {/* <BTN
         style={{
           margin: widthPercentageToDP(2),
           height: widthPercentageToDP(50),
@@ -148,7 +148,7 @@ const Home = props => {
           }
         }}>
         <NBGText>앨범에서 사진 선택 (이미지 테스트, 임시 생성)</NBGText>
-      </BTN>
+      </BTN> */}
       {/* <BTN
         style={{
           margin: widthPercentageToDP(2),
@@ -182,7 +182,7 @@ const Home = props => {
         }}>
         <NBGText>사진찍고 선택</NBGText>
       </BTN> */}
-      <FlatList
+      {/* <FlatList
         style={{flexGrow: 1, width: '100%', height: '100%'}}
         data={props.my_review_list}
         keyExtractor={(item, index) => index.toString()}
@@ -199,7 +199,7 @@ const Home = props => {
             />
           ) : null;
         }}
-      />
+      /> */}
       {/* 광고 배너 뷰 작업 */}
       <NavigationEvents
         onWillFocus={() => {

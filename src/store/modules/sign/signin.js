@@ -36,19 +36,31 @@ export const signIn = (email, userPw) => async dispatch => {
       body: userData,
     });
 
-    const result = jsonData.result;
+    console.log(jsonData);
 
-    await storeData('token', result.token);
-    await storeData('email', result.email);
-    await storeData('user_name', result.userName);
-    await dispatch(
-      userDataAction({
-        email: result.email,
-        userName: result.userName,
-        token: result.token,
-      }),
-    );
-    return true;
+    // 이메일 인증 여부에 따라 데이터 저장
+    if (typeof jsonData.result === 'object') {
+      const result = jsonData.result;
+
+      await storeData('token', result.token);
+      await storeData('user_name', result.userName);
+      await storeData('email', result.email);
+      await dispatch(
+        userDataAction({
+          email: result.email,
+          userName: result.userName,
+          token: result.token,
+        }),
+      );
+      return true;
+    } else {
+      if (jsonData.success) {
+        await dispatch(userDataAction({email: email, result: jsonData.result}));
+        return jsonData.result;
+      } else {
+        return false;
+      }
+    }
   } catch (err) {
     console.log('error');
     return false;
