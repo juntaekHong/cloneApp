@@ -14,9 +14,13 @@ import config from '../../../configs/config';
 
 const RESERVATION_LIST = 'reservation/RESERVATION_LIST';
 const HISTORY_LIST = 'reservation/HISTORY_LIST';
+// 한 병원 예약 상태 조회
+const RESERVATION_STATUS_CHECK = 'reservation/RESERVATION_STATUS_CHECK';
 
 const reservationListAction = createAction(RESERVATION_LIST);
 const historyListActions = createAction(HISTORY_LIST);
+// 한 병원 예약 상태 조회
+const reservationStatusCheckAction = createAction(RESERVATION_STATUS_CHECK);
 
 const initState = {
   // 예약 내역 리스트
@@ -161,6 +165,31 @@ export const deleteReservation = reservationIndex => async dispatch => {
   }
 };
 
+//  예약내역 - 한 병원 접수(예약) 상태 조회
+export const loadReservation = reservationIndex => async dispatch => {
+  try {
+    const token = await getData('token');
+
+    const jsonData = await api.get(
+      `/reservation/reservationIndex/${reservationIndex}`,
+      {
+        token: token,
+      },
+    );
+
+    if (jsonData.success) {
+      await dispatch(reservationStatusCheckAction(jsonData.result));
+      return true;
+    } else {
+      // 불러오기 실패.
+      return false;
+    }
+  } catch (err) {
+    console.log('error');
+    return false;
+  }
+};
+
 export default handleActions(
   {
     [RESERVATION_LIST]: (state, {payload}) =>
@@ -170,6 +199,21 @@ export default handleActions(
     [HISTORY_LIST]: (state, {payload}) =>
       produce(state, draft => {
         draft.history_list = payload;
+      }),
+    // 한 병원 예약(접수) 상태 조회
+    [RESERVATION_STATUS_CHECK]: (state, {payload}) =>
+      produce(state, draft => {
+        for (let i = 0; i < state.reservation_list.length; i++) {
+          if (
+            state.reservation_list[i].reservationIndex ===
+            payload.reservationIndex
+          ) {
+            draft.reservation_list[i].status !== payload.status
+              ? (draft.reservation_list[i].status = payload.status)
+              : null;
+          } else {
+          }
+        }
       }),
   },
   initState,

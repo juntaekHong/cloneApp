@@ -106,7 +106,7 @@ export const ReservationHistoryItem = ({item, navigation}) => {
           </TitleView>
           <BTN
             onPress={async () => {
-              await ReservationActions.getReservation();
+              await ReservationActions.loadReservation(item.reservationIndex);
             }}>
             <RefreshImg width={24} height={24} />
           </BTN>
@@ -174,7 +174,7 @@ export const ReservationHistoryItem = ({item, navigation}) => {
             }
           </NBGLText>
         </StandardView>
-      ) : (
+      ) : item.status !== 'ACCEPTED' ? (
         <StandardView>
           <DivisionView />
           <FooterView justifyContent={'flex-end'} alignItems={'center'}>
@@ -223,7 +223,7 @@ export const ReservationHistoryItem = ({item, navigation}) => {
             }}
           />
         </StandardView>
-      )}
+      ) : null}
     </Reservation>
   );
 };
