@@ -17,7 +17,7 @@ import {CustomModal} from '../../components/common/Modal';
 import Swiper from 'react-native-swiper';
 import OfficeHours from '../hospitalDetail/OfficeHours';
 import {PagiNationTab} from '../../components/home/PagiNation';
-import {CommonActions} from '../../store/actionCreator';
+import {CommonActions, ReviewActions} from '../../store/actionCreator';
 import HospitalMap from '../hospitalDetail/HospitalMap';
 import HospitalReview from '../hospitalDetail/HospitalReview';
 
@@ -55,11 +55,15 @@ const HospitalDetail = props => {
         detailData.wgs84Lat,
         detailData.wgs84Lon,
       );
+
+      await ReviewActions.getAllReview(detailData.hpid);
     });
 
     return async () => {
       await CommonActions.handlePageIndex(0);
       await CommonActions.handleTimeInfo(null);
+
+      await ReviewActions.handleReviewListInit();
     };
   }, []);
 

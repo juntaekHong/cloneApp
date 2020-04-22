@@ -52,3 +52,7 @@ export const EmptyStarImg = ({size}) => {
     />
   );
 };
+
+export const ReviewImg = ({width, height, source}) => {
+  return <BackImg width={width} height={height} source={source} />;
+};

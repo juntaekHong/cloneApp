@@ -3,7 +3,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState, useEffect} from 'react';
 import styled from 'styled-components/native';
-import {widthPercentageToDP} from '../../utils/util';
+import {widthPercentageToDP, timeSince} from '../../utils/util';
 import {StandardView, BTN} from '../common/View';
 import {NBGLText, NBGBText, NBGText} from '../common/Text';
 import {
@@ -12,8 +12,10 @@ import {
   HalfStarImg,
   HalfBelowStarImg,
   EmptyStarImg,
+  ReviewImg,
 } from './Image';
 import colors from '../../configs/colors';
+import {DotsBtn} from './Button';
 
 // 별점 컨테이너 뷰
 const RatingAvg = styled(StandardView)`
@@ -132,5 +134,54 @@ export const ReviewCountView = ({paddingVertical, total}) => {
         <NBGBText> ( {total ? total : 0} ) </NBGBText>
       </StandardView>
     </ReviewCount>
+  );
+};
+
+// 리뷰 리스트없을 때 뷰
+const EmptyReview = styled(StandardView)`
+  align-items: center;
+  padding-top: ${widthPercentageToDP(70)};
+`;
+
+export const EmptyReviewView = ({title}) => {
+  return (
+    <EmptyReview>
+      <NBGBText align={'center'} color={'gray'}>
+        {title}
+      </NBGBText>
+    </EmptyReview>
+  );
+};
+
+// 리뷰 리스트 뷰(리스트 각 아이템)
+const ReviewItem = styled(StandardView)``;
+
+const ReviewHeaderView = styled(StandardView)`
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: ${widthPercentageToDP(10)};
+  margin-horizontal: ${widthPercentageToDP(15)};
+`;
+
+export const ReviewItemView = ({reviewList}) => {
+  // 작성자 인덱스 reviewList[0].userIndex
+
+  console.log(reviewList);
+  return (
+    <ReviewItem>
+      <ReviewHeaderView>
+        <NBGBText>{reviewList[0].userIndex}</NBGBText>
+        <DotsBtn title={'임시'} />
+      </ReviewHeaderView>
+
+      <ReviewImg width={375} height={300} source={{uri: reviewList[0].img}} />
+      <NBGBText>{reviewList[0].contents}</NBGBText>
+      <NBGBText>{reviewList[0].rating}</NBGBText>
+      <NBGBText>
+        {reviewList[0].createdAt === reviewList[0].updatedAt
+          ? timeSince(reviewList[0].createdAt) + ' 작성'
+          : timeSince(reviewList[0].updatedAt) + '수정'}
+      </NBGBText>
+    </ReviewItem>
   );
 };

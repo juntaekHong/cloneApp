@@ -23,10 +23,16 @@ const reviewTotalAction = createAction(REVIEW_TOTAL);
 const myReviewListAction = createAction(MY_REVIEW_LIST);
 
 const initState = {
-  review_list: [],
+  review_list: null,
   review_total: null,
 
   my_review_list: [],
+};
+
+// 병원 리스트 뷰 초기화
+export const handleReviewListInit = () => dispatch => {
+  dispatch(reviewListAction(null));
+  dispatch(reviewTotalAction(null));
 };
 
 // S3 주소로 이미지 저장
@@ -42,8 +48,6 @@ export const uploadImg = formData => async dispatch => {
       body: formData,
     });
 
-    console.log(jsonData);
-
     return jsonData.url;
   } catch (err) {
     console.log('error');
@@ -54,15 +58,9 @@ export const uploadImg = formData => async dispatch => {
 // 병원 리뷰 리스트
 export const getAllReview = hpid => async dispatch => {
   try {
-    // 토큰 임시, 없어도 조회될 예정?
-    const token = await getData('token');
-
-    const jsonData = await api.get(`/review/hpid/${hpid}`, {
-      token: token,
-    });
+    const jsonData = await api.get(`/review/hpid/${hpid}`);
 
     if (jsonData.success) {
-      console.log(jsonData.result.count);
       await dispatch(reviewTotalAction(jsonData.result.count));
       await dispatch(reviewListAction(jsonData.result.rows));
     } else {
@@ -93,8 +91,6 @@ export const postReview = image => async dispatch => {
     });
 
     if (jsonData.success) {
-      console.log('success');
-      console.log(jsonData.result);
     } else {
       console.log('fail');
     }
