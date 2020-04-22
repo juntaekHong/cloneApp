@@ -156,7 +156,9 @@ export const EmptyReviewView = ({title}) => {
 };
 
 // 리뷰 리스트 뷰(리스트 각 아이템)
-const ReviewItem = styled(StandardView)``;
+const ReviewItem = styled(StandardView)`
+  margin-bottom: ${widthPercentageToDP(30)};
+`;
 
 const ReviewHeaderView = styled(StandardView)`
   flex-direction: row;
@@ -168,40 +170,53 @@ const ReviewHeaderView = styled(StandardView)`
 
 export const ReviewFooterView = styled(ReviewHeaderView)``;
 
-export const ReviewItemView = ({reviewList}) => {
+export const ReviewItemView = ({item}) => {
   // 작성자 인덱스 reviewList[0].userIndex
 
-  console.log(reviewList);
+  // 리뷰 글이 5줄 이상이면, 클릭을 통해 보기.
+  const [contentVisible, setContentVisible] = useState(false);
+
   return (
     <ReviewItem>
       {/* 리뷰 상단뷰, 작성자 및 수정&삭제 버튼 */}
       <ReviewHeaderView>
-        <NBGBText>{reviewList[0].userIndex}</NBGBText>
+        <NBGText>적성자: {item.userIndex}</NBGText>
         {/* 작성자가 본인일 시 보임. */}
         <DotsBtn width={20} height={20} onPress={() => {}} />
       </ReviewHeaderView>
       {/* 이미지 뷰 */}
-      <ReviewImg width={375} height={300} source={{uri: reviewList[0].img}} />
+      {item.img ? (
+        <ReviewImg width={375} height={300} source={{uri: item.img}} />
+      ) : null}
       {/* 리뷰 하단 뷰, 리뷰 코멘트 및 작성(수정)일, 리뷰 점수 뷰 */}
       <StandardView>
         <ReviewFooterView>
-          <NBGBText numberOfLines={2} style={{width: widthPercentageToDP(250)}}>
-            {reviewList[0].contents}
-          </NBGBText>
+          <BTN
+            activeOpacity={0.7}
+            // 리뷰 글이 5줄 이상이면, 클릭을 통해 보기.
+            onPress={() => {
+              setContentVisible(!contentVisible);
+            }}>
+            <NBGBText
+              numberOfLines={contentVisible ? 5 : 2}
+              style={{width: widthPercentageToDP(250)}}>
+              {item.contents}
+            </NBGBText>
+          </BTN>
           <StarView>
             <PullStarImg
               size={21}
               source={require('../../../assets/image/home/star-0.png')}
             />
             <NBGBText marginTop={3} marginLeft={5}>
-              {reviewList[0].rating}
+              {item.rating}
             </NBGBText>
           </StarView>
         </ReviewFooterView>
         <NBGLText align={'right'} marginTop={10} marginRight={15}>
-          {reviewList[0].createdAt === reviewList[0].updatedAt
-            ? '작성일: ' + timeSince(reviewList[0].createdAt)
-            : '수정일: ' + timeSince(reviewList[0].updatedAt)}
+          {item.createdAt === item.updatedAt
+            ? '작성일: ' + timeSince(item.createdAt)
+            : '수정일: ' + timeSince(item.updatedAt)}
         </NBGLText>
       </StandardView>
     </ReviewItem>

@@ -6,11 +6,11 @@ import {
   RatingAvgView,
   ReviewCountView,
   EmptyReviewView,
-  ReviewItemView,
 } from '../../components/review/View';
 import {ReviewActions} from '../../store/actionCreator';
 import {UIActivityIndicator} from 'react-native-indicators';
 import {widthPercentageToDP} from '../../utils/util';
+import {ReviewList} from '../../components/review/FlatList';
 
 const HospitalReview = ({hpId, ratingAvg, review_total, review_list}) => {
   // 평균 평점
@@ -45,7 +45,7 @@ const HospitalReview = ({hpId, ratingAvg, review_total, review_list}) => {
               title={'아직 작성된 리뷰가 없습니다!\n먼저 리뷰 작성을 해보세요.'}
             />
           ) : (
-            <ReviewItemView reviewList={review_list} />
+            <ReviewList data={review_list} />
           )}
         </StandardView>
       )}
