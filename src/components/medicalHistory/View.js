@@ -106,7 +106,19 @@ export const ReservationHistoryItem = ({item, navigation}) => {
           </TitleView>
           <BTN
             onPress={async () => {
-              await ReservationActions.loadReservation(item.reservationIndex);
+              const status = item.status;
+
+              const changeStatus = await ReservationActions.loadReservation(
+                item.reservationIndex,
+              );
+
+              if (
+                status !== changeStatus &&
+                (changeStatus !== 'PENDING' || changeStatus !== 'ACCEPTED')
+              ) {
+                await ReservationActions.getReservation();
+                await ReservationActions.getReservationLog();
+              }
             }}>
             <RefreshImg width={24} height={24} />
           </BTN>
@@ -174,56 +186,100 @@ export const ReservationHistoryItem = ({item, navigation}) => {
             }
           </NBGLText>
         </StandardView>
-      ) : item.status !== 'ACCEPTED' ? (
+      ) : (
         <StandardView>
           <DivisionView />
-          <FooterView justifyContent={'flex-end'} alignItems={'center'}>
-            <CancelBtn
-              title={'진료내역 삭제'}
-              onPress={async () => {
-                await ReservationActions.deleteReservation(
-                  item.reservationIndex,
+          {item.status === 'ACCEPTED' ? (
+            <FooterView justifyContent={'space-between'} alignItems={'center'}>
+              <NBGText fontSize={13} color={'gray'}>
+                병원 내원 전
+              </NBGText>
+              <CancelBtn
+                title={'접수 취소'}
+                onPress={async () => {
+                  await ReservationActions.cancelReservation(
+                    item.reservationIndex,
+                  );
+                  await ReservationActions.getReservation();
+                  // 현재 의미없음. 예약 취소 시, 아예 삭제되어 진료내역에 데이터가 들어가지 않기 때문에
+                  await ReservationActions.getReservationLog();
+                }}
+              />
+            </FooterView>
+          ) : (
+            <FooterView justifyContent={'flex-end'} alignItems={'center'}>
+              <CancelBtn
+                title={'진료내역 삭제'}
+                onPress={async () => {
+                  await ReservationActions.deleteReservation(
+                    item.reservationIndex,
+                  );
+                  // 현재 의미없음. 예약 취소 시, 아예 삭제되어 진료내역에 데이터가 들어가지 않기 때문에
+                  await ReservationActions.getReservationLog();
+                }}
+              />
+            </FooterView>
+          )}
+          <DivisionView marginBottom={-15} />
+          {item.status === 'ACCEPTED' ? (
+            <ReservationBottomView
+              positionValue={false}
+              flexDirection={'row'}
+              marginTop={30}
+              backTitle={'전화'}
+              confirmTitle={'병원상세 정보'}
+              backHandler={async () => {
+                const hospitalData = await CommonActions.getHospital(item.hpid);
+
+                await Communications.phonecall(
+                  hospitalData.dutyTel.replace(/-/gi, ''),
+                  false,
                 );
-                // 현재 의미없음. 예약 취소 시, 아예 삭제되어 진료내역에 데이터가 들어가지 않기 때문에
-                await ReservationActions.getReservationLog();
+              }}
+              reservationDisabled={false}
+              reservationHandler={async () => {
+                const object = await CommonActions.getHospital(item.hpid);
+                await navigation.navigate('HospitalDetail', {
+                  object: object,
+                });
               }}
             />
-          </FooterView>
-          <DivisionView marginBottom={-15} />
-          <ReservationBottomView
-            positionValue={false}
-            flexDirection={'row'}
-            marginTop={30}
-            backTitle={'전화'}
-            confirmTitle={'재접수 하기'}
-            backHandler={async () => {
-              await Communications.phonecall(
-                item.hospital.dutyTel.replace(/-/gi, ''),
-                false,
-              );
-            }}
-            reservationDisabled={false}
-            reservationHandler={async () => {
-              const detailData = await CommonActions.getHospital(item.hpid);
+          ) : (
+            <ReservationBottomView
+              positionValue={false}
+              flexDirection={'row'}
+              marginTop={30}
+              backTitle={'전화'}
+              confirmTitle={'재접수 하기'}
+              backHandler={async () => {
+                await Communications.phonecall(
+                  item.hospital.dutyTel.replace(/-/gi, ''),
+                  false,
+                );
+              }}
+              reservationDisabled={false}
+              reservationHandler={async () => {
+                const detailData = await CommonActions.getHospital(item.hpid);
 
-              await CommonActions.handleTimeInfo({
-                hospitalName: detailData.dutyName,
-                dutyTime1: detailData.dutyTime1,
-                dutyTime2: detailData.dutyTime2,
-                dutyTime3: detailData.dutyTime3,
-                dutyTime4: detailData.dutyTime4,
-                dutyTime5: detailData.dutyTime5,
-                dutyTime6: detailData.dutyTime6,
-                dutyTime7: detailData.dutyTime7,
-                dutyTime8: detailData.dutyTime8,
-                office: detailData.office,
-              });
+                await CommonActions.handleTimeInfo({
+                  hospitalName: detailData.dutyName,
+                  dutyTime1: detailData.dutyTime1,
+                  dutyTime2: detailData.dutyTime2,
+                  dutyTime3: detailData.dutyTime3,
+                  dutyTime4: detailData.dutyTime4,
+                  dutyTime5: detailData.dutyTime5,
+                  dutyTime6: detailData.dutyTime6,
+                  dutyTime7: detailData.dutyTime7,
+                  dutyTime8: detailData.dutyTime8,
+                  office: detailData.office,
+                });
 
-              navigation.navigate('Reservation');
-            }}
-          />
+                navigation.navigate('Reservation');
+              }}
+            />
+          )}
         </StandardView>
-      ) : null}
+      )}
     </Reservation>
   );
 };

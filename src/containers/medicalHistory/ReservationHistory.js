@@ -25,7 +25,10 @@ const ReservationHistory = props => {
         </NBGBText>
       ) : props.reservation_list.length !== 0 ? (
         // 로그인하면 보이는 뷰
-        <HistoryList data={props.reservation_list} />
+        <HistoryList
+          data={props.reservation_list}
+          navigation={props.navigation}
+        />
       ) : props.user.token ? (
         // 예약 내역없을 때, 보이는 뷰(로그인 한 상태)
         <NBGBText align={'center'} color={'gray'} fontSize={15}>

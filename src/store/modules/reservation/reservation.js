@@ -179,7 +179,7 @@ export const loadReservation = reservationIndex => async dispatch => {
 
     if (jsonData.success) {
       await dispatch(reservationStatusCheckAction(jsonData.result));
-      return true;
+      return jsonData.result.status;
     } else {
       // 불러오기 실패.
       return false;
