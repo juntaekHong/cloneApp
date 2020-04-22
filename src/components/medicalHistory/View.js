@@ -3,7 +3,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState, useEffect} from 'react';
 import styled from 'styled-components/native';
-import {widthPercentageToDP, dayToString} from '../../utils/util';
+import {widthPercentageToDP, dayToString, showMessage} from '../../utils/util';
 import {StandardView, BTN} from '../common/View';
 import {NBGText, NBGLText, NBGBText} from '../common/Text';
 import {HpImg, RefreshImg} from './Image';
@@ -12,6 +12,7 @@ import {ReservationBottomView} from '../reservation/View';
 import {CancelBtn} from './Button';
 import Communications from 'react-native-communications';
 import {ReservationActions, CommonActions} from '../../store/actionCreator';
+import Toast from 'react-native-root-toast';
 
 // "rows": [
 //     {
@@ -118,6 +119,10 @@ export const ReservationHistoryItem = ({item, navigation}) => {
               ) {
                 await ReservationActions.getReservation();
                 await ReservationActions.getReservationLog();
+              } else {
+                showMessage('접수 상태가 현재와 동일합니다.', {
+                  position: Toast.positions.CENTER,
+                });
               }
             }}>
             <RefreshImg width={24} height={24} />

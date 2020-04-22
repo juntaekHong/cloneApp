@@ -21,6 +21,7 @@ import FastImage from 'react-native-fast-image';
 import Communications from 'react-native-communications';
 import {HospitalActions} from '../../store/actionCreator';
 import Toast from 'react-native-root-toast';
+import {RatingAvgView} from '../review/View';
 
 const LocationView = styled(StandardView)`
   flex-direction: row;
@@ -180,8 +181,8 @@ const CustomBTN = styled(BTN)`
 
 export const Card = ({
   hospitalName,
-  rating,
-  reviewCount,
+  // rating,
+  // reviewCount,
   dutyAddr,
   dutyMapimg,
   phoneNumber,
@@ -199,28 +200,28 @@ export const Card = ({
     setMyScrap(isScrap);
   }, [isScrap]);
 
-  const RatingImg = useCallback(() => {
-    let ratingData = [];
+  // const RatingImg = useCallback(() => {
+  //   let ratingData = [];
 
-    for (let i = 0; i < parseInt(rating); i++) {
-      ratingData.push(<RatingPullImg />);
-    }
+  //   for (let i = 0; i < parseInt(rating); i++) {
+  //     ratingData.push(<RatingPullImg />);
+  //   }
 
-    if (rating % 1 !== 0) {
-      ratingData.push(<RatingHalfImg />);
-    }
+  //   if (rating % 1 !== 0) {
+  //     ratingData.push(<RatingHalfImg />);
+  //   }
 
-    for (let i = ratingData.length; i < 5; i++) {
-      ratingData.push(<RatingEmptyImg />);
-    }
+  //   for (let i = ratingData.length; i < 5; i++) {
+  //     ratingData.push(<RatingEmptyImg />);
+  //   }
 
-    return (
-      <StandardView
-        style={{flexDirection: 'row', marginRight: widthPercentageToDP(10)}}>
-        {ratingData}
-      </StandardView>
-    );
-  }, [rating]);
+  //   return (
+  //     <StandardView
+  //       style={{flexDirection: 'row', marginRight: widthPercentageToDP(10)}}>
+  //       {ratingData}
+  //     </StandardView>
+  //   );
+  // }, [rating]);
 
   return (
     <CardView>
@@ -234,13 +235,14 @@ export const Card = ({
         }}>
         {hospitalName}
       </NBGBText>
-      <RatingView height={30} justifyContent={'center'}>
+      <RatingView height={10} />
+      {/* <RatingView height={30} justifyContent={'center'}>
         <RatingImg />
         <NBGText fontSize={20}>{rating}</NBGText>
       </RatingView>
       <NBGText fontSize={15} color={'gray'}>
         최근 리뷰 {reviewCount}
-      </NBGText>
+      </NBGText> */}
       <NBGText
         fontSize={13}
         numberOfLines={2}

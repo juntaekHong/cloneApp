@@ -140,7 +140,7 @@ const HospitalDetail = props => {
 
     await focusing.current.scrollTo({
       x: 0,
-      y: widthPercentageToDP(293),
+      y: widthPercentageToDP(258),
       animated: true,
     });
   }, []);
@@ -333,7 +333,10 @@ const HospitalDetail = props => {
               endLong={detailData.wgs84Lon}
             />
             {/* 해당 병원 리뷰 페이지 */}
-            <HospitalReview />
+            <HospitalReview
+              hpId={detailData.hpid}
+              ratingAvg={detailData.ratingAvg}
+            />
           </Swiper>
         </View>
       </ScrollView>

@@ -20,7 +20,7 @@ const initState = {
   my_review_list: [],
 };
 
-// 사진 서버 주소 지정으로 변경 테스트
+// S3 주소로 이미지 저장
 export const uploadImg = formData => async dispatch => {
   try {
     const token = await getData('token');
@@ -42,7 +42,31 @@ export const uploadImg = formData => async dispatch => {
   }
 };
 
-// 사진 업로드 테스트 - 업로드 정상
+// 병원 리뷰 리스트
+export const getAllReview = hpid => async dispatch => {
+  try {
+    // 토큰 임시, 없어도 조회될 예정?
+    const token = await getData('token');
+
+    const jsonData = await api.get(`/review/hpid/${hpid}`, {
+      token: token,
+    });
+
+    if (jsonData.success) {
+      console.log('success');
+      console.log(jsonData.result);
+    } else {
+      console.log('fail');
+    }
+
+    return true;
+  } catch (err) {
+    console.log('error');
+    return false;
+  }
+};
+
+// 리뷰 쓰기
 export const postReview = image => async dispatch => {
   try {
     const token = await getData('token');
@@ -72,7 +96,7 @@ export const postReview = image => async dispatch => {
   }
 };
 
-// 내 리뷰 모아보기 테스트
+// 내 리뷰 리스트
 export const getMyReview = () => async dispatch => {
   try {
     const token = await getData('token');
