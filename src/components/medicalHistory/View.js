@@ -114,7 +114,7 @@ export const ReservationHistoryItem = ({item, navigation}) => {
 
               if (
                 status !== changeStatus &&
-                (changeStatus !== 'PENDING' || changeStatus !== 'ACCEPTED')
+                (changeStatus !== 'PENDING' && changeStatus !== 'ACCEPTED')
               ) {
                 await ReservationActions.getReservation();
                 await ReservationActions.getReservationLog();
