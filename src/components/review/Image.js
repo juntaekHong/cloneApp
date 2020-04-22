@@ -56,3 +56,13 @@ export const EmptyStarImg = ({size}) => {
 export const ReviewImg = ({width, height, source}) => {
   return <BackImg width={width} height={height} source={source} />;
 };
+
+export const DotsImg = ({width, height}) => {
+  return (
+    <BackImg
+      width={width}
+      height={height}
+      source={require('../../../assets/image/review/menu.png')}
+    />
+  );
+};

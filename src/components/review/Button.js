@@ -6,13 +6,17 @@ import styled from 'styled-components/native';
 import {widthPercentageToDP} from '../../utils/util';
 import {StandardView, BTN} from '../common/View';
 import {NBGLText, NBGBText, NBGText} from '../common/Text';
+import {DotsImg} from './Image';
 
 const Dots = styled(BTN)``;
 
-export const DotsBtn = ({title}) => {
+export const DotsBtn = ({width, height, onPress}) => {
   return (
-    <Dots>
-      <NBGLText>{title}</NBGLText>
+    <Dots
+      onPress={async () => {
+        await onPress();
+      }}>
+      <DotsImg width={width} height={height} />
     </Dots>
   );
 };

@@ -40,7 +40,7 @@ export const uploadImg = formData => async dispatch => {
   try {
     const token = await getData('token');
 
-    const jsonData = await api.post(`/img`, {
+    const jsonData = await api.post(`/review/img`, {
       header: {
         'Content-Type': 'multipart/form-data',
       },

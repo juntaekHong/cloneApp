@@ -16,6 +16,7 @@ import {
 } from './Image';
 import colors from '../../configs/colors';
 import {DotsBtn} from './Button';
+import {StarImg} from '../common/Image';
 
 // 별점 컨테이너 뷰
 const RatingAvg = styled(StandardView)`
@@ -78,6 +79,7 @@ const Star = (score, size) => {
 
 const StarView = styled(StandardView)`
   flex-direction: row;
+  align-items: center;
 `;
 
 const InnerView = styled(StarView)`
@@ -159,9 +161,12 @@ const ReviewItem = styled(StandardView)``;
 const ReviewHeaderView = styled(StandardView)`
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
   margin-top: ${widthPercentageToDP(10)};
   margin-horizontal: ${widthPercentageToDP(15)};
 `;
+
+export const ReviewFooterView = styled(ReviewHeaderView)``;
 
 export const ReviewItemView = ({reviewList}) => {
   // 작성자 인덱스 reviewList[0].userIndex
@@ -169,19 +174,36 @@ export const ReviewItemView = ({reviewList}) => {
   console.log(reviewList);
   return (
     <ReviewItem>
+      {/* 리뷰 상단뷰, 작성자 및 수정&삭제 버튼 */}
       <ReviewHeaderView>
         <NBGBText>{reviewList[0].userIndex}</NBGBText>
-        <DotsBtn title={'임시'} />
+        {/* 작성자가 본인일 시 보임. */}
+        <DotsBtn width={20} height={20} onPress={() => {}} />
       </ReviewHeaderView>
-
+      {/* 이미지 뷰 */}
       <ReviewImg width={375} height={300} source={{uri: reviewList[0].img}} />
-      <NBGBText>{reviewList[0].contents}</NBGBText>
-      <NBGBText>{reviewList[0].rating}</NBGBText>
-      <NBGBText>
-        {reviewList[0].createdAt === reviewList[0].updatedAt
-          ? timeSince(reviewList[0].createdAt) + ' 작성'
-          : timeSince(reviewList[0].updatedAt) + '수정'}
-      </NBGBText>
+      {/* 리뷰 하단 뷰, 리뷰 코멘트 및 작성(수정)일, 리뷰 점수 뷰 */}
+      <StandardView>
+        <ReviewFooterView>
+          <NBGBText numberOfLines={2} style={{width: widthPercentageToDP(250)}}>
+            {reviewList[0].contents}
+          </NBGBText>
+          <StarView>
+            <PullStarImg
+              size={21}
+              source={require('../../../assets/image/home/star-0.png')}
+            />
+            <NBGBText marginTop={3} marginLeft={5}>
+              {reviewList[0].rating}
+            </NBGBText>
+          </StarView>
+        </ReviewFooterView>
+        <NBGLText align={'right'} marginTop={10} marginRight={15}>
+          {reviewList[0].createdAt === reviewList[0].updatedAt
+            ? '작성일: ' + timeSince(reviewList[0].createdAt)
+            : '수정일: ' + timeSince(reviewList[0].updatedAt)}
+        </NBGLText>
+      </StandardView>
     </ReviewItem>
   );
 };
