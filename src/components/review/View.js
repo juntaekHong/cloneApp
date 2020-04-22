@@ -16,7 +16,6 @@ import {
 } from './Image';
 import colors from '../../configs/colors';
 import {DotsBtn} from './Button';
-import {StarImg} from '../common/Image';
 
 // 별점 컨테이너 뷰
 const RatingAvg = styled(StandardView)`
