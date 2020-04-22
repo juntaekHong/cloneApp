@@ -22,6 +22,8 @@ const HospitalMap = ({
   startLong,
   endLat,
   endLong,
+  abstract_map,
+  detail_map,
 }) => {
   // 시작, 도착 위도&경도
   const [origin, setOrigin] = useState({
@@ -33,16 +35,15 @@ const HospitalMap = ({
     longitude: endLong,
   });
   // 간략 데이터
-  const [legs, setLegs] = useState(null);
+  const [legs, setLegs] = useState(abstract_map ? abstract_map : null);
   // 상세 데이터
-  const [detailData, setDetailData] = useState();
+  const [detailData, setDetailData] = useState(detail_map ? detail_map : null);
   // 유의사항 문구
   const warning =
     '* 도보 경로는 베타 서비스입니다.\n   주의 – 이 경로에는 인도 또는 보행 경로가 누락되었을 수도 있습니다';
 
   useEffect(() => {
     // 대략적인 시간 정보
-
     if (start_end !== null && start_end.length !== 0) {
       // 간략 길찾기 데이터
       const Abstract = start_end[0].legs[0];
@@ -57,6 +58,7 @@ const HospitalMap = ({
       aboutTimeInfo.end_address = Abstract.end_address;
 
       setLegs(aboutTimeInfo);
+      CommonActions.handleAbstractMapAction(aboutTimeInfo);
 
       // Extra List
       let list = [];
@@ -97,6 +99,7 @@ const HospitalMap = ({
       });
 
       setDetailData(list);
+      CommonActions.handleDetailMapAction(list);
     }
 
     return async () => {
@@ -106,7 +109,7 @@ const HospitalMap = ({
 
   return (
     <TopContainerView marginTop={10} marginBottom={100}>
-      {legs === null ? (
+      {legs === null && (abstract_map === null || detail_map === null) ? (
         <UIActivityIndicator size={widthPercentageToDP(30)} color={'gray'} />
       ) : (
         <StandardView>
@@ -152,4 +155,7 @@ const HospitalMap = ({
 export default connect(state => ({
   hospital_detail: state.common.hospital_detail,
   start_end: state.common.start_end,
+
+  abstract_map: state.common.abstract_map,
+  detail_map: state.common.detail_map,
 }))(HospitalMap);

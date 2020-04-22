@@ -14,7 +14,6 @@ const Review = styled(FlatList)`
 `;
 
 export const ReviewList = ({data}) => {
-  console.log(data);
   return (
     <Review
       scrollEnabled={false}

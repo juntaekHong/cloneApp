@@ -180,7 +180,7 @@ export const ReviewItemView = ({item}) => {
     <ReviewItem>
       {/* 리뷰 상단뷰, 작성자 및 수정&삭제 버튼 */}
       <ReviewHeaderView>
-        <NBGText>적성자: {item.userIndex}</NBGText>
+        <NBGText>적성자: {item.user.userNickName}</NBGText>
         {/* 작성자가 본인일 시 보임. */}
         <DotsBtn width={20} height={20} onPress={() => {}} />
       </ReviewHeaderView>

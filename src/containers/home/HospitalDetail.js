@@ -63,6 +63,9 @@ const HospitalDetail = props => {
       await CommonActions.handlePageIndex(0);
       await CommonActions.handleTimeInfo(null);
 
+      await CommonActions.handleAbstractMapAction(null);
+      await CommonActions.handleDetailMapAction(null);
+
       await ReviewActions.handleReviewListInit();
     };
   }, []);
@@ -319,6 +322,8 @@ const HospitalDetail = props => {
           }}>
           <Swiper
             ref={swipe}
+            loadMinimal={true}
+            loadMinimalSize={0}
             height={'100%'}
             index={props.page_index}
             onIndexChanged={async index => {

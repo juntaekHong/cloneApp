@@ -32,6 +32,10 @@ const PAGE_INDEX = 'common/Page_INDEX';
 const START_END_INIT = 'common/START_END_INIT';
 const START_END = 'common/START_END';
 
+// 대략/ 상세 길찾기 정보
+const ABSTRACT_MAP = 'common/ABSTRACT_MAP';
+const DETAIL_MAP = 'common/DETAIL_MAP';
+
 export const commonInit = createAction(COMMON_INIT);
 export const firstScreenLoadingAction = createAction(
   COMMON_FIRST_SCREEN_LOADING,
@@ -49,6 +53,10 @@ const hospitalDetailAction = createAction(HOSPITAL_DETAIL);
 const pageIndexAction = createAction(PAGE_INDEX);
 const startEndInitAction = createAction(START_END_INIT);
 const startEndAction = createAction(START_END);
+
+// 대략/ 상세 길찾기 정보
+const abstractMapAction = createAction(ABSTRACT_MAP);
+const detailMapAction = createAction(DETAIL_MAP);
 
 const initState = {
   // 앱 첫 실행 시, 보여짐.
@@ -68,6 +76,10 @@ const initState = {
   hospital_detail: null,
   // 내 위치에서 병원 길찾기
   start_end: null,
+
+  // 대략, 상세 길찾기 정보
+  abstract_map: null,
+  detail_map: null,
 
   page_index: 0,
 };
@@ -98,6 +110,14 @@ export const handleTimeInfo = value => dispatch => {
 
 export const handleStartEndInit = () => dispatch => {
   dispatch(startEndInitAction());
+};
+
+// 대략/ 상세 길찾기 정보 핸들러
+export const handleAbstractMapAction = value => dispatch => {
+  dispatch(abstractMapAction(value));
+};
+export const handleDetailMapAction = value => dispatch => {
+  dispatch(detailMapAction(value));
 };
 
 // export const getAppVersion = () => async dispatch => {
@@ -374,6 +394,15 @@ export default handleActions(
     [START_END]: (state, {payload}) =>
       produce(state, draft => {
         draft.start_end = payload;
+      }),
+    // 대략, 상세 길찾기 정보
+    [ABSTRACT_MAP]: (state, {payload}) =>
+      produce(state, draft => {
+        draft.abstract_map = payload;
+      }),
+    [DETAIL_MAP]: (state, {payload}) =>
+      produce(state, draft => {
+        draft.detail_map = payload;
       }),
   },
   initState,
