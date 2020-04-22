@@ -147,7 +147,7 @@ const HospitalDetail = props => {
 
     await focusing.current.scrollTo({
       x: 0,
-      y: widthPercentageToDP(258),
+      y: 0,
       animated: true,
     });
   }, []);

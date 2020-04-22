@@ -31,6 +31,9 @@ export const ReviewList = ({data}) => {
       renderItem={({item, index}) => {
         return <ReviewItemView index={index} item={item} />;
       }}
+      ListFooterComponent={() => {
+        return <StandardView style={{height: widthPercentageToDP(70)}} />;
+      }}
     />
   );
 };

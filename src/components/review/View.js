@@ -142,7 +142,8 @@ export const ReviewCountView = ({paddingVertical, total}) => {
 // 리뷰 리스트없을 때 뷰
 const EmptyReview = styled(StandardView)`
   align-items: center;
-  padding-top: ${widthPercentageToDP(70)};
+  padding-top: ${widthPercentageToDP(100)};
+  padding-bottom: ${widthPercentageToDP(100)};
 `;
 
 export const EmptyReviewView = ({title}) => {
