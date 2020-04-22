@@ -12,11 +12,20 @@ import {
 } from '../../../utils/util';
 import config from '../../../configs/config';
 
+const REVIEW_LIST = 'review/REVIEW_LIST';
+const REVIEW_TOTAL = 'review/REVIEW_TOTAL';
+
 const MY_REVIEW_LIST = 'review/MY_REVIEW_LIST';
+
+const reviewListAction = createAction(REVIEW_LIST);
+const reviewTotalAction = createAction(REVIEW_TOTAL);
 
 const myReviewListAction = createAction(MY_REVIEW_LIST);
 
 const initState = {
+  review_list: [],
+  review_total: null,
+
   my_review_list: [],
 };
 
@@ -53,8 +62,9 @@ export const getAllReview = hpid => async dispatch => {
     });
 
     if (jsonData.success) {
-      console.log('success');
-      console.log(jsonData.result);
+      console.log(jsonData.result.count);
+      await dispatch(reviewTotalAction(jsonData.result.count));
+      await dispatch(reviewListAction(jsonData.result.rows));
     } else {
       console.log('fail');
     }
@@ -117,6 +127,14 @@ export const getMyReview = () => async dispatch => {
 
 export default handleActions(
   {
+    [REVIEW_LIST]: (state, {payload}) =>
+      produce(state, draft => {
+        draft.review_list = payload;
+      }),
+    [REVIEW_TOTAL]: (state, {payload}) =>
+      produce(state, draft => {
+        draft.review_total = payload;
+      }),
     [MY_REVIEW_LIST]: (state, {payload}) =>
       produce(state, draft => {
         draft.my_review_list = payload;

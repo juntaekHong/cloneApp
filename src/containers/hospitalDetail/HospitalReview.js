@@ -2,23 +2,23 @@ import React, {useState, useEffect} from 'react';
 import {connect} from 'react-redux';
 import {TopContainerView} from '../../components/common/View';
 import {NBGBText} from '../../components/common/Text';
-import {RatingAvgView, Division} from '../../components/review/View';
+import {RatingAvgView, ReviewCountView} from '../../components/review/View';
 import {ReviewActions} from '../../store/actionCreator';
 
-const HospitalReview = ({hpId, ratingAvg}) => {
+const HospitalReview = ({hpId, ratingAvg, review_total}) => {
   // 평균 평점
   const [ratingScore, setRatingScore] = useState(
     ratingAvg !== null ? parseFloat(ratingAvg).toFixed(2) : 0,
   );
 
-  useEffect(() => {
-    ReviewActions.getAllReview(hpId);
-  }, []);
-
   // 리뷰 작성 및 삭제 등 해당 병원의 평점 변경 시, 변경된 데이터 적용
   useEffect(() => {
     setRatingScore(ratingAvg !== null ? parseFloat(ratingAvg).toFixed(2) : 0);
   }, [ratingAvg]);
+
+  useEffect(() => {
+    ReviewActions.getAllReview(hpId);
+  }, []);
 
   return (
     <TopContainerView marginTop={10}>
@@ -30,10 +30,14 @@ const HospitalReview = ({hpId, ratingAvg}) => {
         paddingVertical={30}
         ratingScore={ratingScore}
       />
-      <Division />
-      {/*  */}
+      {/* 리뷰 총 개수 뷰 */}
+      <ReviewCountView paddingVertical={10} total={review_total} />
+      {/* 리뷰 리스트 뷰 */}
     </TopContainerView>
   );
 };
 
-export default connect(state => ({}))(HospitalReview);
+export default connect(state => ({
+  review_list: state.review.review_list,
+  review_total: state.review.review_total,
+}))(HospitalReview);

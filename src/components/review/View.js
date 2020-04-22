@@ -5,7 +5,7 @@ import React, {useState, useEffect} from 'react';
 import styled from 'styled-components/native';
 import {widthPercentageToDP} from '../../utils/util';
 import {StandardView, BTN} from '../common/View';
-import {NBGLText, NBGBText} from '../common/Text';
+import {NBGLText, NBGBText, NBGText} from '../common/Text';
 import {
   PullStarImg,
   HalfMoreStarImg,
@@ -13,13 +13,9 @@ import {
   HalfBelowStarImg,
   EmptyStarImg,
 } from './Image';
+import colors from '../../configs/colors';
 
-export const Division = styled(StandardView)`
-  width: 100%;
-  height: ${widthPercentageToDP(1)};
-  background-color: #dbdbdb;
-`;
-
+// 별점 컨테이너 뷰
 const RatingAvg = styled(StandardView)`
   margin-top: ${({marginVertical}) =>
     marginVertical ? widthPercentageToDP(marginVertical) : 0};
@@ -112,5 +108,29 @@ export const RatingAvgView = ({
         <StarView>{Star(ratingScore, 30)}</StarView>
       </InnerView>
     </RatingAvg>
+  );
+};
+
+// 리뷰 개수 뷰
+const ReviewCount = styled(StandardView)`
+  width: 100%;
+  padding-top: ${({paddingVertical}) =>
+    paddingVertical ? widthPercentageToDP(paddingVertical) : 0};
+  padding-bottom: ${({paddingVertical}) =>
+    paddingVertical ? widthPercentageToDP(paddingVertical) : 0};
+  justify-content: center;
+  background-color: #f6f7f9;
+`;
+
+export const ReviewCountView = ({paddingVertical, total}) => {
+  return (
+    <ReviewCount paddingVertical={paddingVertical}>
+      <StandardView style={{flexDirection: 'row'}}>
+        <NBGBText marginLeft={10} color={colors.active}>
+          총 리뷰
+        </NBGBText>
+        <NBGBText> ( {total ? total : 0} ) </NBGBText>
+      </StandardView>
+    </ReviewCount>
   );
 };
