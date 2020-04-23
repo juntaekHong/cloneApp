@@ -31,7 +31,7 @@ const ImgInsert = styled(BTN)`
   height: ${widthPercentageToDP(70)};
   margin-top: ${widthPercentageToDP(10)};
   margin-bottom: ${widthPercentageToDP(10)};
-  border-width: ${widthPercentageToDP(2)};
+  border-width: ${({selected}) => (!selected ? widthPercentageToDP(2) : 0)};
   border-color: #dbdbdb;
   border-radius: ${widthPercentageToDP(10)};
   border-style: dotted;
@@ -46,6 +46,7 @@ const ImgDeleteBtn = styled(BTN)`
 export const ImgInsertBtn = ({selected, selectedImg, ImgSelect, deleteImg}) => {
   return (
     <ImgInsert
+      selected={selected}
       onPress={() => {
         ImgSelect();
       }}>

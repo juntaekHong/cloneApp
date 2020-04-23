@@ -17,6 +17,7 @@ import {
 import colors from '../../configs/colors';
 import {DotsBtn, ImgInsertBtn} from './Button';
 import {ReviewTI} from './TextInput';
+import StarRating from 'react-native-star-rating';
 
 // 별점 컨테이너 뷰
 const RatingAvg = styled(StandardView)`
@@ -239,20 +240,52 @@ const ReviewWrite = styled(StandardView)`
     borderRadius ? widthPercentageToDP(borderRadius) : 0};
 `;
 
+// 리뷰 작성 페이지 - 병원 별점 뷰
+const ReviewRatingView = styled(StandardView)`
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-vertical: ${widthPercentageToDP(5)};
+`;
+
 export const ReviewWriteView = ({
   maxHeight,
   marginHorizontal,
   borderRadius,
+  // 이미지 선택 및 보이기, 삭제
   selected,
   selectedImg,
   ImgSelect,
   deleteImg,
+  // 병원 별점
+  rating,
+  selectedRating,
 }) => {
   return (
     <ReviewWrite
       maxHeight={maxHeight}
       marginHorizontal={marginHorizontal}
       borderRadius={borderRadius}>
+      <ReviewRatingView>
+        <NBGBText fontSize={15} marginRight={10}>
+          병원 리뷰 평점
+        </NBGBText>
+        <StarRating
+          disabled={false}
+          halfStarEnabled={true}
+          starSize={widthPercentageToDP(25)}
+          emptyStar={'ios-star-outline'}
+          fullStar={'ios-star'}
+          halfStar={'ios-star-half'}
+          iconSet={'Ionicons'}
+          maxStars={5}
+          rating={rating}
+          selectedStar={rating => {
+            selectedRating(rating);
+          }}
+          fullStarColor={'red'}
+        />
+      </ReviewRatingView>
       <ReviewTI />
       <ImgInsertBtn
         selected={selected}
