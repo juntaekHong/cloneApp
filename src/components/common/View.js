@@ -105,6 +105,18 @@ export const TopView = props => {
             source={require('../../../assets/image/home/share.png')}
           />
         </BTN>
+      ) : props.uploadBtn ? (
+        <BTN
+          style={{marginRight: widthPercentageToDP(5)}}
+          onPress={() => {
+            props.uploadHandler();
+          }}>
+          <CloseImg
+            width={32}
+            height={32}
+            source={require('../../../assets/image/review/arrow-up.png')}
+          />
+        </BTN>
       ) : (
         <View
           style={{

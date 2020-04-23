@@ -318,12 +318,11 @@ const HospitalDetail = props => {
         <View
           style={{
             flex: 1,
-            minHeight: widthPercentageToDP(340),
           }}>
           <Swiper
             ref={swipe}
-            loadMinimal={true}
-            loadMinimalSize={0}
+            // loadMinimal={true}
+            // loadMinimalSize={0}
             height={'100%'}
             index={props.page_index}
             onIndexChanged={async index => {
@@ -353,7 +352,7 @@ const HospitalDetail = props => {
       <BottomView
         reviewBtn={props.user !== null && props.user.token ? true : false}
         reviewWrite={() => {
-          props.navigation.navigate('ReviewWrite');
+          props.navigation.navigate('ReviewWrite', {hpid: detailData.hpid});
         }}
         reservation={async () => {
           if (props.user !== null) {

@@ -75,17 +75,11 @@ export const getAllReview = hpid => async dispatch => {
 };
 
 // 리뷰 쓰기
-export const postReview = image => async dispatch => {
+export const postReview = (hpid, reviewData) => async dispatch => {
   try {
     const token = await getData('token');
 
-    const reviewData = {
-      contents: '이미지 테스트',
-      url: image,
-      rating: '5',
-    };
-
-    const jsonData = await api.post(`/review/hpid/A1100008`, {
+    const jsonData = await api.post(`/review/hpid/${hpid}`, {
       token: token,
       body: reviewData,
     });

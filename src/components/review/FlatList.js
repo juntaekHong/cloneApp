@@ -7,10 +7,12 @@ import {widthPercentageToDP} from '../../utils/util';
 import {FlatList} from 'react-native';
 import {ReviewItemView} from './View';
 import {StandardView} from '../common/View';
+import {UIActivityIndicator} from 'react-native-indicators';
 
 const Review = styled(FlatList)`
   flex-grow: 1;
   width: 100%;
+  height: 100%;
 `;
 
 export const ReviewList = ({data}) => {
@@ -32,7 +34,7 @@ export const ReviewList = ({data}) => {
         return <ReviewItemView index={index} item={item} />;
       }}
       ListFooterComponent={() => {
-        return <StandardView style={{height: widthPercentageToDP(70)}} />;
+        return <StandardView style={{marginBottom: widthPercentageToDP(70)}} />;
       }}
     />
   );

@@ -200,7 +200,7 @@ export const ReviewItemView = ({item}) => {
               setContentVisible(!contentVisible);
             }}>
             <NBGBText
-              numberOfLines={contentVisible ? 5 : 2}
+              numberOfLines={contentVisible ? 100 : 2}
               style={{width: widthPercentageToDP(250)}}>
               {item.contents}
             </NBGBText>
@@ -252,6 +252,9 @@ export const ReviewWriteView = ({
   maxHeight,
   marginHorizontal,
   borderRadius,
+  // 입력 리뷰 및 액션
+  inputReview,
+  changeInputReview,
   // 이미지 선택 및 보이기, 삭제
   selected,
   selectedImg,
@@ -272,7 +275,8 @@ export const ReviewWriteView = ({
         </NBGBText>
         <StarRating
           disabled={false}
-          halfStarEnabled={true}
+          // 현재 소수점 안들어감.
+          halfStarEnabled={false}
           starSize={widthPercentageToDP(25)}
           emptyStar={'ios-star-outline'}
           fullStar={'ios-star'}
@@ -286,7 +290,12 @@ export const ReviewWriteView = ({
           fullStarColor={'red'}
         />
       </ReviewRatingView>
-      <ReviewTI />
+      <ReviewTI
+        value={inputReview}
+        onChangeText={text => {
+          changeInputReview(text);
+        }}
+      />
       <ImgInsertBtn
         selected={selected}
         selectedImg={selectedImg}

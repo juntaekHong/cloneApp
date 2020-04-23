@@ -5,7 +5,7 @@ import {ListView, ContentDataView, EvaluationView} from './View';
 import {PhotoImg} from './Image';
 import {NBGBText, NBGLText, NBGText} from './Text';
 import {widthPercentageToDP, dayToString} from '../../utils/util';
-import {CommonActions} from '../../store/actionCreator';
+import {CommonActions, ReviewActions} from '../../store/actionCreator';
 
 const DataList = styled.FlatList`
   flex-grow: 1;

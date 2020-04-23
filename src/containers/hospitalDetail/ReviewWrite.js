@@ -1,13 +1,21 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
+import {connect} from 'react-redux';
 import {TopContainerView, StandardView} from '../../components/common/View';
 import {TopView} from '../../components/common/View';
 import {ReviewWriteView} from '../../components/review/View';
 import ImageCropPicker from 'react-native-image-crop-picker';
 import {ReviewActions} from '../../store/actionCreator';
 import {KeyboardAvoidingView, Platform, ScrollView} from 'react-native';
+import {showMessage} from '../../utils/util';
+import Toast from 'react-native-root-toast';
 
 const ReviewWrite = props => {
+  // 리뷰 작성하는 병원 id
+  const [hpid, setHpid] = useState(props.navigation.state.params.hpid);
+  // 입력 리뷰 데이터
+  const [inputReview, setInputReview] = useState('');
+
   // 이미지 선택 여부 및 이미지 데이터 저장
   const [selected, setSelected] = useState(false);
   const [ImgData, setImgData] = useState();
@@ -26,6 +34,28 @@ const ReviewWrite = props => {
         }}
         closeBtn={false}
         searchBtn={false}
+        uploadBtn={true}
+        uploadHandler={async () => {
+          if (inputReview === '' || currentRating === 0) {
+            showMessage('리뷰 댓글 또는 병원 평가를 하지 않았습니다!', {
+              position: Toast.positions.CENTER,
+            });
+          } else {
+            const ReviewData = selected
+              ? {contents: inputReview, rating: currentRating, url: ImgData}
+              : {contents: inputReview, rating: currentRating};
+
+            await ReviewActions.postReview(hpid, ReviewData);
+            await ReviewActions.handleReviewListInit();
+
+            const promise1 = ReviewActions.getAllReview(hpid);
+            const promise2 = ReviewActions.getMyReview();
+
+            Promise.all([promise1, promise2]).then(() => {
+              props.navigation.goBack(null);
+            });
+          }
+        }}
       />
       <KeyboardAvoidingView
         style={{flex: 1}}
@@ -38,6 +68,11 @@ const ReviewWrite = props => {
             maxHeight={360}
             marginHorizontal={20}
             borderRadius={20}
+            // 입력 댓글
+            inputReview={inputReview}
+            changeInputReview={text => {
+              setInputReview(text);
+            }}
             // 이미지 선택 및 버튼 액션
             selected={selected}
             selectedImg={ImgData}
@@ -51,13 +86,6 @@ const ReviewWrite = props => {
                   includeBase64: true,
                   cropperToolbarTitle: '',
                 });
-
-                // let crop = await ImageCropPicker.openCropper({
-                //   path: image.path,
-                //   width: 200,
-                //   height: 200,
-                //   cropperToolbarTitle: '',
-                // });
 
                 const formData = new FormData();
                 formData.append('img', {
@@ -99,4 +127,4 @@ const ReviewWrite = props => {
   );
 };
 
-export default ReviewWrite;
+export default connect(state => ({}))(ReviewWrite);

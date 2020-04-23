@@ -17,7 +17,7 @@ const Review = styled(TextInput)`
   font-size: ${widthPercentageToDP(13)};
 `;
 
-export const ReviewTI = ({}) => {
+export const ReviewTI = ({onChangeText, value}) => {
   return (
     <Review
       textAlignVertical={'top'}
@@ -29,8 +29,10 @@ export const ReviewTI = ({}) => {
       autoCapitalize={'none'}
       multiline={true}
       returnKeyType={'next'}
-      //   onChangeText={}
-      //   value={}
+      onChangeText={text => {
+        onChangeText(text);
+      }}
+      value={value}
     />
   );
 };
