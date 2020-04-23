@@ -15,7 +15,8 @@ import {
   ReviewImg,
 } from './Image';
 import colors from '../../configs/colors';
-import {DotsBtn} from './Button';
+import {DotsBtn, ImgInsertBtn} from './Button';
+import {ReviewTI} from './TextInput';
 
 // 별점 컨테이너 뷰
 const RatingAvg = styled(StandardView)`
@@ -182,7 +183,7 @@ export const ReviewItemView = ({item}) => {
       <ReviewHeaderView>
         <NBGText>적성자: {item.user.userNickName}</NBGText>
         {/* 작성자가 본인일 시 보임. */}
-        <DotsBtn width={20} height={20} onPress={() => {}} />
+        <DotsBtn width={30} height={30} onPress={() => {}} />
       </ReviewHeaderView>
       {/* 이미지 뷰 */}
       {item.img ? (
@@ -220,5 +221,49 @@ export const ReviewItemView = ({item}) => {
         </NBGLText>
       </StandardView>
     </ReviewItem>
+  );
+};
+
+// 리뷰 작성 페이지 - 텍스트 인풋 뷰
+const ReviewWrite = styled(StandardView)`
+  margin-horizontal: ${({marginHorizontal}) =>
+    marginHorizontal ? widthPercentageToDP(marginHorizontal) : 0};
+  min-height: ${widthPercentageToDP(150)};
+  max-height: ${({maxHeight}) =>
+    maxHeight ? widthPercentageToDP(maxHeight) : widthPercentageToDP(200)};
+  padding-vertical: ${widthPercentageToDP(15)};
+  padding-horizontal: ${widthPercentageToDP(20)};
+  border-width: ${widthPercentageToDP(1)};
+  border-color: #dbdbdb;
+  border-radius: ${({borderRadius}) =>
+    borderRadius ? widthPercentageToDP(borderRadius) : 0};
+`;
+
+export const ReviewWriteView = ({
+  maxHeight,
+  marginHorizontal,
+  borderRadius,
+  selected,
+  selectedImg,
+  ImgSelect,
+  deleteImg,
+}) => {
+  return (
+    <ReviewWrite
+      maxHeight={maxHeight}
+      marginHorizontal={marginHorizontal}
+      borderRadius={borderRadius}>
+      <ReviewTI />
+      <ImgInsertBtn
+        selected={selected}
+        selectedImg={selectedImg}
+        ImgSelect={() => {
+          ImgSelect();
+        }}
+        deleteImg={() => {
+          deleteImg();
+        }}
+      />
+    </ReviewWrite>
   );
 };

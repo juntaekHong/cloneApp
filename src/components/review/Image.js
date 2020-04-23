@@ -62,7 +62,17 @@ export const DotsImg = ({width, height}) => {
     <BackImg
       width={width}
       height={height}
-      source={require('../../../assets/image/review/menu.png')}
+      source={require('../../../assets/image/review/dots.png')}
+    />
+  );
+};
+
+export const PlusImg = ({width, height}) => {
+  return (
+    <BackImg
+      width={width}
+      height={height}
+      source={require('../../../assets/image/review/plus.png')}
     />
   );
 };
