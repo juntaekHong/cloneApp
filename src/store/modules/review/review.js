@@ -126,7 +126,10 @@ export default handleActions(
     [REVIEW_LIST]: (state, {payload}) =>
       produce(state, draft => {
         draft.review_list = payload;
-        draft.review_list.reverse();
+
+        if (draft.review_list !== null) {
+          draft.review_list.reverse();
+        }
       }),
     [REVIEW_TOTAL]: (state, {payload}) =>
       produce(state, draft => {

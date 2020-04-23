@@ -31,7 +31,7 @@ const HospitalReview = ({hpId, ratingAvg, review_total, review_list}) => {
         <StandardView>
           {/* 병원 별점(평점) 뷰 */}
           <RatingAvgView
-            title={'평균 별점'}
+            title={'평균 평점'}
             marginHorizontal={50}
             marginVertical={30}
             paddingVertical={30}

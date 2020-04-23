@@ -327,8 +327,9 @@ export const Card = ({
 const Bottom = styled(StandardView)`
   flex-direction: row;
   position: absolute;
-  right: 0;
   bottom: 0;
+  right: ${({positionRight}) =>
+    positionRight ? widthPercentageToDP(positionRight) : 0};
   background-color: transparent;
 `;
 
@@ -350,17 +351,43 @@ const BottomBTN = styled(BTN)`
   background-color: yellow;
 `;
 
-export const BottomView = ({reservation}) => {
+const BottomBTN2 = styled(BTN)`
+  justify-content: center;
+  align-items: center;
+  padding-horizontal: ${widthPercentageToDP(15)};
+  padding-vertical: ${widthPercentageToDP(10)};
+  margin-bottom: ${widthPercentageToDP(5)};
+  border-width: ${widthPercentageToDP(2)};
+  border-color: #9ddbfe;
+  border-radius: ${widthPercentageToDP(10)};
+  background-color: #9ddbfe;
+`;
+
+export const BottomView = ({reviewBtn, reviewWrite, reservation}) => {
   return (
-    <Bottom>
-      <BottomBtnView>
-        <BottomBTN
-          onPress={() => {
-            reservation();
-          }}>
-          <NBGBText>예약</NBGBText>
-        </BottomBTN>
-      </BottomBtnView>
-    </Bottom>
+    <StandardView>
+      <Bottom positionRight={0}>
+        <BottomBtnView>
+          <BottomBTN
+            onPress={() => {
+              reservation();
+            }}>
+            <NBGBText>예약</NBGBText>
+          </BottomBTN>
+        </BottomBtnView>
+      </Bottom>
+      {reviewBtn ? (
+        <Bottom positionRight={375 / 2 - 65}>
+          <BottomBtnView>
+            <BottomBTN2
+              onPress={() => {
+                reviewWrite();
+              }}>
+              <NBGBText color={'white'}>리뷰 쓰기</NBGBText>
+            </BottomBTN2>
+          </BottomBtnView>
+        </Bottom>
+      ) : null}
+    </StandardView>
   );
 };

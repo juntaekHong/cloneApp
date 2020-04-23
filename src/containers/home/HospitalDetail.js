@@ -351,6 +351,10 @@ const HospitalDetail = props => {
       </ScrollView>
       {/* 예약 페이지로 이동 */}
       <BottomView
+        reviewBtn={props.user !== null && props.user.token ? true : false}
+        reviewWrite={() => {
+          props.navigation.navigate('ReviewWrite');
+        }}
         reservation={async () => {
           if (props.user !== null) {
             if (props.user.token) {
