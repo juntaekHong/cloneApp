@@ -321,8 +321,8 @@ const HospitalDetail = props => {
           }}>
           <Swiper
             ref={swipe}
-            // loadMinimal={true}
-            // loadMinimalSize={0}
+            loadMinimal={true}
+            loadMinimalSize={0}
             height={'100%'}
             index={props.page_index}
             onIndexChanged={async index => {

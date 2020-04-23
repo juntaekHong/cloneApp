@@ -175,9 +175,6 @@ export const ReviewFooterView = styled(ReviewHeaderView)``;
 export const ReviewItemView = ({item}) => {
   // 작성자 인덱스 reviewList[0].userIndex
 
-  // 리뷰 글이 5줄 이상이면, 클릭을 통해 보기.
-  const [contentVisible, setContentVisible] = useState(false);
-
   return (
     <ReviewItem>
       {/* 리뷰 상단뷰, 작성자 및 수정&삭제 버튼 */}
@@ -193,18 +190,9 @@ export const ReviewItemView = ({item}) => {
       {/* 리뷰 하단 뷰, 리뷰 코멘트 및 작성(수정)일, 리뷰 점수 뷰 */}
       <StandardView>
         <ReviewFooterView>
-          <BTN
-            activeOpacity={0.7}
-            // 리뷰 글이 5줄 이상이면, 클릭을 통해 보기.
-            onPress={() => {
-              setContentVisible(!contentVisible);
-            }}>
-            <NBGBText
-              numberOfLines={contentVisible ? 100 : 2}
-              style={{width: widthPercentageToDP(250)}}>
-              {item.contents}
-            </NBGBText>
-          </BTN>
+          <NBGBText numberOfLines={2} style={{width: widthPercentageToDP(250)}}>
+            {item.contents}
+          </NBGBText>
           <StarView>
             <PullStarImg
               size={21}

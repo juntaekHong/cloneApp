@@ -45,7 +45,7 @@ const HospitalReview = ({hpId, ratingAvg, review_total, review_list}) => {
               title={'아직 작성된 리뷰가 없습니다!\n먼저 리뷰 작성을 해보세요.'}
             />
           ) : (
-            <ReviewList data={review_list} />
+            <ReviewList data={review_list} count={review_total} />
           )}
         </StandardView>
       )}
