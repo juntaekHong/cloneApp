@@ -45,12 +45,6 @@ const HospitalDetail = props => {
   }, [detailData]);
 
   useEffect(() => {
-    // 리뷰 작성 후, 모달 띄우기
-    props.navigation.state.params !== null &&
-    props.navigation.state.params.reviewComplete
-      ? console.log('success')
-      : console.log('fail');
-
     // 즐겨찾기 유무
     const promise1 = props.subscriber_list.map(item => {
       item.hospital.hpid === detailData.hpid ? setMyScrap(true) : null;

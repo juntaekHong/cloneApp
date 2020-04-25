@@ -175,6 +175,20 @@ export const ReviewFooterView = styled(ReviewHeaderView)``;
 export const ReviewItemView = ({item}) => {
   // 작성자 인덱스 reviewList[0].userIndex
 
+  const timeFomat = time => {
+    let fullyear = time.split('T');
+    let min = time.split(':');
+    let hoursFomat = time.split('T');
+    hoursFomat = hoursFomat[1].split(':');
+    hoursFomat = parseInt(hoursFomat[0]) + 9;
+
+    return timeSince(
+      fullyear[0] + 'T' + hoursFomat + ':' + min[1] + ':' + min[2],
+    );
+  };
+
+  console.log(item);
+
   return (
     <ReviewItem>
       {/* 리뷰 상단뷰, 작성자 및 수정&삭제 버튼 */}
@@ -205,8 +219,8 @@ export const ReviewItemView = ({item}) => {
         </ReviewFooterView>
         <NBGLText align={'right'} marginTop={10} marginRight={15}>
           {item.createdAt === item.updatedAt
-            ? '작성일: ' + timeSince(item.createdAt)
-            : '수정일: ' + timeSince(item.updatedAt)}
+            ? '작성 ' + timeFomat(item.createdAt)
+            : '수정 ' + timeFomat(item.updatedAt)}
         </NBGLText>
       </StandardView>
     </ReviewItem>
