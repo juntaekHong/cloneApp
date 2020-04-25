@@ -187,8 +187,6 @@ export const ReviewItemView = ({item}) => {
     );
   };
 
-  console.log(item);
-
   return (
     <ReviewItem>
       {/* 리뷰 상단뷰, 작성자 및 수정&삭제 버튼 */}
