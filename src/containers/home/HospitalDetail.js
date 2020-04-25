@@ -280,12 +280,19 @@ const HospitalDetail = props => {
         close={false}
         children={
           <View style={{marginLeft: widthPercentageToDP(20)}}>
-            <NBGBText fontSize={17}>리뷰 작성완료</NBGBText>
+            <NBGBText fontSize={17}>
+              {props.navigation.state.params !== null &&
+              props.navigation.state.params.modify
+                ? '리뷰 수정완료'
+                : '리뷰 작성완료'}
+            </NBGBText>
             <StandardView style={{marginTop: widthPercentageToDP(30)}}>
               <NBGText fontSize={13}>
-                {
-                  '작성한 리뷰를 보시겠습니까?\n 확인을 누르시면, 리뷰페이지가 보여집니다.'
-                }
+                {props.navigation.state.params !== null &&
+                props.navigation.state.params.modify
+                  ? '정상적으로 리뷰가 수정되었습니다.'
+                  : '작성한 리뷰를 보시겠습니까?\n 확인을 누르시면, 리뷰페이지가 보여집니다.'}
+                {}
               </NBGText>
             </StandardView>
           </View>
@@ -304,21 +311,29 @@ const HospitalDetail = props => {
                 onPress={async () => {
                   await setReviewCompleteModal(false);
                 }}>
-                <NBGText fontSize={15}>취소</NBGText>
+                <NBGText fontSize={15}>
+                  {props.navigation.state.params !== null &&
+                  props.navigation.state.params.modify
+                    ? '닫기'
+                    : '취소'}
+                </NBGText>
               </BTN>
-              <BTN
-                style={{
-                  marginRight: widthPercentageToDP(30),
-                  marginBottom: widthPercentageToDP(20),
-                  justifyContent: 'flex-end',
-                  alignItems: 'flex-end',
-                }}
-                onPress={async () => {
-                  await swipe.current.scrollBy(2);
-                  await setReviewCompleteModal(false);
-                }}>
-                <NBGText fontSize={15}>확인</NBGText>
-              </BTN>
+              {props.navigation.state.params !== null &&
+              props.navigation.state.params.modify ? null : (
+                <BTN
+                  style={{
+                    marginRight: widthPercentageToDP(30),
+                    marginBottom: widthPercentageToDP(20),
+                    justifyContent: 'flex-end',
+                    alignItems: 'flex-end',
+                  }}
+                  onPress={async () => {
+                    await swipe.current.scrollBy(2);
+                    await setReviewCompleteModal(false);
+                  }}>
+                  <NBGText fontSize={15}>확인</NBGText>
+                </BTN>
+              )}
             </StandardView>
           );
         }}
@@ -397,6 +412,8 @@ const HospitalDetail = props => {
               hpId={detailData.hpid}
               ratingAvg={detailData.ratingAvg}
               user={props.user}
+              navigation={props.navigation}
+              reviewCompleteModal={setReviewCompleteModal}
             />
           </Swiper>
         </View>

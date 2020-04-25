@@ -96,6 +96,47 @@ export const postReview = (hpid, reviewData) => async dispatch => {
   }
 };
 
+// 내 리뷰 수정
+export const updateReview = (reviewIndex, reviewData) => async dispatch => {
+  try {
+    const token = await getData('token');
+
+    const jsonData = await api.patch(`/review/reviewIndex/${reviewIndex}`, {
+      token: token,
+      body: reviewData,
+    });
+
+    if (jsonData.success) {
+      // 성공
+    }
+
+    return true;
+  } catch (err) {
+    console.log('error');
+    return false;
+  }
+};
+
+// 내 리뷰 삭제
+export const deleteReview = reviewIndex => async dispatch => {
+  try {
+    const token = await getData('token');
+
+    const jsonData = await api.delete(`/review/reviewIndex/${reviewIndex}`, {
+      token: token,
+    });
+
+    if (jsonData.success) {
+      // 성공
+    }
+
+    return true;
+  } catch (err) {
+    console.log('error');
+    return false;
+  }
+};
+
 // 내 리뷰 리스트
 export const getMyReview = () => async dispatch => {
   try {

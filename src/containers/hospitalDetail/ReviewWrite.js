@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {connect} from 'react-redux';
 import {TopContainerView, StandardView} from '../../components/common/View';
 import {TopView} from '../../components/common/View';
@@ -32,6 +32,23 @@ const ReviewWrite = props => {
       return true;
     }
   };
+
+  useEffect(() => {
+    if (
+      props.navigation.state.params !== null &&
+      props.navigation.state.params.reviewData
+    ) {
+      const reviewData = props.navigation.state.params.reviewData;
+
+      setCurrentRating(reviewData.rating);
+      setInputReview(reviewData.contents);
+
+      if (reviewData.img !== null) {
+        setSelected(true);
+        setImgData(reviewData.img);
+      }
+    }
+  }, [props.navigation]);
 
   return (
     <TopContainerView style={{flex: 1, backgroundColor: 'white'}}>
@@ -70,21 +87,48 @@ const ReviewWrite = props => {
                 }
               : {contents: inputReview.trim(), rating: currentRating};
 
-            await ReviewActions.postReview(hpid, ReviewData);
+            if (
+              props.navigation.state.params !== null &&
+              props.navigation.state.params.modify
+            ) {
+              // 리뷰 수정
+              await ReviewActions.updateReview(
+                props.navigation.state.params.reviewData.reviewIndex,
+                ReviewData,
+              );
+            } else {
+              // 리뷰 작성
+              await ReviewActions.postReview(hpid, ReviewData);
+            }
+
             await ReviewActions.handleReviewListInit();
 
             const promise1 = ReviewActions.getAllReview(hpid);
             const promise2 = ReviewActions.getMyReview();
 
             Promise.all([promise1, promise2]).then(async () => {
-              // await props.navigation.goBack(null);
               const obj = await CommonActions.getHospital(hpid);
-              await props.navigation.navigate('HospitalDetail', {
-                object: obj,
-                reviewComplete: props.navigation.state.params.reviewCompleteModal(
-                  true,
-                ),
-              });
+
+              if (
+                props.navigation.state.params !== null &&
+                props.navigation.state.params.modify
+              ) {
+                await props.navigation.navigate('HospitalDetail', {
+                  modify: props.navigation.state.params.modify,
+                  object: obj,
+                  reviewComplete: props.navigation.state.params.reviewCompleteModal(
+                    true,
+                  ),
+                });
+              } else {
+                await props.navigation.navigate('HospitalDetail', {
+                  modify: false,
+                  object: obj,
+                  reviewComplete: props.navigation.state.params.reviewCompleteModal(
+                    true,
+                  ),
+                });
+              }
             });
 
             await setLoading(false);

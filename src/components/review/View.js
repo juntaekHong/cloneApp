@@ -196,8 +196,8 @@ export const ReviewItemView = ({item, user, dotsBtn}) => {
         <DotsBtn
           width={30}
           height={30}
-          onPress={(bool, nickName) => {
-            dotsBtn(true, item.user.userNickName);
+          onPress={() => {
+            dotsBtn(true, item);
           }}
         />
       </ReviewHeaderView>

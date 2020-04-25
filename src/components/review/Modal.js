@@ -61,17 +61,21 @@ export const BottomMenuModal = ({
   padding,
   user,
   reviewUser,
+  modifyHandler,
+  DeleteHandler,
+  ReviewHandler,
   closeHandler,
 }) => {
   return (
     <Modal style={{margin: 0}} animationType={animate} isVisible={visible}>
       <BottomModalView padding={padding} width={width}>
-        {user.userNickName === reviewUser ? (
+        {reviewUser !== undefined &&
+        user.userNickName === reviewUser.user.userNickName ? (
           <StandardView>
             <ModifyBtn
               borderTop={true}
               onPress={() => {
-                closeHandler();
+                modifyHandler();
               }}>
               <NBGBText fontSize={20} align={'center'}>
                 수정
@@ -80,7 +84,7 @@ export const BottomMenuModal = ({
             <DivisionView />
             <DeleteBtn
               onPress={() => {
-                closeHandler();
+                DeleteHandler();
               }}>
               <NBGBText fontSize={20} align={'center'}>
                 삭제
@@ -91,10 +95,11 @@ export const BottomMenuModal = ({
           <UserReviewBtn
             borderTop={true}
             onPress={() => {
-              closeHandler();
+              ReviewHandler();
             }}>
             <NBGBText fontSize={20} align={'center'}>
-              {reviewUser}의 모든 리뷰 보기
+              {reviewUser !== undefined ? reviewUser.user.userNickName : ''}의
+              모든 리뷰 보기
             </NBGBText>
           </UserReviewBtn>
         )}

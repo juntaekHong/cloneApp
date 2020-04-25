@@ -13,13 +13,19 @@ import {widthPercentageToDP} from '../../utils/util';
 import {ReviewList} from '../../components/review/FlatList';
 import {BottomMenuModal} from '../../components/review/Modal';
 
-const HospitalReview = ({hpId, ratingAvg, review_total, review_list, user}) => {
+const HospitalReview = ({
+  hpId,
+  ratingAvg,
+  review_total,
+  review_list,
+  user,
+  navigation,
+  reviewCompleteModal,
+}) => {
   // 다트 버튼 모달
   const [dotsModal, setDotsModal] = useState(false);
   // 다트 버튼 클릭한 리뷰에 대한 유저 닉네임
   const [reviewUser, setReviewUser] = useState();
-
-  // console.log(review_list);
 
   return (
     <TopContainerView marginTop={10}>
@@ -29,6 +35,24 @@ const HospitalReview = ({hpId, ratingAvg, review_total, review_list, user}) => {
         visible={dotsModal}
         user={user}
         reviewUser={reviewUser}
+        modifyHandler={async () => {
+          await setDotsModal(false);
+          await navigation.navigate('ReviewWrite', {
+            modify: true,
+            hpid: hpId,
+            reviewData: reviewUser,
+            reviewCompleteModal: reviewCompleteModal,
+          });
+        }}
+        DeleteHandler={async () => {
+          await ReviewActions.deleteReview(reviewUser.reviewIndex);
+          await ReviewActions.getAllReview(hpId);
+          await ReviewActions.getMyReview();
+          await setDotsModal(false);
+        }}
+        ReviewHandler={async () => {
+          await setDotsModal(false);
+        }}
         closeHandler={async () => {
           await setDotsModal(false);
         }}
@@ -59,9 +83,9 @@ const HospitalReview = ({hpId, ratingAvg, review_total, review_list, user}) => {
               data={review_list}
               count={review_total}
               user={user}
-              dotsBtn={(bool, nickName) => {
+              dotsBtn={(bool, reviewData) => {
                 setDotsModal(bool);
-                setReviewUser(nickName);
+                setReviewUser(reviewData);
               }}
             />
           )}

@@ -53,8 +53,8 @@ export const ReviewList = ({data, count, user, dotsBtn}) => {
             index={index}
             item={item}
             user={user}
-            dotsBtn={(bool, nickName) => {
-              dotsBtn(bool, nickName);
+            dotsBtn={(bool, reviewData) => {
+              dotsBtn(bool, reviewData);
             }}
           />
         );
