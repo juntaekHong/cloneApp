@@ -8,13 +8,14 @@ import {FlatList} from 'react-native';
 import {ReviewItemView} from './View';
 import {StandardView} from '../common/View';
 import {UIActivityIndicator} from 'react-native-indicators';
+import {NBGBText} from '../common/Text';
 
 const Review = styled(FlatList)`
   flex-grow: 1;
   width: 100%;
   min-height: ${({count, imgCount}) =>
     count && imgCount
-      ? widthPercentageToDP(imgCount * 400 + (count - imgCount) * 230 + 300)
+      ? widthPercentageToDP(imgCount * 410 + (count - imgCount) * 150 + 400)
       : 0};
 `;
 
@@ -50,7 +51,19 @@ export const ReviewList = ({data, count}) => {
         return <ReviewItemView index={index} item={item} />;
       }}
       ListFooterComponent={() => {
-        return <StandardView style={{marginBottom: widthPercentageToDP(70)}} />;
+        return (
+          <StandardView
+            style={{
+              paddingTop: widthPercentageToDP(30),
+              paddingLeft: widthPercentageToDP(15),
+              borderTopWidth: widthPercentageToDP(1),
+              borderTopColor: '#dbdbdb',
+            }}>
+            <NBGBText color={'gray'} fontSize={15}>
+              * 리뷰가 더 이상 없습니다.
+            </NBGBText>
+          </StandardView>
+        );
       }}
     />
   );
