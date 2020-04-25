@@ -396,6 +396,7 @@ const HospitalDetail = props => {
             <HospitalReview
               hpId={detailData.hpid}
               ratingAvg={detailData.ratingAvg}
+              user={props.user}
             />
           </Swiper>
         </View>

@@ -172,7 +172,7 @@ const ReviewHeaderView = styled(StandardView)`
 
 export const ReviewFooterView = styled(ReviewHeaderView)``;
 
-export const ReviewItemView = ({item}) => {
+export const ReviewItemView = ({item, user, dotsBtn}) => {
   // 작성자 인덱스 reviewList[0].userIndex
 
   const timeFomat = time => {
@@ -193,7 +193,13 @@ export const ReviewItemView = ({item}) => {
       <ReviewHeaderView>
         <NBGText>적성자: {item.user.userNickName}</NBGText>
         {/* 작성자가 본인일 시 보임. */}
-        <DotsBtn width={30} height={30} onPress={() => {}} />
+        <DotsBtn
+          width={30}
+          height={30}
+          onPress={(bool, nickName) => {
+            dotsBtn(true, item.user.userNickName);
+          }}
+        />
       </ReviewHeaderView>
       {/* 이미지 뷰 */}
       {item.img ? (

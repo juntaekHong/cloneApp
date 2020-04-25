@@ -19,7 +19,7 @@ const Review = styled(FlatList)`
       : 0};
 `;
 
-export const ReviewList = ({data, count}) => {
+export const ReviewList = ({data, count, user, dotsBtn}) => {
   const [imgCount, setImgCount] = useState();
 
   useEffect(() => {
@@ -48,7 +48,16 @@ export const ReviewList = ({data, count}) => {
         );
       }}
       renderItem={({item, index}) => {
-        return <ReviewItemView index={index} item={item} />;
+        return (
+          <ReviewItemView
+            index={index}
+            item={item}
+            user={user}
+            dotsBtn={(bool, nickName) => {
+              dotsBtn(bool, nickName);
+            }}
+          />
+        );
       }}
       ListFooterComponent={() => {
         return (

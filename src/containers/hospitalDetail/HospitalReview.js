@@ -11,10 +11,28 @@ import {ReviewActions} from '../../store/actionCreator';
 import {UIActivityIndicator} from 'react-native-indicators';
 import {widthPercentageToDP} from '../../utils/util';
 import {ReviewList} from '../../components/review/FlatList';
+import {BottomMenuModal} from '../../components/review/Modal';
 
-const HospitalReview = ({hpId, ratingAvg, review_total, review_list}) => {
+const HospitalReview = ({hpId, ratingAvg, review_total, review_list, user}) => {
+  // 다트 버튼 모달
+  const [dotsModal, setDotsModal] = useState(false);
+  // 다트 버튼 클릭한 리뷰에 대한 유저 닉네임
+  const [reviewUser, setReviewUser] = useState();
+
+  // console.log(review_list);
+
   return (
     <TopContainerView marginTop={10}>
+      <BottomMenuModal
+        width={375}
+        padding={10}
+        visible={dotsModal}
+        user={user}
+        reviewUser={reviewUser}
+        closeHandler={async () => {
+          await setDotsModal(false);
+        }}
+      />
       {review_list === null ? (
         <UIActivityIndicator color={'gray'} size={widthPercentageToDP(30)} />
       ) : (
@@ -37,7 +55,15 @@ const HospitalReview = ({hpId, ratingAvg, review_total, review_list}) => {
               title={'아직 작성된 리뷰가 없습니다!\n먼저 리뷰 작성을 해보세요.'}
             />
           ) : (
-            <ReviewList data={review_list} count={review_total} />
+            <ReviewList
+              data={review_list}
+              count={review_total}
+              user={user}
+              dotsBtn={(bool, nickName) => {
+                setDotsModal(bool);
+                setReviewUser(nickName);
+              }}
+            />
           )}
         </StandardView>
       )}

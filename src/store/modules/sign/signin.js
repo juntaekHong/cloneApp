@@ -36,18 +36,18 @@ export const signIn = (email, userPw) => async dispatch => {
       body: userData,
     });
 
-    console.log(jsonData);
-
     // 이메일 인증 여부에 따라 데이터 저장
     if (typeof jsonData.result === 'object') {
       const result = jsonData.result;
 
       await storeData('token', result.token);
+      await storeData('user_userNickName', result.userNickName);
       await storeData('user_name', result.userName);
       await storeData('email', result.email);
       await dispatch(
         userDataAction({
           email: result.email,
+          userNickName: result.userNickName,
           userName: result.userName,
           token: result.token,
         }),
