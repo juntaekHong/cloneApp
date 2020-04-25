@@ -5,7 +5,7 @@ import {TopContainerView, StandardView} from '../../components/common/View';
 import {TopView} from '../../components/common/View';
 import {ReviewWriteView} from '../../components/review/View';
 import ImageCropPicker from 'react-native-image-crop-picker';
-import {ReviewActions} from '../../store/actionCreator';
+import {ReviewActions, CommonActions} from '../../store/actionCreator';
 import {KeyboardAvoidingView, Platform, ScrollView} from 'react-native';
 import {showMessage} from '../../utils/util';
 import Toast from 'react-native-root-toast';
@@ -22,6 +22,10 @@ const ReviewWrite = props => {
 
   // 병원 별점
   const [currentRating, setCurrentRating] = useState(0);
+
+  // useEffect(() => {
+  //   props.navigation.state.params !== null && props.navigation.state.params.reviewCompleteModal
+  // }, []);
 
   return (
     <TopContainerView style={{flex: 1, backgroundColor: 'white'}}>
@@ -52,7 +56,14 @@ const ReviewWrite = props => {
             const promise2 = ReviewActions.getMyReview();
 
             Promise.all([promise1, promise2]).then(async () => {
-              await props.navigation.goBack(null);
+              // await props.navigation.goBack(null);
+              const obj = await CommonActions.getHospital(hpid);
+              await props.navigation.navigate('HospitalDetail', {
+                object: obj,
+                reviewComplete: props.navigation.state.params.reviewCompleteModal(
+                  true,
+                ),
+              });
             });
           }
         }}

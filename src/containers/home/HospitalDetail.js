@@ -36,6 +36,8 @@ const HospitalDetail = props => {
   const [taxiModal, setTaxiModal] = useState(false);
   // 예약 모달
   const [reservationModal, setReservationModal] = useState(false);
+  // 리뷰 작성 완료 모달
+  const [reviewCompleteModal, setReviewCompleteModal] = useState(false);
 
   // 병원 상세 데이터가 들어오면 네이버 길찾기에 대한 한글 인코딩 해주는 것.
   useEffect(() => {
@@ -43,6 +45,12 @@ const HospitalDetail = props => {
   }, [detailData]);
 
   useEffect(() => {
+    // 리뷰 작성 후, 모달 띄우기
+    props.navigation.state.params !== null &&
+    props.navigation.state.params.reviewComplete
+      ? console.log('success')
+      : console.log('fail');
+
     // 즐겨찾기 유무
     const promise1 = props.subscriber_list.map(item => {
       item.hospital.hpid === detailData.hpid ? setMyScrap(true) : null;
@@ -271,6 +279,56 @@ const HospitalDetail = props => {
           );
         }}
       />
+      <CustomModal
+        width={300}
+        height={200}
+        visible={reviewCompleteModal}
+        close={false}
+        children={
+          <View style={{marginLeft: widthPercentageToDP(20)}}>
+            <NBGBText fontSize={17}>리뷰 작성완료</NBGBText>
+            <StandardView style={{marginTop: widthPercentageToDP(30)}}>
+              <NBGText fontSize={13}>
+                {
+                  '작성한 리뷰를 보시겠습니까?\n 확인을 누르시면, 리뷰페이지가 보여집니다.'
+                }
+              </NBGText>
+            </StandardView>
+          </View>
+        }
+        renderFooter={() => {
+          return (
+            <StandardView
+              style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
+              <BTN
+                style={{
+                  marginRight: widthPercentageToDP(30),
+                  marginBottom: widthPercentageToDP(20),
+                  justifyContent: 'flex-end',
+                  alignItems: 'flex-end',
+                }}
+                onPress={async () => {
+                  await setReviewCompleteModal(false);
+                }}>
+                <NBGText fontSize={15}>취소</NBGText>
+              </BTN>
+              <BTN
+                style={{
+                  marginRight: widthPercentageToDP(30),
+                  marginBottom: widthPercentageToDP(20),
+                  justifyContent: 'flex-end',
+                  alignItems: 'flex-end',
+                }}
+                onPress={async () => {
+                  await swipe.current.scrollBy(2);
+                  await setReviewCompleteModal(false);
+                }}>
+                <NBGText fontSize={15}>확인</NBGText>
+              </BTN>
+            </StandardView>
+          );
+        }}
+      />
       <TopView
         marginBottom={5}
         title={detailData.dutyName}
@@ -354,9 +412,14 @@ const HospitalDetail = props => {
         reviewWrite={() => {
           props.navigation.navigate('ReviewWrite', {
             hpid: detailData.hpid,
+            reviewCompleteModal: setReviewCompleteModal,
           });
 
-          props.page_index === 2 ? swipe.current.scrollBy(-1) : null;
+          props.page_index === 2
+            ? swipe.current.scrollBy(-2)
+            : props.page_index === 1
+            ? swipe.current.scrollBy(-1)
+            : null;
         }}
         reservation={async () => {
           if (props.user !== null) {
