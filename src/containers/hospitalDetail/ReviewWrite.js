@@ -23,9 +23,15 @@ const ReviewWrite = props => {
   // 병원 별점
   const [currentRating, setCurrentRating] = useState(0);
 
-  // useEffect(() => {
-  //   props.navigation.state.params !== null && props.navigation.state.params.reviewCompleteModal
-  // }, []);
+  const [loading, setLoading] = useState(false);
+
+  const checkSpace = str => {
+    if (str.replace(/(\s*)/g, '') == '') {
+      return false;
+    } else {
+      return true;
+    }
+  };
 
   return (
     <TopContainerView style={{flex: 1, backgroundColor: 'white'}}>
@@ -39,15 +45,30 @@ const ReviewWrite = props => {
         closeBtn={false}
         searchBtn={false}
         uploadBtn={true}
+        uploadLoading={loading}
         uploadHandler={async () => {
-          if (inputReview === '' || currentRating === 0) {
+          if (
+            inputReview.trim().length >= 10 && checkSpace(inputReview)
+              ? false
+              : true
+          ) {
+            showMessage('리뷰를 10자 이상 작성해주세요!', {
+              position: Toast.positions.CENTER,
+            });
+          } else if (inputReview === '' || currentRating === 0) {
             showMessage('리뷰 댓글 또는 병원 평가를 하지 않았습니다!', {
               position: Toast.positions.CENTER,
             });
           } else {
+            await setLoading(true);
+
             const ReviewData = selected
-              ? {contents: inputReview, rating: currentRating, url: ImgData}
-              : {contents: inputReview, rating: currentRating};
+              ? {
+                  contents: inputReview.trim(),
+                  rating: currentRating,
+                  url: ImgData,
+                }
+              : {contents: inputReview.trim(), rating: currentRating};
 
             await ReviewActions.postReview(hpid, ReviewData);
             await ReviewActions.handleReviewListInit();
@@ -65,6 +86,8 @@ const ReviewWrite = props => {
                 ),
               });
             });
+
+            await setLoading(false);
           }
         }}
       />

@@ -21,7 +21,7 @@ export const ReviewTI = ({onChangeText, value}) => {
   return (
     <Review
       textAlignVertical={'top'}
-      placeholder={'1000자 이내로 작성해주세요!'}
+      placeholder={'10자 이상, 1000자 이내로 작성해주세요!'}
       placeholderTextColor={'#707070'}
       underlineColorAndroid={'transparent'}
       maxLength={1000}

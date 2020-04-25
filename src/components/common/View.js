@@ -5,6 +5,7 @@ import styled from 'styled-components/native';
 import {widthPercentageToDP} from '../../utils/util';
 import {BackImg, CloseImg} from './Image';
 import {NBGBText} from './Text';
+import {UIActivityIndicator} from 'react-native-indicators';
 
 export const TopContainerView = styled.SafeAreaView`
   flex: 1;
@@ -108,14 +109,24 @@ export const TopView = props => {
       ) : props.uploadBtn ? (
         <BTN
           style={{marginRight: widthPercentageToDP(5)}}
+          disabled={props.uploadLoading}
           onPress={() => {
             props.uploadHandler();
           }}>
-          <CloseImg
-            width={32}
-            height={32}
-            source={require('../../../assets/image/review/arrow-up.png')}
-          />
+          {props.uploadLoading ? (
+            <StandardView style={{marginRight: widthPercentageToDP(3)}}>
+              <UIActivityIndicator
+                size={widthPercentageToDP(20)}
+                color={'gray'}
+              />
+            </StandardView>
+          ) : (
+            <CloseImg
+              width={32}
+              height={32}
+              source={require('../../../assets/image/review/arrow-up.png')}
+            />
+          )}
         </BTN>
       ) : (
         <View
