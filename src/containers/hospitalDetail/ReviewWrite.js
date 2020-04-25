@@ -30,7 +30,7 @@ const ReviewWrite = props => {
         title={'리뷰 작성'}
         backBtn={true}
         backHandler={() => {
-          props.navigation.goBack();
+          props.navigation.goBack(null);
         }}
         closeBtn={false}
         searchBtn={false}
@@ -51,8 +51,8 @@ const ReviewWrite = props => {
             const promise1 = ReviewActions.getAllReview(hpid);
             const promise2 = ReviewActions.getMyReview();
 
-            Promise.all([promise1, promise2]).then(() => {
-              props.navigation.goBack(null);
+            Promise.all([promise1, promise2]).then(async () => {
+              await props.navigation.goBack(null);
             });
           }
         }}

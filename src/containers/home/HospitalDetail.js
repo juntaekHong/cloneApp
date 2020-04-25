@@ -352,7 +352,11 @@ const HospitalDetail = props => {
       <BottomView
         reviewBtn={props.user !== null && props.user.token ? true : false}
         reviewWrite={() => {
-          props.navigation.navigate('ReviewWrite', {hpid: detailData.hpid});
+          props.navigation.navigate('ReviewWrite', {
+            hpid: detailData.hpid,
+          });
+
+          props.page_index === 2 ? swipe.current.scrollBy(-1) : null;
         }}
         reservation={async () => {
           if (props.user !== null) {

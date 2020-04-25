@@ -13,16 +13,6 @@ import {widthPercentageToDP} from '../../utils/util';
 import {ReviewList} from '../../components/review/FlatList';
 
 const HospitalReview = ({hpId, ratingAvg, review_total, review_list}) => {
-  // 평균 평점
-  const [ratingScore, setRatingScore] = useState(
-    ratingAvg !== null ? parseFloat(ratingAvg).toFixed(2) : 0,
-  );
-
-  // 리뷰 작성 및 삭제 등 해당 병원의 평점 변경 시, 변경된 데이터 적용
-  useEffect(() => {
-    setRatingScore(ratingAvg !== null ? parseFloat(ratingAvg).toFixed(2) : 0);
-  }, [ratingAvg]);
-
   return (
     <TopContainerView marginTop={10}>
       {review_list === null ? (
@@ -35,7 +25,9 @@ const HospitalReview = ({hpId, ratingAvg, review_total, review_list}) => {
             marginHorizontal={50}
             marginVertical={30}
             paddingVertical={30}
-            ratingScore={ratingScore}
+            ratingScore={
+              ratingAvg !== null ? parseFloat(ratingAvg).toFixed(2) : 0
+            }
           />
           {/* 리뷰 총 개수 뷰 */}
           <ReviewCountView paddingVertical={10} total={review_total} />
