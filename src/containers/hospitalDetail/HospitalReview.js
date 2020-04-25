@@ -33,7 +33,7 @@ const HospitalReview = ({
         width={375}
         padding={10}
         visible={dotsModal}
-        user={user}
+        user={user ? user : '비회원'}
         reviewUser={reviewUser}
         modifyHandler={async () => {
           await setDotsModal(false);
@@ -51,7 +51,11 @@ const HospitalReview = ({
           await setDotsModal(false);
         }}
         ReviewHandler={async () => {
+          await ReviewActions.getReviewByUserNickName(
+            reviewUser.user.userNickName,
+          );
           await setDotsModal(false);
+          await navigation.navigate('UserReview');
         }}
         closeHandler={async () => {
           await setDotsModal(false);
@@ -83,6 +87,7 @@ const HospitalReview = ({
               data={review_list}
               count={review_total}
               user={user}
+              dots={true}
               dotsBtn={(bool, reviewData) => {
                 setDotsModal(bool);
                 setReviewUser(reviewData);

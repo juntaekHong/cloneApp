@@ -19,7 +19,15 @@ const Review = styled(FlatList)`
       : 0};
 `;
 
-export const ReviewList = ({data, count, user, dotsBtn}) => {
+// 리뷰 페이지
+export const ReviewList = ({
+  scrollEnabled,
+  data,
+  count,
+  user,
+  dots,
+  dotsBtn,
+}) => {
   const [imgCount, setImgCount] = useState();
 
   useEffect(() => {
@@ -35,7 +43,7 @@ export const ReviewList = ({data, count, user, dotsBtn}) => {
     <Review
       count={count}
       imgCount={imgCount}
-      scrollEnabled={false}
+      scrollEnabled={scrollEnabled ? scrollEnabled : false}
       data={data}
       keyExtractor={(item, index) => {
         index.toString();
@@ -53,6 +61,7 @@ export const ReviewList = ({data, count, user, dotsBtn}) => {
             index={index}
             item={item}
             user={user}
+            dots={dots}
             dotsBtn={(bool, reviewData) => {
               dotsBtn(bool, reviewData);
             }}
@@ -64,6 +73,80 @@ export const ReviewList = ({data, count, user, dotsBtn}) => {
           <StandardView
             style={{
               paddingTop: widthPercentageToDP(30),
+              paddingLeft: widthPercentageToDP(15),
+              borderTopWidth: widthPercentageToDP(1),
+              borderTopColor: '#dbdbdb',
+            }}>
+            <NBGBText color={'gray'} fontSize={15}>
+              * 리뷰가 더 이상 없습니다.
+            </NBGBText>
+          </StandardView>
+        );
+      }}
+    />
+  );
+};
+
+const UserReview = styled(FlatList)`
+  flex-grow: 1;
+  width: 100%;
+  height: 100%;
+`;
+
+export const UserReviewList = ({
+  scrollEnabled,
+  data,
+  count,
+  user,
+  dots,
+  dotsBtn,
+}) => {
+  const [imgCount, setImgCount] = useState();
+
+  useEffect(() => {
+    let imgCount = 0;
+    data.map(item => {
+      item.img !== null ? (imgCount = imgCount + 1) : null;
+    });
+
+    setImgCount(imgCount);
+  }, []);
+
+  return (
+    <UserReview
+      count={count}
+      imgCount={imgCount}
+      scrollEnabled={scrollEnabled ? scrollEnabled : false}
+      data={data}
+      keyExtractor={(item, index) => {
+        index.toString();
+      }}
+      ListHeaderComponent={() => {
+        return (
+          <StandardView
+            style={{height: widthPercentageToDP(1), backgroundColor: '#dbdbdb'}}
+          />
+        );
+      }}
+      renderItem={({item, index}) => {
+        return (
+          <ReviewItemView
+            index={index}
+            item={item}
+            user={user}
+            dots={dots}
+            dotsBtn={(bool, reviewData) => {
+              dotsBtn(bool, reviewData);
+            }}
+          />
+        );
+      }}
+      ListFooterComponent={() => {
+        return (
+          <StandardView
+            style={{
+              paddingTop: widthPercentageToDP(30),
+              paddingBottom: widthPercentageToDP(30),
               paddingLeft: widthPercentageToDP(15),
               borderTopWidth: widthPercentageToDP(1),
               borderTopColor: '#dbdbdb',

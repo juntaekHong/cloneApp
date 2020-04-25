@@ -9,6 +9,7 @@ import MyPage_noTab from '../myPage/MyPage_noTab';
 import Reservation from '../../containers/hospitalDetail/Reservation';
 import Calendars from '../../containers/hospitalDetail/Calendars';
 import ReviewWrite from '../../containers/hospitalDetail/ReviewWrite';
+import UserReview from '../../containers/hospitalDetail/UserReview';
 
 const RootStack = createStackNavigator(
   {
@@ -22,6 +23,7 @@ const RootStack = createStackNavigator(
     Reservation: {screen: Reservation},
     Calendars: {screen: Calendars},
     ReviewWrite: {screen: ReviewWrite},
+    UserReview: {screen: UserReview},
   },
   {
     initialRouteName: 'main',
