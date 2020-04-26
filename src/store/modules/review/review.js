@@ -38,10 +38,16 @@ const initState = {
   user_review_total: null,
 };
 
-// 병원 리스트 뷰 초기화
+// 병원 리스트 초기화
 export const handleReviewListInit = () => dispatch => {
   dispatch(reviewListAction(null));
   dispatch(reviewTotalAction(null));
+};
+
+// 다른 유저 리스트 초기화
+export const handleUserReviewListInit = () => dispatch => {
+  dispatch(userReviewListAction([]));
+  dispatch(userReviewTotalAction(null));
 };
 
 // S3 주소로 이미지 저장

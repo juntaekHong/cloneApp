@@ -33,6 +33,12 @@ const UserReview = props => {
     setLoading(false);
   }, [props.navigation]);
 
+  useEffect(() => {
+    return async () => {
+      await ReviewActions.handleUserReviewListInit();
+    };
+  }, []);
+
   return (
     <TopContainerView style={{flex: 1, backgroundColor: 'white'}}>
       <TopView

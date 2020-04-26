@@ -37,7 +37,7 @@ const ReviewWrite = props => {
     return async () => {
       await setLoading(false);
     };
-  });
+  }, []);
 
   useEffect(() => {
     if (
