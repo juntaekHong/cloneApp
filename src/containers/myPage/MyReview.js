@@ -42,6 +42,7 @@ const MyReview = props => {
             modify: true,
             hpid: reviewUser.hpid,
             reviewData: reviewUser,
+            from: 'myPage',
           });
         }}
         // 삭제
