@@ -27,6 +27,7 @@ export const ReviewList = ({
   user,
   dots,
   dotsBtn,
+  contentBtn,
 }) => {
   const [imgCount, setImgCount] = useState();
 
@@ -64,6 +65,9 @@ export const ReviewList = ({
             dots={dots}
             dotsBtn={(bool, reviewData) => {
               dotsBtn(bool, reviewData);
+            }}
+            contentBtn={(bool, reviewData) => {
+              contentBtn(bool, reviewData);
             }}
           />
         );

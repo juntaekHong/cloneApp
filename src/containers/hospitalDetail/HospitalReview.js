@@ -18,6 +18,7 @@ import {widthPercentageToDP} from '../../utils/util';
 import {ReviewList} from '../../components/review/FlatList';
 import {BottomMenuModal} from '../../components/review/Modal';
 import {CustomModal} from '../../components/common/Modal';
+import {ScrollView} from 'react-native';
 
 const HospitalReview = ({
   hpId,
@@ -34,9 +35,54 @@ const HospitalReview = ({
   const [reviewUser, setReviewUser] = useState();
   // 삭제 후, 삭제 알림 모달
   const [reviewDeleteModal, setReviewDeleteModal] = useState(false);
+  // 댓글 내용 모두 보기 모달
+  const [reviewContentModal, setReviewContentModal] = useState(false);
+
+  console.log(reviewUser);
 
   return (
     <TopContainerView marginTop={10}>
+      {/* 리뷰 content 모달 */}
+      <CustomModal
+        width={300}
+        height={400}
+        visible={reviewContentModal}
+        close={false}
+        children={
+          <StandardView style={{marginLeft: widthPercentageToDP(20)}}>
+            <NBGBText fontSize={17}>
+              {reviewUser.user.userNickName}님의 리뷰
+            </NBGBText>
+            <ScrollView style={{marginTop: widthPercentageToDP(30)}}>
+              <NBGText fontSize={13}>{reviewUser.contents}</NBGText>
+            </ScrollView>
+          </StandardView>
+        }
+        renderFooter={() => {
+          return (
+            <StandardView
+              style={{
+                marginTop: widthPercentageToDP(25),
+                flexDirection: 'row',
+                justifyContent: 'flex-end',
+              }}>
+              <BTN
+                style={{
+                  marginRight: widthPercentageToDP(30),
+                  marginBottom: widthPercentageToDP(20),
+                  justifyContent: 'flex-end',
+                  alignItems: 'flex-end',
+                }}
+                onPress={async () => {
+                  await setReviewContentModal(false);
+                }}>
+                <NBGText fontSize={15}>닫기</NBGText>
+              </BTN>
+            </StandardView>
+          );
+        }}
+      />
+      {/* 리뷰 삭제 모달 */}
       <CustomModal
         width={300}
         height={200}
@@ -72,6 +118,7 @@ const HospitalReview = ({
           );
         }}
       />
+      {/* 다트 모달 */}
       <BottomMenuModal
         width={375}
         padding={10}
@@ -143,6 +190,10 @@ const HospitalReview = ({
               dots={true}
               dotsBtn={(bool, reviewData) => {
                 setDotsModal(bool);
+                setReviewUser(reviewData);
+              }}
+              contentBtn={(bool, reviewData) => {
+                setReviewContentModal(bool);
                 setReviewUser(reviewData);
               }}
             />

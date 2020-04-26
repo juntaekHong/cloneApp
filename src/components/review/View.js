@@ -172,7 +172,7 @@ const ReviewHeaderView = styled(StandardView)`
 
 export const ReviewFooterView = styled(ReviewHeaderView)``;
 
-export const ReviewItemView = ({item, user, dots, dotsBtn}) => {
+export const ReviewItemView = ({item, user, dots, dotsBtn, contentBtn}) => {
   // 작성자 인덱스 reviewList[0].userIndex
 
   const timeFomat = time => {
@@ -223,9 +223,17 @@ export const ReviewItemView = ({item, user, dots, dotsBtn}) => {
       {/* 리뷰 하단 뷰, 리뷰 코멘트 및 작성(수정)일, 리뷰 점수 뷰 */}
       <StandardView>
         <ReviewFooterView>
-          <NBGBText numberOfLines={2} style={{width: widthPercentageToDP(250)}}>
-            {item.contents}
-          </NBGBText>
+          <BTN
+            onPress={() => {
+              contentBtn(true, item);
+            }}>
+            <NBGText
+              numberOfLines={2}
+              style={{width: widthPercentageToDP(250)}}>
+              {item.contents}
+            </NBGText>
+            <NBGText color={'gray'}>...더 보기</NBGText>
+          </BTN>
           <StarView>
             <PullStarImg
               size={21}
