@@ -3,13 +3,14 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {BTN} from '../common/View';
-import {NBGBText} from '../common/Text';
+import {NBGText} from '../common/Text';
 import {widthPercentageToDP, removeData} from '../../utils/util';
 import {
   SigninActions,
   ReservationActions,
   HospitalActions,
 } from '../../store/actionCreator';
+import {RightarrowImg} from './Image';
 
 // 로그인 버튼
 export const LoginBtn = ({loginModal}) => {
@@ -19,17 +20,11 @@ export const LoginBtn = ({loginModal}) => {
         loginModal();
       }}
       style={{
-        width: widthPercentageToDP(200),
-        marginLeft: widthPercentageToDP(30),
-        padding: widthPercentageToDP(10),
-        borderWidth: widthPercentageToDP(1),
-        borderColor: '#dbdbdb',
-        borderRadius: widthPercentageToDP(15),
-        justifyContent: 'center',
+        flexDirection: 'row',
         alignItems: 'center',
-        marginVertical: widthPercentageToDP(30),
       }}>
-      <NBGBText>로그인 및 회원가입</NBGBText>
+      <NBGText>로그인 및 회원가입</NBGText>
+      <RightarrowImg width={40} height={40} />
     </BTN>
   );
 };
@@ -51,17 +46,11 @@ export const LogoutBtn = props => {
         await SigninActions.handleLoginData(null);
       }}
       style={{
-        width: widthPercentageToDP(200),
-        marginLeft: widthPercentageToDP(30),
-        padding: widthPercentageToDP(10),
-        borderWidth: widthPercentageToDP(1),
-        borderColor: '#dbdbdb',
-        borderRadius: widthPercentageToDP(15),
-        justifyContent: 'center',
+        flexDirection: 'row',
         alignItems: 'center',
-        marginVertical: widthPercentageToDP(30),
       }}>
-      <NBGBText>로그아웃</NBGBText>
+      <NBGText>로그아웃</NBGText>
+      <RightarrowImg width={40} height={40} />
     </BTN>
   );
 };

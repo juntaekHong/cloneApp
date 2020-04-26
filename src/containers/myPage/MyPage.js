@@ -8,18 +8,25 @@ import {
   BTN,
   StandardView,
 } from '../../components/common/View';
-import {NBGBText} from '../../components/common/Text';
+import {NBGBText, NBGText} from '../../components/common/Text';
 import {widthPercentageToDP, getData, showMessage} from '../../utils/util';
 import {CustomModal} from '../../components/common/Modal';
 import colors from '../../configs/colors';
-import {TextInput, Keyboard, Linking} from 'react-native';
+import {TextInput, Keyboard, Linking, ScrollView} from 'react-native';
 import {SelectImg, UnSelectImg} from '../../components/home/Image';
 import {
   SigninActions,
   ReservationActions,
   HospitalActions,
 } from '../../store/actionCreator';
-import {LoginView} from '../../components/myPage/View';
+import {
+  LoginOutView,
+  DivisionView,
+  LoginView,
+  MyInfoView,
+  MySubView,
+  AppSubView,
+} from '../../components/myPage/View';
 import {LoginBtn} from '../../components/myPage/Button';
 import Toast from 'react-native-root-toast';
 
@@ -58,6 +65,7 @@ const MyPage = props => {
 
   return (
     <TopContainerView>
+      <TopView title="마이 페이지" />
       <CustomModal
         width={300}
         height={350}
@@ -219,42 +227,80 @@ const MyPage = props => {
           );
         }}
       />
-      <TopView title="마이 페이지" />
-      {props.user === null ? (
-        <LoginBtn
-          loginModal={() => {
-            setLoginModal(true);
+      <ScrollView>
+        <LoginOutView
+          paddingVertical={20}
+          paddingLeft={20}
+          borderWidth={1}
+          title={'로그인 상태'}
+          arrowImg={true}
+          user={props.user}
+          sign={() => {
+            return props.user === null ? (
+              <LoginBtn
+                loginModal={() => {
+                  setLoginModal(true);
+                }}
+              />
+            ) : (
+              <LoginView user={props.user} />
+            );
           }}
         />
-      ) : (
-        <StandardView>
-          {/* 이메일 인증 전 보이는 링크 뷰 */}
-          {props.user.result ? (
-            <StandardView style={{marginLeft: widthPercentageToDP(30)}}>
-              <StandardView flexDirection={'row'}>
-                <BTN
-                  style={{
-                    borderBottomWidth: widthPercentageToDP(1),
-                    borderColor: '#2980b9',
-                  }}
-                  onPress={async () => {
-                    let siteUrl = props.user.email.split('@')[1];
-
-                    await Linking.openURL('https://' + siteUrl);
-                  }}>
-                  <NBGBText color={'#2980b9'}>{props.user.email}</NBGBText>
-                </BTN>
-                <NBGBText>을 인증해주세요!</NBGBText>
-              </StandardView>
-              <NBGBText marginTop={5}>인증 후, 재로그인이 필요합니다.</NBGBText>
-              <NBGBText marginTop={5} color={'red'} fontSize={12}>
-                * 이메일 미인증 시, 일부 기능이 제한됩니다.
-              </NBGBText>
-            </StandardView>
-          ) : null}
-          <LoginView user={props.user} />
-        </StandardView>
-      )}
+        <MyInfoView paddingVertical={20} paddingLeft={20} user={props.user} />
+        <DivisionView borderWidth={3} borderColor={'#F6F7F9'} />
+        <MySubView
+          paddingVertical={20}
+          paddingLeft={20}
+          borderWidth={1}
+          title={'즐겨찾기 목록'}
+          imgUrl={require('../../../assets/image/myPage/ui.png')}
+        />
+        <MySubView
+          paddingVertical={20}
+          paddingLeft={20}
+          borderWidth={1}
+          title={'리뷰 목록'}
+          imgUrl={require('../../../assets/image/myPage/review.png')}
+        />
+        <DivisionView borderWidth={3} borderColor={'#F6F7F9'} />
+        <AppSubView
+          paddingVertical={20}
+          paddingLeft={20}
+          borderWidth={1}
+          title={'뽀듬 서비스 문의하기'}
+          arrowImg={true}
+        />
+        <AppSubView
+          paddingVertical={20}
+          paddingLeft={20}
+          borderWidth={1}
+          title={'사용자 의견 보내기'}
+          arrowImg={true}
+        />
+        <AppSubView
+          paddingVertical={20}
+          paddingLeft={20}
+          borderWidth={1}
+          title={'뽀듬 고객센터 전화하기'}
+          arrowImg={true}
+        />
+        <AppSubView
+          paddingVertical={20}
+          paddingLeft={20}
+          borderWidth={1}
+          title={'약관 보기'}
+          arrowImg={true}
+        />
+        <AppSubView
+          paddingVertical={20}
+          paddingLeft={20}
+          borderWidth={1}
+          title={'버전 정보'}
+          arrowImg={false}
+          version={'1. 0. 0'}
+        />
+      </ScrollView>
     </TopContainerView>
   );
 };
