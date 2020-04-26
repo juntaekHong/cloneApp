@@ -45,13 +45,22 @@ const MyInfo = styled(BTN)`
 `;
 
 // 개인정보 뷰
-export const MyInfoView = ({paddingVertical, paddingLeft, user}) => {
+export const MyInfoView = ({
+  paddingVertical,
+  paddingLeft,
+  user,
+  myInfoHandler,
+}) => {
   return (
     <MyInfo
       disabled={user === null ? true : user.userName ? false : true}
       paddingVertical={paddingVertical}
-      paddingLeft={paddingLeft}>
-      <NBGText>
+      paddingLeft={paddingLeft}
+      onPress={() => {
+        myInfoHandler();
+      }}>
+      <NBGText
+        color={user === null ? 'gray' : user.userName ? 'black' : 'gray'}>
         {user === null
           ? '비회원'
           : user.userName
@@ -59,7 +68,10 @@ export const MyInfoView = ({paddingVertical, paddingLeft, user}) => {
           : '이메일 인증을 해주세요!'}
       </NBGText>
       <StandardView style={{flexDirection: 'row', alignItems: 'center'}}>
-        <NBGText>개인정보 수정</NBGText>
+        <NBGText
+          color={user === null ? 'gray' : user.userName ? 'black' : 'gray'}>
+          개인정보 수정
+        </NBGText>
         <RightarrowImg width={40} height={40} />
       </StandardView>
     </MyInfo>
@@ -73,12 +85,16 @@ export const MySubView = ({
   borderWidth,
   title,
   imgUrl,
+  myInfoHandler,
 }) => {
   return (
     <MyInfo
       paddingVertical={paddingVertical}
       paddingLeft={paddingLeft}
-      borderWidth={borderWidth}>
+      borderWidth={borderWidth}
+      onPress={() => {
+        myInfoHandler();
+      }}>
       <MyInfoImg width={24} height={24} source={imgUrl} />
       <StandardView style={{flexDirection: 'row', alignItems: 'center'}}>
         <NBGText>{title}</NBGText>
@@ -96,12 +112,17 @@ export const AppSubView = ({
   title,
   arrowImg,
   version,
+  appInfoHandler,
 }) => {
   return (
     <MyInfo
+      disabled={!arrowImg}
       paddingVertical={paddingVertical}
       paddingLeft={paddingLeft}
-      borderWidth={borderWidth}>
+      borderWidth={borderWidth}
+      onPress={() => {
+        appInfoHandler();
+      }}>
       <NBGText>{title}</NBGText>
       {arrowImg ? (
         <RightarrowImg width={40} height={40} />

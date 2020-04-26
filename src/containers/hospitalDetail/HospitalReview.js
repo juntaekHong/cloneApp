@@ -38,8 +38,6 @@ const HospitalReview = ({
   // 댓글 내용 모두 보기 모달
   const [reviewContentModal, setReviewContentModal] = useState(false);
 
-  console.log(reviewUser);
-
   return (
     <TopContainerView marginTop={10}>
       {/* 리뷰 content 모달 */}

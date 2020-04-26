@@ -28,6 +28,7 @@ import {
   AppSubView,
 } from '../../components/myPage/View';
 import {LoginBtn} from '../../components/myPage/Button';
+import Communications from 'react-native-communications';
 import Toast from 'react-native-root-toast';
 
 const MyPage = props => {
@@ -247,7 +248,12 @@ const MyPage = props => {
             );
           }}
         />
-        <MyInfoView paddingVertical={20} paddingLeft={20} user={props.user} />
+        <MyInfoView
+          paddingVertical={20}
+          paddingLeft={20}
+          user={props.user}
+          myInfoHandler={() => {}}
+        />
         <DivisionView borderWidth={3} borderColor={'#F6F7F9'} />
         <MySubView
           paddingVertical={20}
@@ -255,6 +261,15 @@ const MyPage = props => {
           borderWidth={1}
           title={'즐겨찾기 목록'}
           imgUrl={require('../../../assets/image/myPage/ui.png')}
+          myInfoHandler={async () => {
+            if (props.user === null || props.user.userName === undefined) {
+              showMessage('로그인 또는 이메일 인증이 되지 않았습니다.', {
+                position: Toast.positions.CENTER,
+              });
+            } else {
+              props.navigation.navigate('MySubs');
+            }
+          }}
         />
         <MySubView
           paddingVertical={20}
@@ -262,6 +277,15 @@ const MyPage = props => {
           borderWidth={1}
           title={'리뷰 목록'}
           imgUrl={require('../../../assets/image/myPage/review.png')}
+          myInfoHandler={async () => {
+            if (props.user === null || props.user.userName === undefined) {
+              showMessage('로그인 또는 이메일 인증이 되지 않았습니다.', {
+                position: Toast.positions.CENTER,
+              });
+            } else {
+              props.navigation.navigate('MyReview');
+            }
+          }}
         />
         <DivisionView borderWidth={3} borderColor={'#F6F7F9'} />
         <AppSubView
@@ -270,6 +294,7 @@ const MyPage = props => {
           borderWidth={1}
           title={'뽀듬 서비스 문의하기'}
           arrowImg={true}
+          appInfoHandler={() => {}}
         />
         <AppSubView
           paddingVertical={20}
@@ -277,6 +302,7 @@ const MyPage = props => {
           borderWidth={1}
           title={'사용자 의견 보내기'}
           arrowImg={true}
+          appInfoHandler={() => {}}
         />
         <AppSubView
           paddingVertical={20}
@@ -284,6 +310,10 @@ const MyPage = props => {
           borderWidth={1}
           title={'뽀듬 고객센터 전화하기'}
           arrowImg={true}
+          appInfoHandler={() => {
+            // 임시
+            Communications.phonecall('01034899742', false);
+          }}
         />
         <AppSubView
           paddingVertical={20}
@@ -291,6 +321,7 @@ const MyPage = props => {
           borderWidth={1}
           title={'약관 보기'}
           arrowImg={true}
+          appInfoHandler={() => {}}
         />
         <AppSubView
           paddingVertical={20}
