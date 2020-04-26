@@ -9,6 +9,7 @@ import {
   SigninActions,
   ReservationActions,
   HospitalActions,
+  ReviewActions,
 } from '../../store/actionCreator';
 import {RightarrowImg} from './Image';
 
@@ -43,6 +44,7 @@ export const LogoutBtn = props => {
         // 진료내역 페이지 및 즐겨찾는 병원 데이터 정보 초기화.
         await ReservationActions.handleReservationListInit();
         await HospitalActions.handlerSubscriberListInit();
+        await ReviewActions.handleReviewListInit();
         await SigninActions.handleLoginData(null);
       }}
       style={{

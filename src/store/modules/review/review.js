@@ -50,6 +50,11 @@ export const handleUserReviewListInit = () => dispatch => {
   dispatch(userReviewTotalAction(null));
 };
 
+// 다른 유저 리스트 초기화
+export const handleMyReviewListInit = () => dispatch => {
+  dispatch(myReviewListAction([]));
+};
+
 // S3 주소로 이미지 저장
 export const uploadImg = formData => async dispatch => {
   try {
