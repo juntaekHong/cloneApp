@@ -18,6 +18,7 @@ import {
   SigninActions,
   ReservationActions,
   HospitalActions,
+  ReviewActions,
 } from '../../store/actionCreator';
 import {
   LoginOutView,
@@ -218,6 +219,7 @@ const MyPage = props => {
                     await ReservationActions.getReservationLog();
 
                     await HospitalActions.getAllHospitalSubscribers();
+                    await ReviewActions.getMyReview();
                   }
                 }}>
                 <NBGBText fontSize={15} color={'white'}>
