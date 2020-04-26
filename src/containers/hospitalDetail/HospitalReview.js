@@ -51,10 +51,14 @@ const HospitalReview = ({
         children={
           <StandardView style={{marginLeft: widthPercentageToDP(20)}}>
             <NBGBText fontSize={17}>
-              {reviewUser.user.userNickName}님의 리뷰
+              {reviewUser !== undefined
+                ? reviewUser.user.userNickName + '님의 리뷰'
+                : '리뷰 더 보기'}
             </NBGBText>
             <ScrollView style={{marginTop: widthPercentageToDP(30)}}>
-              <NBGText fontSize={13}>{reviewUser.contents}</NBGText>
+              <NBGText fontSize={13}>
+                {reviewUser !== undefined ? reviewUser.contents : ''}
+              </NBGText>
             </ScrollView>
           </StandardView>
         }
