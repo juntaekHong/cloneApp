@@ -1,7 +1,12 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {useState, useEffect} from 'react';
 import {connect} from 'react-redux';
-import {TopContainerView, StandardView} from '../../components/common/View';
-import {NBGBText} from '../../components/common/Text';
+import {
+  TopContainerView,
+  StandardView,
+  BTN,
+} from '../../components/common/View';
+import {NBGBText, NBGText} from '../../components/common/Text';
 import {
   RatingAvgView,
   ReviewCountView,
@@ -12,6 +17,7 @@ import {UIActivityIndicator} from 'react-native-indicators';
 import {widthPercentageToDP} from '../../utils/util';
 import {ReviewList} from '../../components/review/FlatList';
 import {BottomMenuModal} from '../../components/review/Modal';
+import {CustomModal} from '../../components/common/Modal';
 
 const HospitalReview = ({
   hpId,
@@ -26,15 +32,53 @@ const HospitalReview = ({
   const [dotsModal, setDotsModal] = useState(false);
   // 다트 버튼 클릭한 리뷰에 대한 유저 닉네임
   const [reviewUser, setReviewUser] = useState();
+  // 삭제 후, 삭제 알림 모달
+  const [reviewDeleteModal, setReviewDeleteModal] = useState(false);
 
   return (
     <TopContainerView marginTop={10}>
+      <CustomModal
+        width={300}
+        height={200}
+        visible={reviewDeleteModal}
+        close={false}
+        children={
+          <StandardView style={{marginLeft: widthPercentageToDP(20)}}>
+            <NBGBText fontSize={17}>리뷰 삭제 왼료</NBGBText>
+            <StandardView style={{marginTop: widthPercentageToDP(30)}}>
+              <NBGText fontSize={13}>
+                정상적으로 해당 리뷰가 삭제되었습니다.
+              </NBGText>
+            </StandardView>
+          </StandardView>
+        }
+        renderFooter={() => {
+          return (
+            <StandardView
+              style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
+              <BTN
+                style={{
+                  marginRight: widthPercentageToDP(30),
+                  marginBottom: widthPercentageToDP(20),
+                  justifyContent: 'flex-end',
+                  alignItems: 'flex-end',
+                }}
+                onPress={async () => {
+                  await setReviewDeleteModal(false);
+                }}>
+                <NBGText fontSize={15}>닫기</NBGText>
+              </BTN>
+            </StandardView>
+          );
+        }}
+      />
       <BottomMenuModal
         width={375}
         padding={10}
         visible={dotsModal}
         user={user ? user : '비회원'}
         reviewUser={reviewUser}
+        // 수정
         modifyHandler={async () => {
           await setDotsModal(false);
           await navigation.navigate('ReviewWrite', {
@@ -44,19 +88,28 @@ const HospitalReview = ({
             reviewCompleteModal: reviewCompleteModal,
           });
         }}
+        // 삭제
         DeleteHandler={async () => {
+          await setDotsModal(false);
+
           await ReviewActions.deleteReview(reviewUser.reviewIndex);
           await ReviewActions.getAllReview(hpId);
+
+          let timeout = setInterval(async () => {
+            await setReviewDeleteModal(true);
+            clearInterval(timeout);
+          }, 500);
+
           await ReviewActions.getMyReview();
-          await setDotsModal(false);
         }}
+        // 다른 유저 리뷰
         ReviewHandler={async () => {
-          await ReviewActions.getReviewByUserNickName(
-            reviewUser.user.userNickName,
-          );
           await setDotsModal(false);
-          await navigation.navigate('UserReview');
+          navigation.navigate('UserReview', {
+            userNickName: reviewUser.user.userNickName,
+          });
         }}
+        // 취소
         closeHandler={async () => {
           await setDotsModal(false);
         }}

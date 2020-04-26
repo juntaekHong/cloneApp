@@ -42,7 +42,7 @@ const UserReviewBtn = styled(BTN)`
     borderBottom ? widthPercentageToDP(10) : 0};
   border-bottom-right-radius: ${({borderBottom}) =>
     borderBottom ? widthPercentageToDP(10) : 0};
-  background-color: white;
+  background-color: #f6f7f9;
 `;
 
 //수정 버튼
@@ -77,18 +77,18 @@ export const BottomMenuModal = ({
               onPress={() => {
                 modifyHandler();
               }}>
-              <NBGBText fontSize={20} align={'center'}>
+              <NBGText fontSize={17} align={'center'}>
                 수정
-              </NBGBText>
+              </NBGText>
             </ModifyBtn>
             <DivisionView />
             <DeleteBtn
               onPress={() => {
                 DeleteHandler();
               }}>
-              <NBGBText fontSize={20} align={'center'}>
+              <NBGText fontSize={17} align={'center'}>
                 삭제
-              </NBGBText>
+              </NBGText>
             </DeleteBtn>
           </StandardView>
         ) : (
@@ -97,10 +97,10 @@ export const BottomMenuModal = ({
             onPress={() => {
               ReviewHandler();
             }}>
-            <NBGBText fontSize={20} align={'center'}>
-              {reviewUser !== undefined ? reviewUser.user.userNickName : ''}의
+            <NBGText fontSize={17} align={'center'}>
+              {reviewUser !== undefined ? reviewUser.user.userNickName : ''}님의
               모든 리뷰 보기
-            </NBGBText>
+            </NBGText>
           </UserReviewBtn>
         )}
         <DivisionView />
@@ -109,9 +109,9 @@ export const BottomMenuModal = ({
           onPress={() => {
             closeHandler();
           }}>
-          <NBGBText fontSize={20} align={'center'}>
+          <NBGText fontSize={17} align={'center'}>
             취소
-          </NBGBText>
+          </NBGText>
         </CancelBtn>
       </BottomModalView>
     </Modal>
