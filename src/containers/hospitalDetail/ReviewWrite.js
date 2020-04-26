@@ -34,6 +34,12 @@ const ReviewWrite = props => {
   };
 
   useEffect(() => {
+    return async () => {
+      await setLoading(false);
+    };
+  });
+
+  useEffect(() => {
     if (
       props.navigation.state.params !== null &&
       props.navigation.state.params.reviewData
@@ -130,8 +136,6 @@ const ReviewWrite = props => {
                 });
               }
             });
-
-            await setLoading(false);
           }
         }}
       />

@@ -180,7 +180,20 @@ export const ReviewItemView = ({item, user, dots, dotsBtn}) => {
     let min = time.split(':');
     let hoursFomat = time.split('T');
     hoursFomat = hoursFomat[1].split(':');
-    hoursFomat = parseInt(hoursFomat[0]) + 9;
+
+    if (parseInt(hoursFomat[0]) + 9 >= 24) {
+      hoursFomat = parseInt(hoursFomat[0]) + 9 - 24;
+
+      hoursFomat = '0' + hoursFomat;
+
+      let dayFomat = fullyear[0].split('');
+      dayFomat[dayFomat.length - 1] =
+        parseInt(dayFomat[dayFomat.length - 1]) + 1;
+
+      fullyear[0] = dayFomat.join('');
+    } else {
+      hoursFomat = parseInt(hoursFomat[0]) + 9;
+    }
 
     return timeSince(
       fullyear[0] + 'T' + hoursFomat + ':' + min[1] + ':' + min[2],
