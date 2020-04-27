@@ -205,7 +205,7 @@ export const ReviewItemView = ({item, user, dots, dotsBtn, contentBtn}) => {
       {/* 리뷰 상단뷰, 작성자 및 수정&삭제 버튼 */}
       <ReviewHeaderView>
         {item.user !== undefined ? (
-          <NBGText>적성자: {item.user.userNickName}</NBGText>
+          <NBGText>작성자: {item.user.userNickName}</NBGText>
         ) : (
           <StandardView />
         )}

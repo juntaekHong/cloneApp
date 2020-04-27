@@ -72,7 +72,7 @@ const MyReview = props => {
         close={false}
         children={
           <StandardView style={{marginLeft: widthPercentageToDP(20)}}>
-            <NBGBText fontSize={17}>리뷰 삭제 왼료</NBGBText>
+            <NBGBText fontSize={17}>리뷰 삭제 완료</NBGBText>
             <StandardView style={{marginTop: widthPercentageToDP(30)}}>
               <NBGText fontSize={13}>
                 정상적으로 해당 리뷰가 삭제되었습니다.
