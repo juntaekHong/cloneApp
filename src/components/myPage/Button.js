@@ -39,6 +39,7 @@ export const LogoutBtn = props => {
         await removeData('email');
         await removeData('user_name');
         await removeData('user_userNickName');
+        await removeData('tel');
 
         // await setUserData(null);
         // 진료내역 페이지 및 즐겨찾는 병원 데이터 정보 초기화.

@@ -44,12 +44,14 @@ export const signIn = (email, userPw) => async dispatch => {
       await storeData('user_userNickName', result.userNickName);
       await storeData('user_name', result.userName);
       await storeData('email', result.email);
+      await storeData('tel', result.tel);
       await dispatch(
         userDataAction({
           email: result.email,
           userNickName: result.userNickName,
           userName: result.userName,
           token: result.token,
+          tel: result.tel,
         }),
       );
       return true;

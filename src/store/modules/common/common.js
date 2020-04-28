@@ -147,6 +147,7 @@ export const locationInit = () => async dispatch => {
   const email = await getData('email');
   const user_name = await getData('user_name');
   const user_nickName = await getData('user_userNickName');
+  const tel = await getData('tel');
   const token = await getData('token');
 
   if (location_lat !== null || location_long !== null) {
@@ -158,7 +159,8 @@ export const locationInit = () => async dispatch => {
     email !== null &&
     user_name !== null &&
     token !== null &&
-    user_nickName !== null
+    user_nickName !== null &&
+    tel !== null
   ) {
     await dispatch(
       handleLoginData({
@@ -166,6 +168,7 @@ export const locationInit = () => async dispatch => {
         userName: user_name,
         userNickName: user_nickName,
         token: token,
+        tel: tel,
       }),
     );
   }

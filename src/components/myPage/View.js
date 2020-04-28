@@ -125,7 +125,14 @@ export const AppSubView = ({
       }}>
       <NBGText>{title}</NBGText>
       {arrowImg ? (
-        <RightarrowImg width={40} height={40} />
+        version ? (
+          <StandardView style={{flexDirection: 'row', alignItems: 'center'}}>
+            <NBGText>{version}</NBGText>
+            <RightarrowImg width={40} height={40} />
+          </StandardView>
+        ) : (
+          <RightarrowImg width={40} height={40} />
+        )
       ) : (
         <NBGText color={'gray'} marginRight={20}>
           {version}
@@ -175,4 +182,31 @@ export const LoginOutView = ({
       {arrowImg ? sign() : null}
     </MyInfo>
   );
+};
+
+// 회원정보 수정 페이지 - 변경안되는 값들
+export const ConstMyInfoView = ({
+  paddingVertical,
+  paddingLeft,
+  borderWidth,
+  title,
+  arrowImg,
+  myInfoValue,
+  myInfoHandler,
+}) => {
+  return (
+    <AppSubView
+      paddingVertical={paddingVertical}
+      paddingLeft={paddingLeft}
+      borderWidth={borderWidth}
+      title={title}
+      arrowImg={arrowImg}
+      version={myInfoValue}
+      appInfoHandler={myInfoHandler}
+    />
+  );
+};
+
+export const ModifyMyInfoView = props => {
+  return <ConstMyInfoView {...props} />;
 };

@@ -254,7 +254,9 @@ const MyPage = props => {
           paddingVertical={20}
           paddingLeft={20}
           user={props.user}
-          myInfoHandler={() => {}}
+          myInfoHandler={() => {
+            props.navigation.navigate('MyInfo');
+          }}
         />
         <DivisionView borderWidth={3} borderColor={'#F6F7F9'} />
         <MySubView
