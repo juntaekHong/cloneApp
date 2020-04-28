@@ -88,7 +88,7 @@ export const ReservationHistoryItem = ({item, navigation}) => {
         currentStatus = '접수 거절';
         break;
       case status === 'TIMEOUT':
-        currentStatus = '접수 만료';
+        currentStatus = '진료 완료';
         break;
     }
 
@@ -119,6 +119,15 @@ export const ReservationHistoryItem = ({item, navigation}) => {
               ) {
                 await ReservationActions.getReservation();
                 await ReservationActions.getReservationLog();
+
+                showMessage(
+                  '접수상태가 ' +
+                    ReservationState(changeStatus) +
+                    '로 변경되었습니다.\n진료내역을 확인해주세요!',
+                  {
+                    position: Toast.positions.CENTER,
+                  },
+                );
               } else {
                 showMessage('접수 상태가 현재와 동일합니다.', {
                   position: Toast.positions.CENTER,

@@ -120,15 +120,18 @@ const ReviewWrite = props => {
                 props.navigation.state.params.modify
               ) {
                 // 마이 페이지 - 내가 쓴 리뷰 페이지에서 온 거면, 뒤로가기
-                props.navigation.state.params.from === 'myPage'
-                  ? await props.navigation.goBack()
-                  : await props.navigation.navigate('HospitalDetail', {
-                      modify: props.navigation.state.params.modify,
-                      object: obj,
-                      reviewComplete: props.navigation.state.params.reviewCompleteModal(
-                        true,
-                      ),
-                    });
+                if (props.navigation.state.params.from === 'myPage') {
+                  props.navigation.state.params.reviewCompleteModal(true);
+                  await props.navigation.goBack();
+                } else {
+                  await props.navigation.navigate('HospitalDetail', {
+                    modify: props.navigation.state.params.modify,
+                    object: obj,
+                    reviewComplete: props.navigation.state.params.reviewCompleteModal(
+                      true,
+                    ),
+                  });
+                }
               } else {
                 await props.navigation.navigate('HospitalDetail', {
                   modify: false,

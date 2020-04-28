@@ -18,6 +18,8 @@ import {BottomMenuModal} from '../../components/review/Modal';
 const MyReview = props => {
   // 다트 버튼 모달
   const [dotsModal, setDotsModal] = useState(false);
+  // 리뷰 수정 완료 모달
+  const [reviewCompleteModal, setReviewCompleteModal] = useState(false);
   // 삭제 후, 삭제 알림 모달
   const [reviewDeleteModal, setReviewDeleteModal] = useState(false);
   // 다트 버튼 클릭한 리뷰에 대한 유저 닉네임
@@ -42,6 +44,7 @@ const MyReview = props => {
             modify: true,
             hpid: reviewUser.hpid,
             reviewData: reviewUser,
+            reviewCompleteModal: setReviewCompleteModal,
             from: 'myPage',
           });
         }}
@@ -49,19 +52,53 @@ const MyReview = props => {
         DeleteHandler={async () => {
           await setDotsModal(false);
 
-          await ReviewActions.deleteReview(reviewUser.reviewIndex);
-          await ReviewActions.getAllReview(reviewUser.hpid);
-
           let timeout = setInterval(async () => {
             await setReviewDeleteModal(true);
             clearInterval(timeout);
           }, 500);
+
+          await ReviewActions.deleteReview(reviewUser.reviewIndex);
+          await ReviewActions.getAllReview(reviewUser.hpid);
 
           await ReviewActions.getMyReview();
         }}
         // 취소
         closeHandler={async () => {
           await setDotsModal(false);
+        }}
+      />
+      {/* 리뷰 수정 모달 */}
+      <CustomModal
+        width={300}
+        height={200}
+        visible={reviewCompleteModal}
+        close={false}
+        children={
+          <StandardView style={{marginLeft: widthPercentageToDP(20)}}>
+            <NBGBText fontSize={17}>리뷰 수정완료</NBGBText>
+            <StandardView style={{marginTop: widthPercentageToDP(30)}}>
+              <NBGText fontSize={13}>정상적으로 리뷰가 수정되었습니다.</NBGText>
+            </StandardView>
+          </StandardView>
+        }
+        renderFooter={() => {
+          return (
+            <StandardView
+              style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
+              <BTN
+                style={{
+                  marginRight: widthPercentageToDP(30),
+                  marginBottom: widthPercentageToDP(20),
+                  justifyContent: 'flex-end',
+                  alignItems: 'flex-end',
+                }}
+                onPress={async () => {
+                  await setReviewCompleteModal(false);
+                }}>
+                <NBGText fontSize={15}>닫기</NBGText>
+              </BTN>
+            </StandardView>
+          );
         }}
       />
       {/* 리뷰 삭제 모달 */}
