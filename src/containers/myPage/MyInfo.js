@@ -15,7 +15,7 @@ const MyInfo = props => {
     <TopContainerView>
       <TopView
         marginBottom={5}
-        title={'회원정보 수정'}
+        title={'개인정보 수정'}
         backBtn={true}
         backHandler={() => {
           props.navigation.goBack();
