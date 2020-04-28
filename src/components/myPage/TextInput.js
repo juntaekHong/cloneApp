@@ -14,6 +14,8 @@ export const MyInfo = styled(TextInput)`
   border-width: ${widthPercentageToDP(1)};
   border-radius: ${widthPercentageToDP(15)};
   border-color: #dbdbdb;
+  margin-top: ${({marginTop}) =>
+    marginTop ? widthPercentageToDP(marginTop) : 0};
 `;
 
 export const MyInfoTI = props => {

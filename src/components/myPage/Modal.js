@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import styled from 'styled-components/native';
 import Modal from 'react-native-modal';
 import {widthPercentageToDP} from '../../utils/util';
@@ -45,6 +45,8 @@ export const MyInfoMdal = ({
   userData,
   setUserData,
   changePass,
+  passCheck,
+  setPassCheck,
   changeHandler,
 }) => {
   return (
@@ -75,8 +77,17 @@ export const MyInfoMdal = ({
           <MyInfoTI
             onChangeText={text => setUserData(text)}
             value={userData ? userData : ''}
+            returnKeyType={changePass ? 'next' : 'done'}
+            onSubmitEditing={async () => {}}
           />
-          {changePass ? <MyInfoTI value={userData ? userData : ''} /> : null}
+          {changePass ? (
+            <MyInfoTI
+              marginTop={20}
+              onChangeText={text => setPassCheck(text)}
+              value={passCheck ? passCheck : ''}
+              returnKeyType={'done'}
+            />
+          ) : null}
         </BodyView>
         <FooterView>
           <BTN
@@ -87,12 +98,14 @@ export const MyInfoMdal = ({
               height: widthPercentageToDP(60),
               borderBottomLeftRadius: widthPercentageToDP(15),
               borderBottomRightRadius: widthPercentageToDP(15),
-              backgroundColor: 'yellow',
+              backgroundColor: colors.active,
             }}
             onPress={() => {
               changeHandler();
             }}>
-            <NBGText fontSize={14}>확인</NBGText>
+            <NBGText color={'white'} fontSize={16}>
+              확인
+            </NBGText>
           </BTN>
         </FooterView>
       </ModalView>

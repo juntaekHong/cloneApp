@@ -19,6 +19,8 @@ const MyInfo = props => {
   const [MyInfoData, setMyInfoData] = useState();
   // 비밀번호 변경일 경우
   const [changePass, setChangePass] = useState(false);
+  // 비밀번호 변경 시, 재확인용 비밀번호 데이터
+  const [passCheck, setPassCheck] = useState('');
 
   return (
     <TopContainerView>
@@ -31,13 +33,24 @@ const MyInfo = props => {
           await setMyInfoModal(false);
           await setMyInfoData();
 
-          changePass ? await setChangePass(false) : null;
+          if (changePass) {
+            await setPassCheck('');
+            await setChangePass(false);
+          }
         }}
         userData={MyInfoData}
         setUserData={setMyInfoData}
         changePass={changePass}
+        passCheck={passCheck}
+        setPassCheck={setPassCheck}
         changeHandler={async () => {
           await setMyInfoModal(false);
+          await setMyInfoData();
+
+          if (changePass) {
+            await setPassCheck('');
+            await setChangePass(false);
+          }
         }}
       />
       <TopView
