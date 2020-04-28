@@ -30,7 +30,7 @@ const MyInfo = props => {
           borderWidth={1}
           title={'이름'}
           arrowImg={false}
-          myInfoValue={props.user.userName}
+          myInfoValue={props.user ? props.user.userName : ''}
         />
         <ConstMyInfoView
           paddingVertical={20}
@@ -38,7 +38,7 @@ const MyInfo = props => {
           borderWidth={1}
           title={'이메일'}
           arrowImg={false}
-          myInfoValue={props.user.email}
+          myInfoValue={props.user ? props.user.email : ''}
         />
         <DivisionView borderWidth={3} borderColor={'#F6F7F9'} />
         <ModifyMyInfoView
@@ -47,7 +47,7 @@ const MyInfo = props => {
           borderWidth={1}
           title={'닉네임'}
           arrowImg={true}
-          myInfoValue={props.user.userNickName}
+          myInfoValue={props.user ? props.user.userNickName : ''}
           myInfoHandler={() => {}}
         />
         <ModifyMyInfoView
@@ -56,7 +56,7 @@ const MyInfo = props => {
           borderWidth={1}
           title={'전화번호'}
           arrowImg={true}
-          myInfoValue={props.user.tel}
+          myInfoValue={props.user ? props.user.tel : ''}
           myInfoHandler={() => {}}
         />
         <ModifyMyInfoView
