@@ -36,7 +36,7 @@ $ react-native link // react-native version 0.6 이상이므로 link 필요없�
 
 ```
 $ react-native run-android
-$ react-native run-ios
+$ react-native run-ios OR "open ./ios/cloneApp.xcworkspace" // Xcode 설치되어있어야 함.
 ```
 
 ### 실행 오류 시, 확인 사항(Mac)
@@ -57,7 +57,7 @@ Project< ios Folder 안에 pod --version 으로 pod 설치 확인
 1. ios folder 안에 pod install
 2. pod update
 3. open ./ios/cloneApp.xcodeproj > Xcode > Build Phases > Copy Pod Resources > OutPut Files 들 빼기(-) // 안하면 IOS 실행 오류남.
-4. Project Top Folder에서 react-native run-ios 실행.
+4. Project Top Folder에서 "react-native run-ios" OR "open ./ios/cloneApp.xcworkspace"
 ```
 
 ### 모듈 설치 시, 유의사항
@@ -92,3 +92,16 @@ Project< ios Folder 안에 pod --version 으로 pod 설치 확인
 
 ![KakaoTalk_Photo_2020-04-14-13-53-07](https://user-images.githubusercontent.com/50249009/79187516-67fb5300-7e57-11ea-97c3-ecaeffaea32e.png)
 
+![1](https://user-images.githubusercontent.com/50249009/80452073-686c1180-8960-11ea-8258-1df028095c9a.png)
+
+![2](https://user-images.githubusercontent.com/50249009/80452082-6dc95c00-8960-11ea-88ea-04bed8a4e357.png)
+
+![3](https://user-images.githubusercontent.com/50249009/80452087-715ce300-8960-11ea-8ee0-7bb59b177f4d.png)
+
+![4](https://user-images.githubusercontent.com/50249009/80452089-728e1000-8960-11ea-9fcf-15471890ad22.png)
+
+![5](https://user-images.githubusercontent.com/50249009/80452092-7457d380-8960-11ea-803a-08a6ce992b1e.png)
+
+![6](https://user-images.githubusercontent.com/50249009/80452098-76219700-8960-11ea-83b9-1d6c2cc5ed48.png)
+
+![7](https://user-images.githubusercontent.com/50249009/80452106-791c8780-8960-11ea-95b5-f815ff9088b0.png)
