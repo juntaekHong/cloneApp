@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import {TopContainerView, TopView} from '../../components/common/View';
 import {ScrollView} from 'react-native';
 import {NBGText} from '../../components/common/Text';
+import {widthPercentageToDP} from '../../utils/util';
 
 const TermInfo = props => {
   return (
@@ -18,8 +19,11 @@ const TermInfo = props => {
         closeBtn={false}
         searchBtn={false}
       />
-      <ScrollView>
-        <NBGText>{`◉ 행정자치부 고시  제2016-21호
+      <ScrollView style={{marginHorizontal: widthPercentageToDP(20)}}>
+        <NBGText
+          style={{
+            lineHeight: widthPercentageToDP(25),
+          }}>{`◉ 행정자치부 고시  제2016-21호
  
 표준 개인정보 보호지침
  

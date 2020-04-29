@@ -292,21 +292,23 @@ const MyPage = props => {
           }}
         />
         <DivisionView borderWidth={3} borderColor={'#F6F7F9'} />
-        <AppSubView
+        {/* <AppSubView
           paddingVertical={20}
           paddingLeft={20}
           borderWidth={1}
           title={'뽀듬 서비스 문의하기'}
           arrowImg={true}
           appInfoHandler={() => {}}
-        />
+        /> */}
         <AppSubView
           paddingVertical={20}
           paddingLeft={20}
           borderWidth={1}
           title={'사용자 의견 보내기'}
           arrowImg={true}
-          appInfoHandler={() => {}}
+          appInfoHandler={() => {
+            props.navigation.navigate('UserOpinion');
+          }}
         />
         <AppSubView
           paddingVertical={20}
