@@ -325,7 +325,9 @@ const MyPage = props => {
           borderWidth={1}
           title={'약관 보기'}
           arrowImg={true}
-          appInfoHandler={() => {}}
+          appInfoHandler={() => {
+            props.navigation.navigate('TermInfo');
+          }}
         />
         <AppSubView
           paddingVertical={20}
