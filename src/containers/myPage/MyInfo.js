@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {connect} from 'react-redux';
 import {TopContainerView, TopView} from '../../components/common/View';
 import {
@@ -7,20 +7,69 @@ import {
   ModifyMyInfoView,
   DivisionView,
 } from '../../components/myPage/View';
-import {ScrollView} from 'react-native';
+import {ScrollView, Keyboard} from 'react-native';
 import {MyInfoMdal} from '../../components/myPage/Modal';
+import {SigninActions} from '../../store/actionCreator';
+import Toast from 'react-native-root-toast';
+import {showMessage} from '../../utils/util';
+import {
+  checkPass,
+  checkPhoneNumber,
+  checkNickName,
+  checkNickNameLength,
+} from '../../utils/validation';
 
 const MyInfo = props => {
   // 개인정보 변경 모달
   const [MyInfoModal, setMyInfoModal] = useState(false);
   // 모달 타이틀
   const [title, setTitle] = useState('');
+  // 변경될 개인정보 칼럼명
+  const [myInfoColumn, setMyInfoColumn] = useState('');
   // 개인 정보
   const [MyInfoData, setMyInfoData] = useState();
   // 비밀번호 변경일 경우
   const [changePass, setChangePass] = useState(false);
   // 비밀번호 변경 시, 재확인용 비밀번호 데이터
   const [passCheck, setPassCheck] = useState('');
+  // 비밀번호 유효성 검사
+  const [valid, setValid] = useState('');
+
+  useEffect(() => {
+    let valid1;
+    let valid2 = false;
+
+    switch (true) {
+      case myInfoColumn === 'userNickName':
+        valid1 = checkNickNameLength(MyInfoData);
+        valid2 = checkNickName(MyInfoData);
+
+        MyInfoData.length !== 0 && !valid1
+          ? setValid('* 2글자이상 17자미만으로 입력하세요.')
+          : MyInfoData.length !== 0 && !valid2
+          ? setValid('* 올바르지 않은 닉네임입니다.')
+          : setValid('');
+        break;
+
+      case myInfoColumn === 'tel':
+        valid1 = checkPhoneNumber(MyInfoData);
+
+        MyInfoData.length !== 0 && !valid1
+          ? setValid('* 유효하지 않은 전화번호입니다.')
+          : setValid('');
+        break;
+
+      case myInfoColumn === 'userPw':
+        valid1 = checkPass(MyInfoData);
+
+        MyInfoData.length !== 0 && !valid1
+          ? setValid('* 대소문자&숫자&특수문자를 포함 7자이상 입력해주세요.')
+          : setValid('');
+        break;
+    }
+  }, [MyInfoData]);
+
+  console.log(valid);
 
   return (
     <TopContainerView>
@@ -31,6 +80,7 @@ const MyInfo = props => {
         title={title}
         closeHandler={async () => {
           await setMyInfoModal(false);
+          await setMyInfoColumn('');
           await setMyInfoData();
 
           if (changePass) {
@@ -38,19 +88,64 @@ const MyInfo = props => {
             await setChangePass(false);
           }
         }}
+        myInfoColumn={myInfoColumn}
         userData={MyInfoData}
         setUserData={setMyInfoData}
         changePass={changePass}
         passCheck={passCheck}
         setPassCheck={setPassCheck}
+        valid={valid}
         changeHandler={async () => {
           await setMyInfoModal(false);
-          await setMyInfoData();
+
+          const userData = {[myInfoColumn]: MyInfoData};
+
+          if (
+            changePass ||
+            props.user[myInfoColumn] !== userData[myInfoColumn]
+          ) {
+            if (myInfoColumn === 'userPw' && MyInfoData !== passCheck) {
+              showMessage('비밀번호가 일치하지 않습니다.', {
+                position: Toast.positions.CENTER,
+              });
+            } else if (userData[myInfoColumn]) {
+              if (valid.length === 0) {
+                const result = await SigninActions.updateUserInfo(userData);
+
+                await SigninActions.handleLoginData({
+                  ...props.user,
+                  [myInfoColumn]: MyInfoData,
+                });
+
+                showMessage(result, {
+                  position: Toast.positions.CENTER,
+                });
+              } else {
+                showMessage(
+                  '유효하지 않은 값을 입력하여서 정보가 변경되지 않았습니다.',
+                  {
+                    position: Toast.positions.CENTER,
+                  },
+                );
+              }
+            } else {
+              showMessage('개인정보를 입력하지 않았습니다.', {
+                position: Toast.positions.CENTER,
+              });
+            }
+          } else {
+            showMessage('기존 정보와 일치하여 변경되지 않았습니다.', {
+              position: Toast.positions.CENTER,
+            });
+          }
 
           if (changePass) {
             await setPassCheck('');
             await setChangePass(false);
           }
+
+          await setMyInfoColumn('');
+          await setMyInfoData();
         }}
       />
       <TopView
@@ -90,6 +185,7 @@ const MyInfo = props => {
           myInfoValue={props.user ? props.user.userNickName : ''}
           myInfoHandler={async () => {
             await setTitle('닉네임 변경');
+            await setMyInfoColumn('userNickName');
             await setMyInfoData(props.user.userNickName);
             await setMyInfoModal(true);
           }}
@@ -103,6 +199,7 @@ const MyInfo = props => {
           myInfoValue={props.user ? props.user.tel : ''}
           myInfoHandler={async () => {
             await setTitle('전화번호 변경');
+            await setMyInfoColumn('tel');
             await setMyInfoData(props.user.tel);
             await setMyInfoModal(true);
           }}
@@ -115,6 +212,7 @@ const MyInfo = props => {
           arrowImg={true}
           myInfoHandler={async () => {
             await setTitle('비밀번호 변경');
+            await setMyInfoColumn('userPw');
             await setChangePass(true);
             await setMyInfoModal(true);
           }}

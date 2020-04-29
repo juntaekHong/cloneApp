@@ -69,6 +69,33 @@ export const signIn = (email, userPw) => async dispatch => {
   }
 };
 
+// 개인정보 수정
+export const updateUserInfo = userData => async dispatch => {
+  try {
+    const token = await getData('token');
+
+    const jsonData = await api.patch(`/user`, {
+      token: token,
+      body: userData,
+    });
+
+    if (jsonData.success) {
+      const result = Object.keys(userData).toString();
+
+      result === 'userNickName'
+        ? await storeData('user_userNickName', userData[result])
+        : result !== 'userPw'
+        ? await storeData(result, userData[result])
+        : null;
+
+      return jsonData.result;
+    }
+  } catch (e) {
+    // 서버 연동 실패
+    console.log('개인정보 변경 실패...');
+  }
+};
+
 export default handleActions(
   {
     [SIGNIN_USER_DATA]: (state, {payload}) =>

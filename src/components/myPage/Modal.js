@@ -42,11 +42,13 @@ export const MyInfoMdal = ({
   height,
   closeHandler,
   title,
+  myInfoColumn,
   userData,
   setUserData,
   changePass,
   passCheck,
   setPassCheck,
+  valid,
   changeHandler,
 }) => {
   return (
@@ -75,6 +77,20 @@ export const MyInfoMdal = ({
         </NBGBText>
         <BodyView>
           <MyInfoTI
+            placeholder={
+              myInfoColumn === 'tel'
+                ? '("-") 제외하고 입력해주세요.'
+                : myInfoColumn === 'userPw'
+                ? '대소문자&숫자&특수문자를 포함 7자이상 입력'
+                : '2글자이상 17자미만으로 입력하세요.'
+            }
+            borderColor={
+              valid.length === 0 && userData && userData.length !== 0
+                ? '#53A6EC'
+                : userData && userData.length !== 0
+                ? 'red'
+                : '#dbdbdb'
+            }
             onChangeText={text => setUserData(text)}
             value={userData ? userData : ''}
             returnKeyType={changePass ? 'next' : 'done'}
@@ -83,11 +99,16 @@ export const MyInfoMdal = ({
           {changePass ? (
             <MyInfoTI
               marginTop={20}
+              secureTextEntry={true}
+              placeholder={'비밀번호 재확인'}
               onChangeText={text => setPassCheck(text)}
               value={passCheck ? passCheck : ''}
               returnKeyType={'done'}
             />
           ) : null}
+          <NBGBText color={'red'} fontSize={12} marginLeft={40}>
+            {valid.length !== 0 ? valid : null}
+          </NBGBText>
         </BodyView>
         <FooterView>
           <BTN
