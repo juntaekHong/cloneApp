@@ -82,11 +82,15 @@ export const updateUserInfo = userData => async dispatch => {
     if (jsonData.success) {
       const result = Object.keys(userData).toString();
 
-      result === 'userNickName'
-        ? await storeData('user_userNickName', userData[result])
-        : result !== 'userPw'
-        ? await storeData(result, userData[result])
-        : null;
+      if (jsonData.result.indexOf('중복') !== -1) {
+        // 닉네임 중복
+      } else {
+        result === 'userNickName'
+          ? await storeData('user_userNickName', userData[result])
+          : result !== 'userPw'
+          ? await storeData(result, userData[result])
+          : null;
+      }
 
       return jsonData.result;
     }
