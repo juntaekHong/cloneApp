@@ -19,7 +19,7 @@ const TermInfo = props => {
         closeBtn={false}
         searchBtn={false}
       />
-      <ScrollView style={{marginHorizontal: widthPercentageToDP(20)}}>
+      <ScrollView style={{paddingHorizontal: widthPercentageToDP(20)}}>
         <NBGText
           style={{
             lineHeight: widthPercentageToDP(25),

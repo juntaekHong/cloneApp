@@ -118,7 +118,10 @@ export const MyInfoMdal = ({
           <NBGBText color={'red'} fontSize={12} marginLeft={40}>
             {valid.length !== 0
               ? valid
-              : changePass && valid2.length !== 0
+              : changePass &&
+                passCheck &&
+                passCheck.length !== 0 &&
+                valid2.length !== 0
               ? valid2
               : null}
           </NBGBText>
