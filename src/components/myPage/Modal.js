@@ -94,6 +94,7 @@ export const MyInfoMdal = ({
                 : '#dbdbdb'
             }
             onChangeText={text => setUserData(text)}
+            keyboardType={myInfoColumn === 'tel' ? 'number-pad' : 'default'}
             value={userData ? userData : ''}
             returnKeyType={changePass ? 'next' : 'done'}
             onSubmitEditing={async () => {}}

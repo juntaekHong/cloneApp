@@ -146,12 +146,14 @@ export const deleteReservation = reservationIndex => async dispatch => {
   try {
     const token = await getData('token');
 
-    const jsonData = await api.delete(
-      `/reservation/reservationIndex/${reservationIndex}`,
+    const jsonData = await api.patch(
+      `/delete/reservationIndex/${reservationIndex}`,
       {
         token: token,
       },
     );
+
+    console.log(jsonData);
 
     if (jsonData.success) {
       return true;

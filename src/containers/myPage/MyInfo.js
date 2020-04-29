@@ -89,6 +89,7 @@ const MyInfo = props => {
         visible={MyInfoModal}
         title={title}
         closeHandler={async () => {
+          await Keyboard.dismiss();
           await setMyInfoModal(false);
           await setMyInfoColumn('');
           await setMyInfoData();
