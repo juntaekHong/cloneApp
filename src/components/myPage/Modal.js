@@ -82,7 +82,7 @@ export const MyInfoMdal = ({
               myInfoColumn === 'tel'
                 ? '("-") 제외하고 입력해주세요.'
                 : myInfoColumn === 'userPw'
-                ? '대소문자&숫자&특수문자를 포함 7자이상 입력'
+                ? '비밀번호 입력'
                 : '2글자이상 17자미만으로 입력하세요.'
             }
             borderColor={
@@ -115,7 +115,11 @@ export const MyInfoMdal = ({
             />
           ) : null}
           <NBGBText color={'red'} fontSize={12} marginLeft={40}>
-            {valid.length !== 0 ? valid : valid2.length !== 0 ? valid2 : null}
+            {valid.length !== 0
+              ? valid
+              : changePass && valid2.length !== 0
+              ? valid2
+              : null}
           </NBGBText>
         </BodyView>
         <FooterView>

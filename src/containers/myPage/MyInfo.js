@@ -131,7 +131,7 @@ const MyInfo = props => {
                   [myInfoColumn]: MyInfoData,
                 });
 
-                showMessage(result, {
+                showMessage('개인정보가 ' + result + '되었습니다.', {
                   position: Toast.positions.CENTER,
                 });
               } else {
