@@ -49,6 +49,7 @@ export const MyInfoMdal = ({
   passCheck,
   setPassCheck,
   valid,
+  valid2,
   changeHandler,
 }) => {
   return (
@@ -98,6 +99,13 @@ export const MyInfoMdal = ({
           />
           {changePass ? (
             <MyInfoTI
+              borderColor={
+                valid2.length === 0 && passCheck && passCheck.length !== 0
+                  ? '#53A6EC'
+                  : passCheck && passCheck.length !== 0
+                  ? 'red'
+                  : '#dbdbdb'
+              }
               marginTop={20}
               secureTextEntry={true}
               placeholder={'비밀번호 재확인'}
@@ -107,7 +115,7 @@ export const MyInfoMdal = ({
             />
           ) : null}
           <NBGBText color={'red'} fontSize={12} marginLeft={40}>
-            {valid.length !== 0 ? valid : null}
+            {valid.length !== 0 ? valid : valid2.length !== 0 ? valid2 : null}
           </NBGBText>
         </BodyView>
         <FooterView>

@@ -17,6 +17,7 @@ import {
   checkPhoneNumber,
   checkNickName,
   checkNickNameLength,
+  checkPassCompare,
 } from '../../utils/validation';
 
 const MyInfo = props => {
@@ -34,6 +35,8 @@ const MyInfo = props => {
   const [passCheck, setPassCheck] = useState('');
   // 비밀번호 유효성 검사
   const [valid, setValid] = useState('');
+  // 비밀번호 재확인 유효성
+  const [valid2, setValid2] = useState('');
 
   useEffect(() => {
     let valid1;
@@ -61,15 +64,22 @@ const MyInfo = props => {
 
       case myInfoColumn === 'userPw':
         valid1 = checkPass(MyInfoData);
+        let valid3 = checkPassCompare(MyInfoData, passCheck);
 
-        MyInfoData.length !== 0 && !valid1
-          ? setValid('* 대소문자&숫자&특수문자를 포함 7자이상 입력해주세요.')
-          : setValid('');
+        if (MyInfoData.length !== 0 && !valid1) {
+          setValid('* 대소문자&숫자&특수문자를 포함 7자이상 입력해주세요.');
+        } else {
+          setValid('');
+        }
         break;
     }
   }, [MyInfoData]);
 
-  console.log(valid);
+  useEffect(() => {
+    let valid = checkPassCompare(MyInfoData, passCheck);
+
+    !valid ? setValid2('* 비밀번호가 일치하지 않습니다.') : setValid2('');
+  }, [passCheck]);
 
   return (
     <TopContainerView>
@@ -83,8 +93,11 @@ const MyInfo = props => {
           await setMyInfoColumn('');
           await setMyInfoData();
 
+          await setValid('');
+
           if (changePass) {
             await setPassCheck('');
+            await setValid2('');
             await setChangePass(false);
           }
         }}
@@ -95,6 +108,7 @@ const MyInfo = props => {
         passCheck={passCheck}
         setPassCheck={setPassCheck}
         valid={valid}
+        valid2={valid2}
         changeHandler={async () => {
           await setMyInfoModal(false);
 
@@ -142,10 +156,12 @@ const MyInfo = props => {
           if (changePass) {
             await setPassCheck('');
             await setChangePass(false);
+            await setValid2('');
           }
 
           await setMyInfoColumn('');
           await setMyInfoData();
+          await setValid('');
         }}
       />
       <TopView
