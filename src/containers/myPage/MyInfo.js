@@ -76,9 +76,9 @@ const MyInfo = props => {
   }, [MyInfoData]);
 
   useEffect(() => {
-    let valid = checkPassCompare(MyInfoData, passCheck);
+    let valid3 = checkPassCompare(MyInfoData, passCheck);
 
-    !valid ? setValid2('* 비밀번호가 일치하지 않습니다.') : setValid2('');
+    !valid3 ? setValid2('* 비밀번호가 일치하지 않습니다.') : setValid2('');
   }, [passCheck]);
 
   return (
