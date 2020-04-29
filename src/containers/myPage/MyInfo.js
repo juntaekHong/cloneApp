@@ -127,12 +127,16 @@ const MyInfo = props => {
               if (valid.length === 0) {
                 const result = await SigninActions.updateUserInfo(userData);
 
-                await SigninActions.handleLoginData({
-                  ...props.user,
-                  [myInfoColumn]: MyInfoData,
-                });
+                if (result.indexOf('중복') !== -1) {
+                  // 닉네임 중복
+                } else {
+                  await SigninActions.handleLoginData({
+                    ...props.user,
+                    [myInfoColumn]: MyInfoData,
+                  });
+                }
 
-                showMessage('개인정보가 ' + result + '되었습니다.', {
+                showMessage('개인정보 ' + result + '!', {
                   position: Toast.positions.CENTER,
                 });
               } else {
