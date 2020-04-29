@@ -25,7 +25,6 @@ import {
 } from '../../utils/validation';
 import {SignupActions} from '../../store/actionCreator';
 import Toast from 'react-native-root-toast';
-// import {WheelPicker} from '../../components/signUp/modal';
 
 const SignUp = props => {
   const [index, setIndex] = useState(0);
@@ -188,7 +187,6 @@ const SignUp = props => {
               value={email}
               onChangeText={text => setEmail(text)}
               onSubmitEditing={() => {
-                // passRef.current.focus();
                 input2.current.focus();
               }}
               returnKeyType={'next'}
@@ -219,7 +217,6 @@ const SignUp = props => {
                 style={{
                   width: widthPercentageToDP(200),
                 }}
-                // ref={passRef}
                 placeholder={'비밀번호'}
                 secureTextEntry={passVisible}
                 value={pass}
@@ -311,7 +308,6 @@ const SignUp = props => {
               value={name}
               onChangeText={text => setName(text)}
               onSubmitEditing={() => {
-                // passRef.current.focus();
                 input5.current.focus();
               }}
               returnKeyType={'next'}
@@ -339,7 +335,6 @@ const SignUp = props => {
               onChangeText={text => setNickName(text)}
               onSubmitEditing={() => {
                 input6.current.focus();
-                // passRef.current.focus();
               }}
               returnKeyType={'next'}
             />
@@ -370,7 +365,6 @@ const SignUp = props => {
               onSubmitEditing={async () => {
                 Keyboard.dismiss();
                 await swipe.current.scrollBy(1);
-                // passRef.current.focus();
               }}
             />
             <NBGBText marginLeft={5} marginTop={5} fontSize={10} color={'red'}>
@@ -473,9 +467,7 @@ const SignUp = props => {
               keyboardType={'number-pad'}
               value={phoneNumber}
               onChangeText={text => setPhoneNumber(text)}
-              onSubmitEditing={() => {
-                // passRef.current.focus();
-              }}
+              onSubmitEditing={() => {}}
               returnKeyType={'done'}
             />
             <NBGBText marginLeft={5} marginTop={5} fontSize={10} color={'red'}>

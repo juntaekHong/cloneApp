@@ -4,7 +4,7 @@
 import React from 'react';
 import {BTN} from '../common/View';
 import {NBGText} from '../common/Text';
-import {widthPercentageToDP, removeData} from '../../utils/util';
+import {removeData} from '../../utils/util';
 import {
   SigninActions,
   ReservationActions,

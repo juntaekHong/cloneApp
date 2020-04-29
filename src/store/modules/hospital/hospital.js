@@ -5,15 +5,7 @@
 import {createAction, handleActions} from 'redux-actions';
 import {produce} from 'immer';
 import api from '../../../utils/api';
-import axios from 'axios';
-import {parseString} from 'xml2js';
-import config from '../../../configs/config';
-import {
-  getData,
-  storeData,
-  removeData,
-  removeAllData,
-} from '../../../utils/util';
+import {getData} from '../../../utils/util';
 
 const SUBSCRIBER_LIST = 'hospital/SUBSCRIBER_LIST';
 

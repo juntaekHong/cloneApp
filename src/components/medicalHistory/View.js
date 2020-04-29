@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-fallthrough */
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import styled from 'styled-components/native';
 import {widthPercentageToDP, dayToString, showMessage} from '../../utils/util';
 import {StandardView, BTN} from '../common/View';
@@ -13,35 +13,6 @@ import {CancelBtn} from './Button';
 import Communications from 'react-native-communications';
 import {ReservationActions, CommonActions} from '../../store/actionCreator';
 import Toast from 'react-native-root-toast';
-
-// "rows": [
-//     {
-//       "reservationIndex": 4,
-//       "userIndex": 3,
-//       "hpid": "A1100008",
-//       "officeIndex": 16,
-//       "treatmentIndex": 3,
-//       "treatmentName": "호흡기질환",
-//       "reservationDate": "2020-04-15",
-//       "reservationTime": "11:30:00",
-//       "comment": null,
-//       "status": "ACCEPTED",
-//       "createdAt": "2020-04-08T11:25:43.000Z",
-//       "updatedAt": "2020-04-08T11:25:43.000Z",
-//       "hospital": {
-//         "dutyName": "(학)고려대학교의과대학부속병원(안암병원)"
-//       },
-//       "hospitalOffice": {
-//         "officeName": "박철수 선생님 - 이비인후과"
-//       },
-//       "user": {
-//         "userName": "이해찬",
-//         "age": 21,
-//         "tel": null,
-//         "email": "haechan@sm.com"
-//       }
-//     }
-//   ]
 
 const Reservation = styled(StandardView)`
   margin-top: ${({margin}) => (margin ? widthPercentageToDP(margin) : 0)};

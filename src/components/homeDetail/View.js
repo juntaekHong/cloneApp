@@ -1,7 +1,7 @@
 /* eslint-disable no-fallthrough */
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState, useEffect} from 'react';
-import {View, FlatList} from 'react-native';
+import {View} from 'react-native';
 import styled from 'styled-components/native';
 import MapView, {Marker, Callout} from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
@@ -378,10 +378,6 @@ export const DetailView = ({
               style={{width: widthPercentageToDP(210)}}>
               <NBGBText fontSize={12}>이동 거리: {items.distance}</NBGBText>
               <NBGBText fontSize={12}>이동 시간: {items.duration}</NBGBText>
-              {/* <NBGBText fontSize={12}>
-                예상 대기시간: {items.headway > 60 ? items.headway / 60 : 0}
-                분(이동시간 제외)
-              </NBGBText> */}
               <NBGBText fontSize={12}>
                 버스 도착: {items.num_stops} 정류장 전
               </NBGBText>
@@ -438,10 +434,6 @@ export const DetailView = ({
               style={{width: widthPercentageToDP(210)}}>
               <NBGBText fontSize={12}>이동 거리: {items.distance}</NBGBText>
               <NBGBText fontSize={12}>이동 시간: {items.duration}</NBGBText>
-              {/* <NBGBText fontSize={12}>
-                예상 대기시간: {items.headway > 60 ? items.headway / 60 : 0}
-                분(이동시간 제외)
-              </NBGBText> */}
               <NBGBText fontSize={12}>
                 지하철 도착: {items.num_stops} 정거장 전
               </NBGBText>
@@ -522,13 +514,6 @@ const colors = [
 
 // 진료시간 페이지 - 진료시간 데이터 부분 뷰
 const InfoView = ({index, hInfo}) => {
-  // 시간 포맷
-  const timeFormat = time => {
-    let toStringFormat =
-      String(time).substring(0, 2) + ':' + String(time).substring(2, 4);
-    return toStringFormat;
-  };
-
   return (
     <Hours
       marginTop={30}

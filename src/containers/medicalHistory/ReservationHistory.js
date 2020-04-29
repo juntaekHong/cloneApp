@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import {TopContainerView} from '../../components/common/View';
 import {ReservationActions} from '../../store/actionCreator';
-import {NBGText, NBGBText} from '../../components/common/Text';
+import {NBGBText} from '../../components/common/Text';
 import {HistoryList} from '../../components/medicalHistory/FlatList';
 
 const ReservationHistory = props => {

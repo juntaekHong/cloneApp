@@ -1,17 +1,11 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useRef, useEffect, useState} from 'react';
-import {NavigationEvents, FlatList} from 'react-navigation';
+import React, {useRef} from 'react';
+import {NavigationEvents} from 'react-navigation';
 // import LottieView from 'lottie-react-native';
 import {connect} from 'react-redux';
-import {TopContainerView, BTN} from '../../components/common/View';
+import {TopContainerView} from '../../components/common/View';
 import {TopView, HomeAd} from '../../components/home/View';
 import {DataList} from '../../components/home/DataList';
-import {Img} from '../../components/common/Image';
-import {Image} from 'react-native';
-import {widthPercentageToDP} from '../../utils/util';
-import {ReviewActions} from '../../store/actionCreator';
-import ImageCropPicker from 'react-native-image-crop-picker';
-import {NBGText} from '../../components/common/Text';
 
 // 병원별 이미지 및 타이틀
 const DATA = [
@@ -97,109 +91,6 @@ const Home = props => {
         justifyContent={'center'}
         navigation={props.navigation}
       />
-      {/* <BTN
-        style={{
-          margin: widthPercentageToDP(2),
-          height: widthPercentageToDP(50),
-          padding: widthPercentageToDP(5),
-          borderWidth: widthPercentageToDP(2),
-          borderRadius: widthPercentageToDP(6),
-          borderColor: '#dbdbdb',
-          justifyContent: 'center',
-        }}
-        onPress={async () => {
-          try {
-            let image = await ImageCropPicker.openPicker({
-              width: 200,
-              height: 200,
-              mediaType: 'photo',
-              // cropping: true,
-              includeBase64: true,
-              cropperToolbarTitle: '',
-            });
-
-            // let crop = await ImageCropPicker.openCropper({
-            //   path: image.path,
-            //   width: 200,
-            //   height: 200,
-            //   cropperToolbarTitle: '',
-            // });
-
-            const formData = new FormData();
-            formData.append('img', {
-              uri: image.path,
-              type: `${image.mime}`,
-              name: `.${image.mime.substr(
-                image.mime.indexOf('/') + 1,
-                image.mime.length - 1,
-              )}`,
-            });
-
-            const ImageFormat = await ReviewActions.uploadImg(formData);
-
-            Promise.all([ImageFormat]).then(async () => {
-              await ReviewActions.postReview(ImageFormat);
-              await ReviewActions.getMyReview();
-            });
-          } catch (err) {
-            console.log(err);
-          } finally {
-            await ImageCropPicker.clean();
-          }
-        }}>
-        <NBGText>앨범에서 사진 선택 (이미지 테스트, 임시 생성)</NBGText>
-      </BTN> */}
-      {/* <BTN
-        style={{
-          margin: widthPercentageToDP(2),
-          height: widthPercentageToDP(50),
-          padding: widthPercentageToDP(5),
-          borderWidth: widthPercentageToDP(2),
-          borderRadius: widthPercentageToDP(6),
-          borderColor: '#dbdbdb',
-          justifyContent: 'center',
-        }}
-        onPress={async () => {
-          try {
-            let image = await ImageCropPicker.openCamera({
-              width: 200,
-              height: 200,
-              cropping: true,
-              cropperToolbarTitle: '',
-            });
-
-            const formData = new FormData();
-            formData.append('avatar', {
-              uri: image.path,
-              type: 'image/png',
-              name: 'avatar.png',
-            });
-          } catch (err) {
-            console.log(err);
-          } finally {
-            await ImageCropPicker.clean();
-          }
-        }}>
-        <NBGText>사진찍고 선택</NBGText>
-      </BTN> */}
-      {/* <FlatList
-        style={{flexGrow: 1, width: '100%', height: '100%'}}
-        data={props.my_review_list}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={({item, index}) => {
-          return item.img !== null ? (
-            <Image
-              style={{
-                width: widthPercentageToDP(50),
-                height: widthPercentageToDP(60),
-              }}
-              source={{
-                uri: item.img,
-              }}
-            />
-          ) : null;
-        }}
-      /> */}
       {/* 광고 배너 뷰 작업 */}
       <NavigationEvents
         onWillFocus={() => {

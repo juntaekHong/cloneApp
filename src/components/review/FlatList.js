@@ -7,7 +7,6 @@ import {widthPercentageToDP} from '../../utils/util';
 import {FlatList} from 'react-native';
 import {ReviewItemView} from './View';
 import {StandardView} from '../common/View';
-import {UIActivityIndicator} from 'react-native-indicators';
 import {NBGBText} from '../common/Text';
 
 const Review = styled(FlatList)`

@@ -1,27 +1,19 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react/react-in-jsx-scope */
-import React, {useCallback, useState, useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import {View} from 'react-native';
 import styled from 'styled-components/native';
 import {StandardView, BTN} from '../common/View';
 import {BackImg, StarImg, MapImg} from '../common/Image';
-import {NBGBText, NBGText, NBGLText} from '../common/Text';
-import {widthPercentageToDP, getData, showMessage} from '../../utils/util';
+import {NBGBText, NBGText} from '../common/Text';
+import {widthPercentageToDP, showMessage} from '../../utils/util';
 import colors from '../../configs/colors';
-import {
-  SelectImg,
-  RatingPullImg,
-  RatingHalfImg,
-  RatingEmptyImg,
-  CallImg,
-  TaxiImg,
-} from './Image';
+import {SelectImg, RatingEmptyImg, CallImg, TaxiImg} from './Image';
 import Carousel from 'react-native-looped-carousel';
 import FastImage from 'react-native-fast-image';
 import Communications from 'react-native-communications';
 import {HospitalActions} from '../../store/actionCreator';
 import Toast from 'react-native-root-toast';
-import {RatingAvgView} from '../review/View';
 
 const LocationView = styled(StandardView)`
   flex-direction: row;

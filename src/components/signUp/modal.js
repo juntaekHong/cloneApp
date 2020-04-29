@@ -1,7 +1,6 @@
 import React, {useState, useCallback} from 'react';
 import styled from 'styled-components/native';
 import {CustomModal} from '../common/Modal';
-import {NBGText} from '../common/Text';
 import Picker from 'react-native-wheel-picker-extended';
 import {widthPercentageToDP} from '../../utils/util';
 import fonts from '../../configs/fonts';

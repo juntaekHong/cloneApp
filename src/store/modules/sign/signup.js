@@ -1,10 +1,6 @@
 import {handleActions} from 'redux-actions';
 import api from '../../../utils/api';
 
-// const USER_DATA = 'signup/USER_DATA';
-
-// export const userDataAction = createAction(USER_DATA);
-
 const initState = {};
 
 // 회원가입
@@ -19,12 +15,4 @@ export const signUp = userData => async dispatch => {
   }
 };
 
-export default handleActions(
-  {
-    // [USER_DATA]: (state, {payload}) =>
-    //   produce(state, draft => {
-    //     draft.user_data = payload;
-    //   }),
-  },
-  initState,
-);
+export default handleActions({}, initState);

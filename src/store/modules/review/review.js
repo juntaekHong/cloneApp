@@ -2,15 +2,7 @@
 import {createAction, handleActions} from 'redux-actions';
 import {produce} from 'immer';
 import api from '../../../utils/api';
-import axios from 'axios';
-import {
-  getData,
-  storeData,
-  removeAllData,
-  removeData,
-  showMessage,
-} from '../../../utils/util';
-import config from '../../../configs/config';
+import {getData} from '../../../utils/util';
 
 const REVIEW_LIST = 'review/REVIEW_LIST';
 const REVIEW_TOTAL = 'review/REVIEW_TOTAL';

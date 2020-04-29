@@ -8,11 +8,11 @@ import {
   BTN,
   StandardView,
 } from '../../components/common/View';
-import {NBGBText, NBGText} from '../../components/common/Text';
+import {NBGBText} from '../../components/common/Text';
 import {widthPercentageToDP, getData, showMessage} from '../../utils/util';
 import {CustomModal} from '../../components/common/Modal';
 import colors from '../../configs/colors';
-import {TextInput, Keyboard, Linking, ScrollView} from 'react-native';
+import {TextInput, Keyboard, ScrollView} from 'react-native';
 import {SelectImg, UnSelectImg} from '../../components/home/Image';
 import {
   SigninActions,

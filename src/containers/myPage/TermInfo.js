@@ -1,6 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import {connect} from 'react-redux';
 import {TopContainerView, TopView} from '../../components/common/View';
 import {ScrollView} from 'react-native';
 import {NBGText} from '../../components/common/Text';

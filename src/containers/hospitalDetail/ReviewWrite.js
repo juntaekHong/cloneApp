@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState, useEffect} from 'react';
 import {connect} from 'react-redux';
-import {TopContainerView, StandardView} from '../../components/common/View';
+import {TopContainerView} from '../../components/common/View';
 import {TopView} from '../../components/common/View';
 import {ReviewWriteView} from '../../components/review/View';
 import ImageCropPicker from 'react-native-image-crop-picker';
@@ -189,11 +189,6 @@ const ReviewWrite = props => {
 
                 await setImgData(ImageFormat);
                 await setSelected(true);
-
-                // Promise.all([ImageFormat]).then(async () => {
-                //   await ReviewActions.postReview(ImageFormat);
-                //   await ReviewActions.getMyReview();
-                // });
               } catch (err) {
                 console.log(err);
               } finally {

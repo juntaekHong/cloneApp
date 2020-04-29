@@ -1,21 +1,17 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState, useEffect} from 'react';
-import {View, TouchableOpacity, Text} from 'react-native';
+import {View, TouchableOpacity} from 'react-native';
 import Geolocation from '@react-native-community/geolocation';
 import {connect} from 'react-redux';
-import {widthPercentageToDP, getData, removeData} from '../../utils/util';
+import {widthPercentageToDP, getData} from '../../utils/util';
 import {CenterView} from '../../components/common/Extra';
-import navigators from '../../utils/navigators';
 import {
   CommonActions,
   HospitalActions,
   ReviewActions,
 } from '../../store/actionCreator';
-import {CustomModal} from '../../components/common/Modal';
-import {BTN} from '../../components/common/View';
-import {NBGBText, NBGText} from '../../components/common/Text';
-import {UIActivityIndicator} from 'react-native-indicators';
+import {NBGText} from '../../components/common/Text';
 
 const UpdateCheck = props => {
   // 초기 처음 사용시, 내 위치 설정

@@ -3,7 +3,7 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import {StandardView, BTN} from '../common/View';
-import {NBGBText, NBGText} from '../common/Text';
+import {NBGText} from '../common/Text';
 import {widthPercentageToDP} from '../../utils/util';
 import {LogoutBtn} from './Button';
 import {RightarrowImg, MyInfoImg} from './Image';

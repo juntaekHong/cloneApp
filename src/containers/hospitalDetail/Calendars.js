@@ -55,9 +55,6 @@ const Calendars = props => {
   // 병원 예약 최종 확인 모달
   const [reservationModal, setReservationModal] = useState(false);
 
-  // 병원 예약 성공 또는 실패 모달
-  const [reservationAlertModal, setReservationAlertModal] = useState(false);
-
   // 자동 스크롤
   const hourListRef = useRef(null);
 

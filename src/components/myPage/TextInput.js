@@ -2,8 +2,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import styled from 'styled-components/native';
-import {BTN} from '../common/View';
-import {NBGBText} from '../common/Text';
 import {widthPercentageToDP} from '../../utils/util';
 import {TextInput} from 'react-native-gesture-handler';
 

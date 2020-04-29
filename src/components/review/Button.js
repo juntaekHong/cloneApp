@@ -5,8 +5,7 @@ import React from 'react';
 import styled from 'styled-components/native';
 import {widthPercentageToDP} from '../../utils/util';
 import {StandardView, BTN} from '../common/View';
-import {NBGLText, NBGBText, NBGText} from '../common/Text';
-import {DotsImg, PlusImg, MinusImg} from './Image';
+import {DotsImg, PlusImg} from './Image';
 import {Img} from '../common/Image';
 
 // 리뷰 다트 버튼(수정, 삭제, 해당 유저 리스트 보기 버튼)

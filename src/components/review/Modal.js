@@ -2,12 +2,8 @@ import React from 'react';
 import styled from 'styled-components/native';
 import Modal from 'react-native-modal';
 import {widthPercentageToDP} from '../../utils/util';
-import colors from '../../configs/colors';
-import {NBGText, NBGBText} from '../common/Text';
-import FastImage from 'react-native-fast-image';
-import {UIActivityIndicator} from 'react-native-indicators';
+import {NBGText} from '../common/Text';
 import {BTN, StandardView} from '../common/View';
-// import Dialog, {SlideAnimation} from 'react-native-popup-dialog';
 
 const DivisionView = styled.View`
   width: 100%;

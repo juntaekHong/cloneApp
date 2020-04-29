@@ -1,12 +1,11 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import styled from 'styled-components/native';
 import Modal from 'react-native-modal';
 import {widthPercentageToDP} from '../../utils/util';
 import colors from '../../configs/colors';
-import {NBGText, NBGBText, NBGLText} from '../common/Text';
+import {NBGText, NBGBText} from '../common/Text';
 import {StandardView, BTN} from '../common/View';
-import {SelectImg} from '../home/Image';
 import {CloseImg} from '../common/Image';
 import {MyInfoTI} from './TextInput';
 

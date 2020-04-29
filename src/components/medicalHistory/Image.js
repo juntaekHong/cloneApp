@@ -1,7 +1,5 @@
 /* eslint-disable react/react-in-jsx-scope */
 import React from 'react';
-import styled from 'styled-components/native';
-import {widthPercentageToDP} from '../../utils/util';
 import {BackImg} from '../common/Image';
 
 export const HpImg = ({width, height}) => {

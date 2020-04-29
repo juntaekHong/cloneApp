@@ -4,7 +4,6 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import {widthPercentageToDP} from '../../utils/util';
-import {StandardView} from '../common/View';
 import {TextInput} from 'react-native';
 import fonts from '../../configs/fonts';
 

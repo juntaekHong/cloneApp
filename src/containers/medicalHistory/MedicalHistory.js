@@ -1,8 +1,8 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import {TopContainerView} from '../../components/common/View';
-import {ReservationActions, CommonActions} from '../../store/actionCreator';
-import {NBGText, NBGBText} from '../../components/common/Text';
+import {ReservationActions} from '../../store/actionCreator';
+import {NBGBText} from '../../components/common/Text';
 import {HistoryList} from '../../components/medicalHistory/FlatList';
 
 const MedicalHistory = props => {

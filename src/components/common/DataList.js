@@ -1,11 +1,11 @@
 /* eslint-disable react/react-in-jsx-scope */
-import React, {useState} from 'react';
+import React from 'react';
 import styled from 'styled-components/native';
 import {ListView, ContentDataView, EvaluationView} from './View';
 import {PhotoImg} from './Image';
 import {NBGBText, NBGLText, NBGText} from './Text';
 import {widthPercentageToDP, dayToString} from '../../utils/util';
-import {CommonActions, ReviewActions} from '../../store/actionCreator';
+import {CommonActions} from '../../store/actionCreator';
 
 const DataList = styled.FlatList`
   flex-grow: 1;

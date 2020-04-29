@@ -2,15 +2,7 @@
 import {createAction, handleActions} from 'redux-actions';
 import {produce} from 'immer';
 import api from '../../../utils/api';
-import axios from 'axios';
-import {
-  getData,
-  storeData,
-  removeAllData,
-  removeData,
-  showMessage,
-} from '../../../utils/util';
-import config from '../../../configs/config';
+import {getData, storeData} from '../../../utils/util';
 
 const SIGNIN_USER_DATA = 'signin/SIGNIN_USER_DATA';
 

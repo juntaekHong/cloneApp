@@ -5,8 +5,6 @@ import Modal from 'react-native-modal';
 import {widthPercentageToDP} from '../../utils/util';
 import colors from '../../configs/colors';
 import {NBGText, NBGBText, NBGLText} from '../common/Text';
-import FastImage from 'react-native-fast-image';
-import {UIActivityIndicator} from 'react-native-indicators';
 import {StandardView} from '../common/View';
 import {SelectImg} from '../home/Image';
 import {ReservationBottomView} from './View';

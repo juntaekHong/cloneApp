@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-fallthrough */
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import styled from 'styled-components/native';
 import {widthPercentageToDP, timeSince} from '../../utils/util';
 import {StandardView, BTN} from '../common/View';
@@ -173,8 +173,6 @@ const ReviewHeaderView = styled(StandardView)`
 export const ReviewFooterView = styled(ReviewHeaderView)``;
 
 export const ReviewItemView = ({item, user, dots, dotsBtn, contentBtn}) => {
-  // 작성자 인덱스 reviewList[0].userIndex
-
   const timeFomat = time => {
     let fullyear = time.split('T');
     let min = time.split(':');
