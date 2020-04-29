@@ -78,6 +78,7 @@ export const MyInfoMdal = ({
         </NBGBText>
         <BodyView>
           <MyInfoTI
+            secureTextEntry={changePass}
             placeholder={
               myInfoColumn === 'tel'
                 ? '("-") 제외하고 입력해주세요.'
