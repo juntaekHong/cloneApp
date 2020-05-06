@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {Component} from 'react';
+import React, {Fragment, Component} from 'react';
 import {
   Platform,
   View,
@@ -7,6 +7,7 @@ import {
   Text,
   SafeAreaView,
   Image,
+  StatusBar,
 } from 'react-native';
 import AppNavigation from './navigations';
 import SplashScreen from 'react-native-splash-screen';
@@ -31,38 +32,41 @@ class App extends Component {
   render() {
     const {firstScreenLoading, loading} = this.props;
     return (
-      <SafeAreaView style={styles.container}>
-        <Modal
-          isVisible={firstScreenLoading}
-          animationIn={'fadeIn'}
-          animationOut={'fadeOut'}
-          style={{
-            margin: 0,
-            justifyContent: 'center',
-            alignItems: 'center',
-            backgroundColor: 'white',
-          }}>
-          <View backgroundColor={'white'}>
-            <Image
-              style={{
-                width: widthPercentageToDP(100),
-                height: widthPercentageToDP(100),
-              }}
-              source={require('../assets/image/hospital.png')}
-            />
-          </View>
-        </Modal>
-        <Modal isVisible={loading}>
-          <View backgroundColor={'transparent'}>
-            <UIActivityIndicator color={'gray'} />
-          </View>
-        </Modal>
-        <AppNavigation
-          ref={navigatorRef => {
-            NavigatorService.setContainer(navigatorRef);
-          }}
-        />
-      </SafeAreaView>
+      <Fragment>
+        {Platform.OS === 'ios' && <StatusBar barStyle="dark-content" />}
+        <SafeAreaView style={styles.container}>
+          <Modal
+            isVisible={firstScreenLoading}
+            animationIn={'fadeIn'}
+            animationOut={'fadeOut'}
+            style={{
+              margin: 0,
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: 'white',
+            }}>
+            <View backgroundColor={'white'}>
+              <Image
+                style={{
+                  width: widthPercentageToDP(100),
+                  height: widthPercentageToDP(100),
+                }}
+                source={require('../assets/image/hospital.png')}
+              />
+            </View>
+          </Modal>
+          <Modal isVisible={loading}>
+            <View backgroundColor={'transparent'}>
+              <UIActivityIndicator color={'gray'} />
+            </View>
+          </Modal>
+          <AppNavigation
+            ref={navigatorRef => {
+              NavigatorService.setContainer(navigatorRef);
+            }}
+          />
+        </SafeAreaView>
+      </Fragment>
     );
   }
 }
