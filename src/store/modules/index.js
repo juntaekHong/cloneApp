@@ -10,6 +10,7 @@ import signin from './sign/signin';
 import signup from './sign/signup';
 import reservation from './reservation/reservation';
 import review from './review/review';
+import search from './search/search';
 
 export default combineReducers({
   counter,
@@ -20,4 +21,5 @@ export default combineReducers({
   signup,
   reservation,
   review,
+  search,
 });
