@@ -10,6 +10,9 @@ const Search = props => {
 
   const [searchText, setSearchText] = useState('');
 
+  // 자동 완성 기능 설정 유무
+  const [autoCompleteSet, setAutoCompleteSet] = useState(false);
+
   return (
     <TopContainerView>
       <TopView title="검색 페이지" />
@@ -24,7 +27,7 @@ const Search = props => {
           // 검색어 텍스트 변경 및 값 저장 기능
           onChangeText={async text => {
             await setSearchText(text);
-            text === '' ? null : await SearchActions.searchHospital(text);
+            // text === '' ? null : await SearchActions.searchHospital(text);
           }}
           autoScroll={async () => {
             await scrollRef.current.scrollTo({
@@ -40,6 +43,11 @@ const Search = props => {
           }}
           // 검색된 목록
           searchData={props.searchList}
+          // 자동 완성 설정
+          autoCompleteSet={autoCompleteSet}
+          setAutoCompleteSet={async () => {
+            await setAutoCompleteSet(!autoCompleteSet);
+          }}
         />
       </ScrollView>
     </TopContainerView>

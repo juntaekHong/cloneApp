@@ -51,6 +51,8 @@ export const SearchView = ({
   value,
   SearchHandler,
   searchData,
+  autoCompleteSet,
+  setAutoCompleteSet,
 }) => {
   return (
     <Search marginHorizontal={marginHorizontal}>
@@ -80,8 +82,21 @@ export const SearchView = ({
             onChangeText(text);
             autoScroll();
           }}
+          autoCompleteSet={autoCompleteSet}
+          setAutoCompleteSet={() => {
+            setAutoCompleteSet();
+          }}
         />
       )}
     </Search>
   );
 };
+
+// 자동완성 스위치 뷰
+export const AutoCompleteView = styled(StandardView)`
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  margin-vertical: ${widthPercentageToDP(10)};
+  margin-right: ${widthPercentageToDP(10)};
+`;

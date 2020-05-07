@@ -4,8 +4,10 @@ import styled from 'styled-components/native';
 import {widthPercentageToDP} from '../../utils/util';
 import {FlatList, Text} from 'react-native';
 import {StandardView} from '../common/View';
-import {NBGBText} from '../common/Text';
+import {NBGBText, NBGLText} from '../common/Text';
 import {AutoCompelteBtn} from './Button';
+import Switch from 'react-native-switch-pro';
+import {AutoCompleteView} from './View';
 
 const AutoComplete = styled.FlatList`
   width: 100%;
@@ -15,11 +17,16 @@ const AutoComplete = styled.FlatList`
   border-color: #dbdbdb;
 `;
 
-export const AutoCompleteList = ({data, onChangeText}) => {
+export const AutoCompleteList = ({
+  data,
+  onChangeText,
+  autoCompleteSet,
+  setAutoCompleteSet,
+}) => {
   return (
     <AutoComplete
       scrollEnabled={false}
-      data={data}
+      data={autoCompleteSet ? data : []}
       keyExtractor={(item, index) => index.toString()}
       renderItem={({item}) => {
         return (
@@ -33,10 +40,20 @@ export const AutoCompleteList = ({data, onChangeText}) => {
         );
       }}
       ListFooterComponent={() => {
-        //   임시
         return (
           <StandardView>
-            <NBGBText>asdsa</NBGBText>
+            <AutoCompleteView>
+              <NBGLText marginRight={7}>자동완성 설정</NBGLText>
+              <Switch
+                width={widthPercentageToDP(40)}
+                height={widthPercentageToDP(21)}
+                backgroundActive={'rgb(96, 169, 243)'}
+                value={autoCompleteSet}
+                onSyncPress={() => {
+                  setAutoCompleteSet();
+                }}
+              />
+            </AutoCompleteView>
           </StandardView>
         );
       }}

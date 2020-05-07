@@ -15,6 +15,7 @@ const Search = styled(TextInput)`
     paddingVertical
       ? widthPercentageToDP(paddingVertical)
       : widthPercentageToDP(10)};
+  font-size: ${widthPercentageToDP(13)};
 `;
 
 export const SearchTI = ({
@@ -33,6 +34,7 @@ export const SearchTI = ({
         onChangeText(text);
       }}
       value={value}
+      returnKeyType={'done'}
       onPress={() => {
         SearchHandler();
       }}
