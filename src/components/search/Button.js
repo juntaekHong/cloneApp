@@ -1,8 +1,8 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-fallthrough */
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
-import {BTN} from '../common/View';
+import React, {useCallback} from 'react';
+import {BTN, StandardView} from '../common/View';
 import styled from 'styled-components';
 import {widthPercentageToDP} from '../../utils/util';
 import {Img} from '../common/Image';
@@ -45,10 +45,33 @@ export const AutoCompelteBtn = ({
   hpId,
   onChangeText,
 }) => {
+  const stringMatch = useCallback(
+    hospital => {
+      let searchString = [];
+
+      hospital = hospital.split('');
+
+      for (let i = 0; i < hospital.length; i++) {
+        if (searchText.indexOf(hospital[i]) !== -1) {
+          searchString.push(
+            <NBGBText color={'rgb(96, 169, 243)'}>{hospital[i]}</NBGBText>,
+          );
+        } else {
+          searchString.push(<NBGLText>{hospital[i]}</NBGLText>);
+        }
+      }
+
+      return searchString;
+    },
+    [searchText],
+  );
+
   return (
     <AutoCompelte>
       {searchText !== hospitalName ? (
-        <NBGLText>{hospitalName}</NBGLText>
+        <StandardView style={{flexDirection: 'row'}}>
+          {stringMatch(hospitalName)}
+        </StandardView>
       ) : (
         <NBGBText color={'rgb(96, 169, 243)'}>{hospitalName}</NBGBText>
       )}
