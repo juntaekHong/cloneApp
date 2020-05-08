@@ -35,7 +35,7 @@ export const SearchTI = ({
       }}
       value={value}
       returnKeyType={'search'}
-      onPress={() => {
+      onSubmitEditing={() => {
         SearchHandler();
       }}
     />

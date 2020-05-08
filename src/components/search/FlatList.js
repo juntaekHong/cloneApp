@@ -9,7 +9,7 @@ import {
   removeData,
 } from '../../utils/util';
 import {StandardView, BTN} from '../common/View';
-import {NBGLText} from '../common/Text';
+import {NBGLText, NBGBText} from '../common/Text';
 import {AutoCompelteBtn} from './Button';
 import Switch from 'react-native-switch-pro';
 import {AutoCompleteView} from './View';
@@ -63,7 +63,7 @@ export const AutoCompleteList = ({
               onPress={() => {
                 onChangeText(historyData[i]);
               }}>
-              <NBGLText color={'gray'}>{historyData[i]}</NBGLText>
+              <NBGLText>{historyData[i]}</NBGLText>
               <BTN
                 style={{
                   paddingHorizontal: widthPercentageToDP(10),
@@ -91,7 +91,12 @@ export const AutoCompleteList = ({
         }
 
         return historyData.length !== 0 ? (
-          <StandardView>{format}</StandardView>
+          <StandardView>
+            <NBGBText color={'gray'} marginTop={5} marginLeft={10}>
+              최근 검색어
+            </NBGBText>
+            {format}
+          </StandardView>
         ) : null;
       }}
       renderItem={({item}) => {
