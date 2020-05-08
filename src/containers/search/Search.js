@@ -27,7 +27,7 @@ const Search = props => {
           // 검색어 텍스트 변경 및 값 저장 기능
           onChangeText={async text => {
             await setSearchText(text);
-            // text === '' ? null : await SearchActions.searchHospital(text);
+            text === '' ? null : await SearchActions.searchHospital(text);
           }}
           autoScroll={async () => {
             await scrollRef.current.scrollTo({

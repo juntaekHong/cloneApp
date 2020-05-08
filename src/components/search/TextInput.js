@@ -34,7 +34,7 @@ export const SearchTI = ({
         onChangeText(text);
       }}
       value={value}
-      returnKeyType={'done'}
+      returnKeyType={'search'}
       onPress={() => {
         SearchHandler();
       }}

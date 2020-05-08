@@ -78,6 +78,7 @@ export const SearchView = ({
       {value === '' ? null : (
         <AutoCompleteList
           data={searchData}
+          searchText={value}
           onChangeText={text => {
             onChangeText(text);
             autoScroll();

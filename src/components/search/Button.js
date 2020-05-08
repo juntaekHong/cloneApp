@@ -6,7 +6,7 @@ import {BTN} from '../common/View';
 import styled from 'styled-components';
 import {widthPercentageToDP} from '../../utils/util';
 import {Img} from '../common/Image';
-import {NBGLText} from '../common/Text';
+import {NBGLText, NBGBText} from '../common/Text';
 import {DiagonalImg} from './Image';
 
 const Search = styled(BTN)`
@@ -39,10 +39,19 @@ const AutoCompelte = styled(BTN)`
   border-color: #dbdbdb;
 `;
 
-export const AutoCompelteBtn = ({hospitalName, hpId, onChangeText}) => {
+export const AutoCompelteBtn = ({
+  searchText,
+  hospitalName,
+  hpId,
+  onChangeText,
+}) => {
   return (
     <AutoCompelte>
-      <NBGLText>{hospitalName}</NBGLText>
+      {searchText !== hospitalName ? (
+        <NBGLText>{hospitalName}</NBGLText>
+      ) : (
+        <NBGBText color={'rgb(96, 169, 243)'}>{hospitalName}</NBGBText>
+      )}
       <BTN
         style={{
           paddingHorizontal: widthPercentageToDP(10),

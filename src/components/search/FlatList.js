@@ -15,10 +15,15 @@ const AutoComplete = styled.FlatList`
   border-right-width: ${widthPercentageToDP(1)};
   border-bottom-width: ${widthPercentageToDP(1)};
   border-color: #dbdbdb;
+  border-bottom-left-radius: ${({data}) =>
+    data.length !== 0 ? widthPercentageToDP(10) : 0};
+  border-bottom-right-radius: ${({data}) =>
+    data.length !== 0 ? widthPercentageToDP(10) : 0};
 `;
 
 export const AutoCompleteList = ({
   data,
+  searchText,
   onChangeText,
   autoCompleteSet,
   setAutoCompleteSet,
@@ -31,6 +36,7 @@ export const AutoCompleteList = ({
       renderItem={({item}) => {
         return (
           <AutoCompelteBtn
+            searchText={searchText}
             hospitalName={item._source.dutyName._text}
             hpId={item._source.hpid._text}
             onChangeText={text => {
