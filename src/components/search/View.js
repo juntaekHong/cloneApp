@@ -2,8 +2,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import styled from 'styled-components/native';
-import {StandardView, BTN} from '../common/View';
-import {NBGText} from '../common/Text';
+import {StandardView} from '../common/View';
 import {widthPercentageToDP} from '../../utils/util';
 import {SearchTI} from './TextInput';
 import {SearchBtn} from './Button';
@@ -53,6 +52,8 @@ export const SearchView = ({
   searchData,
   autoCompleteSet,
   setAutoCompleteSet,
+  historyData,
+  setHistoryData,
 }) => {
   return (
     <Search marginHorizontal={marginHorizontal}>
@@ -87,6 +88,8 @@ export const SearchView = ({
           setAutoCompleteSet={() => {
             setAutoCompleteSet();
           }}
+          historyData={historyData}
+          setHistoryData={setHistoryData}
         />
       )}
     </Search>

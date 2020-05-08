@@ -3,11 +3,19 @@ import {produce} from 'immer';
 import api from '../../../utils/api';
 
 const SEARCH_LIST = 'search/SEARCH_LIST';
+const SEARCH_HISTORY_LIST = 'search/SEARCH_HISTORY_LIST';
 
 const searchListAction = createAction(SEARCH_LIST);
+const searchHistoryListAction = createAction(SEARCH_HISTORY_LIST);
 
 const initState = {
   searchList: [],
+  searchHistoryList: [],
+};
+
+// 검색 기록
+export const handleSearchHistoryList = list => dispatch => {
+  dispatch(searchHistoryListAction(list));
 };
 
 // 병원 검색
@@ -29,6 +37,10 @@ export default handleActions(
     [SEARCH_LIST]: (state, {payload}) =>
       produce(state, draft => {
         draft.searchList = payload;
+      }),
+    [SEARCH_HISTORY_LIST]: (state, {payload}) =>
+      produce(state, draft => {
+        draft.searchHistoryList = payload;
       }),
   },
   initState,

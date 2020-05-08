@@ -1,13 +1,20 @@
+/* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react/react-in-jsx-scope */
-import React, {useState} from 'react';
+import React from 'react';
 import styled from 'styled-components/native';
-import {widthPercentageToDP} from '../../utils/util';
-import {FlatList, Text} from 'react-native';
-import {StandardView} from '../common/View';
-import {NBGBText, NBGLText} from '../common/Text';
+import {
+  widthPercentageToDP,
+  getData,
+  storeData,
+  removeData,
+} from '../../utils/util';
+import {StandardView, BTN} from '../common/View';
+import {NBGLText} from '../common/Text';
 import {AutoCompelteBtn} from './Button';
 import Switch from 'react-native-switch-pro';
 import {AutoCompleteView} from './View';
+import {CloseImg} from '../common/Image';
+import {handleSearchHistoryList} from '../../store/modules/search/search';
 
 const AutoComplete = styled.FlatList`
   width: 100%;
@@ -27,12 +34,66 @@ export const AutoCompleteList = ({
   onChangeText,
   autoCompleteSet,
   setAutoCompleteSet,
+  historyData,
+  setHistoryData,
 }) => {
   return (
     <AutoComplete
       scrollEnabled={false}
       data={autoCompleteSet ? data : []}
       keyExtractor={(item, index) => index.toString()}
+      ListHeaderComponent={() => {
+        let format = [];
+        let changeData = [];
+
+        for (let i = 0; i < historyData.length; i++) {
+          changeData.push(historyData[i]);
+
+          format.push(
+            <BTN
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                paddingHorizontal: widthPercentageToDP(10),
+                paddingVertical: widthPercentageToDP(10),
+                borderBottomWidth: widthPercentageToDP(1),
+                borderColor: '#dbdbdb',
+              }}
+              onPress={() => {
+                onChangeText(historyData[i]);
+              }}>
+              <NBGLText color={'gray'}>{historyData[i]}</NBGLText>
+              <BTN
+                style={{
+                  paddingHorizontal: widthPercentageToDP(10),
+                  paddingVertical: widthPercentageToDP(10),
+                }}
+                onPress={async () => {
+                  let deleteIndex = historyData.indexOf(historyData[i]);
+
+                  changeData.splice(deleteIndex, 1);
+
+                  await setHistoryData(changeData);
+                  await handleSearchHistoryList(changeData);
+                  changeData = JSON.stringify(changeData);
+                  await removeData('search_history');
+                  await storeData('search_history', changeData);
+                }}>
+                <CloseImg
+                  width={16}
+                  height={16}
+                  source={require('../../../assets/image/common/close.png')}
+                />
+              </BTN>
+            </BTN>,
+          );
+        }
+
+        return historyData.length !== 0 ? (
+          <StandardView>{format}</StandardView>
+        ) : null;
+      }}
       renderItem={({item}) => {
         return (
           <AutoCompelteBtn

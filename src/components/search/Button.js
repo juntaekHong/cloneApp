@@ -69,11 +69,19 @@ export const AutoCompelteBtn = ({
   return (
     <AutoCompelte>
       {searchText !== hospitalName ? (
-        <StandardView style={{flexDirection: 'row'}}>
+        <StandardView
+          style={{
+            flexDirection: 'row',
+            width: widthPercentageToDP(240),
+          }}>
           {stringMatch(hospitalName)}
         </StandardView>
       ) : (
-        <NBGBText color={'rgb(96, 169, 243)'}>{hospitalName}</NBGBText>
+        <NBGBText
+          style={{width: widthPercentageToDP(240)}}
+          color={'rgb(96, 169, 243)'}>
+          {hospitalName}
+        </NBGBText>
       )}
       <BTN
         style={{
