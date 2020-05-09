@@ -29,7 +29,7 @@ export const SearchTI = ({
     <Search
       paddingHorizontal={innerPaddingHorizontal}
       paddingVertical={innerPaddingVertical}
-      placeholder={'검색할 병원명 또는 카테고리명을 입력하세요.'}
+      placeholder={'병원명 또는 카테고리명을 입력하세요.'}
       onChangeText={text => {
         onChangeText(text);
       }}

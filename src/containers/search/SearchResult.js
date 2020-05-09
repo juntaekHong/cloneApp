@@ -22,10 +22,10 @@ const SearchResult = props => {
     const promise1 = props.searchList.map(async item => {
       searchData = await CommonActions.getHospital(item._source.hpid._text);
       searchData ? await listData.push(searchData) : null;
+      setData(listData);
     });
 
     Promise.all([promise1]).then(async () => {
-      await setData(listData);
       await SearchActions.handleSearchLoading(false);
     });
   }, [props.searchList]);

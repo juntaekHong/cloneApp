@@ -43,8 +43,8 @@ export const List = props => {
         }}>
         <PhotoImg
           source={
-            item.img
-              ? {uri: item.img}
+            items.img
+              ? {uri: items.img}
               : require('../../../assets/image/navigation/homeblue.png')
           }
           width={80}
