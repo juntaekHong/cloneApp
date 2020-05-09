@@ -13,7 +13,7 @@ import {NBGLText, NBGBText} from '../common/Text';
 import {AutoCompelteBtn} from './Button';
 import Switch from 'react-native-switch-pro';
 import {AutoCompleteView} from './View';
-import {CloseImg} from '../common/Image';
+import {CloseImg, Img} from '../common/Image';
 import {handleSearchHistoryList} from '../../store/modules/search/search';
 
 const AutoComplete = styled.FlatList`
@@ -23,9 +23,9 @@ const AutoComplete = styled.FlatList`
   border-bottom-width: ${widthPercentageToDP(1)};
   border-color: #dbdbdb;
   border-bottom-left-radius: ${({data}) =>
-    data.length !== 0 ? widthPercentageToDP(10) : 0};
+    data && data.length !== 0 ? widthPercentageToDP(10) : 0};
   border-bottom-right-radius: ${({data}) =>
-    data.length !== 0 ? widthPercentageToDP(10) : 0};
+    data && data.length !== 0 ? widthPercentageToDP(10) : 0};
 `;
 
 export const AutoCompleteList = ({
@@ -34,8 +34,10 @@ export const AutoCompleteList = ({
   onChangeText,
   autoCompleteSet,
   setAutoCompleteSet,
+  SearchHandler,
   historyData,
   setHistoryData,
+  navigation,
 }) => {
   return (
     <AutoComplete
@@ -62,8 +64,23 @@ export const AutoCompleteList = ({
               }}
               onPress={() => {
                 onChangeText(historyData[i]);
+                navigation.navigate('SearchResult');
               }}>
-              <NBGLText>{historyData[i]}</NBGLText>
+              <StandardView
+                style={{flexDirection: 'row', alignItems: 'center'}}>
+                <Img
+                  width={16}
+                  height={16}
+                  source={require('../../../assets/image/search/wall-clock.png')}
+                />
+                <NBGLText
+                  marginLeft={5}
+                  style={{
+                    width: widthPercentageToDP(210),
+                  }}>
+                  {historyData[i]}
+                </NBGLText>
+              </StandardView>
               <BTN
                 style={{
                   paddingHorizontal: widthPercentageToDP(10),
@@ -91,12 +108,7 @@ export const AutoCompleteList = ({
         }
 
         return historyData.length !== 0 ? (
-          <StandardView>
-            <NBGBText color={'gray'} marginTop={5} marginLeft={10}>
-              최근 검색어
-            </NBGBText>
-            {format}
-          </StandardView>
+          <StandardView>{format}</StandardView>
         ) : null;
       }}
       renderItem={({item}) => {
@@ -107,6 +119,11 @@ export const AutoCompleteList = ({
             hpId={item._source.hpid._text}
             onChangeText={text => {
               onChangeText(text);
+            }}
+            onPress={async () => {
+              onChangeText(item._source.dutyName._text);
+              await SearchHandler();
+              navigation.navigate('SearchResult');
             }}
           />
         );

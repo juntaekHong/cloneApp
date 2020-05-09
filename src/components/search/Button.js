@@ -44,6 +44,7 @@ export const AutoCompelteBtn = ({
   hospitalName,
   hpId,
   onChangeText,
+  onPress,
 }) => {
   const stringMatch = useCallback(
     hospital => {
@@ -67,18 +68,22 @@ export const AutoCompelteBtn = ({
   );
 
   return (
-    <AutoCompelte>
+    <AutoCompelte
+      onPress={() => {
+        onChangeText(hospitalName);
+        onPress();
+      }}>
       {searchText !== hospitalName ? (
         <StandardView
           style={{
             flexDirection: 'row',
-            width: widthPercentageToDP(240),
+            width: widthPercentageToDP(235),
           }}>
           {stringMatch(hospitalName)}
         </StandardView>
       ) : (
         <NBGBText
-          style={{width: widthPercentageToDP(240)}}
+          style={{width: widthPercentageToDP(235)}}
           color={'rgb(96, 169, 243)'}>
           {hospitalName}
         </NBGBText>

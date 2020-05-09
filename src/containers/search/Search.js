@@ -78,6 +78,8 @@ const Search = props => {
           // 검색 기록
           historyData={historyData}
           setHistoryData={setHistoryData}
+          // 검색 후, 검색 결과 페이지 이동
+          navigation={props.navigation}
         />
       </ScrollView>
     </TopContainerView>
