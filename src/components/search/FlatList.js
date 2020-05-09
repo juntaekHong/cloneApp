@@ -37,7 +37,6 @@ export const AutoCompleteList = ({
   SearchHandler,
   historyData,
   setHistoryData,
-  navigation,
 }) => {
   return (
     <AutoComplete
@@ -64,7 +63,7 @@ export const AutoCompleteList = ({
               }}
               onPress={async () => {
                 await onChangeText(historyData[i]);
-                await navigation.navigate('SearchResult');
+                await SearchHandler();
               }}>
               <StandardView
                 style={{flexDirection: 'row', alignItems: 'center'}}>

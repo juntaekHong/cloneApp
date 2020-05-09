@@ -42,7 +42,6 @@ const AutoCompelte = styled(BTN)`
 export const AutoCompelteBtn = ({
   searchText,
   hospitalName,
-  hpId,
   onChangeText,
   onPress,
 }) => {

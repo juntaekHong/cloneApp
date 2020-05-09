@@ -54,7 +54,6 @@ export const SearchView = ({
   setAutoCompleteSet,
   historyData,
   setHistoryData,
-  navigation,
 }) => {
   return (
     <Search marginHorizontal={marginHorizontal}>
@@ -94,7 +93,6 @@ export const SearchView = ({
           }}
           historyData={historyData}
           setHistoryData={setHistoryData}
-          navigation={navigation}
         />
       )}
     </Search>

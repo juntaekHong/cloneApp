@@ -68,6 +68,7 @@ const Search = props => {
             await handleSearchHistoryList(searchHistoryList);
             await setHistoryData(searchHistoryList);
 
+            await SearchActions.handleSearchLoading(true);
             await props.navigation.navigate('SearchResult');
           }}
           // 검색된 목록
