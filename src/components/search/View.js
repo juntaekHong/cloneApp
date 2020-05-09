@@ -69,13 +69,11 @@ export const SearchView = ({
           value={value}
           SearchHandler={() => {
             SearchHandler();
-            navigation.navigate('SearchResult');
           }}
         />
         <SearchBtn
           SearchHandler={() => {
             SearchHandler();
-            navigation.navigate('SearchResult');
           }}
         />
       </SearchBorder>
@@ -91,8 +89,8 @@ export const SearchView = ({
           setAutoCompleteSet={() => {
             setAutoCompleteSet();
           }}
-          SearchHandler={() => {
-            SearchHandler();
+          SearchHandler={async () => {
+            await SearchHandler();
           }}
           historyData={historyData}
           setHistoryData={setHistoryData}

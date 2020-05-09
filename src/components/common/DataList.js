@@ -42,7 +42,11 @@ export const List = props => {
           await CommonActions.loadingAction(false);
         }}>
         <PhotoImg
-          source={require('../../../assets/image/navigation/homeblue.png')}
+          source={
+            item.img
+              ? {uri: item.img}
+              : require('../../../assets/image/navigation/homeblue.png')
+          }
           width={80}
           height={80}
           radius={25}
@@ -67,10 +71,12 @@ export const List = props => {
             style={{width: widthPercentageToDP(250)}}>
             장소: {items.dutyAddr}
           </NBGText>
-          <NBGText fontSize={13} color={'gray'}>
-            거리: {item.distance.toFixed(2)}
-            km
-          </NBGText>
+          {item.distance ? (
+            <NBGText fontSize={13} color={'gray'}>
+              거리: {item.distance.toFixed(2)}
+              km
+            </NBGText>
+          ) : null}
         </ContentDataView>
       </ListView>
     );

@@ -67,6 +67,8 @@ const Search = props => {
             searchHistoryList = JSON.parse(searchHistoryList);
             await handleSearchHistoryList(searchHistoryList);
             await setHistoryData(searchHistoryList);
+
+            await props.navigation.navigate('SearchResult');
           }}
           // 검색된 목록
           searchData={props.searchList}

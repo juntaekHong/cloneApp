@@ -62,9 +62,9 @@ export const AutoCompleteList = ({
                 borderBottomWidth: widthPercentageToDP(1),
                 borderColor: '#dbdbdb',
               }}
-              onPress={() => {
-                onChangeText(historyData[i]);
-                navigation.navigate('SearchResult');
+              onPress={async () => {
+                await onChangeText(historyData[i]);
+                await navigation.navigate('SearchResult');
               }}>
               <StandardView
                 style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -121,9 +121,8 @@ export const AutoCompleteList = ({
               onChangeText(text);
             }}
             onPress={async () => {
-              onChangeText(item._source.dutyName._text);
+              await onChangeText(item._source.dutyName._text);
               await SearchHandler();
-              navigation.navigate('SearchResult');
             }}
           />
         );

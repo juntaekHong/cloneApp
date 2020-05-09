@@ -23,8 +23,6 @@ export const searchHospital = SearchText => async dispatch => {
   try {
     const jsonData = await api.get(`/search/content/${SearchText}`);
 
-    console.log(jsonData);
-
     await dispatch(searchListAction(jsonData.result));
   } catch (e) {
     // 서버 연동 실패
