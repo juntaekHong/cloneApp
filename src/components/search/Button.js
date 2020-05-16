@@ -77,6 +77,7 @@ export const AutoCompelteBtn = ({
           style={{
             flexDirection: 'row',
             width: widthPercentageToDP(235),
+            overflow: 'hidden',
           }}>
           {stringMatch(hospitalName)}
         </StandardView>

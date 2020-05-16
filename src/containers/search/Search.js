@@ -43,33 +43,37 @@ const Search = props => {
           value={searchText}
           // 검색 버튼 핸들러
           SearchHandler={async () => {
-            let searchHistoryList = [];
-            const data = await getData('search_history');
+            if (searchText.trim() !== '') {
+              let searchHistoryList = [];
+              const data = await getData('search_history');
 
-            if (data === null) {
-              searchHistoryList.push(searchText);
-              searchHistoryList = JSON.stringify(searchHistoryList);
-
-              await storeData('search_history', searchHistoryList);
-            } else {
-              searchHistoryList = JSON.parse(data);
-
-              if (searchHistoryList.indexOf(searchText) !== -1) {
-              } else {
+              if (data === null) {
                 searchHistoryList.push(searchText);
+                searchHistoryList = JSON.stringify(searchHistoryList);
+
+                await storeData('search_history', searchHistoryList);
+              } else {
+                searchHistoryList = JSON.parse(data);
+
+                if (searchHistoryList.indexOf(searchText) !== -1) {
+                } else {
+                  searchHistoryList.push(searchText);
+                }
+
+                searchHistoryList = JSON.stringify(searchHistoryList);
+
+                await storeData('search_history', searchHistoryList);
               }
 
-              searchHistoryList = JSON.stringify(searchHistoryList);
+              searchHistoryList = JSON.parse(searchHistoryList);
+              await handleSearchHistoryList(searchHistoryList);
+              await setHistoryData(searchHistoryList);
 
-              await storeData('search_history', searchHistoryList);
+              await SearchActions.handleSearchLoading(true);
+              await props.navigation.navigate('SearchResult');
+            } else {
+              setSearchText('');
             }
-
-            searchHistoryList = JSON.parse(searchHistoryList);
-            await handleSearchHistoryList(searchHistoryList);
-            await setHistoryData(searchHistoryList);
-
-            await SearchActions.handleSearchLoading(true);
-            await props.navigation.navigate('SearchResult');
           }}
           // 검색된 목록
           searchData={props.searchList}
