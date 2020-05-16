@@ -121,7 +121,7 @@ export const AutoCompleteList = ({
             }}
             onPress={async () => {
               await onChangeText(item._source.dutyName._text);
-              await SearchHandler();
+              await SearchHandler(item._source.dutyName._text);
             }}
           />
         );
