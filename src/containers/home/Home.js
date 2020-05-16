@@ -6,6 +6,7 @@ import {connect} from 'react-redux';
 import {TopContainerView} from '../../components/common/View';
 import {TopView, HomeAd} from '../../components/home/View';
 import {DataList} from '../../components/home/DataList';
+import {ScrollView} from 'react-native-gesture-handler';
 
 // 병원별 이미지 및 타이틀
 const DATA = [
@@ -47,7 +48,7 @@ const DATA = [
   {
     image: require('../../../assets/image/home/acupuncture.png'),
     title: '한의원',
-    // 추가 필요
+    hospitalCategoryName: '한의원',
   },
   {
     image: require('../../../assets/image/home/tooth.png'),
@@ -77,6 +78,7 @@ const DATA = [
   {
     image: require('../../../assets/image/home/pill.png'),
     title: '약국',
+    hospitalCategoryName: '약국',
   },
 ];
 
@@ -91,42 +93,44 @@ const Home = props => {
         justifyContent={'center'}
         navigation={props.navigation}
       />
-      {/* 광고 배너 뷰 작업 */}
-      <NavigationEvents
-        onWillFocus={() => {
-          try {
-            if (lottie.current) lottie.current.play();
-          } catch (e) {}
-        }}
-        onWillBlur={() => {
-          try {
-            if (lottie.current) lottie.current.play();
-          } catch (e) {}
-        }}
-      />
+      <ScrollView>
+        {/* 광고 배너 뷰 작업 */}
+        <NavigationEvents
+          onWillFocus={() => {
+            try {
+              if (lottie.current) lottie.current.play();
+            } catch (e) {}
+          }}
+          onWillBlur={() => {
+            try {
+              if (lottie.current) lottie.current.play();
+            } catch (e) {}
+          }}
+        />
 
-      {/* 임시로 아무 이미지 광고 배너 넣음. */}
-      <HomeAd
-        list={[
-          {
-            noticeIndex: 1,
-            noticeImg:
-              'https://littledeep.com/wp-content/uploads/2019/05/littledeep_hospital_sns-1024x552.png',
-            info: null,
-            createdAt: '2019-05-23T18:21:20.000Z',
-            updatedAt: '2019-09-23T10:37:20.000Z',
-          },
-          {
-            noticeIndex: 2,
-            noticeImg:
-              'https://previews.123rf.com/images/photoplotnikov/photoplotnikov1603/photoplotnikov160300032/53961525-도시-병원-파란색-배경에-플랫-디자인에서-구급차와-헬리콥터-건물-클리닉-벡터-일러스트-레이션.jpg',
-            info: null,
-            createdAt: '2019-02-12T23:02:06.000Z',
-            updatedAt: '2019-09-01T10:45:48.000Z',
-          },
-        ]}
-      />
-      <DataList data={DATA} navigation={props.navigation} />
+        {/* 임시로 아무 이미지 광고 배너 넣음. */}
+        <HomeAd
+          list={[
+            {
+              noticeIndex: 1,
+              noticeImg:
+                'https://littledeep.com/wp-content/uploads/2019/05/littledeep_hospital_sns-1024x552.png',
+              info: null,
+              createdAt: '2019-05-23T18:21:20.000Z',
+              updatedAt: '2019-09-23T10:37:20.000Z',
+            },
+            {
+              noticeIndex: 2,
+              noticeImg:
+                'https://previews.123rf.com/images/photoplotnikov/photoplotnikov1603/photoplotnikov160300032/53961525-도시-병원-파란색-배경에-플랫-디자인에서-구급차와-헬리콥터-건물-클리닉-벡터-일러스트-레이션.jpg',
+              info: null,
+              createdAt: '2019-02-12T23:02:06.000Z',
+              updatedAt: '2019-09-01T10:45:48.000Z',
+            },
+          ]}
+        />
+        <DataList data={DATA} navigation={props.navigation} />
+      </ScrollView>
     </TopContainerView>
   );
 };

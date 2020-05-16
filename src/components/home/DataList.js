@@ -40,6 +40,7 @@ export const DataList = props => {
         width: '100%',
         height: '100%',
       }}
+      scrollEnabled={false}
       data={props.data}
       keyExtractor={(item, index) => index.toString()}
       renderItem={_renderItem}
