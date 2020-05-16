@@ -31,7 +31,12 @@ const Search = props => {
           // 검색어 텍스트 변경 및 값 저장 기능
           onChangeText={async text => {
             await setSearchText(text);
-            text === '' ? null : await SearchActions.searchHospital(text);
+
+            text.trim() === ''
+              ? props.searchList.length === 0
+                ? null
+                : await SearchActions.handleSearchListInit()
+              : await SearchActions.searchHospital(text);
           }}
           autoScroll={async () => {
             await scrollRef.current.scrollTo({
@@ -42,22 +47,24 @@ const Search = props => {
           }}
           value={searchText}
           // 검색 버튼 핸들러
-          SearchHandler={async () => {
-            if (searchText.trim() !== '') {
+          SearchHandler={async search => {
+            const searched = search ? search : searchText;
+
+            if (searched.trim() !== '') {
               let searchHistoryList = [];
               const data = await getData('search_history');
 
               if (data === null) {
-                searchHistoryList.push(searchText);
+                searchHistoryList.push(searched);
                 searchHistoryList = JSON.stringify(searchHistoryList);
 
                 await storeData('search_history', searchHistoryList);
               } else {
                 searchHistoryList = JSON.parse(data);
 
-                if (searchHistoryList.indexOf(searchText) !== -1) {
+                if (searchHistoryList.indexOf(searched) !== -1) {
                 } else {
-                  searchHistoryList.push(searchText);
+                  searchHistoryList.push(searched);
                 }
 
                 searchHistoryList = JSON.stringify(searchHistoryList);
@@ -72,7 +79,6 @@ const Search = props => {
               await SearchActions.handleSearchLoading(true);
               await props.navigation.navigate('SearchResult');
             } else {
-              setSearchText('');
             }
           }}
           // 검색된 목록

@@ -21,6 +21,11 @@ export const handleSearchHistoryList = list => dispatch => {
   dispatch(searchHistoryListAction(list));
 };
 
+// 연관 검색 리스트
+export const handleSearchListInit = () => dispatch => {
+  dispatch(searchListAction([]));
+};
+
 // 검색 결과 페이지 로딩
 export const handleSearchLoading = bool => dispatch => {
   dispatch(searchResultLoadingAction(bool));

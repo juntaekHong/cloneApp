@@ -69,7 +69,7 @@ export const AutoCompelteBtn = ({
   return (
     <AutoCompelte
       onPress={() => {
-        onChangeText(hospitalName);
+        // onChangeText(hospitalName);
         onPress();
       }}>
       {searchText !== hospitalName ? (

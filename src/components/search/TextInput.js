@@ -41,6 +41,3 @@ export const SearchTI = ({
     />
   );
 };
-
-// 검색어 완성? 추천 검색어?? 뷰
-// const AutoCompleteView = styled();

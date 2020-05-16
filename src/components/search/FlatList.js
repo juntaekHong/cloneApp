@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react/react-in-jsx-scope */
-import React from 'react';
+import React, {useEffect} from 'react';
 import styled from 'styled-components/native';
 import {
   widthPercentageToDP,
@@ -63,7 +63,7 @@ export const AutoCompleteList = ({
               }}
               onPress={async () => {
                 await onChangeText(historyData[i]);
-                await SearchHandler();
+                await SearchHandler(historyData[i]);
               }}>
               <StandardView
                 style={{flexDirection: 'row', alignItems: 'center'}}>

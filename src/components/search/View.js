@@ -88,8 +88,8 @@ export const SearchView = ({
           setAutoCompleteSet={() => {
             setAutoCompleteSet();
           }}
-          SearchHandler={() => {
-            SearchHandler();
+          SearchHandler={search => {
+            SearchHandler(search);
           }}
           historyData={historyData}
           setHistoryData={setHistoryData}
