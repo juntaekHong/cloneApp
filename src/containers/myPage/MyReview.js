@@ -24,7 +24,9 @@ const MyReview = props => {
   const [reviewDeleteModal, setReviewDeleteModal] = useState(false);
   // 다트 버튼 클릭한 리뷰에 대한 유저 닉네임
   const [reviewUser, setReviewUser] = useState();
-  const user = {user: {userNickName: props.user.userNickName}};
+  const user = {
+    user: {userNickName: props.user ? props.user.userNickName : '없음'},
+  };
   // 댓글 내용 모두 보기 모달
   const [reviewContentModal, setReviewContentModal] = useState(false);
 

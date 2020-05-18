@@ -98,7 +98,8 @@ export const postReview = (hpid, reviewData) => async dispatch => {
 
     if (jsonData.success) {
     } else {
-      console.log('fail');
+      // 리뷰 쓰기 실패 => 해당 병원 진료 내역이 없거나 이미 리뷰를 작성하였을 때..
+      return false;
     }
 
     return true;
