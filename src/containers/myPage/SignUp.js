@@ -47,6 +47,10 @@ const SignUp = props => {
   // 닉네임, 닉네임 유효성
   const [nickName, setNickName] = useState('');
   const [nickNameValid, setNickNameValid] = useState('');
+  const [nickNameDuplicated, setNickNameDuplicated] = useState({
+    userNickName: '',
+    check: false,
+  });
 
   // 나이, 나이 유효성
   const [age, setAge] = useState('');
@@ -192,7 +196,7 @@ const SignUp = props => {
               <TextInput
                 ref={input1}
                 style={{
-                  width: widthPercentageToDP(200),
+                  width: widthPercentageToDP(230),
                 }}
                 placeholder={'이메일'}
                 keyboardType={'email-address'}
@@ -210,8 +214,9 @@ const SignUp = props => {
                 returnKeyType={'next'}
               />
               <CheckDuplicatedBtn
-                email={email}
-                emailValid={emailValid}
+                type={'email'}
+                data={email}
+                dataValid={emailValid}
                 checkHandler={async () => {
                   if (email.length === 0 || emailValid.length !== 0) {
                     showMessage(
@@ -230,7 +235,7 @@ const SignUp = props => {
                       ? showMessage('이메일 사용 가능!', {
                           position: Toast.positions.CENTER,
                         })
-                      : showMessage('이미 회원가입된 이메일입니다!', {
+                      : showMessage('이미 존재하는 이메일입니다!', {
                           position: Toast.positions.CENTER,
                         });
 
@@ -369,31 +374,88 @@ const SignUp = props => {
             <NBGBText marginLeft={5} marginTop={5} fontSize={10} color={'red'}>
               {nameValid}
             </NBGBText>
-            <TextInput
-              ref={input5}
+            <StandardView
               style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
                 marginTop: widthPercentageToDP(15),
                 height: widthPercentageToDP(40),
                 borderWidth: widthPercentageToDP(1),
                 borderColor:
                   nickName.length === 0
                     ? '#dbdbdb'
-                    : nickNameValid.length === 0
+                    : nickNameValid.length === 0 && nickNameDuplicated.check
                     ? '#53A6EC'
                     : 'red',
                 borderRadius: widthPercentageToDP(15),
                 paddingLeft: widthPercentageToDP(20),
-              }}
-              placeholder={'닉네임'}
-              value={nickName}
-              onChangeText={text => setNickName(text)}
-              onSubmitEditing={() => {
-                input6.current.focus();
-              }}
-              returnKeyType={'next'}
-            />
-            <NBGBText marginLeft={5} marginTop={5} fontSize={10} color={'red'}>
-              {nickNameValid}
+              }}>
+              <TextInput
+                ref={input5}
+                style={{width: widthPercentageToDP(230)}}
+                placeholder={'닉네임'}
+                value={nickName}
+                onChangeText={async text => {
+                  await setNickName(text);
+
+                  if (
+                    nickNameDuplicated.check &&
+                    nickNameDuplicated.userNickName !== text
+                  ) {
+                    await setNickNameDuplicated({
+                      userNickName: '',
+                      check: false,
+                    });
+                  }
+                }}
+                onSubmitEditing={() => {
+                  input6.current.focus();
+                }}
+                returnKeyType={'next'}
+              />
+              <CheckDuplicatedBtn
+                type={'nickName'}
+                data={nickName}
+                dataValid={nickNameValid}
+                checkHandler={async () => {
+                  if (nickName.length === 0 || nickNameValid.length !== 0) {
+                    showMessage(
+                      '올바른 닉네임을 입력 후, 중복 검사를 하시기 바랍니다!',
+                      {
+                        position: Toast.positions.CENTER,
+                      },
+                    );
+                  } else {
+                    const nickNameCheck = await SignupActions.checkDuplicated({
+                      userNickName: nickName,
+                      role: 'user',
+                    });
+
+                    nickNameCheck
+                      ? showMessage('닉네임 사용 가능!', {
+                          position: Toast.positions.CENTER,
+                        })
+                      : showMessage('이미 존재하는 닉네임입니다!', {
+                          position: Toast.positions.CENTER,
+                        });
+
+                    await setNickNameDuplicated({
+                      userNickName: nickName,
+                      check: nickNameCheck,
+                    });
+                  }
+                }}
+              />
+            </StandardView>
+            <NBGBText
+              marginLeft={5}
+              marginTop={5}
+              fontSize={10}
+              color={nameValid ? 'red' : '#53A6EC'}>
+              {nickNameValid
+                ? nickNameValid
+                : '닉네임 입력 후, 닉네임 중복 검사를 위해 버튼을 눌러주세요!'}
             </NBGBText>
             <TextInput
               ref={input6}
@@ -607,19 +669,25 @@ const SignUp = props => {
                     phoneNumberValid.length === 0 &&
                     emailValid.length === 0
                   ) {
-                    let userData = {
-                      email: email,
-                      userPw: pass,
-                      userName: name,
-                      userNickName: nickName,
-                      age: age,
-                      gender: gender,
-                      tel: phoneNumber,
-                    };
+                    if (emailDuplicated.check && nickNameDuplicated.check) {
+                      let userData = {
+                        email: email,
+                        userPw: pass,
+                        userName: name,
+                        userNickName: nickName,
+                        age: age,
+                        gender: gender,
+                        tel: phoneNumber,
+                      };
 
-                    await SignupActions.signUp(userData);
+                      await SignupActions.signUp(userData);
 
-                    props.navigation.goBack(null);
+                      props.navigation.goBack(null);
+                    } else {
+                      showMessage('이메일 또는 닉네임 중복검사가 필요합니다!', {
+                        position: Toast.positions.CENTER,
+                      });
+                    }
                   } else {
                     showMessage('잘못된 입력한 항목이 있습니다.', {
                       position: Toast.positions.CENTER,

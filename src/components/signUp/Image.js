@@ -21,3 +21,23 @@ export const EmailCheckImg = ({width, height}) => {
     />
   );
 };
+
+export const EmptyNickNameCheckImg = ({width, height}) => {
+  return (
+    <BackImg
+      width={width}
+      height={height}
+      source={require('../../../assets/image/sign/business.png')}
+    />
+  );
+};
+
+export const NickNameCheckImg = ({width, height}) => {
+  return (
+    <BackImg
+      width={width}
+      height={height}
+      source={require('../../../assets/image/sign/business-2.png')}
+    />
+  );
+};
