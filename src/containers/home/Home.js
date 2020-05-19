@@ -137,6 +137,4 @@ const Home = props => {
 
 export default connect(state => ({
   address: state.common.address,
-
-  my_review_list: state.review.my_review_list,
 }))(Home);

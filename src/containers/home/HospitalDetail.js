@@ -20,6 +20,7 @@ import {PagiNationTab} from '../../components/home/PagiNation';
 import {CommonActions, ReviewActions} from '../../store/actionCreator';
 import HospitalMap from '../hospitalDetail/HospitalMap';
 import HospitalReview from '../hospitalDetail/HospitalReview';
+import moment from 'moment';
 
 const HospitalDetail = props => {
   const [detailData, setDetailData] = useState(
@@ -422,16 +423,65 @@ const HospitalDetail = props => {
       <BottomView
         reviewBtn={props.user !== null && props.user.token ? true : false}
         reviewWrite={() => {
-          props.navigation.navigate('ReviewWrite', {
-            hpid: detailData.hpid,
-            reviewCompleteModal: setReviewCompleteModal,
-          });
+          let reviewListCheck = true;
 
-          props.page_index === 2
-            ? swipe.current.scrollBy(-2)
-            : props.page_index === 1
-            ? swipe.current.scrollBy(-1)
-            : null;
+          let medicalHistoryCheck = false;
+          // 예약날로부터 유효 기간 7일
+          let timeoutDate = 7 * 24 * 60 * 60 * 1000;
+          // 오늘 날짜
+          let todayDate = new Date().getTime() + 540 * 60 * 1000;
+          // 예약 시간
+          let reservationDate;
+          // 오늘 기준 진료완료 시간 갭
+          let gapDate;
+
+          if (props.my_review_list.length !== 0) {
+            props.my_review_list.map(item => {
+              item.hpid === detailData.hpid ? (reviewListCheck = false) : null;
+            });
+          }
+
+          if (props.history_list.length !== 0) {
+            props.history_list.map(item => {
+              if (item.hpid === detailData.hpid && item.status === 'TIMEOUT') {
+                reservationDate = new Date(item.reservationDate).getTime();
+
+                gapDate =
+                  todayDate - reservationDate > 0
+                    ? todayDate - reservationDate
+                    : reservationDate - todayDate;
+
+                if (timeoutDate >= gapDate) {
+                  medicalHistoryCheck = true;
+                }
+              }
+            });
+          }
+
+          if (reviewListCheck && medicalHistoryCheck) {
+            props.navigation.navigate('ReviewWrite', {
+              hpid: detailData.hpid,
+              reviewCompleteModal: setReviewCompleteModal,
+            });
+
+            props.page_index === 2
+              ? swipe.current.scrollBy(-2)
+              : props.page_index === 1
+              ? swipe.current.scrollBy(-1)
+              : null;
+          } else {
+            !medicalHistoryCheck && reviewListCheck
+              ? showMessage('진료 내역이 없어 리뷰를 작성하실 수 없습니다!', {
+                  position: Toast.positions.CENTER,
+                })
+              : !medicalHistoryCheck
+              ? showMessage('진료한지 7일이 지나 작성하실 수 없습니다.', {
+                  position: Toast.positions.CENTER,
+                })
+              : showMessage('이미 작성한 리뷰가 있습니다!', {
+                  position: Toast.positions.CENTER,
+                });
+          }
         }}
         reservation={async () => {
           if (props.user !== null) {
@@ -480,4 +530,7 @@ export default connect(state => ({
   user: state.signin.user,
 
   subscriber_list: state.hospital.subscriber_list,
+  // 리뷰 작성 버튼 클릭 시, 작성 가능한지 검사하기 위해 필요함.
+  my_review_list: state.review.my_review_list,
+  history_list: state.reservation.history_list,
 }))(HospitalDetail);
