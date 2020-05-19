@@ -423,8 +423,8 @@ const HospitalDetail = props => {
       <BottomView
         reviewBtn={props.user !== null && props.user.token ? true : false}
         reviewWrite={() => {
+          // reviewListCheck이 true, medicalHistoryCheck이 true일 때, 작성 가능함.
           let reviewListCheck = true;
-
           let medicalHistoryCheck = false;
           // 예약날로부터 유효 기간 7일
           let timeoutDate = 7 * 24 * 60 * 60 * 1000;
