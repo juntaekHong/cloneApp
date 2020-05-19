@@ -23,8 +23,9 @@ import {
   checkPhoneNumber,
   checkAge,
 } from '../../utils/validation';
-import {SignupActions} from '../../store/actionCreator';
+import {SignupActions, SigninActions} from '../../store/actionCreator';
 import Toast from 'react-native-root-toast';
+import {CheckDuplicatedBtn} from '../../components/signUp/Button';
 
 const SignUp = props => {
   const [index, setIndex] = useState(0);
@@ -62,6 +63,10 @@ const SignUp = props => {
   // 이메일
   const [email, setEmail] = useState('');
   const [emailValid, setEmailValid] = useState('');
+  const [emailDuplicated, setEmailDuplicated] = useState({
+    email: '',
+    check: false,
+  });
 
   // 아바타
 
@@ -167,32 +172,81 @@ const SignUp = props => {
               borderColor: '#53A6EC',
               borderRadius: widthPercentageToDP(5),
             }}>
-            <TextInput
-              ref={input1}
+            <StandardView
               style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
                 marginTop: widthPercentageToDP(15),
                 height: widthPercentageToDP(40),
                 borderWidth: widthPercentageToDP(1),
                 borderColor:
                   email.length === 0
                     ? '#dbdbdb'
-                    : emailValid.length === 0
+                    : emailValid.length === 0 && emailDuplicated.check
                     ? '#53A6EC'
                     : 'red',
                 borderRadius: widthPercentageToDP(15),
                 paddingLeft: widthPercentageToDP(20),
-              }}
-              placeholder={'이메일'}
-              keyboardType={'email-address'}
-              value={email}
-              onChangeText={text => setEmail(text)}
-              onSubmitEditing={() => {
-                input2.current.focus();
-              }}
-              returnKeyType={'next'}
-            />
-            <NBGBText marginLeft={5} marginTop={5} fontSize={10} color={'red'}>
-              {emailValid}
+              }}>
+              <TextInput
+                ref={input1}
+                style={{
+                  width: widthPercentageToDP(200),
+                }}
+                placeholder={'이메일'}
+                keyboardType={'email-address'}
+                value={email}
+                onChangeText={async text => {
+                  await setEmail(text);
+
+                  if (emailDuplicated.check && emailDuplicated.email !== text) {
+                    await setEmailDuplicated({email: '', check: false});
+                  }
+                }}
+                onSubmitEditing={() => {
+                  input2.current.focus();
+                }}
+                returnKeyType={'next'}
+              />
+              <CheckDuplicatedBtn
+                email={email}
+                emailValid={emailValid}
+                checkHandler={async () => {
+                  if (email.length === 0 || emailValid.length !== 0) {
+                    showMessage(
+                      '올바른 이메일을 입력 후, 중복 검사를 하시기 바랍니다!',
+                      {
+                        position: Toast.positions.CENTER,
+                      },
+                    );
+                  } else {
+                    const emailCheck = await SignupActions.checkDuplicated({
+                      email: email,
+                      role: 'user',
+                    });
+
+                    emailCheck
+                      ? showMessage('이메일 사용 가능!', {
+                          position: Toast.positions.CENTER,
+                        })
+                      : showMessage('이미 회원가입된 이메일입니다!', {
+                          position: Toast.positions.CENTER,
+                        });
+
+                    await setEmailDuplicated({email: email, check: emailCheck});
+                  }
+                }}
+              />
+            </StandardView>
+            <NBGBText
+              marginLeft={5}
+              marginTop={5}
+              fontSize={10}
+              color={emailValid ? 'red' : '#53A6EC'}>
+              {emailValid
+                ? emailValid
+                : '이메일 입력 후, 이메일 중복 검사를 위해 버튼을 눌러주세요!'}
             </NBGBText>
             <StandardView
               style={{
