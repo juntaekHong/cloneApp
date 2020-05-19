@@ -452,7 +452,7 @@ const SignUp = props => {
               marginLeft={5}
               marginTop={5}
               fontSize={10}
-              color={nameValid ? 'red' : '#53A6EC'}>
+              color={nickNameValid ? 'red' : '#53A6EC'}>
               {nickNameValid
                 ? nickNameValid
                 : '닉네임 입력 후, 닉네임 중복 검사를 위해 버튼을 눌러주세요!'}
@@ -681,6 +681,10 @@ const SignUp = props => {
                       };
 
                       await SignupActions.signUp(userData);
+
+                      showMessage('정상적으로 회원가입이 되었습니다!', {
+                        position: Toast.positions.CENTER,
+                      });
 
                       props.navigation.goBack(null);
                     } else {
