@@ -292,7 +292,7 @@ const MyPage = props => {
           }}
         />
         <DivisionView borderWidth={3} borderColor={'#F6F7F9'} />
-        <AppSubView
+        {/* <AppSubView
           paddingVertical={20}
           paddingLeft={20}
           borderWidth={1}
@@ -301,7 +301,7 @@ const MyPage = props => {
           appInfoHandler={() => {
             props.navigation.navigate('Certification');
           }}
-        />
+        /> */}
         <AppSubView
           paddingVertical={20}
           paddingLeft={20}

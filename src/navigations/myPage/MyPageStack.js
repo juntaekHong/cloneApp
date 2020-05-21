@@ -15,7 +15,7 @@ const MyPageStack = createStackNavigator(
     MyReview: {screen: MyReview},
     UserOpinion: {screen: UserOpinion},
     TermInfo: {screen: TermInfo},
-    Certification: {screen: Certification},
+    // Certification: {screen: Certification},
   },
   {
     initialRouteName: 'MyPage',

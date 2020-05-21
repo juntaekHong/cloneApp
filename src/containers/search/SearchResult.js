@@ -53,7 +53,7 @@ const SearchResult = props => {
         <StandardView
           style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
           <NBGText fontSize={18} color={'gray'}>
-            데이터를 키고 검색하여주세요!
+            데이터가 꺼져있거나 서버 오류로 인해 검색할 수 없습니다.
           </NBGText>
         </StandardView>
       ) : props.searchList.length === 0 ? (

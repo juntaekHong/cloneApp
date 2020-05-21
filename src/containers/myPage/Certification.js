@@ -9,22 +9,21 @@ import {UIActivityIndicator} from 'react-native-indicators';
 import {widthPercentageToDP} from '../../utils/util';
 import {SigninActions} from '../../store/actionCreator';
 
+const data = {
+  pg: 'html5_inicis',
+  merchant_uid: `mid_${new Date().getTime()}`,
+};
+
 const Certification = props => {
   useEffect(() => {
     // SigninActions.getToken();
   }, []);
 
-  console.log('186d51959dabd59d07240164beb58f691f21197a');
+  //   console.log('186d51959dabd59d07240164beb58f691f21197a');
 
-  const data = {
-    app_scheme: 'TeamFour',
-    merchant_uid: `mid_${new Date().getTime()}`,
-    company: '뽀듬',
-    carrier: 'KT',
-    name: '홍준택',
-    phone: '01034899742',
-    min_age: '19',
-  };
+  function callback(response) {
+    console.log('123');
+  }
 
   return (
     // <TopContainerView>
@@ -40,14 +39,25 @@ const Certification = props => {
     //   />
     <IMP.Certification
       userCode={'imp35852204'} // 가맹점 식별코드
-      loading={
-        <UIActivityIndicator color={'gray'} size={widthPercentageToDP(30)} />
-      } // 웹뷰 로딩 컴포넌트
       data={data} // 본인인증 데이터
-      callback={response => {
-        console.log(response);
-      }} // 본인인증 종료 후 콜백
+      callback={callback} // 본인인증 종료 후 콜백
     />
+    // IMP.Certification(
+    //   {
+    //     pg: 'html5_inicis',
+    //     userCode: 'imp35852204',
+    //     merchant_uid: `mid_${new Date().getTime()}`,
+    //   },
+    //   function(rsp) {
+    //     if (rsp.success) {
+    //       //본인인증 성공
+    //       console.log(rsp);
+    //     } else {
+    //       //본인인증 실패 혹은 중단(팝업창이 닫히거나 화면내 X버튼/취소버튼 클릭 시)
+    //       console.log(rsp);
+    //     }
+    //   },
+    // )
     // </TopContainerView>
   );
 };
