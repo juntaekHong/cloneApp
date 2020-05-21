@@ -19,7 +19,7 @@ const UserOpinion = props => {
       <WebView
         source={{
           uri:
-            'https://docs.google.com/forms/d/e/1FAIpQLSduWS8c6YcHlaRg82wUSCYXikwQ7BpeYUfiz-0pZCnFg6xKXg/viewform?usp=sf_link',
+            'http://ec2-15-164-250-5.ap-northeast-2.compute.amazonaws.com/auth/kakao',
         }}
       />
     </TopContainerView>

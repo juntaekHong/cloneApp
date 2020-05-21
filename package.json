@@ -13,6 +13,7 @@
     "@react-native-community/async-storage": "^1.7.1",
     "@react-native-community/geolocation": "^2.0.2",
     "@react-native-community/masked-view": "^0.1.6",
+    "@react-native-seoul/kakao-login": "^2.4.5",
     "axios": "^0.19.2",
     "buffer": "^5.4.3",
     "events": "^3.1.0",
