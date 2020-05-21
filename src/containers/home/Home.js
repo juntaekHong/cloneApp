@@ -97,14 +97,12 @@ const kakaoLogin = async () => {
       })
       .catch(e => {
         console.log(e);
-        showMessage(e);
       });
   } catch (e) {
     // if(e.code === 'KAKAO_LOGIN_CANCEL'){//사용자가 취소
     // }
     // console.log('kakao error receive......', JSON.stringify(e) )
     console.log('kakao error receive......', e.code);
-    showMessage(e.code);
   }
 };
 
