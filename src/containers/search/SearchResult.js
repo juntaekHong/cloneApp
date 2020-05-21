@@ -18,12 +18,17 @@ const SearchResult = props => {
   useEffect(() => {
     let listData = [];
     let searchData;
+    let promise1;
 
-    const promise1 = props.searchList.map(async item => {
-      searchData = await CommonActions.getHospital(item._source.hpid._text);
-      searchData ? await listData.push(searchData) : null;
+    if (props.searchList !== undefined) {
+      promise1 = props.searchList.map(async item => {
+        searchData = await CommonActions.getHospital(item._source.hpid._text);
+        searchData ? await listData.push(searchData) : null;
+        setData(listData);
+      });
+    } else {
       setData(listData);
-    });
+    }
 
     Promise.all([promise1]).then(async () => {
       await SearchActions.handleSearchLoading(false);
@@ -44,6 +49,13 @@ const SearchResult = props => {
       />
       {props.searchResultLoading ? (
         <UIActivityIndicator color={'gray'} size={widthPercentageToDP(30)} />
+      ) : props.searchList === undefined ? (
+        <StandardView
+          style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+          <NBGText fontSize={18} color={'gray'}>
+            데이터를 키고 검색하여주세요!
+          </NBGText>
+        </StandardView>
       ) : props.searchList.length === 0 ? (
         <StandardView
           style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
