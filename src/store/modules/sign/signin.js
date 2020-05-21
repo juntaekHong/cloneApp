@@ -1,16 +1,22 @@
 /* eslint-disable prettier/prettier */
 import {createAction, handleActions} from 'redux-actions';
 import {produce} from 'immer';
+import axios from 'axios';
 import api from '../../../utils/api';
 import {getData, storeData} from '../../../utils/util';
 
 const SIGNIN_USER_DATA = 'signin/SIGNIN_USER_DATA';
+const SIGNIN_ACCESS_TOKEN = 'signin/SIGNIN_ACCESS_TOKEN';
 
 const userDataAction = createAction(SIGNIN_USER_DATA);
+const accessTokenAction = createAction(SIGNIN_ACCESS_TOKEN);
 
 const initState = {
   // 초기 사용자 정보
   user: null,
+
+  // iamport access token
+  access_token: null,
 };
 
 export const handleLoginData = value => dispatch => {
@@ -92,11 +98,35 @@ export const updateUserInfo = userData => async dispatch => {
   }
 };
 
+// test
+export const getToken = () => async dispatch => {
+  try {
+    const jsonData = await axios.post(`https://api.iamport.kr/users/getToken`, {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      imp_key: '4098980811262043',
+      imp_secret:
+        'rohO1SKrXGkTwpHGAUjPVI7jdXRscUREi8tk0dMYU6SrwA76urVqa3Jo0BQdwISPRl9RzWQt3IVzi2GN',
+    });
+
+    dispatch(accessTokenAction(jsonData.data.response.access_token));
+  } catch (e) {
+    // 서버 연동 실패
+    console.log('토큰발급 실패');
+  }
+};
+
 export default handleActions(
   {
     [SIGNIN_USER_DATA]: (state, {payload}) =>
       produce(state, draft => {
         draft.user = payload;
+      }),
+    [SIGNIN_ACCESS_TOKEN]: (state, {payload}) =>
+      produce(state, draft => {
+        draft.access_token = payload;
       }),
   },
   initState,

@@ -292,14 +292,16 @@ const MyPage = props => {
           }}
         />
         <DivisionView borderWidth={3} borderColor={'#F6F7F9'} />
-        {/* <AppSubView
+        <AppSubView
           paddingVertical={20}
           paddingLeft={20}
           borderWidth={1}
-          title={'뽀듬 서비스 문의하기'}
+          title={'핸드폰 인증 테스트'}
           arrowImg={true}
-          appInfoHandler={() => {}}
-        /> */}
+          appInfoHandler={() => {
+            props.navigation.navigate('Certification');
+          }}
+        />
         <AppSubView
           paddingVertical={20}
           paddingLeft={20}

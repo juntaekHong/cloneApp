@@ -5,6 +5,7 @@ import MySubs from '../../containers/myPage/MySubs';
 import MyReview from '../../containers/myPage/MyReview';
 import UserOpinion from '../../containers/myPage/UserOpinion';
 import TermInfo from '../../containers/myPage/TermInfo';
+import Certification from '../../containers/myPage/Certification';
 
 const MyPageStack = createStackNavigator(
   {
@@ -14,6 +15,7 @@ const MyPageStack = createStackNavigator(
     MyReview: {screen: MyReview},
     UserOpinion: {screen: UserOpinion},
     TermInfo: {screen: TermInfo},
+    Certification: {screen: Certification},
   },
   {
     initialRouteName: 'MyPage',
