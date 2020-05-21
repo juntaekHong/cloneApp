@@ -118,6 +118,20 @@ export const getToken = () => async dispatch => {
   }
 };
 
+// test
+// export const getSMS = () => async dispatch => {
+//   try {
+//     const jsonData = await api.post(`:8002/sendSMS`, {
+//       body: {tel: '01034899742'},
+//     });
+
+//     console.log(jsonData);
+//   } catch (e) {
+//     // 서버 연동 실패
+//     console.log('SMS인증 실패');
+//   }
+// };
+
 export default handleActions(
   {
     [SIGNIN_USER_DATA]: (state, {payload}) =>

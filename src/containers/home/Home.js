@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useRef} from 'react';
+import React, {useRef, useEffect} from 'react';
 import {NavigationEvents} from 'react-navigation';
 // import LottieView from 'lottie-react-native';
 import {connect} from 'react-redux';
@@ -11,7 +11,8 @@ import {ScrollView} from 'react-native-gesture-handler';
 // test
 import KakaoLogins from '@react-native-seoul/kakao-login';
 import {NBGBText} from '../../components/common/Text';
-import Toast from 'react-native-root-toast';
+import {showMessage} from '../../utils/util';
+import {SigninActions} from '../../store/actionCreator';
 
 // 병원별 이미지 및 타이틀
 const DATA = [
@@ -92,21 +93,27 @@ const kakaoLogin = async () => {
     await KakaoLogins.login()
       .then(result => {
         console.log(result);
-        Toast.show('카카오톡 로그인 성공');
+        showMessage('카카오톡 연동 로그인 성공!');
       })
       .catch(e => {
         console.log(e);
+        showMessage(e);
       });
   } catch (e) {
     // if(e.code === 'KAKAO_LOGIN_CANCEL'){//사용자가 취소
     // }
     // console.log('kakao error receive......', JSON.stringify(e) )
     console.log('kakao error receive......', e.code);
+    showMessage(e.code);
   }
 };
 
 const Home = props => {
   const lottie = useRef(null);
+
+  // useEffect(() => {
+  //   SigninActions.getSMS();
+  // }, []);
 
   return (
     <TopContainerView>
