@@ -13,6 +13,8 @@ import KakaoLogins from '@react-native-seoul/kakao-login';
 import {NBGBText} from '../../components/common/Text';
 import {showMessage} from '../../utils/util';
 import {SigninActions} from '../../store/actionCreator';
+import OneSignal from 'react-native-onesignal';
+import {Platform} from 'react-native';
 
 // 병원별 이미지 및 타이틀
 const DATA = [
@@ -89,6 +91,9 @@ const DATA = [
 ];
 
 const kakaoLogin = async () => {
+  // await KakaoLogins.logout(result => {
+  //   console.log(result);
+  // });
   try {
     await KakaoLogins.login()
       .then(result => {
@@ -104,14 +109,24 @@ const kakaoLogin = async () => {
     // console.log('kakao error receive......', JSON.stringify(e) )
     console.log('kakao error receive......', e.code);
   }
+
+  await KakaoLogins.getProfile().then(result => {
+    console.log(result);
+  });
 };
 
 const Home = props => {
   const lottie = useRef(null);
 
-  // useEffect(() => {
-  //   SigninActions.getSMS();
-  // }, []);
+  useEffect(() => {
+    if (Platform.OS === 'android') {
+      OneSignal.init('ffaa627f-c0ab-48a5-92ff-aab4aba972f3');
+
+      OneSignal.addEventListener('received', this.onReceived);
+      OneSignal.addEventListener('opened', this.onOpened);
+      OneSignal.addEventListener('ids', this.onIds);
+    }
+  }, []);
 
   return (
     <TopContainerView>
