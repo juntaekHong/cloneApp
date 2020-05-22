@@ -8,8 +8,13 @@ import {
   BTN,
   StandardView,
 } from '../../components/common/View';
-import {NBGBText} from '../../components/common/Text';
-import {widthPercentageToDP, getData, showMessage} from '../../utils/util';
+import {NBGBText, NBGLText} from '../../components/common/Text';
+import {
+  widthPercentageToDP,
+  getData,
+  showMessage,
+  storeData,
+} from '../../utils/util';
 import {CustomModal} from '../../components/common/Modal';
 import colors from '../../configs/colors';
 import {TextInput, Keyboard, ScrollView} from 'react-native';
@@ -31,6 +36,7 @@ import {
 import {LoginBtn} from '../../components/myPage/Button';
 import Communications from 'react-native-communications';
 import Toast from 'react-native-root-toast';
+import KakaoLogins from '@react-native-seoul/kakao-login';
 
 const MyPage = props => {
   // 로그인 모달
@@ -89,7 +95,7 @@ const MyPage = props => {
               </NBGBText>
               <TextInput
                 style={{
-                  marginTop: widthPercentageToDP(30),
+                  marginTop: widthPercentageToDP(20),
                   height: widthPercentageToDP(40),
                   borderWidth: widthPercentageToDP(1),
                   borderColor: email.length === 0 ? '#dbdbdb' : '#53A6EC',
@@ -148,6 +154,52 @@ const MyPage = props => {
                   </BTN>
                 )}
               </StandardView>
+              <BTN
+                style={{
+                  marginTop: widthPercentageToDP(20),
+                  paddingVertical: widthPercentageToDP(5),
+                  paddingHorizontal: widthPercentageToDP(5),
+                  borderRadius: widthPercentageToDP(10),
+                  width: widthPercentageToDP(150),
+                  backgroundColor: '#F7E600',
+                }}
+                onPress={async () => {
+                  await setLoginModal(false);
+                  await setPassVisible(true);
+                  setEmail('');
+                  setPass('');
+
+                  try {
+                    await KakaoLogins.login()
+                      .then(async result => {
+                        await KakaoLogins.getProfile().then(async userData => {
+                          // 서버에 데이터 보내서 토큰 발급.
+                          await storeData(
+                            'user_userNickName',
+                            userData.nickname,
+                          );
+                          // 일단 가상 토큰 생성
+                          await storeData('token', userData.id);
+
+                          await SigninActions.handleLoginData({
+                            token: userData.id,
+                            userNickName: userData.nickname,
+                          });
+                        });
+                        showMessage('카카오톡 연동 로그인 성공!');
+                      })
+                      .catch(e => {
+                        // 로그인 실패
+                        console.log(e);
+                      });
+                  } catch (e) {
+                    console.log('kakao error receive......', e.code);
+                  }
+                }}>
+                <NBGBText color={'#3C1E1E'} align={'center'}>
+                  카카오톡 연동 로그인
+                </NBGBText>
+              </BTN>
             </StandardView>
           </StandardView>
         }

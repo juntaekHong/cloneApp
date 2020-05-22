@@ -3,15 +3,11 @@ import React, {useRef, useEffect} from 'react';
 import {NavigationEvents} from 'react-navigation';
 // import LottieView from 'lottie-react-native';
 import {connect} from 'react-redux';
-import {TopContainerView, BTN} from '../../components/common/View';
+import {TopContainerView} from '../../components/common/View';
 import {TopView, HomeAd} from '../../components/home/View';
 import {DataList} from '../../components/home/DataList';
 import {ScrollView} from 'react-native-gesture-handler';
 
-// test
-import KakaoLogins from '@react-native-seoul/kakao-login';
-import {NBGBText} from '../../components/common/Text';
-import {showMessage} from '../../utils/util';
 import {SigninActions} from '../../store/actionCreator';
 import OneSignal from 'react-native-onesignal';
 import {Platform} from 'react-native';
@@ -90,31 +86,6 @@ const DATA = [
   },
 ];
 
-const kakaoLogin = async () => {
-  // await KakaoLogins.logout(result => {
-  //   console.log(result);
-  // });
-  try {
-    await KakaoLogins.login()
-      .then(result => {
-        console.log(result);
-        showMessage('카카오톡 연동 로그인 성공!');
-      })
-      .catch(e => {
-        console.log(e);
-      });
-  } catch (e) {
-    // if(e.code === 'KAKAO_LOGIN_CANCEL'){//사용자가 취소
-    // }
-    // console.log('kakao error receive......', JSON.stringify(e) )
-    console.log('kakao error receive......', e.code);
-  }
-
-  await KakaoLogins.getProfile().then(result => {
-    console.log(result);
-  });
-};
-
 const Home = props => {
   const lottie = useRef(null);
 
@@ -172,14 +143,6 @@ const Home = props => {
             },
           ]}
         />
-        <BTN>
-          <NBGBText
-            onPress={() => {
-              kakaoLogin();
-            }}>
-            카카오톡 로그인 테스트
-          </NBGBText>
-        </BTN>
         <DataList data={DATA} navigation={props.navigation} />
       </ScrollView>
     </TopContainerView>

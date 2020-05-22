@@ -12,6 +12,7 @@ import {
   ReviewActions,
 } from '../../store/actionCreator';
 import {RightarrowImg} from './Image';
+import KakaoLogins from '@react-native-seoul/kakao-login';
 
 // 로그인 버튼
 export const LoginBtn = ({loginModal}) => {
@@ -47,6 +48,14 @@ export const LogoutBtn = props => {
         await HospitalActions.handlerSubscriberListInit();
         await ReviewActions.handleReviewListInit();
         await SigninActions.handleLoginData(null);
+
+        await KakaoLogins.logout()
+          .then(result => {
+            console.log(result);
+          })
+          .catch(e => {
+            console.log(e);
+          });
       }}
       style={{
         flexDirection: 'row',

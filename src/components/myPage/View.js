@@ -60,11 +60,14 @@ export const MyInfoView = ({
         myInfoHandler();
       }}>
       <NBGText
+        style={{width: widthPercentageToDP(200)}}
         color={user === null ? 'gray' : user.userName ? 'black' : 'gray'}>
         {user === null
           ? '비회원'
           : user.userName
           ? user.userName
+          : user.userNickName
+          ? '다양한 기능을 이용하시려면 개인정보를 추가가 필요합니다!'
           : '이메일 인증을 해주세요!'}
       </NBGText>
       <StandardView style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -161,21 +164,25 @@ export const LoginOutView = ({
       {user === null ? (
         <NBGText>{title}</NBGText>
       ) : user.userName === undefined ? (
-        <BTN
-          onPress={() => {
-            const emailUrl = user.email.split('@')[1];
+        user.userNickName !== undefined ? (
+          <NBGText>{user.userNickName}</NBGText>
+        ) : (
+          <BTN
+            onPress={() => {
+              const emailUrl = user.email.split('@')[1];
 
-            Linking.openURL('https://' + emailUrl).catch(e => {
-              console.log(e);
-            });
-          }}
-          style={{
-            paddingBottom: widthPercentageToDP(1),
-            borderBottomWidth: widthPercentageToDP(1),
-            borderColor: '#4E9DF3',
-          }}>
-          <NBGText color={'#4E9DF3'}>{user.email}</NBGText>
-        </BTN>
+              Linking.openURL('https://' + emailUrl).catch(e => {
+                console.log(e);
+              });
+            }}
+            style={{
+              paddingBottom: widthPercentageToDP(1),
+              borderBottomWidth: widthPercentageToDP(1),
+              borderColor: '#4E9DF3',
+            }}>
+            <NBGText color={'#4E9DF3'}>{user.email}</NBGText>
+          </BTN>
+        )
       ) : (
         <NBGText>{'이메일 인증 완료'}</NBGText>
       )}
