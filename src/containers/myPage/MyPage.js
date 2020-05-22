@@ -8,7 +8,7 @@ import {
   BTN,
   StandardView,
 } from '../../components/common/View';
-import {NBGBText, NBGLText} from '../../components/common/Text';
+import {NBGBText} from '../../components/common/Text';
 import {
   widthPercentageToDP,
   getData,
@@ -24,6 +24,7 @@ import {
   ReservationActions,
   HospitalActions,
   ReviewActions,
+  CommonActions,
 } from '../../store/actionCreator';
 import {
   LoginOutView,
@@ -37,6 +38,7 @@ import {LoginBtn} from '../../components/myPage/Button';
 import Communications from 'react-native-communications';
 import Toast from 'react-native-root-toast';
 import KakaoLogins from '@react-native-seoul/kakao-login';
+import {SecessionModal} from '../../components/myPage/Modal';
 
 const MyPage = props => {
   // 로그인 모달
@@ -51,6 +53,8 @@ const MyPage = props => {
 
   // 로그인 시, 이메일 인증안되어 있으면, 이메일 인증 문구
   const [resultMessage, setResultMessage] = useState();
+
+  const [secessionModal, setSecessionModal] = useState(false);
 
   // 아이디 입력 후, 패스워드 포커싱
   const passRef = useRef(null);
@@ -172,8 +176,9 @@ const MyPage = props => {
                   try {
                     await KakaoLogins.login()
                       .then(async result => {
+                        await CommonActions.handleLoading(true);
                         await KakaoLogins.getProfile().then(async userData => {
-                          // 서버에 데이터 보내서 토큰 발급.
+                          // 서버에 데이터 보내서 토큰 발급하는 로직 구현 예정.
                           await storeData(
                             'user_userNickName',
                             userData.nickname,
@@ -185,7 +190,9 @@ const MyPage = props => {
                             token: userData.id,
                             userNickName: userData.nickname,
                           });
+                          await CommonActions.handleLoading(false);
                         });
+
                         showMessage('카카오톡 연동 로그인 성공!');
                       })
                       .catch(e => {
@@ -280,6 +287,17 @@ const MyPage = props => {
               </BTN>
             </StandardView>
           );
+        }}
+      />
+      <SecessionModal
+        visible={secessionModal}
+        width={300}
+        height={300}
+        closeHandler={() => {
+          setSecessionModal(false);
+        }}
+        confirmHandler={async () => {
+          await setSecessionModal(false);
         }}
       />
       <ScrollView>
@@ -383,6 +401,16 @@ const MyPage = props => {
           arrowImg={true}
           appInfoHandler={() => {
             props.navigation.navigate('TermInfo');
+          }}
+        />
+        <AppSubView
+          paddingVertical={20}
+          paddingLeft={20}
+          borderWidth={1}
+          title={'회원탈퇴'}
+          arrowImg={true}
+          appInfoHandler={() => {
+            setSecessionModal(true);
           }}
         />
         <AppSubView

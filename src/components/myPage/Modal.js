@@ -149,3 +149,72 @@ export const MyInfoMdal = ({
     </Modal>
   );
 };
+
+// 회원탈퇴 모달
+export const SecessionModal = ({
+  animate = 'fade',
+  visible = false,
+  width,
+  height,
+  closeHandler,
+  confirmHandler,
+}) => {
+  return (
+    <Modal
+      style={{
+        margin: 0,
+        alignItems: 'center',
+      }}
+      animationType={animate}
+      isVisible={visible}>
+      <ModalView width={width} height={height}>
+        <HeaderView>
+          <BTN
+            onPress={() => {
+              closeHandler();
+            }}>
+            <CloseImg
+              width={20}
+              height={20}
+              source={require('../../../assets/image/common/close.png')}
+            />
+          </BTN>
+        </HeaderView>
+        <NBGBText align={'center'} marginTop={15} fontSize={17}>
+          회원탈퇴
+        </NBGBText>
+        <BodyView
+          style={{
+            justifyContent: 'flex-start',
+            marginTop: widthPercentageToDP(40),
+            marginHorizontal: widthPercentageToDP(20),
+          }}>
+          <NBGText style={{lineHeight: widthPercentageToDP(20)}}>
+            {
+              '정말로 삭제하시겠습니까?\n삭제하시면, 모든 정보가 삭제되며\n다시 정보를 복구할 수 없습니다!'
+            }
+          </NBGText>
+        </BodyView>
+        <FooterView>
+          <BTN
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              width: '100%',
+              height: widthPercentageToDP(60),
+              borderBottomLeftRadius: widthPercentageToDP(15),
+              borderBottomRightRadius: widthPercentageToDP(15),
+              backgroundColor: colors.active,
+            }}
+            onPress={() => {
+              confirmHandler();
+            }}>
+            <NBGText color={'white'} fontSize={16}>
+              계속
+            </NBGText>
+          </BTN>
+        </FooterView>
+      </ModalView>
+    </Modal>
+  );
+};
