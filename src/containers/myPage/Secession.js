@@ -1,28 +1,22 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {TopContainerView, TopView} from '../../components/common/View';
-import {WebView} from 'react-native-webview';
 
-const UserOpinion = props => {
+const Secession = props => {
   return (
     <TopContainerView>
       <TopView
         marginBottom={5}
-        title={'사용자 의견 보내기'}
+        title={'회원탈퇴 페이지'}
         backBtn={true}
         backHandler={() => {
-          props.navigation.goBack();
+          props.navigation.goBack(null);
         }}
         closeBtn={false}
         searchBtn={false}
-      />
-      <WebView
-        source={{
-          uri: 'https://forms.gle/8nLeum5b6F1zh5GU7',
-        }}
       />
     </TopContainerView>
   );
 };
 
-export default UserOpinion;
+export default Secession;

@@ -10,6 +10,7 @@ import Reservation from '../../containers/hospitalDetail/Reservation';
 import Calendars from '../../containers/hospitalDetail/Calendars';
 import ReviewWrite from '../../containers/hospitalDetail/ReviewWrite';
 import UserReview from '../../containers/hospitalDetail/UserReview';
+import Secession from '../../containers/myPage/Secession';
 
 const RootStack = createStackNavigator(
   {
@@ -24,6 +25,7 @@ const RootStack = createStackNavigator(
     Calendars: {screen: Calendars},
     ReviewWrite: {screen: ReviewWrite},
     UserReview: {screen: UserReview},
+    Secession: {screen: Secession},
   },
   {
     initialRouteName: 'main',
