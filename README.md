@@ -1,4 +1,5 @@
-## clone App
+## 뽀듬
+서버: https://github.com/HyoVeemo/T4server
 
 
 ## 설치 전 확인 및 해야 할 사항
