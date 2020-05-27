@@ -16,7 +16,7 @@ const Search = styled(StandardView)`
   margin-bottom: ${widthPercentageToDP(20)};
 `;
 
-const SearchBorder = styled(StandardView)`
+export const SearchBorder = styled(StandardView)`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;

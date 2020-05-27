@@ -1,8 +1,11 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {TopContainerView, TopView} from '../../components/common/View';
+import KakaoLogins from '@react-native-seoul/kakao-login';
 
 const Secession = props => {
+  // const [provider, setProvider] = useState('app');
+
   return (
     <TopContainerView>
       <TopView

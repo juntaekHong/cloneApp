@@ -19,6 +19,7 @@ const Search = styled(TextInput)`
 `;
 
 export const SearchTI = ({
+  placeholder,
   innerPaddingHorizontal,
   innerPaddingVertical,
   onChangeText,
@@ -29,7 +30,9 @@ export const SearchTI = ({
     <Search
       paddingHorizontal={innerPaddingHorizontal}
       paddingVertical={innerPaddingVertical}
-      placeholder={'병원명 또는 카테고리명을 입력하세요.'}
+      placeholder={
+        !placeholder ? '병원명 또는 카테고리명을 입력하세요.' : placeholder
+      }
       onChangeText={text => {
         onChangeText(text);
       }}

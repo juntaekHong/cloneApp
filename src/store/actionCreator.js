@@ -10,6 +10,7 @@ import * as location from './modules/myLocationSetting/myLocationSetting';
 import * as reservation from './modules/reservation/reservation';
 import * as review from './modules/review/review';
 import * as search from './modules/search/search';
+import * as community from './modules/community/community';
 import store from './index';
 
 const {dispatch} = store;
@@ -22,3 +23,4 @@ export const LocationActions = bindActionCreators(location, dispatch);
 export const ReservationActions = bindActionCreators(reservation, dispatch);
 export const ReviewActions = bindActionCreators(review, dispatch);
 export const SearchActions = bindActionCreators(search, dispatch);
+export const CommunityActions = bindActionCreators(community, dispatch);
