@@ -7,6 +7,7 @@ import {CommunityActions} from '../../store/actionCreator';
 import {ScrollView, FlatList} from 'react-native';
 import {widthPercentageToDP} from '../../utils/util';
 import {NBGText} from '../../components/common/Text';
+import {HashListView} from '../../components/community/FlatList';
 
 const Community = props => {
   // 검색어
@@ -33,6 +34,7 @@ const Community = props => {
         searchBtn={false}
       />
       <ScrollView>
+        {/* 게시판 검색 뷰 */}
         <BoardSearchView
           marginHorizontal={30}
           borderRadius={15}
@@ -45,30 +47,8 @@ const Community = props => {
           // 검색 버튼 핸들러
           searchHandler={() => {}}
         />
-        <FlatList
-          style={{
-            flexGrow: 1,
-            width: '100%',
-            height: widthPercentageToDP(40),
-            marginTop: widthPercentageToDP(10),
-            paddingHorizontal: widthPercentageToDP(10),
-          }}
-          horizontal={true}
-          keyExtractor={(item, index) => index.toString()}
-          data={hashTagData}
-          renderItem={({item, index}) => {
-            return (
-              <BTN
-                style={{
-                  justifyContent: 'center',
-                  paddingHorizontal: widthPercentageToDP(10),
-                  marginHorizontal: widthPercentageToDP(10),
-                }}>
-                <NBGText color={'#0066CC'}>#{item.hashtagName}</NBGText>
-              </BTN>
-            );
-          }}
-        />
+        {/* 해쉬 리스트 뷰 */}
+        <HashListView data={hashTagData} />
       </ScrollView>
     </TopContainerView>
   );
