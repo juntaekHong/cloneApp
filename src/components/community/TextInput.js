@@ -1,8 +1,6 @@
 /* eslint-disable no-fallthrough */
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import styled from 'styled-components/native';
-import {widthPercentageToDP} from '../../utils/util';
 import {SearchTI} from '../search/TextInput';
 
 export const BDSearchTI = ({
