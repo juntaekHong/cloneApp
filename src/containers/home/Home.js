@@ -96,6 +96,15 @@ const Home = props => {
       OneSignal.addEventListener('received', this.onReceived);
       OneSignal.addEventListener('opened', this.onOpened);
       OneSignal.addEventListener('ids', this.onIds);
+
+      return async () => {
+        if (Platform.OS === 'android') {
+          await OneSignal.getPermissionSubscriptionState(status => {
+            const userID = status.userId;
+            console.log(userID);
+          });
+        }
+      };
     }
   }, []);
 

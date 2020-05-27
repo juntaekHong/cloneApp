@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react/react-in-jsx-scope */
-import React, {useState} from 'react';
+import React, {useState, useRef} from 'react';
 import styled from 'styled-components/native';
 import {widthPercentageToDP, showMessage} from '../../utils/util';
 import {BTN, StandardView} from '../common/View';
@@ -32,8 +32,8 @@ export const HashListView = ({data, searchHandler}) => {
               paddingHorizontal: widthPercentageToDP(10),
               marginHorizontal: widthPercentageToDP(10),
             }}
-            onPress={() => {
-              searchHandler(item.hashtagName);
+            onPress={async () => {
+              await searchHandler(item.hashtagName);
             }}>
             {/* item.hashtagIndex */}
             <NBGText color={'#0066CC'}>#{item.hashtagName}</NBGText>
@@ -93,7 +93,9 @@ export const PostListView = ({ListHeaderComponent, data, searchHandler}) => {
                 );
               });
             }}>
-            <NBGText>{item._source['title._text']}</NBGText>
+            <NBGText marginLeft={10}>
+              제목: {item._source['title._text']}
+            </NBGText>
             <Image
               style={{
                 width: '100%',
@@ -102,7 +104,9 @@ export const PostListView = ({ListHeaderComponent, data, searchHandler}) => {
               }}
               source={{uri: item._source['img._text']}}
             />
-            <StandardView>{hashView}</StandardView>
+            <StandardView style={{marginLeft: widthPercentageToDP(10)}}>
+              {hashView}
+            </StandardView>
           </BTN>
         );
       }}
