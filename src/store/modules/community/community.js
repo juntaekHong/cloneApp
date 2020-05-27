@@ -16,8 +16,24 @@ export const listHashtag = () => async dispatch => {
     const jsonData = await api.get(`/hashTag`);
 
     if (jsonData.success) {
-      console.log(jsonData.result.rows);
       await dispatch(hashTagListAction(jsonData.result.rows));
+    }
+  } catch (e) {
+    // 서버 연동 실패
+    console.log('검색 실패...');
+  }
+};
+
+// 게시글 검색 조회
+export const postList = (filter, pn) => async dispatch => {
+  try {
+    const Filter = encodeURI(encodeURIComponent(filter));
+    const Pn = JSON.stringify(pn);
+
+    const jsonData = await api.get(`/posts?filter=${Filter}&pn=${Pn}`);
+
+    if (jsonData.success) {
+      console.log(jsonData.result);
     }
   } catch (e) {
     // 서버 연동 실패

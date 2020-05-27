@@ -13,15 +13,8 @@ const Community = props => {
   // 검색어
   const [searchText, setSearchText] = useState('');
 
-  // 해쉬태그 데이터
-  const [hashTagData, setHashTagData] = useState([]);
-
   useEffect(() => {
-    const promise1 = CommunityActions.listHashtag();
-
-    Promise.all([promise1]).then(async () => {
-      await setHashTagData(props.hashTagList);
-    });
+    CommunityActions.listHashtag();
   }, []);
 
   return (
@@ -45,10 +38,14 @@ const Community = props => {
           }}
           value={searchText}
           // 검색 버튼 핸들러
-          searchHandler={() => {}}
+          searchHandler={async () => {
+            const pn = {offset: 10, page: 1};
+
+            await CommunityActions.postList(searchText, pn);
+          }}
         />
         {/* 해쉬 리스트 뷰 */}
-        <HashListView data={hashTagData} />
+        <HashListView data={props.hashTagList} />
       </ScrollView>
     </TopContainerView>
   );
