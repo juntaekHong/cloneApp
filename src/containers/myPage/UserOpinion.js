@@ -20,7 +20,8 @@ const UserOpinion = props => {
       />
       <WebView
         source={{
-          uri: 'https://forms.gle/XoWXU2oYjnGTcy2x5',
+          uri:
+            'https://docs.google.com/forms/d/e/1FAIpQLSduWS8c6YcHlaRg82wUSCYXikwQ7BpeYUfiz-0pZCnFg6xKXg/viewform?usp=sf_link',
         }}
         renderLoading={() => {
           return (
