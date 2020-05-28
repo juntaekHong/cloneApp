@@ -12,9 +12,9 @@ import Toast from 'react-native-root-toast';
 const HashList = styled(FlatList)`
   flex-grow: 1;
   width: 100%;
-  height: ${widthPercentageToDP(40)};
-  margin-top: ${widthPercentageToDP(10)};
-  padding-horizontal: ${widthPercentageToDP(10)};
+  height: 100%;
+  padding-vertical: ${widthPercentageToDP(10)};
+  background-color: red;
 `;
 
 export const HashListView = ({data, searchHandler}) => {
@@ -30,7 +30,6 @@ export const HashListView = ({data, searchHandler}) => {
             style={{
               justifyContent: 'center',
               paddingHorizontal: widthPercentageToDP(10),
-              marginHorizontal: widthPercentageToDP(10),
             }}
             onPress={async () => {
               await searchHandler(item.hashtagName);
@@ -48,17 +47,15 @@ export const HashListView = ({data, searchHandler}) => {
 const PostList = styled(FlatList)`
   flex-grow: 1;
   width: 100%;
-  margin-top: ${widthPercentageToDP(15)};
 `;
 
-export const PostListView = ({ListHeaderComponent, data, searchHandler}) => {
+export const PostListView = ({data, searchHandler}) => {
   const [listLength, setListLength] = useState(0);
 
   return (
     <PostList
       keyExtractor={(item, index) => index.toString()}
       data={data}
-      ListHeaderComponent={ListHeaderComponent}
       renderItem={({item, index}) => {
         let hashText = [];
         let hashView = [];
