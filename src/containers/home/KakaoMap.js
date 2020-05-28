@@ -3,6 +3,8 @@ import React from 'react';
 import {SafeAreaView} from 'react-native';
 import {WebView} from 'react-native-webview';
 import {TopView} from '../../components/common/View';
+import {UIActivityIndicator} from 'react-native-indicators';
+import {widthPercentageToDP} from '../../utils/util';
 
 const KakaoMap = props => {
   return (
@@ -17,7 +19,19 @@ const KakaoMap = props => {
         closeBtn={false}
         searchBtn={false}
       />
-      <WebView source={{uri: props.navigation.state.params.uri}} />
+      <WebView
+        source={{uri: props.navigation.state.params.uri}}
+        renderLoading={() => {
+          return (
+            <UIActivityIndicator
+              style={{justifyContent: 'flex-start'}}
+              color={'gray'}
+              size={widthPercentageToDP(30)}
+            />
+          );
+        }}
+        startInLoadingState={true}
+      />
     </SafeAreaView>
   );
 };

@@ -2,6 +2,8 @@
 import React from 'react';
 import {TopContainerView, TopView} from '../../components/common/View';
 import {WebView} from 'react-native-webview';
+import {UIActivityIndicator} from 'react-native-indicators';
+import {widthPercentageToDP} from '../../utils/util';
 
 const UserOpinion = props => {
   return (
@@ -18,8 +20,18 @@ const UserOpinion = props => {
       />
       <WebView
         source={{
-          uri: 'https://forms.gle/8nLeum5b6F1zh5GU7',
+          uri: 'https://forms.gle/XoWXU2oYjnGTcy2x5',
         }}
+        renderLoading={() => {
+          return (
+            <UIActivityIndicator
+              style={{justifyContent: 'flex-start'}}
+              color={'gray'}
+              size={widthPercentageToDP(30)}
+            />
+          );
+        }}
+        startInLoadingState={true}
       />
     </TopContainerView>
   );
