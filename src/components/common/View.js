@@ -128,6 +128,18 @@ export const TopView = props => {
             />
           )}
         </BTN>
+      ) : props.refreshBtn ? (
+        <BTN
+          style={{marginRight: widthPercentageToDP(10)}}
+          onPress={() => {
+            props.refreshHandler();
+          }}>
+          <CloseImg
+            width={25}
+            height={25}
+            source={require('../../../assets/image/reservation/reload.png')}
+          />
+        </BTN>
       ) : (
         <View
           style={{

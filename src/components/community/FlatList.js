@@ -1,12 +1,13 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react/react-in-jsx-scope */
-import React, {useState, useRef} from 'react';
+import React, {useState, useEffect} from 'react';
 import styled from 'styled-components/native';
 import {widthPercentageToDP, showMessage} from '../../utils/util';
 import {BTN, StandardView} from '../common/View';
 import {NBGText} from '../common/Text';
 import {FlatList, Linking, Image} from 'react-native';
 import Toast from 'react-native-root-toast';
+import {UIActivityIndicator} from 'react-native-indicators';
 
 // 해쉬태그 리스트
 const HashList = styled(FlatList)`
@@ -14,7 +15,6 @@ const HashList = styled(FlatList)`
   width: 100%;
   height: 100%;
   padding-vertical: ${widthPercentageToDP(10)};
-  background-color: red;
 `;
 
 export const HashListView = ({data, searchHandler}) => {
@@ -51,6 +51,7 @@ const PostList = styled(FlatList)`
 
 export const PostListView = ({data, searchHandler}) => {
   const [listLength, setListLength] = useState(0);
+  const [nextListLoading, setNextListLoading] = useState(false);
 
   return (
     <PostList
@@ -108,8 +109,19 @@ export const PostListView = ({data, searchHandler}) => {
         );
       }}
       onEndReachedThreshold={0.01}
-      onEndReached={() => {
-        searchHandler(listLength);
+      onEndReached={async () => {
+        await setNextListLoading(true);
+        await searchHandler(listLength);
+        await setNextListLoading(false);
+      }}
+      ListFooterComponent={() => {
+        return nextListLoading ? (
+          <UIActivityIndicator
+            style={{marginVertical: widthPercentageToDP(30)}}
+            color={'gray'}
+            size={widthPercentageToDP(30)}
+          />
+        ) : null;
       }}
     />
   );
