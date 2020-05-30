@@ -120,7 +120,7 @@ export const CalendarView = ({onDayPress, markedDate}) => {
         // 선택 가능한 제일 오래된 날짜
         minDate={new Date()}
         // 최대 선택 가능한 날짜
-        maxDate={'2020-05-30'}
+        maxDate={new Date().getTime() + 2678400000}
         // 날짜 선택 시 이벤트
         onDayPress={day => {
           onDayPress(day);
