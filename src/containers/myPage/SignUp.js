@@ -63,6 +63,13 @@ const SignUp = props => {
   // 전화번호
   const [phoneNumber, setPhoneNumber] = useState('');
   const [phoneNumberValid, setPhoneNumberValid] = useState('');
+  const [phoneCertification, setPhoneCertification] = useState({
+    tel: '',
+    check: false,
+  });
+  // SMS 인증
+  const [smsNumber, setSmsNumber] = useState('');
+  const [smsNumberConfirm, setSmsNumberConfirm] = useState('');
 
   // 이메일
   const [email, setEmail] = useState('');
@@ -87,6 +94,7 @@ const SignUp = props => {
   const input6 = useRef(null);
 
   const input7 = useRef(null);
+  const input8 = useRef(null);
 
   // 비밀번호 입력시, 비밀번호 유효성 체크
   useEffect(() => {
@@ -146,6 +154,17 @@ const SignUp = props => {
       ? setPhoneNumberValid('* 유효하지 않은 전화번호입니다.')
       : setPhoneNumberValid('');
   }, [phoneNumber]);
+
+  useEffect(() => {
+    let smsNumnberValid;
+    const reg = /^([0-9]{6})$/;
+    if (reg.test(smsNumber)) smsNumnberValid = true;
+    else smsNumnberValid = false;
+
+    smsNumber.length !== 0 && smsNumber.length !== 6 && !smsNumnberValid
+      ? setSmsNumberConfirm('* 유효한 인증번호 6자리를 입력해주세요!')
+      : setSmsNumberConfirm('');
+  }, [smsNumber]);
 
   return (
     <TopContainerView>
@@ -564,35 +583,180 @@ const SignUp = props => {
                 <NBGBText>남자</NBGBText>
               </BTN>
             </StandardView>
-            <TextInput
-              ref={input7}
+            <StandardView
               style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
                 marginTop: widthPercentageToDP(30),
                 height: widthPercentageToDP(40),
                 borderWidth: widthPercentageToDP(1),
                 borderColor:
                   phoneNumber.length === 0
                     ? '#dbdbdb'
-                    : phoneNumberValid.length === 0
+                    : phoneNumberValid.length === 0 && phoneCertification.check
                     ? '#53A6EC'
                     : 'red',
                 borderRadius: widthPercentageToDP(15),
                 paddingLeft: widthPercentageToDP(20),
-              }}
-              placeholder={'전화번호 ( "-" 제외 )'}
-              keyboardType={'number-pad'}
-              value={phoneNumber}
-              onChangeText={text => setPhoneNumber(text)}
-              onSubmitEditing={() => {}}
-              returnKeyType={'done'}
-            />
-            <NBGBText marginLeft={5} marginTop={5} fontSize={10} color={'red'}>
-              {phoneNumberValid}
+              }}>
+              <TextInput
+                ref={input7}
+                style={{
+                  width: widthPercentageToDP(230),
+                }}
+                placeholder={'전화번호 ( "-" 제외 )'}
+                keyboardType={'number-pad'}
+                value={phoneNumber}
+                onChangeText={async text => {
+                  await setPhoneNumber(text);
+
+                  if (
+                    phoneCertification.check &&
+                    phoneCertification.tel !== text
+                  ) {
+                    await setPhoneCertification({
+                      tel: '',
+                      check: false,
+                    });
+                  }
+                }}
+                onSubmitEditing={() => {}}
+                returnKeyType={'done'}
+              />
+              <CheckDuplicatedBtn
+                type={'SMS'}
+                data={phoneNumber}
+                dataValid={phoneNumberValid}
+                checkHandler={async () => {
+                  if (
+                    phoneNumber.length === 0 ||
+                    phoneNumberValid.length !== 0
+                  ) {
+                    // SMS 인증번호가 발송되었습니다.\n인증번호를 입력해 주세요!
+                    showMessage('잘못된 전화번호를 입력하셨습니다.', {
+                      position: Toast.positions.CENTER,
+                    });
+                  } else {
+                    const smsCertification = await SignupActions.smsRequest({
+                      tel: phoneNumber,
+                    });
+                    smsCertification
+                      ? showMessage(
+                          '정상적으로 SMS 인증번호가 발송되었습니다.\n인증번호를 입력해주세요!',
+                          {
+                            position: Toast.positions.CENTER,
+                          },
+                        )
+                      : showMessage('SMS 인증번호 요청에 실패하였습니다.', {
+                          position: Toast.positions.CENTER,
+                        });
+                    await setPhoneCertification({
+                      tel: phoneNumber,
+                      check: false,
+                    });
+
+                    await input8.current.focus();
+                  }
+                }}
+              />
+            </StandardView>
+            <NBGBText
+              marginLeft={5}
+              marginTop={5}
+              fontSize={10}
+              color={phoneNumberValid ? 'red' : '#53A6EC'}>
+              {phoneNumberValid
+                ? phoneNumberValid
+                : '전화번호 입력 후, 전화번호 SMS인증을 위해 버튼을 눌러주세요!'}
+            </NBGBText>
+            <StandardView
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                marginTop: widthPercentageToDP(30),
+                height: widthPercentageToDP(40),
+                borderWidth: widthPercentageToDP(1),
+                borderColor:
+                  smsNumber.length === 0
+                    ? '#dbdbdb'
+                    : smsNumberConfirm.length === 0
+                    ? '#53A6EC'
+                    : 'red',
+                borderRadius: widthPercentageToDP(15),
+                paddingLeft: widthPercentageToDP(20),
+              }}>
+              <TextInput
+                ref={input8}
+                style={{
+                  width: widthPercentageToDP(230),
+                }}
+                placeholder={'인증번호 6자리를 입력해주세요. ( "-" 제외 )'}
+                keyboardType={'number-pad'}
+                value={smsNumber}
+                onChangeText={async text => {
+                  if (phoneCertification.check && smsNumber !== text) {
+                    await setPhoneCertification({
+                      tel: '',
+                      check: false,
+                    });
+                  }
+
+                  await setSmsNumber(text);
+                }}
+                onSubmitEditing={() => {}}
+                returnKeyType={'done'}
+              />
+              <CheckDuplicatedBtn
+                type={'SMSCertification'}
+                data={smsNumber}
+                dataValid={smsNumberConfirm}
+                checkHandler={async () => {
+                  if (smsNumber.length === 0 || smsNumberConfirm.length !== 0) {
+                    showMessage('올바른 인증번호를 입력해주세요.', {
+                      position: Toast.positions.CENTER,
+                    });
+                  } else {
+                    const certification = await SignupActions.verifyPhoneNumber(
+                      {
+                        tel: phoneNumber,
+                        userInputNumber: smsNumber,
+                      },
+                    );
+
+                    certification
+                      ? showMessage('SMS 인증에 성공하였습니다!', {
+                          position: Toast.positions.CENTER,
+                        })
+                      : showMessage(
+                          '인증번호가 일치하지 않습니다.\n다시 시도해주세요!',
+                          {
+                            position: Toast.positions.CENTER,
+                          },
+                        );
+
+                    await setPhoneCertification({
+                      tel: phoneNumber,
+                      check: certification,
+                    });
+                  }
+                }}
+              />
+            </StandardView>
+            <NBGBText
+              marginLeft={5}
+              marginTop={5}
+              fontSize={10}
+              color={smsNumberConfirm ? 'red' : '#53A6EC'}>
+              {smsNumberConfirm
+                ? smsNumberConfirm
+                : '전화번호 입력 후, 전화번호 SMS인증을 위해 버튼을 눌러주세요!'}
             </NBGBText>
             <View
               style={{
                 marginTop: widthPercentageToDP(30),
-                height: widthPercentageToDP(100),
+                height: widthPercentageToDP(30),
               }}
             />
             {/* 아바타 데이터 추가해야 함. */}
@@ -657,7 +821,8 @@ const SignUp = props => {
                   age.length !== 0 &&
                   gender !== null &&
                   phoneNumber.length !== 0 &&
-                  email.length !== 0
+                  email.length !== 0 &&
+                  smsNumber.length !== 0
                 ) {
                   if (
                     passValid.length === 0 &&
@@ -667,9 +832,14 @@ const SignUp = props => {
                     ageValid.length === 0 &&
                     gender !== null &&
                     phoneNumberValid.length === 0 &&
-                    emailValid.length === 0
+                    emailValid.length === 0 &&
+                    smsNumberConfirm.length === 0
                   ) {
-                    if (emailDuplicated.check && nickNameDuplicated.check) {
+                    if (
+                      emailDuplicated.check &&
+                      nickNameDuplicated.check &&
+                      phoneCertification.check
+                    ) {
                       let userData = {
                         email: email,
                         userPw: pass,
@@ -680,6 +850,8 @@ const SignUp = props => {
                         tel: phoneNumber,
                       };
 
+                      console.log(userData);
+
                       await SignupActions.signUp(userData);
 
                       showMessage('정상적으로 회원가입이 되었습니다!', {
@@ -688,9 +860,12 @@ const SignUp = props => {
 
                       props.navigation.goBack(null);
                     } else {
-                      showMessage('이메일 또는 닉네임 중복검사가 필요합니다!', {
-                        position: Toast.positions.CENTER,
-                      });
+                      showMessage(
+                        '이메일 또는 닉네임, SMS인증 여부를 확인해주세요!',
+                        {
+                          position: Toast.positions.CENTER,
+                        },
+                      );
                     }
                   } else {
                     showMessage('잘못된 입력한 항목이 있습니다.', {

@@ -41,3 +41,23 @@ export const NickNameCheckImg = ({width, height}) => {
     />
   );
 };
+
+export const SMSImg = ({width, height}) => {
+  return (
+    <BackImg
+      width={width}
+      height={height}
+      source={require('../../../assets/image/sign/sms.png')}
+    />
+  );
+};
+
+export const SMSCertificationImg = ({width, height}) => {
+  return (
+    <BackImg
+      width={width}
+      height={height}
+      source={require('../../../assets/image/sign/mail.png')}
+    />
+  );
+};

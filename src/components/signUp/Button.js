@@ -10,6 +10,8 @@ import {
   EmptyEmailCheckImg,
   NickNameCheckImg,
   EmptyNickNameCheckImg,
+  SMSImg,
+  SMSCertificationImg,
 } from './Image';
 
 const CheckDuplicated = styled(BTN)`
@@ -25,13 +27,21 @@ export const CheckDuplicatedBtn = ({type, data, dataValid, checkHandler}) => {
       {data.length === 0 || dataValid.length !== 0 ? (
         type === 'email' ? (
           <EmptyEmailCheckImg width={16} height={16} />
-        ) : (
+        ) : type === 'nickName' ? (
           <EmptyNickNameCheckImg width={16} height={16} />
+        ) : type === 'SMS' ? (
+          <SMSImg width={24} height={24} />
+        ) : (
+          <SMSCertificationImg width={24} height={24} />
         )
       ) : type === 'email' ? (
         <EmailCheckImg width={16} height={16} />
-      ) : (
+      ) : type === 'nickName' ? (
         <NickNameCheckImg width={16} height={16} />
+      ) : type === 'SMS' ? (
+        <SMSImg width={24} height={24} />
+      ) : (
+        <SMSCertificationImg width={24} height={24} />
       )}
     </CheckDuplicated>
   );
