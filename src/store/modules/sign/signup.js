@@ -16,7 +16,7 @@ export const signUp = userData => async dispatch => {
   }
 };
 
-// 카카오톡 회원가입
+// 카카오톡 로그인
 export const kakaoSignUp = userData => async dispatch => {
   const data = JSON.stringify(userData);
 
@@ -34,6 +34,33 @@ export const kakaoSignUp = userData => async dispatch => {
   } catch (e) {
     // 서버 연동 실패
     console.log('회원가입 실패...');
+  }
+};
+
+// 카카오 정보 추가 입력
+export const kakaoAddInfo = userData => async dispatch => {
+  try {
+    let jsonData;
+    const token = await getData('token');
+
+    jsonData = await api.patch(`/kakao/user`, {
+      token: token,
+      body: JSON.stringify(userData),
+    });
+
+    console.log(jsonData);
+
+    if (jsonData.success) {
+      console.log(jsonData);
+
+      // 중복 시 , false.
+      return true;
+    } else {
+      return false;
+    }
+  } catch (e) {
+    // 서버 연동 실패
+    console.log('회원탈퇴 실패');
   }
 };
 

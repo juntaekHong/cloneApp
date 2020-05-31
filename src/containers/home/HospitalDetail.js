@@ -12,7 +12,7 @@ import {
 } from '../../components/common/View';
 import {NBGText, NBGBText} from '../../components/common/Text';
 import {Card, BottomView} from '../../components/home/View';
-import {widthPercentageToDP, showMessage} from '../../utils/util';
+import {widthPercentageToDP, showMessage, getData} from '../../utils/util';
 import {CustomModal} from '../../components/common/Modal';
 import Swiper from 'react-native-swiper';
 import OfficeHours from '../hospitalDetail/OfficeHours';
@@ -522,7 +522,19 @@ const HospitalDetail = props => {
                   office: detailData.office,
                 });
 
-                props.navigation.navigate('Reservation');
+                const userName = await getData('user_name');
+                const provider = await getData('provider');
+
+                if (false) {
+                  showMessage(
+                    '카카오톡 로그인은 마이페이지에서\n추가 정보를 입력해야 사용할 수 있습니다.',
+                    {
+                      position: Toast.positions.CENTER,
+                    },
+                  );
+                } else {
+                  props.navigation.navigate('Reservation');
+                }
               } else {
                 showMessage('현재 전화접수만 가능한 병원입니다!', {
                   position: Toast.positions.CENTER,

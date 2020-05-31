@@ -129,7 +129,9 @@ export const ReservationModal = ({
         <DivisionView />
         <NameView>
           <NBGBText marginTop={10} fontSize={15}>
-            {userData.userName}
+            {userData.userName
+              ? userData.userName
+              : '카카오 회원 (예약 접수 완료시 이름이 표시됩니다!)'}
           </NBGBText>
         </NameView>
         <DivisionView />

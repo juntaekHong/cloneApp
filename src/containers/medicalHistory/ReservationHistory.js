@@ -34,10 +34,15 @@ const ReservationHistory = props => {
         <NBGBText align={'center'} color={'gray'} fontSize={15}>
           예약한 내역이 없습니다.
         </NBGBText>
-      ) : (
+      ) : props.user.userName ? (
         // 이메일 미인증 상태 시, 보이는 뷰
         <NBGBText align={'center'} color={'gray'} fontSize={15}>
           이메일 인증 후, 사용하실 수 있습니다.
+        </NBGBText>
+      ) : (
+        // 이메일 미인증 상태 시, 보이는 뷰
+        <NBGBText align={'center'} color={'gray'} fontSize={15}>
+          {'카카오톡은 추가 정보를 입력해야\n사용하실 수 있습니다.'}
         </NBGBText>
       )}
     </TopContainerView>

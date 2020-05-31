@@ -182,13 +182,25 @@ export const locationInit = () => async dispatch => {
       }),
     );
   } else if (token !== null && provider !== null && user_nickName !== null) {
-    await dispatch(
-      handleLoginData({
-        userNickName: user_nickName,
-        token: token,
-        provider: provider,
-      }),
-    );
+    if (user_name !== null && tel !== null) {
+      await dispatch(
+        handleLoginData({
+          provider: provider,
+          userName: user_name,
+          userNickName: user_nickName,
+          token: token,
+          tel: tel,
+        }),
+      );
+    } else {
+      await dispatch(
+        handleLoginData({
+          userNickName: user_nickName,
+          token: token,
+          provider: provider,
+        }),
+      );
+    }
   }
 
   if (searchHistory !== null) {

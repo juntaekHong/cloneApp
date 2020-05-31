@@ -203,6 +203,7 @@ const MyPage = props => {
                                 await SigninActions.handleLoginData({
                                   token: token,
                                   userNickName: userData.nickname,
+                                  provider: 'kakao',
                                 });
                               }
 
@@ -362,6 +363,20 @@ const MyPage = props => {
             props.navigation.navigate('MyInfo');
           }}
         />
+        {props.user !== null &&
+        props.user.provider === 'kakao' &&
+        props.user.userName === undefined ? (
+          <MySubView
+            paddingVertical={20}
+            paddingLeft={20}
+            borderWidth={1}
+            title={'개인정보 추가/변경'}
+            imgUrl={require('../../../assets/image/navigation/worker.png')}
+            myInfoHandler={async () => {
+              props.navigation.navigate('MyInfoAddition');
+            }}
+          />
+        ) : null}
         <DivisionView borderWidth={3} borderColor={'#F6F7F9'} />
         <MySubView
           paddingVertical={20}
@@ -370,7 +385,11 @@ const MyPage = props => {
           title={'즐겨찾기 목록'}
           imgUrl={require('../../../assets/image/myPage/ui.png')}
           myInfoHandler={async () => {
-            if (props.user === null || props.user.userName === undefined) {
+            if (
+              props.user === null ||
+              (props.user.userName === undefined &&
+                props.user.provider !== 'kakao')
+            ) {
               showMessage('로그인 또는 이메일 인증이 되지 않았습니다.', {
                 position: Toast.positions.CENTER,
               });
@@ -386,7 +405,11 @@ const MyPage = props => {
           title={'리뷰 목록'}
           imgUrl={require('../../../assets/image/myPage/review.png')}
           myInfoHandler={async () => {
-            if (props.user === null || props.user.userName === undefined) {
+            if (
+              props.user === null ||
+              (props.user.userName === undefined &&
+                props.user.provider !== 'kakao')
+            ) {
               showMessage('로그인 또는 이메일 인증이 되지 않았습니다.', {
                 position: Toast.positions.CENTER,
               });

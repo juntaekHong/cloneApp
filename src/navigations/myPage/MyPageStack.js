@@ -6,6 +6,7 @@ import MyReview from '../../containers/myPage/MyReview';
 import UserOpinion from '../../containers/myPage/UserOpinion';
 import TermInfo from '../../containers/myPage/TermInfo';
 import Certification from '../../containers/myPage/Certification';
+import MyInfoAddition from '../../containers/myPage/MyInfoAddition';
 
 const MyPageStack = createStackNavigator(
   {
@@ -15,6 +16,7 @@ const MyPageStack = createStackNavigator(
     MyReview: {screen: MyReview},
     UserOpinion: {screen: UserOpinion},
     TermInfo: {screen: TermInfo},
+    MyInfoAddition: {screen: MyInfoAddition},
     // Certification: {screen: Certification},
   },
   {

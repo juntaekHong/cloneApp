@@ -849,9 +849,6 @@ const SignUp = props => {
                         gender: gender,
                         tel: phoneNumber,
                       };
-
-                      console.log(userData);
-
                       await SignupActions.signUp(userData);
 
                       showMessage('정상적으로 회원가입이 되었습니다!', {
