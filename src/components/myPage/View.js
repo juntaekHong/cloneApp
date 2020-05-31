@@ -66,9 +66,9 @@ export const MyInfoView = ({
           ? '비회원'
           : user.userName
           ? user.userName
-          : user.userNickName
-          ? '카카오톡 로그인 회원분들은 회원정보를 수정하실 수 없습니다.'
-          : '이메일 인증을 해주세요!'}
+          : user.email
+          ? '이메일 인증을 해주세요!'
+          : '카카오톡 로그인 회원분들은 회원정보를 수정하실 수 없습니다.'}
       </NBGText>
       <StandardView style={{flexDirection: 'row', alignItems: 'center'}}>
         <NBGText

@@ -215,6 +215,12 @@ const MyPage = props => {
                                 }
                               }
 
+                              await ReservationActions.getReservation();
+                              await ReservationActions.getReservationLog();
+
+                              await HospitalActions.getAllHospitalSubscribers();
+                              await ReviewActions.getMyReview();
+
                               await CommonActions.handleLoading(false);
                             },
                           );
@@ -332,6 +338,10 @@ const MyPage = props => {
             await SignupActions.closeAccount();
             await KakaoLogins.logout().then(async () => {
               await removeAllData();
+              await ReservationActions.handleReservationListInit();
+              await HospitalActions.handlerSubscriberListInit();
+              await ReviewActions.handleReviewListInit();
+              await SigninActions.handleLoginData(null);
               await SigninActions.handleLoginData(null);
             });
 

@@ -13,7 +13,13 @@ import {
 } from '../../utils/util';
 import {TextInput} from 'react-native';
 import {NBGBText} from '../../components/common/Text';
-import {SignupActions, SigninActions} from '../../store/actionCreator';
+import {
+  SignupActions,
+  SigninActions,
+  ReservationActions,
+  HospitalActions,
+  ReviewActions,
+} from '../../store/actionCreator';
 import Toast from 'react-native-root-toast';
 
 const Secession = props => {
@@ -41,7 +47,7 @@ const Secession = props => {
         <TextInput
           style={{
             width: widthPercentageToDP(300),
-            marginTop: widthPercentageToDP(150),
+            marginTop: widthPercentageToDP(70),
             height: widthPercentageToDP(50),
             borderWidth: widthPercentageToDP(1),
             borderColor: '#53A6EC',
@@ -74,6 +80,10 @@ const Secession = props => {
             const success = await SignupActions.closeAccount(passData);
 
             if (success) {
+              await ReservationActions.handleReservationListInit();
+              await HospitalActions.handlerSubscriberListInit();
+              await ReviewActions.handleReviewListInit();
+              await SigninActions.handleLoginData(null);
               await removeAllData();
               await SigninActions.handleLoginData(null);
               await showMessage('회원탈퇴가 완료되었습니다!', {
@@ -95,7 +105,7 @@ const Secession = props => {
               paddingVertical: widthPercentageToDP(15),
             }}
             color={'white'}
-            fontSize={20}
+            fontSize={17}
             align={'center'}>
             회원탈퇴
           </NBGBText>

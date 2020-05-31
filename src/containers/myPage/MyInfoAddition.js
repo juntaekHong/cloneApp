@@ -19,7 +19,7 @@ import {
 } from '../../utils/validation';
 import Toast from 'react-native-root-toast';
 import {CheckDuplicatedBtn} from '../../components/signUp/Button';
-import {SignupActions} from '../../store/actionCreator';
+import {SignupActions, SigninActions} from '../../store/actionCreator';
 
 const MyInfoAddition = props => {
   // 이름, 이름 유효성
@@ -518,7 +518,13 @@ const MyInfoAddition = props => {
 
                   await SignupActions.kakaoAddInfo(userData);
 
-                  showMessage('정상적으로 회원정보가 추가 되었습니다!', {
+                  await SigninActions.handleLoginData({
+                    token: props.user.token,
+                    userNickName: userData.userNickName,
+                    provider: 'kakao',
+                  });
+
+                  await showMessage('정상적으로 회원정보가 추가 되었습니다!', {
                     position: Toast.positions.CENTER,
                   });
 
@@ -544,7 +550,7 @@ const MyInfoAddition = props => {
               height: widthPercentageToDP(50),
             }}
             color={'white'}
-            fontSize={20}
+            fontSize={17}
             align={'center'}>
             개인정보 추가
           </NBGBText>
