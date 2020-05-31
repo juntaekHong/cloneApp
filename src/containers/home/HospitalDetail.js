@@ -20,7 +20,7 @@ import {PagiNationTab} from '../../components/home/PagiNation';
 import {CommonActions, ReviewActions} from '../../store/actionCreator';
 import HospitalMap from '../hospitalDetail/HospitalMap';
 import HospitalReview from '../hospitalDetail/HospitalReview';
-import moment from 'moment';
+import RNKakaoLink from 'react-native-kakao-links';
 
 const HospitalDetail = props => {
   const [detailData, setDetailData] = useState(
@@ -349,7 +349,29 @@ const HospitalDetail = props => {
         closeBtn={false}
         searchBtn={false}
         sharedBtn={true}
-        sharedHandler={() => {}}
+        sharedHandler={async () => {
+          const kakaoLinkData = {
+            title: detailData.dutyName,
+            address: detailData.dutyAddr,
+            img: detailData.img
+              ? detailData.img
+              : 'https://cdn.icon-icons.com/icons2/1465/PNG/512/588hospital_100778.png',
+          };
+
+          await RNKakaoLink.link({
+            objectType: 'feed', //required
+            content: {
+              title: kakaoLinkData.title,
+              desc: kakaoLinkData.address,
+              link: {
+                mobileWebURL: 'https://developers.kakao.com',
+                androidExecutionParams: 'id=1',
+                iosExecutionParams: 'id=1',
+              },
+              imageURL: kakaoLinkData.img,
+            }, //required
+          });
+        }}
       />
       <ScrollView ref={focusing}>
         <Card
