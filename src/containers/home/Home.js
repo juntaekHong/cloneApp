@@ -3,7 +3,7 @@ import React, {useRef, useEffect} from 'react';
 import {NavigationEvents} from 'react-navigation';
 // import LottieView from 'lottie-react-native';
 import {connect} from 'react-redux';
-import {TopContainerView} from '../../components/common/View';
+import {TopContainerView, BTN} from '../../components/common/View';
 import {TopView, HomeAd} from '../../components/home/View';
 import {DataList} from '../../components/home/DataList';
 import {ScrollView} from 'react-native-gesture-handler';
@@ -11,6 +11,8 @@ import {ScrollView} from 'react-native-gesture-handler';
 import {SigninActions} from '../../store/actionCreator';
 import OneSignal from 'react-native-onesignal';
 import {Platform} from 'react-native';
+import {NBGText} from '../../components/common/Text';
+import RNKakaoLink from 'react-native-kakao-links';
 
 // 병원별 이미지 및 타이틀
 const DATA = [
@@ -116,6 +118,26 @@ const Home = props => {
         justifyContent={'center'}
         navigation={props.navigation}
       />
+      <BTN
+        onPress={async () => {
+          await RNKakaoLink.link({
+            objectType: 'feed', //required
+            content: {
+              title: '뽀듬',
+              desc: '테스트',
+              link: {
+                mobileWebURL: 'https://developers.kakao.com',
+                androidExecutionParams: 'id=1',
+                iosExecutionParams: 'id=1',
+              },
+              imageURL:
+                'http://mud-kage.kakao.co.kr/dn/NTmhS/btqfEUdFAUf/FjKzkZsnoeE4o19klTOVI1/openlink_640x640s.jpg',
+            }, //required
+          });
+          console.log('123');
+        }}>
+        <NBGText>카카오 링크 테스트</NBGText>
+      </BTN>
       <ScrollView>
         {/* 광고 배너 뷰 작업 */}
         <NavigationEvents
