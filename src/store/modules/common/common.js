@@ -181,8 +181,8 @@ export const locationInit = () => async dispatch => {
         tel: tel,
       }),
     );
-  } else if (token !== null && provider !== null && user_nickName !== null) {
-    if (user_name !== null && tel !== null) {
+  } else if (token !== null && provider !== null) {
+    if (user_name !== null && tel !== null && user_name !== null) {
       await dispatch(
         handleLoginData({
           provider: provider,
@@ -195,7 +195,6 @@ export const locationInit = () => async dispatch => {
     } else {
       await dispatch(
         handleLoginData({
-          userNickName: user_nickName,
           token: token,
           provider: provider,
         }),

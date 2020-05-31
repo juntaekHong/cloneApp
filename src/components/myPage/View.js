@@ -67,7 +67,7 @@ export const MyInfoView = ({
           : user.userName
           ? user.userName
           : user.userNickName
-          ? '다양한 기능을 이용하시려면, 개인정보 추가가 필요합니다!'
+          ? '카카오톡 로그인 회원분들은 회원정보를 수정하실 수 없습니다.'
           : '이메일 인증을 해주세요!'}
       </NBGText>
       <StandardView style={{flexDirection: 'row', alignItems: 'center'}}>

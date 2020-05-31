@@ -15,6 +15,7 @@ import {
   showMessage,
   storeData,
   removeData,
+  removeAllData,
 } from '../../utils/util';
 import {CustomModal} from '../../components/common/Modal';
 import colors from '../../configs/colors';
@@ -189,10 +190,6 @@ const MyPage = props => {
                           await KakaoLogins.getProfile().then(
                             async userData => {
                               // 서버에 데이터 보내서 토큰 발급하는 로직 구현 예정.
-                              await storeData(
-                                'user_userNickName',
-                                userData.nickname,
-                              );
 
                               const token = await SignupActions.kakaoSignUp({
                                 snsId: userData.id,
@@ -200,11 +197,22 @@ const MyPage = props => {
                               });
 
                               if (token !== false) {
-                                await SigninActions.handleLoginData({
-                                  token: token,
-                                  userNickName: userData.nickname,
-                                  provider: 'kakao',
-                                });
+                                const userNickName = await getData(
+                                  'user_userNickName',
+                                );
+
+                                if (userNickName !== null) {
+                                  await SigninActions.handleLoginData({
+                                    token: token,
+                                    provider: 'kakao',
+                                    userNickName: userNickName,
+                                  });
+                                } else {
+                                  await SigninActions.handleLoginData({
+                                    token: token,
+                                    provider: 'kakao',
+                                  });
+                                }
                               }
 
                               await CommonActions.handleLoading(false);
@@ -323,7 +331,7 @@ const MyPage = props => {
             await setProvider();
             await SignupActions.closeAccount();
             await KakaoLogins.logout().then(async () => {
-              await removeData('provider');
+              await removeAllData();
               await SigninActions.handleLoginData(null);
             });
 
@@ -365,12 +373,12 @@ const MyPage = props => {
         />
         {props.user !== null &&
         props.user.provider === 'kakao' &&
-        props.user.userName === undefined ? (
+        props.user.userNickName === undefined ? (
           <MySubView
             paddingVertical={20}
             paddingLeft={20}
             borderWidth={1}
-            title={'개인정보 추가/변경'}
+            title={'개인정보 추가'}
             imgUrl={require('../../../assets/image/navigation/worker.png')}
             myInfoHandler={async () => {
               props.navigation.navigate('MyInfoAddition');

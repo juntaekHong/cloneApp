@@ -522,10 +522,7 @@ const HospitalDetail = props => {
                   office: detailData.office,
                 });
 
-                const userName = await getData('user_name');
-                const provider = await getData('provider');
-
-                if (false) {
+                if (props.user.userNickName === undefined) {
                   showMessage(
                     '카카오톡 로그인은 마이페이지에서\n추가 정보를 입력해야 사용할 수 있습니다.',
                     {

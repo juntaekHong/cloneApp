@@ -53,7 +53,14 @@ const config = {
   googleMaps_url: 'https://maps.googleapis.com/maps/api/directions/json?',
   googleMaps_ServiceKey: 'AIzaSyDgBRnXW2cAmBWKGd-EFo-P0cZ_zKKp5As',
 
-  signDataKey: ['token', 'userId', 'pass_locking', 'lock_pass'],
+  signDataKey: [
+    'token',
+    'email',
+    'user_name',
+    'user_userNickName',
+    'tel',
+    'provider',
+  ],
 };
 
 export default config;

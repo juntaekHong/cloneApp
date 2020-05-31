@@ -25,9 +25,15 @@ export const kakaoSignUp = userData => async dispatch => {
       body: data,
     });
 
+    console.log(jsonData);
+
     if (jsonData.success) {
       await storeData('token', jsonData.token.token);
       await storeData('provider', 'kakao');
+
+      if (jsonData.token.userNickName) {
+        await storeData('user_userNickName', jsonData.token.userNickName);
+      }
       return jsonData.token.token;
     }
     return false;
@@ -51,6 +57,7 @@ export const kakaoAddInfo = userData => async dispatch => {
     console.log(jsonData);
 
     if (jsonData.success) {
+      await storeData('user_userNickName', userData.userNickName);
       console.log(jsonData);
 
       // 중복 시 , false.
