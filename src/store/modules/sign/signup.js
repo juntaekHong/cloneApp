@@ -1,5 +1,6 @@
 import {handleActions} from 'redux-actions';
 import api from '../../../utils/api';
+import {storeData, removeAllData, getData} from '../../../utils/util';
 
 const initState = {};
 
@@ -9,6 +10,30 @@ export const signUp = userData => async dispatch => {
     const jsonData = await api.post(`/user/signUp`, {
       body: userData,
     });
+  } catch (e) {
+    // 서버 연동 실패
+    console.log('회원가입 실패...');
+  }
+};
+
+// 카카오톡 회원가입
+export const kakaoSignUp = userData => async dispatch => {
+  const data = JSON.stringify(userData);
+
+  try {
+    const jsonData = await api.post(`/kakao/signUp`, {
+      body: data,
+    });
+
+    console.log(jsonData);
+
+    if (jsonData.success) {
+      await storeData('token', jsonData.token);
+      await storeData('provider', 'kakao');
+
+      return jsonData.token;
+    }
+    return false;
   } catch (e) {
     // 서버 연동 실패
     console.log('회원가입 실패...');
@@ -82,6 +107,40 @@ export const verifyPhoneNumber = telData => async dispatch => {
   } catch (e) {
     // 서버 연동 실패
     console.log('SMS 인증 실패');
+  }
+};
+
+// 회원탈퇴
+export const closeAccount = passData => async dispatch => {
+  try {
+    let jsonData;
+    const token = await getData('token');
+
+    // 앱이면
+    if (passData) {
+      jsonData = await api.post(`/user/closeAccount`, {
+        token: token,
+        body: JSON.stringify(passData),
+      });
+      // 카톡이면
+    } else {
+      jsonData = await api.post(`/user/closeAccount`, {
+        token: token,
+      });
+    }
+
+    console.log(jsonData);
+
+    if (jsonData.success) {
+      await removeAllData();
+      // 중복 시 , false.
+      return true;
+    } else {
+      return false;
+    }
+  } catch (e) {
+    // 서버 연동 실패
+    console.log('회원탈퇴 실패');
   }
 };
 

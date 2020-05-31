@@ -100,7 +100,11 @@ export const PostListView = ({data, searchHandler}) => {
                 marginVertical: widthPercentageToDP(20),
                 height: widthPercentageToDP(200),
               }}
-              source={{uri: item._source['img._text']}}
+              source={{
+                uri: item._source['img._text']
+                  ? item._source['img._text']
+                  : 'https://cdn.icon-icons.com/icons2/1465/PNG/512/588hospital_100778.png',
+              }}
             />
             <StandardView style={{marginLeft: widthPercentageToDP(10)}}>
               {hashView}

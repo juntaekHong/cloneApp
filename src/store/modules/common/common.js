@@ -150,6 +150,7 @@ export const locationInit = () => async dispatch => {
   const user_nickName = await getData('user_userNickName');
   const tel = await getData('tel');
   const token = await getData('token');
+  const provider = await getData('provider');
 
   const searchHistory = await getData('search_history');
 
@@ -158,10 +159,16 @@ export const locationInit = () => async dispatch => {
     await dispatch(locationLongitudeAction(parseFloat(location_long)));
   }
 
+  // "userName": "김태연",
+  // "userNickName": "탱구",
+  // "age": "31",
+  // "gender": "여자",
+  // "tel": "01011112222"
+
   if (
+    token !== null &&
     email !== null &&
     user_name !== null &&
-    token !== null &&
     user_nickName !== null &&
     tel !== null
   ) {
@@ -172,6 +179,14 @@ export const locationInit = () => async dispatch => {
         userNickName: user_nickName,
         token: token,
         tel: tel,
+      }),
+    );
+  } else if (token !== null && provider !== null && user_nickName !== null) {
+    await dispatch(
+      handleLoginData({
+        userNickName: user_nickName,
+        token: token,
+        provider: provider,
       }),
     );
   }

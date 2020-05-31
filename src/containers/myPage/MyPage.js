@@ -14,6 +14,7 @@ import {
   getData,
   showMessage,
   storeData,
+  removeData,
 } from '../../utils/util';
 import {CustomModal} from '../../components/common/Modal';
 import colors from '../../configs/colors';
@@ -25,6 +26,7 @@ import {
   HospitalActions,
   ReviewActions,
   CommonActions,
+  SignupActions,
 } from '../../store/actionCreator';
 import {
   LoginOutView,
@@ -53,6 +55,9 @@ const MyPage = props => {
 
   // 로그인 시, 이메일 인증안되어 있으면, 이메일 인증 문구
   const [resultMessage, setResultMessage] = useState();
+
+  // 회원탈퇴 전에, 카카오톡 계정인지 앱 계정인지 확인
+  const [provider, setProvider] = useState();
 
   const [secessionModal, setSecessionModal] = useState(false);
 
@@ -188,13 +193,19 @@ const MyPage = props => {
                                 'user_userNickName',
                                 userData.nickname,
                               );
-                              // 일단 가상 토큰 생성
-                              await storeData('token', userData.id);
 
-                              await SigninActions.handleLoginData({
-                                token: userData.id,
-                                userNickName: userData.nickname,
+                              const token = await SignupActions.kakaoSignUp({
+                                snsId: userData.id,
+                                provider: 'kakao',
                               });
+
+                              if (token !== false) {
+                                await SigninActions.handleLoginData({
+                                  token: token,
+                                  userNickName: userData.nickname,
+                                });
+                              }
+
                               await CommonActions.handleLoading(false);
                             },
                           );
@@ -300,12 +311,27 @@ const MyPage = props => {
         visible={secessionModal}
         width={300}
         height={300}
-        closeHandler={() => {
-          setSecessionModal(false);
+        closeHandler={async () => {
+          await setProvider();
+          await setSecessionModal(false);
         }}
         confirmHandler={async () => {
           await setSecessionModal(false);
-          await props.navigation.navigate('Secession');
+
+          if (provider) {
+            await setProvider();
+            await SignupActions.closeAccount();
+            await KakaoLogins.logout().then(async () => {
+              await removeData('provider');
+              await SigninActions.handleLoginData(null);
+            });
+
+            showMessage('회원탈퇴가 완료되었습니다!', {
+              position: Toast.positions.CENTER,
+            });
+          } else {
+            await props.navigation.navigate('Secession');
+          }
         }}
       />
       <ScrollView>
@@ -417,8 +443,22 @@ const MyPage = props => {
           borderWidth={1}
           title={'회원탈퇴'}
           arrowImg={true}
-          appInfoHandler={() => {
-            setSecessionModal(true);
+          appInfoHandler={async () => {
+            const provider = await getData('provider');
+            const token = await getData('token');
+
+            console.log(token);
+
+            provider !== null ? await setProvider(provider) : null;
+
+            token !== null
+              ? await setSecessionModal(true)
+              : showMessage(
+                  '로그인 상태가 아니거나 이메일 인증 후, 탈퇴가 가능합니다.',
+                  {
+                    position: Toast.positions.CENTER,
+                  },
+                );
           }}
         />
         <AppSubView
