@@ -1,4 +1,5 @@
 ## 뽀듬
+
 서버: https://github.com/HyoVeemo/T4server
 <br/>
 웹(병원 관리자): https://github.com/juntaekHong/hospitalAdmin
@@ -6,7 +7,7 @@
 ## 설치 전 확인 및 해야 할 사항
 
 ```
-Node.js // node --version 설치 확인. 
+Node.js // node --version 설치 확인.
 react-native-cli --version // cli 설치 확인.
 
 android studio 설치 및 API 28 버전 설치 확인
@@ -46,7 +47,7 @@ $ react-native run-ios OR "open ./ios/cloneApp.xcworkspace" // Xcode 설치되�
 ```
 Mac 사용 시 추가 설정 사항
 
-* Android 
+* Android
 Project< android Folder 안에 local.properties vi 명령어로 생성 후,
 sdk.dir = /Users/USERNAME/Library/Android/sdk 추가해주면 됨. // USERNAME 에는 해당 컴퓨터 계정명
 
@@ -70,6 +71,7 @@ Project< ios Folder 안에 pod --version 으로 pod 설치 확인
 ```
 
 ### 실행 화면들
+
 <img width="382" alt="스크린샷 2020-03-14 오전 7 33 36" src="https://user-images.githubusercontent.com/50249009/76664039-5dcf0600-65c6-11ea-9a0e-488fd60fcc58.png">
 
 <img width="386" alt="스크린샷 2020-03-14 오전 7 31 31" src="https://user-images.githubusercontent.com/50249009/76664052-64f61400-65c6-11ea-9690-94c3aade7bd0.png">
