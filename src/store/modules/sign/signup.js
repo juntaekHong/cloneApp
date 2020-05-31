@@ -21,17 +21,14 @@ export const kakaoSignUp = userData => async dispatch => {
   const data = JSON.stringify(userData);
 
   try {
-    const jsonData = await api.post(`/kakao/signUp`, {
+    const jsonData = await api.post(`/kakao/signIn`, {
       body: data,
     });
 
-    console.log(jsonData);
-
     if (jsonData.success) {
-      await storeData('token', jsonData.token);
+      await storeData('token', jsonData.token.token);
       await storeData('provider', 'kakao');
-
-      return jsonData.token;
+      return jsonData.token.token;
     }
     return false;
   } catch (e) {
