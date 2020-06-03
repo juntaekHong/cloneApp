@@ -48,8 +48,8 @@ class App extends Component {
             <View backgroundColor={'white'}>
               <Image
                 style={{
-                  width: widthPercentageToDP(100),
-                  height: widthPercentageToDP(100),
+                  width: widthPercentageToDP(200),
+                  height: widthPercentageToDP(200),
                 }}
                 source={require('../assets/image/hospital.png')}
               />
