@@ -54,11 +54,8 @@ export const kakaoAddInfo = userData => async dispatch => {
       body: JSON.stringify(userData),
     });
 
-    console.log(jsonData);
-
     if (jsonData.success) {
       await storeData('user_userNickName', userData.userNickName);
-      console.log(jsonData);
 
       // 중복 시 , false.
       return true;
@@ -102,8 +99,6 @@ export const smsRequest = tel => async dispatch => {
       body: data,
     });
 
-    console.log(jsonData);
-
     if (jsonData.success) {
       // 중복 시 , false.
       return true;
@@ -125,8 +120,6 @@ export const verifyPhoneNumber = telData => async dispatch => {
     const jsonData = await api.post(`/verifyPhoneNumber`, {
       body: data,
     });
-
-    console.log(jsonData);
 
     if (jsonData.success) {
       // 중복 시 , false.
@@ -159,8 +152,6 @@ export const closeAccount = passData => async dispatch => {
         token: token,
       });
     }
-
-    console.log(jsonData);
 
     if (jsonData.success) {
       await removeAllData();
