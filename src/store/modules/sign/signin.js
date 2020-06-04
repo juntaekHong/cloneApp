@@ -23,11 +23,12 @@ export const handleLoginData = value => dispatch => {
   dispatch(userDataAction(value));
 };
 
-export const signIn = (email, userPw) => async dispatch => {
+export const signIn = (email, userPw, playerId) => async dispatch => {
   try {
     let userData = {
       email,
       userPw,
+      playerId,
     };
 
     const jsonData = await api.post(`/user/signIn`, {

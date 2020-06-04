@@ -42,6 +42,7 @@ import Communications from 'react-native-communications';
 import Toast from 'react-native-root-toast';
 import KakaoLogins from '@react-native-seoul/kakao-login';
 import {SecessionModal} from '../../components/myPage/Modal';
+import OneSignal from 'react-native-onesignal';
 
 const MyPage = props => {
   // 로그인 모달
@@ -64,6 +65,24 @@ const MyPage = props => {
 
   // 아이디 입력 후, 패스워드 포커싱
   const passRef = useRef(null);
+
+  useEffect(() => {
+    if (Platform.OS === 'android') {
+      OneSignal.init('ffaa627f-c0ab-48a5-92ff-aab4aba972f3');
+
+      OneSignal.addEventListener('received', this.onReceived);
+      OneSignal.addEventListener('opened', this.onOpened);
+      OneSignal.addEventListener('ids', this.onIds);
+
+      return async () => {
+        if (Platform.OS === 'android') {
+          await OneSignal.getPermissionSubscriptionState(async status => {
+            await storeData('playerId', status.userId);
+          });
+        }
+      };
+    }
+  }, [props.user]);
 
   // 병원 상세페이지에서 예약버튼을 통한 자동으로 로그인 창 뜨기.
   useEffect(() => {
@@ -187,13 +206,18 @@ const MyPage = props => {
                       await KakaoLogins.login()
                         .then(async result => {
                           await CommonActions.handleLoading(true);
+
+                          console.log(result);
+
                           await KakaoLogins.getProfile().then(
                             async userData => {
-                              // 서버에 데이터 보내서 토큰 발급하는 로직 구현 예정.
+                              // 알림 - playerId 추가
+                              const playerId = await getData('playerId');
 
                               const token = await SignupActions.kakaoSignUp({
                                 snsId: userData.id,
                                 provider: 'kakao',
+                                playerId: playerId,
                               });
 
                               if (token !== false) {
@@ -285,7 +309,16 @@ const MyPage = props => {
                   email.length === 0 || pass.length === 0 ? true : false
                 }
                 onPress={async () => {
-                  const result = await SigninActions.signIn(email, pass);
+                  // 알림 - playerId 추가
+                  const playerId = await getData('playerId');
+
+                  console.log(playerId);
+
+                  const result = await SigninActions.signIn(
+                    email,
+                    pass,
+                    playerId,
+                  );
 
                   await setLoginModal(false);
                   await setPassVisible(true);

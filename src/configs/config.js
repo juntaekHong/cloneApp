@@ -6,17 +6,17 @@ import values from './values';
  */
 
 const init = {
-  type: 'prod',
+  type: 'dev',
   server: {
     // dev: 'http://ec2-15-164-250-5.ap-northeast-2.compute.amazonaws.com',
     // prod: 'http://ec2-15-164-250-5.ap-northeast-2.compute.amazonaws.com',
-    dev: 'http://15.164.250.5',
+    dev: 'http://ec2-15-164-221-39.ap-northeast-2.compute.amazonaws.com',
     prod: 'https://ppodeum.site',
   },
   mailServer: {
     // dev: 'http://ec2-15-164-250-5.ap-northeast-2.compute.amazonaws.com',
     // prod: 'http://ec2-15-164-250-5.ap-northeast-2.compute.amazonaws.com',
-    dev: 'http://15.164.250.5',
+    dev: 'http://ec2-15-164-221-39.ap-northeast-2.compute.amazonaws.com',
     prod: 'https://ppodeum.site',
   },
 };
@@ -60,6 +60,7 @@ const config = {
     'user_userNickName',
     'tel',
     'provider',
+    'playerId',
   ],
 };
 

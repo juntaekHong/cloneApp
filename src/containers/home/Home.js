@@ -1,17 +1,12 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useRef, useEffect} from 'react';
+import React, {useRef} from 'react';
 import {NavigationEvents} from 'react-navigation';
 // import LottieView from 'lottie-react-native';
 import {connect} from 'react-redux';
-import {TopContainerView, BTN} from '../../components/common/View';
+import {TopContainerView} from '../../components/common/View';
 import {TopView, HomeAd} from '../../components/home/View';
 import {DataList} from '../../components/home/DataList';
 import {ScrollView} from 'react-native-gesture-handler';
-
-import {SigninActions} from '../../store/actionCreator';
-import OneSignal from 'react-native-onesignal';
-import {Platform} from 'react-native';
-import {NBGText} from '../../components/common/Text';
 
 // 병원별 이미지 및 타이틀
 const DATA = [
@@ -89,25 +84,6 @@ const DATA = [
 
 const Home = props => {
   const lottie = useRef(null);
-
-  useEffect(() => {
-    if (Platform.OS === 'android') {
-      OneSignal.init('ffaa627f-c0ab-48a5-92ff-aab4aba972f3');
-
-      OneSignal.addEventListener('received', this.onReceived);
-      OneSignal.addEventListener('opened', this.onOpened);
-      OneSignal.addEventListener('ids', this.onIds);
-
-      return async () => {
-        if (Platform.OS === 'android') {
-          await OneSignal.getPermissionSubscriptionState(status => {
-            const userID = status.userId;
-            console.log(userID);
-          });
-        }
-      };
-    }
-  }, []);
 
   return (
     <TopContainerView>

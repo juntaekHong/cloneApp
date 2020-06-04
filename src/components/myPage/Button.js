@@ -4,7 +4,7 @@
 import React from 'react';
 import {BTN} from '../common/View';
 import {NBGText} from '../common/Text';
-import {removeData} from '../../utils/util';
+import {removeAllData} from '../../utils/util';
 import {
   SigninActions,
   ReservationActions,
@@ -36,11 +36,7 @@ export const LogoutBtn = props => {
   return (
     <BTN
       onPress={async () => {
-        await removeData('token');
-        await removeData('email');
-        await removeData('user_name');
-        await removeData('user_userNickName');
-        await removeData('tel');
+        await removeAllData();
 
         // await setUserData(null);
         // 진료내역 페이지 및 즐겨찾는 병원 데이터 정보 초기화.
