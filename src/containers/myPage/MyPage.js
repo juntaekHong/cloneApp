@@ -14,7 +14,6 @@ import {
   getData,
   showMessage,
   storeData,
-  removeData,
   removeAllData,
 } from '../../utils/util';
 import {CustomModal} from '../../components/common/Modal';
@@ -74,13 +73,9 @@ const MyPage = props => {
       OneSignal.addEventListener('opened', this.onOpened);
       OneSignal.addEventListener('ids', this.onIds);
 
-      return async () => {
-        if (Platform.OS === 'android') {
-          await OneSignal.getPermissionSubscriptionState(async status => {
-            await storeData('playerId', status.userId);
-          });
-        }
-      };
+      OneSignal.getPermissionSubscriptionState(async status => {
+        await storeData('playerId', status.userId);
+      });
     }
   }, [props.user]);
 
@@ -207,17 +202,15 @@ const MyPage = props => {
                         .then(async result => {
                           await CommonActions.handleLoading(true);
 
-                          console.log(result);
-
                           await KakaoLogins.getProfile().then(
                             async userData => {
                               // 알림 - playerId 추가
-                              const playerId = await getData('playerId');
+                              // const playerId = await getData('playerId');
 
                               const token = await SignupActions.kakaoSignUp({
                                 snsId: userData.id,
                                 provider: 'kakao',
-                                playerId: playerId,
+                                playerId: null,
                               });
 
                               if (token !== false) {
@@ -311,8 +304,6 @@ const MyPage = props => {
                 onPress={async () => {
                   // 알림 - playerId 추가
                   const playerId = await getData('playerId');
-
-                  console.log(playerId);
 
                   const result = await SigninActions.signIn(
                     email,
