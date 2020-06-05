@@ -48,6 +48,11 @@ const config = {
   // 병원 상세페이지 길찾기에 사용되는 api
   googleMaps_url: 'https://maps.googleapis.com/maps/api/directions/json?',
   googleMaps_ServiceKey: 'AIzaSyDgBRnXW2cAmBWKGd-EFo-P0cZ_zKKp5As',
+  // 코로나 데이터 api
+  covid_url:
+    'http://openapi.data.go.kr/openapi/service/rest/Covid19/getCovid19SidoInfStateJson?',
+  covid_serviceKey:
+    'EyyXmfDmrjacJ7QcXl3bKKYjcRUCT1GsuQIFDcJlSjkboDRxx0nJAXaoxNNWCFAIlPJ6HBqlmr5Zl4f6KTS0ZA%3D%3D',
 
   signDataKey: [
     'token',

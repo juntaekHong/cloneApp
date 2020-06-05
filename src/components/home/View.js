@@ -383,3 +383,70 @@ export const BottomView = ({reviewBtn, reviewWrite, reservation}) => {
     </StandardView>
   );
 };
+
+export const CovidView = ({data}) => {
+  return data.length > 0 ? (
+    <Carousel
+      delay={4000}
+      style={{width: '100%', height: widthPercentageToDP(100)}}
+      autoplay>
+      {data.map(item => {
+        return (
+          <StandardView
+            style={{
+              justifyContent: 'center',
+              marginHorizontal: widthPercentageToDP(10),
+              marginBottom: widthPercentageToDP(10),
+              width: widthPercentageToDP(355),
+              borderWidth: widthPercentageToDP(1),
+              borderRadius: widthPercentageToDP(15),
+              borderColor: 'red',
+            }}>
+            <NBGText marginLeft={10} marginBottom={5}>
+              코로나 일일 현황
+            </NBGText>
+            <StandardView
+              style={{
+                flexDirection: 'row',
+                marginHorizontal: widthPercentageToDP(10),
+                marginBottom: widthPercentageToDP(5),
+              }}>
+              <NBGText style={{flex: 2}}>기준일: {item.stdDay}</NBGText>
+              <NBGText style={{flex: 1}}>
+                {item.gubun === '검역'
+                  ? ''
+                  : item.gubun === '합계'
+                  ? ''
+                  : '지역: '}
+                {item.gubun}
+              </NBGText>
+            </StandardView>
+            <StandardView
+              style={{
+                flexDirection: 'row',
+                marginHorizontal: widthPercentageToDP(10),
+                marginBottom: widthPercentageToDP(5),
+              }}>
+              <NBGText style={{flex: 1}}>사망자: {item.deathCnt}명</NBGText>
+              <NBGText style={{flex: 1}}>일일 증가: {item.incDec}명</NBGText>
+              <NBGText style={{flex: 1}}>
+                격리해제: {item.isolClearCnt}명
+              </NBGText>
+            </StandardView>
+            <StandardView
+              style={{
+                flexDirection: 'row',
+                marginHorizontal: widthPercentageToDP(10),
+              }}>
+              <NBGText style={{flex: 1}}>격리자: {item.isolIngCnt}명</NBGText>
+              <NBGText style={{flex: 1}}>
+                지역 감염: {item.localOccCnt}명
+              </NBGText>
+              <StandardView style={{flex: 1}} />
+            </StandardView>
+          </StandardView>
+        );
+      })}
+    </Carousel>
+  ) : null;
+};

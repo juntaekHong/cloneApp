@@ -12,6 +12,7 @@ import reservation from './reservation/reservation';
 import review from './review/review';
 import search from './search/search';
 import community from './community/community';
+import covid from './covid/covid';
 
 export default combineReducers({
   counter,
@@ -24,4 +25,5 @@ export default combineReducers({
   review,
   search,
   community,
+  covid,
 });

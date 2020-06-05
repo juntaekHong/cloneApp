@@ -1,10 +1,10 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useRef, useEffect} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import {NavigationEvents} from 'react-navigation';
 // import LottieView from 'lottie-react-native';
 import {connect} from 'react-redux';
 import {TopContainerView} from '../../components/common/View';
-import {TopView, HomeAd} from '../../components/home/View';
+import {TopView, HomeAd, CovidView} from '../../components/home/View';
 import {DataList} from '../../components/home/DataList';
 import {ScrollView} from 'react-native-gesture-handler';
 
@@ -94,6 +94,7 @@ const Home = props => {
         navigation={props.navigation}
       />
       <ScrollView>
+        <CovidView data={props.covidList} />
         {/* 광고 배너 뷰 작업 */}
         <NavigationEvents
           onWillFocus={() => {
@@ -137,4 +138,5 @@ const Home = props => {
 
 export default connect(state => ({
   address: state.common.address,
+  covidList: state.covid.covidList,
 }))(Home);

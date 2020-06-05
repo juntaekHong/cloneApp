@@ -10,6 +10,7 @@ import {
   CommonActions,
   HospitalActions,
   ReviewActions,
+  CovidActions,
 } from '../../store/actionCreator';
 import {NBGText} from '../../components/common/Text';
 
@@ -54,6 +55,7 @@ const UpdateCheck = props => {
         setLongitude(long);
 
         await ReviewActions.getMyReview();
+        await CovidActions.getCovidList();
 
         if (props.firstScreenLoading === false) {
           await props.navigation.navigate('root');
@@ -113,6 +115,7 @@ const UpdateCheck = props => {
               const promise1 = CommonActions.getHospitalList(long, lat);
               const promise2 = CommonActions.getMyAddress(long, lat);
               Promise.all([promise1, promise2]).then(async () => {
+                await CovidActions.getCovidList();
                 await props.navigation.navigate('root');
                 await CommonActions.loadingAction(false);
                 await HospitalActions.getAllHospitalSubscribers();
