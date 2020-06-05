@@ -119,7 +119,8 @@ export const getErmDetail = hpid => async dispatch => {
       type: 'erm',
       hpid: result.hpid,
       dutyAddr: result.dutyAddr,
-      dutyMapimg: result.dutyMapimg ? result.dutyMapimg : null,
+      dutyMapimg: result.dutyMapimg ? result.dutyMapimg : undefined,
+      img: result.dutyImg ? result.dutyImg : null,
       dutyName: result.dutyName,
       dutyTel: result.dutyTel1,
       wgs84Lat: result.wgs84Lat,
@@ -166,8 +167,6 @@ export const getErmDetail = hpid => async dispatch => {
           ermTimeFormat(result.dutyTime8c)
         : '휴진',
     };
-
-    console.log(dataFomrat);
 
     return dataFomrat;
   } catch (e) {
