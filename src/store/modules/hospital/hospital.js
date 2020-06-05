@@ -125,45 +125,45 @@ export const getErmDetail = hpid => async dispatch => {
       wgs84Lat: result.wgs84Lat,
       wgs84Lon: result.wgs84Lon,
       dutyInf: result.dutyInf ? result.dutyInf : null,
-      dutyTime1: result.dutyTime1c
-        ? ermTimeFormat(result.dutyTime1c) +
+      dutyTime1: result.dutyTime1s
+        ? ermTimeFormat(result.dutyTime1s) +
           ' ~ ' +
-          ermTimeFormat(result.dutyTime1s)
+          ermTimeFormat(result.dutyTime1c)
         : '휴진',
-      dutyTime2: result.dutyTime2c
-        ? ermTimeFormat(result.dutyTime2c) +
+      dutyTime2: result.dutyTime2s
+        ? ermTimeFormat(result.dutyTime2s) +
           ' ~ ' +
-          ermTimeFormat(result.dutyTime2s)
+          ermTimeFormat(result.dutyTime2c)
         : '휴진',
-      dutyTime3: result.dutyTime3c
-        ? ermTimeFormat(result.dutyTime3c) +
+      dutyTime3: result.dutyTime3s
+        ? ermTimeFormat(result.dutyTime3s) +
           ' ~ ' +
-          ermTimeFormat(result.dutyTime3s)
+          ermTimeFormat(result.dutyTime3c)
         : '휴진',
-      dutyTime4: result.dutyTime4c
-        ? ermTimeFormat(result.dutyTime4c) +
+      dutyTime4: result.dutyTime4s
+        ? ermTimeFormat(result.dutyTime4s) +
           ' ~ ' +
-          ermTimeFormat(result.dutyTime4s)
+          ermTimeFormat(result.dutyTime4c)
         : '휴진',
-      dutyTime5: result.dutyTime5c
-        ? ermTimeFormat(result.dutyTime5c) +
+      dutyTime5: result.dutyTime5s
+        ? ermTimeFormat(result.dutyTime5s) +
           ' ~ ' +
-          ermTimeFormat(result.dutyTime5s)
+          ermTimeFormat(result.dutyTime5c)
         : '휴진',
-      dutyTime6: result.dutyTime6c
-        ? ermTimeFormat(result.dutyTime6c) +
+      dutyTime6: result.dutyTime6s
+        ? ermTimeFormat(result.dutyTime6s) +
           ' ~ ' +
-          ermTimeFormat(result.dutyTime6s)
+          ermTimeFormat(result.dutyTime6c)
         : '휴진',
-      dutyTime7: result.dutyTime7c
-        ? ermTimeFormat(result.dutyTime7c) +
+      dutyTime7: result.dutyTime7s
+        ? ermTimeFormat(result.dutyTime7s) +
           ' ~ ' +
-          ermTimeFormat(result.dutyTime7s)
+          ermTimeFormat(result.dutyTime7c)
         : '휴진',
-      dutyTime8: result.dutyTime8c
-        ? ermTimeFormat(result.dutyTime8c) +
+      dutyTime8: result.dutyTime8s
+        ? ermTimeFormat(result.dutyTime8s) +
           ' ~ ' +
-          ermTimeFormat(result.dutyTime8s)
+          ermTimeFormat(result.dutyTime8c)
         : '휴진',
     };
 

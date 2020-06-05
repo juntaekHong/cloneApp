@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState, useRef} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {NavigationEvents} from 'react-navigation';
 // import LottieView from 'lottie-react-native';
 import {connect} from 'react-redux';
@@ -13,6 +13,7 @@ import {DataList} from '../../components/home/DataList';
 import {ScrollView} from 'react-native-gesture-handler';
 import {NBGBText, NBGText} from '../../components/common/Text';
 import {widthPercentageToDP} from '../../utils/util';
+import {CovidActions} from '../../store/actionCreator';
 
 // 병원별 이미지 및 타이틀
 const DATA = [
@@ -92,6 +93,10 @@ const Home = props => {
   const lottie = useRef(null);
 
   const [covidVisible, setCovidVisble] = useState(false);
+
+  useEffect(() => {
+    props.covidList.length === 0 ? CovidActions.getCovidList() : null;
+  }, [props.covidList]);
 
   return (
     <TopContainerView>
