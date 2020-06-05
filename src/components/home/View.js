@@ -408,7 +408,6 @@ export const CovidView = ({data}) => {
                 marginHorizontal: widthPercentageToDP(10),
                 marginBottom: widthPercentageToDP(5),
               }}>
-              <NBGText style={{flex: 2}}>기준일: {item.stdDay}</NBGText>
               <NBGText style={{flex: 1}}>
                 {item.gubun === '검역'
                   ? ''

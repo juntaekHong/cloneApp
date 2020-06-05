@@ -3,11 +3,16 @@ import React, {useState, useRef, useEffect} from 'react';
 import {NavigationEvents} from 'react-navigation';
 // import LottieView from 'lottie-react-native';
 import {connect} from 'react-redux';
-import {TopContainerView} from '../../components/common/View';
+import {
+  TopContainerView,
+  StandardView,
+  BTN,
+} from '../../components/common/View';
 import {TopView, HomeAd, CovidView} from '../../components/home/View';
 import {DataList} from '../../components/home/DataList';
 import {ScrollView} from 'react-native-gesture-handler';
-import {NBGBText} from '../../components/common/Text';
+import {NBGBText, NBGText} from '../../components/common/Text';
+import {widthPercentageToDP} from '../../utils/util';
 
 // 병원별 이미지 및 타이틀
 const DATA = [
@@ -86,6 +91,8 @@ const DATA = [
 const Home = props => {
   const lottie = useRef(null);
 
+  const [covidVisible, setCovidVisble] = useState(false);
+
   return (
     <TopContainerView>
       <TopView
@@ -95,10 +102,26 @@ const Home = props => {
         navigation={props.navigation}
       />
       <ScrollView>
-        <NBGBText marginLeft={15} marginBottom={5}>
-          코로나 일일 현황
-        </NBGBText>
-        <CovidView data={props.covidList} />
+        {props.covidList.length > 0 ? (
+          <StandardView
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              marginHorizontal: widthPercentageToDP(15),
+              marginBottom: widthPercentageToDP(5),
+            }}>
+            <BTN
+              onPress={() => {
+                setCovidVisble(!covidVisible);
+              }}>
+              <NBGBText color={'#53A6EC'}>
+                {covidVisible ? '코로나 현황' : '코로나 현황 보기'}
+              </NBGBText>
+            </BTN>
+            <NBGText>* 기준일:{props.covidList[0].stdDay}</NBGText>
+          </StandardView>
+        ) : null}
+        <CovidView data={covidVisible ? props.covidList : []} />
         {/* 광고 배너 뷰 작업 */}
         <NavigationEvents
           onWillFocus={() => {
