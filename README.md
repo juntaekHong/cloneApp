@@ -1,4 +1,4 @@
-## 뽀듬
+## 뽀듬(BBodum)
 
 서버: https://github.com/HyoVeemo/T4server
 <br/>
