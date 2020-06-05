@@ -119,8 +119,8 @@ export const getErmDetail = hpid => async dispatch => {
       type: 'erm',
       hpid: result.hpid,
       dutyAddr: result.dutyAddr,
-      dutyMapimg: result.dutyMapimg ? result.dutyMapimg : undefined,
-      img: result.dutyImg ? result.dutyImg : null,
+      dutyMapimg: result.dutyMapimg ? result.dutyMapimg : null,
+      img: result.dutyImg ? result.dutyImg : undefined,
       dutyName: result.dutyName,
       dutyTel: result.dutyTel1,
       wgs84Lat: result.wgs84Lat,
@@ -172,6 +172,25 @@ export const getErmDetail = hpid => async dispatch => {
   } catch (e) {
     // 병원 리스트 공공 api 요청 실패 => 서버 연동 실패
     console.log('erm list insert fail');
+  }
+};
+
+// 공적 마스크 조회
+export const getMaskList = (lat, long) => async dispatch => {
+  try {
+    const jsonData = await axios.get(
+      `https://8oi9s0nnth.apigw.ntruss.com/corona19-masks/v1/storesByGeo/json?lat=${lat}&lng=${long}&m=100`,
+      {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+      },
+    );
+    return jsonData.data.stores;
+  } catch (err) {
+    console.log('error');
+    return false;
   }
 };
 

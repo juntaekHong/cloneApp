@@ -106,9 +106,64 @@ export const ErmList = props => {
         padding={10}
         onPress={async () => {
           await CommonActions.loadingAction(true);
-          // 상세페이지 데이터 불러오기
+          // 약국 상세페이지 데이터 불러오기
+          let maskList = await HospitalActions.getMaskList(
+            item.latitude,
+            item.longitude,
+          );
+
+          let mask;
+
+          maskList
+            ? await maskList.map(async maskData => {
+                if (maskData.name === item.dutyName) {
+                  let status;
+                  let stock_date;
+                  let stock_clock;
+
+                  switch (true) {
+                    case maskData.remain_stat === 'plenty':
+                      status = '100개 이상';
+                      break;
+                    case maskData.remain_stat === 'some':
+                      status = '30 ~ 100개';
+                      break;
+                    case maskData.remain_stat === 'few':
+                      status = '2 ~ 30개';
+                      break;
+                    case maskData.remain_stat === 'empty':
+                      status = '1개 이하';
+                      break;
+                    case maskData.remain_stat === 'break':
+                      status = '판매 중지(수량 없음)';
+                      break;
+                  }
+                  stock_date = maskData.stock_at.split('/');
+                  stock_clock = maskData.stock_at.split(' ')[1].split(':');
+
+                  stock_date =
+                    stock_date[0] +
+                    '년 ' +
+                    stock_date[1] +
+                    '월 ' +
+                    stock_date[2].split(' ')[0] +
+                    '일 ';
+
+                  stock_clock = stock_clock[0] + '시 ' + stock_clock[1] + '분';
+
+                  mask = {
+                    status: status,
+                    stock: stock_date + ' ' + stock_clock,
+                  };
+                }
+              })
+            : null;
+
           let object = await HospitalActions.getErmDetail(item.hpid);
-          await props.navigation.navigate('HospitalDetail', {object: object});
+          await props.navigation.navigate('HospitalDetail', {
+            object: object,
+            mask: mask,
+          });
           await CommonActions.loadingAction(false);
         }}>
         <PhotoImg
@@ -141,6 +196,9 @@ export const ErmList = props => {
               km
             </NBGText>
           ) : null}
+          <NBGBText fontSize={10} color={'#53A6EC'}>
+            * 상세페이지에서 마스크 재고 현황을 확인하실 수 있습니다.
+          </NBGBText>
         </ContentDataView>
       </ListView>
     );

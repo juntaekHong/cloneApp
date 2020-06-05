@@ -173,6 +173,7 @@ const CustomBTN = styled(BTN)`
 
 export const Card = ({
   type,
+  mask,
   hospitalName,
   // rating,
   // reviewCount,
@@ -257,6 +258,20 @@ export const Card = ({
         color={'black'}>
         인근 위치: {dutyMapimg !== null ? dutyMapimg : '정보없음'}
       </NBGText>
+      {type ? (
+        <NBGText
+          fontSize={13}
+          numberOfLines={2}
+          style={{
+            width: widthPercentageToDP(340),
+            height: widthPercentageToDP(33),
+          }}
+          color={'black'}>
+          재고: {mask && mask.status !== undefined ? mask.status : '알 수 없음'}
+          {'\n'}입고일:{' '}
+          {mask && mask.stock !== undefined ? mask.stock : '알 수 없음'}
+        </NBGText>
+      ) : null}
       <BTNView>
         {!type ? (
           <CustomBTN

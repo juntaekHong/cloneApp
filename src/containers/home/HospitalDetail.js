@@ -17,7 +17,11 @@ import {CustomModal} from '../../components/common/Modal';
 import Swiper from 'react-native-swiper';
 import OfficeHours from '../hospitalDetail/OfficeHours';
 import {PagiNationTab} from '../../components/home/PagiNation';
-import {CommonActions, ReviewActions} from '../../store/actionCreator';
+import {
+  CommonActions,
+  ReviewActions,
+  HospitalActions,
+} from '../../store/actionCreator';
 import HospitalMap from '../hospitalDetail/HospitalMap';
 import HospitalReview from '../hospitalDetail/HospitalReview';
 import RNKakaoLink from 'react-native-kakao-links';
@@ -39,6 +43,12 @@ const HospitalDetail = props => {
   const [reservationModal, setReservationModal] = useState(false);
   // 리뷰 작성 완료 모달
   const [reviewCompleteModal, setReviewCompleteModal] = useState(false);
+  // 약국 상세페이지 마스크 현황
+  const [mask, setMask] = useState(
+    props.navigation.state.params.mask
+      ? props.navigation.state.params.mask
+      : undefined,
+  );
 
   // 병원 상세 데이터가 들어오면 네이버 길찾기에 대한 한글 인코딩 해주는 것.
   useEffect(() => {
@@ -376,6 +386,7 @@ const HospitalDetail = props => {
       <ScrollView ref={focusing}>
         <Card
           type={detailData.type}
+          mask={mask}
           hospitalName={detailData.dutyName}
           rating={4.0}
           reviewCount={50}
