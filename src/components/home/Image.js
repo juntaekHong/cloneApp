@@ -81,3 +81,13 @@ export const StartImg = styled(TaxiImg)``;
 export const ConnectionImg = styled(Img)``;
 
 export const FinishImg = styled(Img)``;
+
+export const MaskImg = () => {
+  return (
+    <Img
+      width={16}
+      height={16}
+      source={require('../../../assets/image/home/coronavirus.png')}
+    />
+  );
+};

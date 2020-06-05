@@ -28,7 +28,7 @@ export const getCovidList = () => async dispatch => {
         : String(today.getDay());
     let now = year + month + day;
 
-    const jsonData = await axios.get(
+    let jsonData = await axios.get(
       `${config.covid_url}serviceKey=${
         config.covid_serviceKey
       }&pageNo=1&numOfRows=10&startCreateDt=${now}&endCreateDt=${now}&`,
@@ -39,6 +39,27 @@ export const getCovidList = () => async dispatch => {
         },
       },
     );
+
+    if (!jsonData.data.response.body) {
+      let preDay =
+        today.getDay() < 10
+          ? '0' + String(today.getDay() - 1)
+          : String(today.getDay() - 1);
+
+      now = year + month + preDay;
+
+      jsonData = await axios.get(
+        `${config.covid_url}serviceKey=${
+          config.covid_serviceKey
+        }&pageNo=1&numOfRows=10&startCreateDt=${now}&endCreateDt=${now}&`,
+        {
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+        },
+      );
+    }
 
     await dispatch(covidListAction(jsonData.data.response.body.items.item));
   } catch (e) {

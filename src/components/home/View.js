@@ -8,7 +8,7 @@ import {BackImg, StarImg, MapImg} from '../common/Image';
 import {NBGBText, NBGText} from '../common/Text';
 import {widthPercentageToDP, showMessage} from '../../utils/util';
 import colors from '../../configs/colors';
-import {SelectImg, RatingEmptyImg, CallImg, TaxiImg} from './Image';
+import {SelectImg, RatingEmptyImg, CallImg, TaxiImg, MaskImg} from './Image';
 import Carousel from 'react-native-looped-carousel';
 import FastImage from 'react-native-fast-image';
 import Communications from 'react-native-communications';
@@ -259,18 +259,28 @@ export const Card = ({
         인근 위치: {dutyMapimg !== null ? dutyMapimg : '정보없음'}
       </NBGText>
       {type ? (
-        <NBGText
-          fontSize={13}
-          numberOfLines={2}
+        <StandardView
           style={{
-            width: widthPercentageToDP(340),
-            height: widthPercentageToDP(33),
-          }}
-          color={'black'}>
-          재고: {mask && mask.status !== undefined ? mask.status : '알 수 없음'}
-          {'\n'}입고일:{' '}
-          {mask && mask.stock !== undefined ? mask.stock : '알 수 없음'}
-        </NBGText>
+            flexDirection: 'row',
+            alignItems: 'center',
+            marginLeft: widthPercentageToDP(30),
+          }}>
+          <MaskImg />
+          <NBGText
+            fontSize={13}
+            numberOfLines={2}
+            marginLeft={10}
+            style={{
+              width: widthPercentageToDP(340),
+              height: widthPercentageToDP(33),
+            }}
+            color={'black'}>
+            재고:{' '}
+            {mask && mask.status !== undefined ? mask.status : '알 수 없음'}
+            {'\n'}입고일:{' '}
+            {mask && mask.stock !== undefined ? mask.stock : '알 수 없음'}
+          </NBGText>
+        </StandardView>
       ) : null}
       <BTNView>
         {!type ? (
