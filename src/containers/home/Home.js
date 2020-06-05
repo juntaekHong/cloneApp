@@ -86,8 +86,6 @@ const DATA = [
 const Home = props => {
   const lottie = useRef(null);
 
-  const [covidVisible, setCovidVisible] = useState(false);
-
   return (
     <TopContainerView>
       <TopView
