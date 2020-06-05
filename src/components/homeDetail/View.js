@@ -580,7 +580,9 @@ export const HourView = ({hoursInfo}) => {
 
   return (
     <Container margin={20}>
-      <NBGBText fontSize={15}>진료시간</NBGBText>
+      <NBGBText fontSize={15}>
+        {!hoursInfo.type ? '진료시간' : '영업시간'}
+      </NBGBText>
       <InnerContainer>
         {/* 반복되는 뷰 */}
         <DetailList
