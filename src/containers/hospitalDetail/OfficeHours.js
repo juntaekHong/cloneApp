@@ -15,7 +15,7 @@ const OfficeHours = ({detailData}) => {
         {detailData.dutyInf === null
           ? !detailData.type
             ? '현재 병원 소개 내용이 없습니다.'
-            : '현재 약구 소개 내용이 없습니다.'
+            : '현재 약국 소개 내용이 없습니다.'
           : detailData.dutyInf}
       </NBGText>
     </TopContainerView>
