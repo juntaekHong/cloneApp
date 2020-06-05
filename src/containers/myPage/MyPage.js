@@ -67,7 +67,10 @@ const MyPage = props => {
 
   useEffect(() => {
     if (Platform.OS === 'android') {
-      OneSignal.init('ffaa627f-c0ab-48a5-92ff-aab4aba972f3');
+      OneSignal.init('ffaa627f-c0ab-48a5-92ff-aab4aba972f3', {
+        kOSSettingsKeyAutoPrompt: true,
+      });
+      OneSignal.inFocusDisplaying(2);
 
       OneSignal.addEventListener('received', this.onReceived);
       OneSignal.addEventListener('opened', this.onOpened);
