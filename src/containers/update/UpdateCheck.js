@@ -40,6 +40,7 @@ const UpdateCheck = props => {
             });
             CommonActions.myLocation(latitude, longitude);
             CovidActions.getCovidList();
+            HospitalActions.getErmList(longitude, latitude);
           },
           error => {
             setError(error.message);
@@ -63,6 +64,7 @@ const UpdateCheck = props => {
         } else {
           let timeout = setInterval(async () => {
             await CommonActions.getHospitalList(long, lat);
+            await HospitalActions.getErmList(long, lat);
             await CommonActions.getMyAddress(long, lat);
             await CommonActions.handleFirstScreenLoading(false);
             await props.navigation.navigate('root');
@@ -113,6 +115,7 @@ const UpdateCheck = props => {
               const long = longitude === null ? location.longitude : longitude;
               const lat = latitude === null ? location.latitude : latitude;
               await CommonActions.loadingAction(true);
+              await HospitalActions.getErmList(long, lat);
               const promise1 = CommonActions.getHospitalList(long, lat);
               const promise2 = CommonActions.getMyAddress(long, lat);
               Promise.all([promise1, promise2]).then(async () => {

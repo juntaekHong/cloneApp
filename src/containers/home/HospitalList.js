@@ -3,13 +3,17 @@ import React, {useState, useEffect} from 'react';
 import {SafeAreaView} from 'react-native';
 import {connect} from 'react-redux';
 import {CustomTopView} from '../../components/home/View';
-import {List} from '../../components/common/DataList';
+import {List, ErmList} from '../../components/common/DataList';
 import {HospitalActions} from '../../store/actionCreator';
+import {NBGText} from '../../components/common/Text';
+import {processors} from 'xml2js';
 
 const HospitalList = props => {
   const [data, setData] = useState(
     props.navigation.state.params.hospitalCategoryName === '즐겨찾기'
       ? props.subscriber_list
+      : props.navigation.state.params.hospitalCategoryName === '약국'
+      ? props.ermList
       : props.hospitalList,
   );
   const [name, setName] = useState(
@@ -24,38 +28,40 @@ const HospitalList = props => {
 
   // 홈(메인) 페이지에서 항목에 맞는 병원 리스트만 보여지는 것으로 가정.
   useEffect(() => {
-    const Matching = findData => {
-      let searchData = [];
+    if (name !== '약국') {
+      const Matching = findData => {
+        let searchData = [];
 
-      data.map((item, index) => {
-        item.category.map(categorys => {
-          if (categorys.indexOf(findData) !== -1) {
-            searchData.push(item);
-          } else {
-            return;
-          }
+        data.map((item, index) => {
+          item.category.map(categorys => {
+            if (categorys.indexOf(findData) !== -1) {
+              searchData.push(item);
+            } else {
+              return;
+            }
+          });
         });
-      });
 
-      searchData = [...new Set(searchData)];
+        searchData = [...new Set(searchData)];
 
-      if (findData === '모두') {
-        return props.hospitalList;
+        if (findData === '모두') {
+          return props.hospitalList;
+        } else {
+          if (searchData.length === 0) return;
+        }
+
+        return searchData;
+      };
+
+      if (name === undefined || name === '즐겨찾기') {
+        if (name === '즐겨찾기') {
+          HospitalActions.getAllHospitalSubscribers();
+        } else {
+          setData([]);
+        }
       } else {
-        if (searchData.length === 0) return;
+        setData(Matching(name));
       }
-
-      return searchData;
-    };
-
-    if (name === undefined || name === '즐겨찾기') {
-      if (name === '즐겨찾기') {
-        HospitalActions.getAllHospitalSubscribers();
-      } else {
-        setData([]);
-      }
-    } else {
-      setData(Matching(name));
     }
   }, []);
 
@@ -66,7 +72,11 @@ const HospitalList = props => {
         height={55}
         navigation={props.navigation}
       />
-      <List data={data} navigation={props.navigation} />
+      {name !== '약국' ? (
+        <List data={data} navigation={props.navigation} />
+      ) : (
+        <ErmList data={data} navigation={props.navigation} />
+      )}
     </SafeAreaView>
   );
 };
@@ -76,4 +86,5 @@ export default connect(state => ({
   hospitalList: state.common.hospitalList,
 
   subscriber_list: state.hospital.subscriber_list,
+  ermList: state.hospital.ermList,
 }))(HospitalList);

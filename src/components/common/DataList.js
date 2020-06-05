@@ -90,3 +90,57 @@ export const List = props => {
     />
   );
 };
+
+export const ErmList = props => {
+  const _renderItem = ({item, index}) => {
+    return (
+      <ListView
+        index={index}
+        padding={10}
+        onPress={async () => {
+          await CommonActions.loadingAction(true);
+          // 상세페이지 데이터 불러오기
+          await CommonActions.loadingAction(false);
+        }}>
+        <PhotoImg
+          source={require('../../../assets/image/navigation/homeblue.png')}
+          width={80}
+          height={80}
+          radius={25}
+        />
+        <ContentDataView>
+          <NBGBText fontSize={14} numberOfLines={1}>
+            {item.dutyName}
+          </NBGBText>
+          <EvaluationView marginTop={3} marginBottom={3}>
+            <NBGBText fontSize={12}>전화번호: {item.dutyTel1}</NBGBText>
+            <NBGLText>
+              영업시간: {item.startTime} ~ {item.endTime}
+            </NBGLText>
+          </EvaluationView>
+          <NBGText
+            numberOfLines={1}
+            fontSize={13}
+            color={'gray'}
+            style={{width: widthPercentageToDP(250)}}>
+            장소: {item.dutyAddr}
+          </NBGText>
+          {item.distance ? (
+            <NBGText fontSize={13} color={'gray'}>
+              거리: {item.distance.toFixed(2)}
+              km
+            </NBGText>
+          ) : null}
+        </ContentDataView>
+      </ListView>
+    );
+  };
+
+  return (
+    <DataList
+      data={props.data}
+      keyExtractor={(item, index) => index.toString()}
+      renderItem={_renderItem}
+    />
+  );
+};

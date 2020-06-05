@@ -7,7 +7,7 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
 } from 'react-native';
-import {CommonActions} from '../../store/actionCreator';
+import {CommonActions, HospitalActions} from '../../store/actionCreator';
 import {
   TopView,
   TopContainerView,
@@ -55,6 +55,7 @@ const LocationSearch = props => {
     await CommonActions.getMyAddress(long, lat);
     await CommonActions.handleHospitalListInit();
     await CommonActions.getHospitalList(long, lat);
+    await HospitalActions.getErmList(long, lat);
     await CommonActions.handleLoading(false);
     await props.navigation.navigate('home');
   };

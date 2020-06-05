@@ -53,6 +53,11 @@ const config = {
     'http://openapi.data.go.kr/openapi/service/rest/Covid19/getCovid19SidoInfStateJson?',
   covid_serviceKey:
     'EyyXmfDmrjacJ7QcXl3bKKYjcRUCT1GsuQIFDcJlSjkboDRxx0nJAXaoxNNWCFAIlPJ6HBqlmr5Zl4f6KTS0ZA%3D%3D',
+  // 약국 데이터 api
+  erm_url:
+    'http://apis.data.go.kr/B552657/ErmctInsttInfoInqireService/getParmacyLcinfoInqire?',
+  erm_serviceKey:
+    'EyyXmfDmrjacJ7QcXl3bKKYjcRUCT1GsuQIFDcJlSjkboDRxx0nJAXaoxNNWCFAIlPJ6HBqlmr5Zl4f6KTS0ZA%3D%3D',
 
   signDataKey: [
     'token',
