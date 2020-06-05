@@ -6,7 +6,7 @@ import values from './values';
  */
 
 const init = {
-  type: 'prod',
+  type: 'dev',
   server: {
     dev: 'http://ec2-15-164-221-39.ap-northeast-2.compute.amazonaws.com',
     prod: 'https://ppodeum.site',

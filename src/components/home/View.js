@@ -426,7 +426,7 @@ export const CovidView = ({data}) => {
               <NBGText style={{flex: 1}}>사망자: {item.deathCnt}명</NBGText>
               <NBGText style={{flex: 1}}>일일 증가: {item.incDec}명</NBGText>
               <NBGText style={{flex: 1}}>
-                격리해제: {item.isolClearCnt}명
+                지역 감염: {item.localOccCnt}명
               </NBGText>
             </StandardView>
             <StandardView
@@ -435,10 +435,9 @@ export const CovidView = ({data}) => {
                 marginHorizontal: widthPercentageToDP(10),
               }}>
               <NBGText style={{flex: 1}}>격리자: {item.isolIngCnt}명</NBGText>
-              <NBGText style={{flex: 1}}>
-                지역 감염: {item.localOccCnt}명
+              <NBGText style={{flex: 2}}>
+                격리해제: {item.isolClearCnt}명
               </NBGText>
-              <StandardView style={{flex: 1}} />
             </StandardView>
           </StandardView>
         );

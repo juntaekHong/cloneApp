@@ -39,6 +39,7 @@ const UpdateCheck = props => {
               longitude,
             });
             CommonActions.myLocation(latitude, longitude);
+            CovidActions.getCovidList();
           },
           error => {
             setError(error.message);
