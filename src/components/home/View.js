@@ -388,7 +388,7 @@ export const CovidView = ({data}) => {
   return data.length > 0 ? (
     <Carousel
       delay={4000}
-      style={{width: '100%', height: widthPercentageToDP(100)}}
+      style={{width: '100%', height: widthPercentageToDP(90)}}
       autoplay>
       {data.map(item => {
         return (
@@ -402,9 +402,6 @@ export const CovidView = ({data}) => {
               borderRadius: widthPercentageToDP(15),
               borderColor: 'red',
             }}>
-            <NBGText marginLeft={10} marginBottom={5}>
-              코로나 일일 현황
-            </NBGText>
             <StandardView
               style={{
                 flexDirection: 'row',

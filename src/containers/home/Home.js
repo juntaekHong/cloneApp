@@ -7,6 +7,7 @@ import {TopContainerView} from '../../components/common/View';
 import {TopView, HomeAd, CovidView} from '../../components/home/View';
 import {DataList} from '../../components/home/DataList';
 import {ScrollView} from 'react-native-gesture-handler';
+import {NBGBText} from '../../components/common/Text';
 
 // 병원별 이미지 및 타이틀
 const DATA = [
@@ -85,6 +86,8 @@ const DATA = [
 const Home = props => {
   const lottie = useRef(null);
 
+  const [covidVisible, setCovidVisible] = useState(false);
+
   return (
     <TopContainerView>
       <TopView
@@ -94,6 +97,9 @@ const Home = props => {
         navigation={props.navigation}
       />
       <ScrollView>
+        <NBGBText marginLeft={15} marginBottom={5}>
+          코로나 일일 현황
+        </NBGBText>
         <CovidView data={props.covidList} />
         {/* 광고 배너 뷰 작업 */}
         <NavigationEvents
