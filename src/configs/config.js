@@ -56,6 +56,9 @@ const config = {
   // 약국 데이터 api
   erm_url:
     'http://apis.data.go.kr/B552657/ErmctInsttInfoInqireService/getParmacyLcinfoInqire?',
+  // 약국 상세 데이터 api
+  erm_detail_url:
+    'http://apis.data.go.kr/B552657/ErmctInsttInfoInqireService/getParmacyBassInfoInqire?',
   erm_serviceKey:
     'EyyXmfDmrjacJ7QcXl3bKKYjcRUCT1GsuQIFDcJlSjkboDRxx0nJAXaoxNNWCFAIlPJ6HBqlmr5Zl4f6KTS0ZA%3D%3D',
 

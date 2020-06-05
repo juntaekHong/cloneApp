@@ -21,7 +21,7 @@ const PagiNationBTN = styled(BTN)`
   border-bottom-width: ${widthPercentageToDP(3)};
 `;
 
-export const PagiNationTab = ({index, page1, page2, page3, onPress}) => {
+export const PagiNationTab = ({type, index, page1, page2, page3, onPress}) => {
   return (
     <TabView>
       <PagiNationBTN
@@ -34,7 +34,11 @@ export const PagiNationTab = ({index, page1, page2, page3, onPress}) => {
           align={'center'}
           fontSize={15}
           color={index === 0 ? '#259ffa' : '#dbdbdb'}
-          style={{width: widthPercentageToDP(375 / 3)}}>
+          style={{
+            width: !type
+              ? widthPercentageToDP(375 / 3)
+              : widthPercentageToDP(375 / 2),
+          }}>
           {page1.title}
         </NBGBText>
       </PagiNationBTN>
@@ -48,24 +52,30 @@ export const PagiNationTab = ({index, page1, page2, page3, onPress}) => {
           align={'center'}
           fontSize={15}
           color={index === 1 ? '#259ffa' : '#dbdbdb'}
-          style={{width: widthPercentageToDP(375 / 3)}}>
+          style={{
+            width: !type
+              ? widthPercentageToDP(375 / 3)
+              : widthPercentageToDP(375 / 2),
+          }}>
           {page2.title}
         </NBGBText>
       </PagiNationBTN>
-      <PagiNationBTN
-        index={index}
-        page={page3.index}
-        onPress={() => {
-          onPress(page3.index);
-        }}>
-        <NBGBText
-          align={'center'}
-          fontSize={15}
-          color={index === 2 ? '#259ffa' : '#dbdbdb'}
-          style={{width: widthPercentageToDP(375 / 3)}}>
-          {page3.title}
-        </NBGBText>
-      </PagiNationBTN>
+      {!type ? (
+        <PagiNationBTN
+          index={index}
+          page={page3.index}
+          onPress={() => {
+            onPress(page3.index);
+          }}>
+          <NBGBText
+            align={'center'}
+            fontSize={15}
+            color={index === 2 ? '#259ffa' : '#dbdbdb'}
+            style={{width: widthPercentageToDP(375 / 3)}}>
+            {page3.title}
+          </NBGBText>
+        </PagiNationBTN>
+      ) : null}
     </TabView>
   );
 };

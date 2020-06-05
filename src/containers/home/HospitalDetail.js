@@ -375,6 +375,7 @@ const HospitalDetail = props => {
       />
       <ScrollView ref={focusing}>
         <Card
+          type={detailData.type}
           hospitalName={detailData.dutyName}
           rating={4.0}
           reviewCount={50}
@@ -399,6 +400,7 @@ const HospitalDetail = props => {
           page1={{title: '진료시간 정보', index: 0}}
           page2={{title: '길찾기', index: 1}}
           page3={{title: '리뷰', index: 2}}
+          type={detailData.type}
           onPress={async index => {
             if (props.page_index !== index) {
               await swipe.current.scrollBy(index - props.page_index);
@@ -431,123 +433,132 @@ const HospitalDetail = props => {
               endLong={detailData.wgs84Lon}
             />
             {/* 해당 병원 리뷰 페이지 */}
-            <HospitalReview
-              hpId={detailData.hpid}
-              ratingAvg={detailData.ratingAvg}
-              user={props.user}
-              navigation={props.navigation}
-              reviewCompleteModal={setReviewCompleteModal}
-            />
+            {!detailData.type ? (
+              <HospitalReview
+                hpId={detailData.hpid}
+                ratingAvg={detailData.ratingAvg}
+                user={props.user}
+                navigation={props.navigation}
+                reviewCompleteModal={setReviewCompleteModal}
+              />
+            ) : null}
           </Swiper>
         </View>
       </ScrollView>
       {/* 예약 페이지로 이동 */}
-      <BottomView
-        reviewBtn={props.user !== null && props.user.token ? true : false}
-        reviewWrite={() => {
-          // reviewListCheck이 true, medicalHistoryCheck이 true일 때, 작성 가능함.
-          let reviewListCheck = true;
-          let medicalHistoryCheck = false;
-          // 예약날로부터 유효 기간 7일
-          let timeoutDate = 7 * 24 * 60 * 60 * 1000;
-          // 오늘 날짜
-          let todayDate = new Date().getTime() + 540 * 60 * 1000;
-          // 예약 시간
-          let reservationDate;
-          // 오늘 기준 진료완료 시간 갭
-          let gapDate;
+      {!detailData.type ? (
+        <BottomView
+          reviewBtn={props.user !== null && props.user.token ? true : false}
+          reviewWrite={() => {
+            // reviewListCheck이 true, medicalHistoryCheck이 true일 때, 작성 가능함.
+            let reviewListCheck = true;
+            let medicalHistoryCheck = false;
+            // 예약날로부터 유효 기간 7일
+            let timeoutDate = 7 * 24 * 60 * 60 * 1000;
+            // 오늘 날짜
+            let todayDate = new Date().getTime() + 540 * 60 * 1000;
+            // 예약 시간
+            let reservationDate;
+            // 오늘 기준 진료완료 시간 갭
+            let gapDate;
 
-          if (props.my_review_list.length !== 0) {
-            props.my_review_list.map(item => {
-              item.hpid === detailData.hpid ? (reviewListCheck = false) : null;
-            });
-          }
+            if (props.my_review_list.length !== 0) {
+              props.my_review_list.map(item => {
+                item.hpid === detailData.hpid
+                  ? (reviewListCheck = false)
+                  : null;
+              });
+            }
 
-          if (props.history_list.length !== 0) {
-            props.history_list.map(item => {
-              if (item.hpid === detailData.hpid && item.status === 'TIMEOUT') {
-                reservationDate = new Date(item.reservationDate).getTime();
+            if (props.history_list.length !== 0) {
+              props.history_list.map(item => {
+                if (
+                  item.hpid === detailData.hpid &&
+                  item.status === 'TIMEOUT'
+                ) {
+                  reservationDate = new Date(item.reservationDate).getTime();
 
-                gapDate =
-                  todayDate - reservationDate > 0
-                    ? todayDate - reservationDate
-                    : reservationDate - todayDate;
+                  gapDate =
+                    todayDate - reservationDate > 0
+                      ? todayDate - reservationDate
+                      : reservationDate - todayDate;
 
-                if (timeoutDate >= gapDate) {
-                  medicalHistoryCheck = true;
+                  if (timeoutDate >= gapDate) {
+                    medicalHistoryCheck = true;
+                  }
                 }
-              }
-            });
-          }
+              });
+            }
 
-          if (reviewListCheck && medicalHistoryCheck) {
-            props.navigation.navigate('ReviewWrite', {
-              hpid: detailData.hpid,
-              reviewCompleteModal: setReviewCompleteModal,
-            });
+            if (reviewListCheck && medicalHistoryCheck) {
+              props.navigation.navigate('ReviewWrite', {
+                hpid: detailData.hpid,
+                reviewCompleteModal: setReviewCompleteModal,
+              });
 
-            props.page_index === 2
-              ? swipe.current.scrollBy(-2)
-              : props.page_index === 1
-              ? swipe.current.scrollBy(-1)
-              : null;
-          } else {
-            !medicalHistoryCheck && reviewListCheck
-              ? showMessage('진료 내역이 없어 리뷰를 작성하실 수 없습니다!', {
-                  position: Toast.positions.CENTER,
-                })
-              : !medicalHistoryCheck
-              ? showMessage('진료한지 7일이 지나 작성하실 수 없습니다.', {
-                  position: Toast.positions.CENTER,
-                })
-              : showMessage('이미 작성한 리뷰가 있습니다!', {
-                  position: Toast.positions.CENTER,
-                });
-          }
-        }}
-        reservation={async () => {
-          if (props.user !== null) {
-            if (props.user.token) {
-              if (detailData.office.length !== 0) {
-                await CommonActions.handleTimeInfo({
-                  hospitalName: detailData.dutyName,
-                  dutyTime1: detailData.dutyTime1,
-                  dutyTime2: detailData.dutyTime2,
-                  dutyTime3: detailData.dutyTime3,
-                  dutyTime4: detailData.dutyTime4,
-                  dutyTime5: detailData.dutyTime5,
-                  dutyTime6: detailData.dutyTime6,
-                  dutyTime7: detailData.dutyTime7,
-                  dutyTime8: detailData.dutyTime8,
-                  office: detailData.office,
-                });
+              props.page_index === 2
+                ? swipe.current.scrollBy(-2)
+                : props.page_index === 1
+                ? swipe.current.scrollBy(-1)
+                : null;
+            } else {
+              !medicalHistoryCheck && reviewListCheck
+                ? showMessage('진료 내역이 없어 리뷰를 작성하실 수 없습니다!', {
+                    position: Toast.positions.CENTER,
+                  })
+                : !medicalHistoryCheck
+                ? showMessage('진료한지 7일이 지나 작성하실 수 없습니다.', {
+                    position: Toast.positions.CENTER,
+                  })
+                : showMessage('이미 작성한 리뷰가 있습니다!', {
+                    position: Toast.positions.CENTER,
+                  });
+            }
+          }}
+          reservation={async () => {
+            if (props.user !== null) {
+              if (props.user.token) {
+                if (detailData.office.length !== 0) {
+                  await CommonActions.handleTimeInfo({
+                    hospitalName: detailData.dutyName,
+                    dutyTime1: detailData.dutyTime1,
+                    dutyTime2: detailData.dutyTime2,
+                    dutyTime3: detailData.dutyTime3,
+                    dutyTime4: detailData.dutyTime4,
+                    dutyTime5: detailData.dutyTime5,
+                    dutyTime6: detailData.dutyTime6,
+                    dutyTime7: detailData.dutyTime7,
+                    dutyTime8: detailData.dutyTime8,
+                    office: detailData.office,
+                  });
 
-                if (props.user.userNickName === undefined) {
-                  showMessage(
-                    '카카오톡 로그인은 마이페이지에서\n추가 정보를 입력해야 사용할 수 있습니다.',
-                    {
-                      position: Toast.positions.CENTER,
-                    },
-                  );
+                  if (props.user.userNickName === undefined) {
+                    showMessage(
+                      '카카오톡 로그인은 마이페이지에서\n추가 정보를 입력해야 사용할 수 있습니다.',
+                      {
+                        position: Toast.positions.CENTER,
+                      },
+                    );
+                  } else {
+                    props.navigation.navigate('Reservation');
+                  }
                 } else {
-                  props.navigation.navigate('Reservation');
+                  showMessage('현재 전화접수만 가능한 병원입니다!', {
+                    position: Toast.positions.CENTER,
+                  });
                 }
               } else {
-                showMessage('현재 전화접수만 가능한 병원입니다!', {
+                showMessage('이메일 인증 후, 사용할 수 있습니다.', {
                   position: Toast.positions.CENTER,
                 });
               }
             } else {
-              showMessage('이메일 인증 후, 사용할 수 있습니다.', {
-                position: Toast.positions.CENTER,
-              });
+              setReservationModal(true);
             }
-          } else {
-            setReservationModal(true);
-          }
-        }}
-        navigation={props.navigation}
-      />
+          }}
+          navigation={props.navigation}
+        />
+      ) : null}
     </TopContainerView>
   );
 };

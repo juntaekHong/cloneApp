@@ -87,7 +87,89 @@ export const getErmList = (lon, lat) => async dispatch => {
     );
 
     await dispatch(ermListAction(jsonData.data.response.body.items.item));
-    console.log(jsonData.data.response.body.items.item);
+  } catch (e) {
+    // 병원 리스트 공공 api 요청 실패 => 서버 연동 실패
+    console.log('erm list insert fail');
+  }
+};
+
+// 불러온 약국 상세 정보 불러오기
+export const getErmDetail = hpid => async dispatch => {
+  try {
+    const jsonData = await axios.get(
+      `${config.erm_detail_url}serviceKey=${
+        config.erm_serviceKey
+      }&HPID=${hpid}`,
+      {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+      },
+    );
+
+    const result = jsonData.data.response.body.items.item;
+
+    const ermTimeFormat = time => {
+      time = String(time);
+      return time[0] + time[1] + ':' + time[2] + time[3];
+    };
+
+    const dataFomrat = {
+      type: 'erm',
+      hpid: result.hpid,
+      dutyAddr: result.dutyAddr,
+      dutyMapimg: result.dutyMapimg ? result.dutyMapimg : null,
+      dutyName: result.dutyName,
+      dutyTel: result.dutyTel1,
+      wgs84Lat: result.wgs84Lat,
+      wgs84Lon: result.wgs84Lon,
+      dutyInf: result.dutyInf ? result.dutyInf : null,
+      dutyTime1: result.dutyTime1c
+        ? ermTimeFormat(result.dutyTime1c) +
+          ' ~ ' +
+          ermTimeFormat(result.dutyTime1s)
+        : '휴진',
+      dutyTime2: result.dutyTime2c
+        ? ermTimeFormat(result.dutyTime2c) +
+          ' ~ ' +
+          ermTimeFormat(result.dutyTime2s)
+        : '휴진',
+      dutyTime3: result.dutyTime3c
+        ? ermTimeFormat(result.dutyTime3c) +
+          ' ~ ' +
+          ermTimeFormat(result.dutyTime3s)
+        : '휴진',
+      dutyTime4: result.dutyTime4c
+        ? ermTimeFormat(result.dutyTime4c) +
+          ' ~ ' +
+          ermTimeFormat(result.dutyTime4s)
+        : '휴진',
+      dutyTime5: result.dutyTime5c
+        ? ermTimeFormat(result.dutyTime5c) +
+          ' ~ ' +
+          ermTimeFormat(result.dutyTime5s)
+        : '휴진',
+      dutyTime6: result.dutyTime6c
+        ? ermTimeFormat(result.dutyTime6c) +
+          ' ~ ' +
+          ermTimeFormat(result.dutyTime6s)
+        : '휴진',
+      dutyTime7: result.dutyTime7c
+        ? ermTimeFormat(result.dutyTime7c) +
+          ' ~ ' +
+          ermTimeFormat(result.dutyTime7s)
+        : '휴진',
+      dutyTime8: result.dutyTime8c
+        ? ermTimeFormat(result.dutyTime8c) +
+          ' ~ ' +
+          ermTimeFormat(result.dutyTime8s)
+        : '휴진',
+    };
+
+    console.log(dataFomrat);
+
+    return dataFomrat;
   } catch (e) {
     // 병원 리스트 공공 api 요청 실패 => 서버 연동 실패
     console.log('erm list insert fail');

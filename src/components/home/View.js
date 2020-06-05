@@ -172,6 +172,7 @@ const CustomBTN = styled(BTN)`
 `;
 
 export const Card = ({
+  type,
   hospitalName,
   // rating,
   // reviewCount,
@@ -257,33 +258,35 @@ export const Card = ({
         인근 위치: {dutyMapimg !== null ? dutyMapimg : '정보없음'}
       </NBGText>
       <BTNView>
-        <CustomBTN
-          onPress={async () => {
-            if (loginInfo === null) {
-              await autoLoginModal();
-            } else {
-              if (loginInfo.token) {
-                myScrap ? setMyScrap(false) : setMyScrap(true);
-                await HospitalActions.updateHospitalSubscriber(hospitalId);
-                await HospitalActions.getAllHospitalSubscribers();
+        {!type ? (
+          <CustomBTN
+            onPress={async () => {
+              if (loginInfo === null) {
+                await autoLoginModal();
               } else {
-                showMessage('이메일 인증 후, 사용할 수 있습니다.', {
-                  position: Toast.positions.CENTER,
-                });
+                if (loginInfo.token) {
+                  myScrap ? setMyScrap(false) : setMyScrap(true);
+                  await HospitalActions.updateHospitalSubscriber(hospitalId);
+                  await HospitalActions.getAllHospitalSubscribers();
+                } else {
+                  showMessage('이메일 인증 후, 사용할 수 있습니다.', {
+                    position: Toast.positions.CENTER,
+                  });
+                }
               }
-            }
-          }}>
-          {myScrap ? (
-            <StarImg
-              style={{marginRight: widthPercentageToDP(5)}}
-              width={21}
-              height={21}
-              source={require('../../../assets/image/home/star-0.png')}
-            />
-          ) : (
-            <RatingEmptyImg />
-          )}
-        </CustomBTN>
+            }}>
+            {myScrap ? (
+              <StarImg
+                style={{marginRight: widthPercentageToDP(5)}}
+                width={21}
+                height={21}
+                source={require('../../../assets/image/home/star-0.png')}
+              />
+            ) : (
+              <RatingEmptyImg />
+            )}
+          </CustomBTN>
+        ) : null}
         <CustomBTN
           onPress={() => {
             Communications.phonecall(phoneNumber.replace(/-/gi, ''), false);

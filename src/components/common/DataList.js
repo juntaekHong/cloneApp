@@ -5,7 +5,7 @@ import {ListView, ContentDataView, EvaluationView} from './View';
 import {PhotoImg} from './Image';
 import {NBGBText, NBGLText, NBGText} from './Text';
 import {widthPercentageToDP, dayToString} from '../../utils/util';
-import {CommonActions} from '../../store/actionCreator';
+import {CommonActions, HospitalActions} from '../../store/actionCreator';
 
 const DataList = styled.FlatList`
   flex-grow: 1;
@@ -14,7 +14,7 @@ const DataList = styled.FlatList`
 `;
 
 // 진료시간 포맷 커스텀
-const TimeFormat = () => {
+export const TimeFormat = () => {
   let day = 'dutyTime';
   let index = new Date().getDay();
 
@@ -25,6 +25,12 @@ const TimeFormat = () => {
   }
 
   return day;
+};
+
+// 약국 영업시간 포맷
+const ermTimeFormat = time => {
+  time = String(time);
+  return time[0] + time[1] + ':' + time[2] + time[3];
 };
 
 export const List = props => {
@@ -91,6 +97,7 @@ export const List = props => {
   );
 };
 
+// 약국 리스트
 export const ErmList = props => {
   const _renderItem = ({item, index}) => {
     return (
@@ -100,6 +107,8 @@ export const ErmList = props => {
         onPress={async () => {
           await CommonActions.loadingAction(true);
           // 상세페이지 데이터 불러오기
+          let object = await HospitalActions.getErmDetail(item.hpid);
+          await props.navigation.navigate('HospitalDetail', {object: object});
           await CommonActions.loadingAction(false);
         }}>
         <PhotoImg
@@ -115,7 +124,8 @@ export const ErmList = props => {
           <EvaluationView marginTop={3} marginBottom={3}>
             <NBGBText fontSize={12}>전화번호: {item.dutyTel1}</NBGBText>
             <NBGLText>
-              영업시간: {item.startTime} ~ {item.endTime}
+              영업시간: {ermTimeFormat(item.startTime)} ~{' '}
+              {ermTimeFormat(item.endTime)}
             </NBGLText>
           </EvaluationView>
           <NBGText
