@@ -115,10 +115,10 @@ const UpdateCheck = props => {
               const long = longitude === null ? location.longitude : longitude;
               const lat = latitude === null ? location.latitude : latitude;
               await CommonActions.loadingAction(true);
-              await HospitalActions.getErmList(long, lat);
               const promise1 = CommonActions.getHospitalList(long, lat);
               const promise2 = CommonActions.getMyAddress(long, lat);
-              Promise.all([promise1, promise2]).then(async () => {
+              const promise3 = HospitalActions.getErmList(long, lat);
+              Promise.all([promise1, promise2, promise3]).then(async () => {
                 await CovidActions.getCovidList();
                 await props.navigation.navigate('root');
                 await CommonActions.loadingAction(false);

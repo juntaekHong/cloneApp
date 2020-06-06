@@ -105,7 +105,7 @@ export const ErmList = props => {
         index={index}
         padding={10}
         onPress={async () => {
-          await CommonActions.loadingAction(true);
+          // await CommonActions.loadingAction(true);
           // 약국 상세페이지 데이터 불러오기
           let maskList = await HospitalActions.getMaskList(
             item.latitude,
@@ -138,32 +138,40 @@ export const ErmList = props => {
                       status = '판매 중지(수량 없음)';
                       break;
                   }
-                  stock_date = maskData.stock_at.split('/');
-                  stock_clock = maskData.stock_at.split(' ')[1].split(':');
 
-                  stock_date =
-                    stock_date[0] +
-                    '년 ' +
-                    stock_date[1] +
-                    '월 ' +
-                    stock_date[2].split(' ')[0] +
-                    '일 ';
+                  if (maskData.stock_at) {
+                    stock_date = maskData.stock_at.split('/');
+                    stock_clock = maskData.stock_at.split(' ')[1].split(':');
 
-                  stock_clock = stock_clock[0] + '시 ' + stock_clock[1] + '분';
+                    stock_date =
+                      stock_date[0] +
+                      '년 ' +
+                      stock_date[1] +
+                      '월 ' +
+                      stock_date[2].split(' ')[0] +
+                      '일 ';
+
+                    stock_clock =
+                      stock_clock[0] + '시 ' + stock_clock[1] + '분';
+                  }
 
                   mask = {
                     status: status,
-                    stock: stock_date + ' ' + stock_clock,
+                    stock: stock_date
+                      ? stock_date + ' ' + stock_clock
+                      : maskData.stock_at,
                   };
                 }
               })
             : null;
 
           let object = await HospitalActions.getErmDetail(item.hpid);
+
           await props.navigation.navigate('HospitalDetail', {
             object: object,
             mask: mask,
           });
+
           await CommonActions.loadingAction(false);
         }}>
         <PhotoImg

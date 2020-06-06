@@ -28,27 +28,8 @@ export const getCovidList = () => async dispatch => {
         : String(today.getDay());
     let now = year + month + day;
 
-    let jsonData = await axios.get(
-      `${config.covid_url}serviceKey=${
-        config.covid_serviceKey
-      }&pageNo=1&numOfRows=10&startCreateDt=${now}&endCreateDt=${now}&`,
-      {
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-      },
-    );
-
-    if (!jsonData.data.response.body) {
-      let preDay =
-        today.getDay() < 10
-          ? '0' + String(today.getDay() - 1)
-          : String(today.getDay() - 1);
-
-      now = year + month + preDay;
-
-      jsonData = await axios.get(
+    await axios
+      .get(
         `${config.covid_url}serviceKey=${
           config.covid_serviceKey
         }&pageNo=1&numOfRows=10&startCreateDt=${now}&endCreateDt=${now}&`,
@@ -58,10 +39,93 @@ export const getCovidList = () => async dispatch => {
             'Content-Type': 'application/json',
           },
         },
-      );
-    }
+      )
+      .then(async result => {
+        if (
+          !result.data.response.body &&
+          result.data.response.body.totalCount === 0
+        ) {
+          let preDay =
+            today.getDay() < 10
+              ? '0' + String(today.getDay() - 1)
+              : String(today.getDay() - 1);
+          now = year + month + preDay;
 
-    await dispatch(covidListAction(jsonData.data.response.body.items.item));
+          await axios
+            .get(
+              `${config.covid_url}serviceKey=${
+                config.covid_serviceKey
+              }&pageNo=1&numOfRows=10&startCreateDt=${now}&endCreateDt=${now}&`,
+              {
+                headers: {
+                  Accept: 'application/json',
+                  'Content-Type': 'application/json',
+                },
+              },
+            )
+            .then(async results => {
+              // console.log('1', results.data.response.body.items.item);
+              await dispatch(
+                covidListAction(results.data.response.body.items.item),
+              );
+            });
+        }
+        if (result.data.response.body) {
+          // console.log('2', result.data.response.body.items.item);
+          await dispatch(covidListAction(result.data.response.body.items.item));
+        }
+      })
+      .catch(async e => {
+        await axios
+          .get(
+            `${config.covid_url}serviceKey=${
+              config.covid_serviceKey
+            }&pageNo=1&numOfRows=10&startCreateDt=${now}&endCreateDt=${now}&`,
+            {
+              headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+              },
+            },
+          )
+          .then(async result => {
+            if (
+              !result.data.response.body &&
+              result.data.response.body.totalCount === 0
+            ) {
+              let preDay =
+                today.getDay() < 10
+                  ? '0' + String(today.getDay() - 1)
+                  : String(today.getDay() - 1);
+              now = year + month + preDay;
+
+              await axios
+                .get(
+                  `${config.covid_url}serviceKey=${
+                    config.covid_serviceKey
+                  }&pageNo=1&numOfRows=10&startCreateDt=${now}&endCreateDt=${now}&`,
+                  {
+                    headers: {
+                      Accept: 'application/json',
+                      'Content-Type': 'application/json',
+                    },
+                  },
+                )
+                .then(async results => {
+                  // console.log('3', results.data.response.body.items.item);
+                  await dispatch(
+                    covidListAction(results.data.response.body.items.item),
+                  );
+                });
+            }
+            if (result.data.response.body) {
+              // console.log('4', result.data.response.body.items.item);
+              await dispatch(
+                covidListAction(result.data.response.body.items.item),
+              );
+            }
+          });
+      });
   } catch (e) {
     // 병원 리스트 공공 api 요청 실패 => 서버 연동 실패
     console.log('covid list insert fail');

@@ -123,7 +123,12 @@ const Home = props => {
                 {covidVisible ? '코로나 현황' : '코로나 현황 보기'}
               </NBGBText>
             </BTN>
-            <NBGText>* 기준일:{props.covidList[0].stdDay}</NBGText>
+            <StandardView>
+              <NBGText>* 기준일: {props.covidList[0].stdDay}</NBGText>
+              {covidVisible ? (
+                <NBGText>* 등록일: {props.covidList[0].createDt}</NBGText>
+              ) : null}
+            </StandardView>
           </StandardView>
         ) : null}
         <CovidView data={covidVisible ? props.covidList : []} />
