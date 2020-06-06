@@ -105,7 +105,7 @@ export const ErmList = props => {
         index={index}
         padding={10}
         onPress={async () => {
-          // await CommonActions.loadingAction(true);
+          await CommonActions.loadingAction(true);
           // 약국 상세페이지 데이터 불러오기
           let maskList = await HospitalActions.getMaskList(
             item.latitude,
