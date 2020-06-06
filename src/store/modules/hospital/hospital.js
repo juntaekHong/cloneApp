@@ -101,6 +101,13 @@ export const getErmList = (lon, lat) => async dispatch => {
 // 불러온 약국 상세 정보 불러오기
 export const getErmDetail = hpid => async dispatch => {
   try {
+    const ermTimeFormat = time => {
+      time = String(time);
+      return time[0] + time[1] + ':' + time[2] + time[3];
+    };
+
+    let dataFomrat;
+
     await axios
       .get(
         `${config.erm_detail_url}serviceKey=${
@@ -116,12 +123,7 @@ export const getErmDetail = hpid => async dispatch => {
       .then(async json => {
         const result = json.data.response.body.items.item;
 
-        const ermTimeFormat = time => {
-          time = String(time);
-          return time[0] + time[1] + ':' + time[2] + time[3];
-        };
-
-        const dataFomrat = {
+        dataFomrat = {
           type: 'erm',
           hpid: result.hpid,
           dutyAddr: result.dutyAddr,
@@ -173,12 +175,12 @@ export const getErmDetail = hpid => async dispatch => {
               ermTimeFormat(result.dutyTime8c)
             : '휴진',
         };
-
-        return dataFomrat;
       })
       .catch(e => {
         console.log(e);
       });
+
+    return dataFomrat;
   } catch (e) {
     // 병원 리스트 공공 api 요청 실패 => 서버 연동 실패
     console.log('erm list insert fail');

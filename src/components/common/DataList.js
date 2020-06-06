@@ -4,8 +4,9 @@ import styled from 'styled-components/native';
 import {ListView, ContentDataView, EvaluationView} from './View';
 import {PhotoImg} from './Image';
 import {NBGBText, NBGLText, NBGText} from './Text';
-import {widthPercentageToDP, dayToString} from '../../utils/util';
+import {widthPercentageToDP, dayToString, showMessage} from '../../utils/util';
 import {CommonActions, HospitalActions} from '../../store/actionCreator';
+import Toast from 'react-native-root-toast';
 
 const DataList = styled.FlatList`
   flex-grow: 1;
@@ -167,10 +168,19 @@ export const ErmList = props => {
 
           let object = await HospitalActions.getErmDetail(item.hpid);
 
-          await props.navigation.navigate('HospitalDetail', {
-            object: object,
-            mask: mask,
-          });
+          if (object) {
+            await props.navigation.navigate('HospitalDetail', {
+              object: object,
+              mask: mask,
+            });
+          } else {
+            showMessage(
+              '서버 오류로 상세정보를 불러올 수 없습니다.\n잠시 후, 시도해 주세요.',
+              {
+                position: Toast.positions.CENTER,
+              },
+            );
+          }
 
           await CommonActions.loadingAction(false);
         }}>
