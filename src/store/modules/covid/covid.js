@@ -28,6 +28,9 @@ export const getCovidList = () => async dispatch => {
         : String(today.getDate());
     let now = year + month + day;
 
+    let preDay = new Date().getTime() - 1000 * 60 * 60 * 24;
+    preDay = new Date(preDay);
+
     let succuess;
 
     await axios
@@ -89,10 +92,14 @@ export const getCovidList = () => async dispatch => {
     }
 
     if (!succuess) {
+      month =
+        preDay.getMonth() < 9
+          ? '0' + String(preDay.getMonth() + 1)
+          : String(preDay.getMonth() + 1);
       day =
-        today.getDate() <= 10
-          ? '0' + String(today.getDate() - 1)
-          : String(today.getDate() - 1);
+        preDay.getDate() < 10
+          ? '0' + String(preDay.getDate())
+          : String(preDay.getDate());
       now = year + month + day;
 
       await axios
