@@ -121,7 +121,7 @@ const Home = props => {
   }, [props.covidList]);
 
   useEffect(() => {
-    if (Platform.OS !== 'android') {
+    if (Platform.OS === 'android') {
       OneSignal.init('ffaa627f-c0ab-48a5-92ff-aab4aba972f3');
       OneSignal.inFocusDisplaying(2);
 

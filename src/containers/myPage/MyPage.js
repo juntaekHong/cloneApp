@@ -66,7 +66,7 @@ const MyPage = props => {
   const passRef = useRef(null);
 
   useEffect(() => {
-    if (Platform.OS !== 'android') {
+    if (Platform.OS === 'android') {
       OneSignal.getPermissionSubscriptionState(async status => {
         await storeData('playerId', status.userId);
       });
