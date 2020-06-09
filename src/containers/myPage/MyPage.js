@@ -65,13 +65,13 @@ const MyPage = props => {
   // 아이디 입력 후, 패스워드 포커싱
   const passRef = useRef(null);
 
-  useEffect(() => {
-    if (Platform.OS === 'android') {
-      OneSignal.getPermissionSubscriptionState(async status => {
-        await storeData('playerId', status.userId);
-      });
-    }
-  }, [props.user]);
+  // useEffect(() => {
+  //   if (Platform.OS === 'android') {
+  //     OneSignal.getPermissionSubscriptionState(async status => {
+  //       await storeData('playerId', status.userId);
+  //     });
+  //   }
+  // }, [props.user]);
 
   // 병원 상세페이지에서 예약버튼을 통한 자동으로 로그인 창 뜨기.
   useEffect(() => {

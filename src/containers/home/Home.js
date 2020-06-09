@@ -128,6 +128,10 @@ const Home = props => {
       OneSignal.addEventListener('received', this.onReceived);
       OneSignal.addEventListener('opened', this.onOpened);
       OneSignal.addEventListener('ids', this.onIds);
+
+      OneSignal.getPermissionSubscriptionState(async status => {
+        await storeData('playerId', status.userId);
+      });
     }
   }, []);
 
