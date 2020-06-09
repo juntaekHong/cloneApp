@@ -12,8 +12,15 @@ import {TopView, HomeAd, CovidView} from '../../components/home/View';
 import {DataList} from '../../components/home/DataList';
 import {ScrollView} from 'react-native-gesture-handler';
 import {NBGBText, NBGText} from '../../components/common/Text';
-import {widthPercentageToDP} from '../../utils/util';
+import {
+  widthPercentageToDP,
+  storeData,
+  getData,
+  removeData,
+} from '../../utils/util';
 import {CovidActions} from '../../store/actionCreator';
+import {Platform} from 'react-native';
+import OneSignal from 'react-native-onesignal';
 
 // 병원별 이미지 및 타이틀
 const DATA = [
@@ -98,6 +105,37 @@ const Home = props => {
     props.covidList.length === 0 ? CovidActions.getCovidList() : null;
   }, [props.covidList]);
 
+  // useEffect(() => {
+  //   if (Platform.OS === 'android') {
+  //     OneSignal.init('ffaa627f-c0ab-48a5-92ff-aab4aba972f3', {
+  //       kOSSettingsKeyAutoPrompt: true,
+  //     });
+  //     OneSignal.inFocusDisplaying(2);
+
+  //     OneSignal.addEventListener('received', this.onReceived);
+  //     OneSignal.addEventListener('opened', this.onOpened);
+  //     OneSignal.addEventListener('ids', this.onIds);
+
+  //     OneSignal.getPermissionSubscriptionState(async status => {
+  //       const access = await getData('playerId');
+
+  //       if (access !== null) {
+  //         await removeData('playerId');
+  //       }
+  //       await storeData('playerId', status.userId);
+  //       console.log(status.userId);
+  //     });
+  //   }
+
+  //   return async () => {
+  //     if (Platform.OS === 'android') {
+  //       await OneSignal.removeEventListener('received', this.onReceived);
+  //       await OneSignal.removeEventListener('opened', this.onOpened);
+  //       await OneSignal.removeEventListener('ids', this.onIds);
+  //     }
+  //   };
+  // }, []);
+
   return (
     <TopContainerView>
       <TopView
@@ -151,16 +189,14 @@ const Home = props => {
           list={[
             {
               noticeIndex: 1,
-              noticeImg:
-                'https://littledeep.com/wp-content/uploads/2019/05/littledeep_hospital_sns-1024x552.png',
+              noticeImg: require('../../../assets/image/1.png'),
               info: null,
               createdAt: '2019-05-23T18:21:20.000Z',
               updatedAt: '2019-09-23T10:37:20.000Z',
             },
             {
               noticeIndex: 2,
-              noticeImg:
-                'https://previews.123rf.com/images/photoplotnikov/photoplotnikov1603/photoplotnikov160300032/53961525-도시-병원-파란색-배경에-플랫-디자인에서-구급차와-헬리콥터-건물-클리닉-벡터-일러스트-레이션.jpg',
+              noticeImg: require('../../../assets/image/2.png'),
               info: null,
               createdAt: '2019-02-12T23:02:06.000Z',
               updatedAt: '2019-09-01T10:45:48.000Z',

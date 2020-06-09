@@ -121,7 +121,7 @@ export const HomeAd = ({list = []}) => {
               width: widthPercentageToDP(375),
               height: widthPercentageToDP(170),
             }}
-            source={{uri: item.noticeImg}}
+            source={item.noticeImg}
           />
         );
       })}

@@ -515,8 +515,6 @@ const MyPage = props => {
             const provider = await getData('provider');
             const token = await getData('token');
 
-            console.log(token);
-
             provider !== null ? await setProvider(provider) : null;
 
             token !== null
