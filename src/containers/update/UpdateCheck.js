@@ -4,7 +4,12 @@ import React, {useState, useEffect} from 'react';
 import {View, TouchableOpacity} from 'react-native';
 import Geolocation from '@react-native-community/geolocation';
 import {connect} from 'react-redux';
-import {widthPercentageToDP, getData} from '../../utils/util';
+import {
+  widthPercentageToDP,
+  storeData,
+  getData,
+  removeData,
+} from '../../utils/util';
 import {CenterView} from '../../components/common/Extra';
 import {
   CommonActions,
@@ -12,6 +17,8 @@ import {
   ReviewActions,
   CovidActions,
 } from '../../store/actionCreator';
+import {Platform} from 'react-native';
+import OneSignal from 'react-native-onesignal';
 import {NBGText} from '../../components/common/Text';
 
 const UpdateCheck = props => {
@@ -76,6 +83,22 @@ const UpdateCheck = props => {
         }
       }
     });
+
+    if (Platform.OS === 'android') {
+      OneSignal.init('ffaa627f-c0ab-48a5-92ff-aab4aba972f3');
+      OneSignal.inFocusDisplaying(2);
+
+      OneSignal.addEventListener('received', this.onReceived);
+      OneSignal.addEventListener('opened', this.onOpened);
+      OneSignal.addEventListener('ids', this.onIds);
+
+      return async () => {
+        await OneSignal.getPermissionSubscriptionState(async status => {
+          await removeData('playerId');
+          await storeData('playerId', status.userId);
+        });
+      };
+    }
   }, []);
 
   return location === undefined && latitude === null ? (
@@ -118,6 +141,7 @@ const UpdateCheck = props => {
               const promise1 = CommonActions.getHospitalList(long, lat);
               const promise2 = CommonActions.getMyAddress(long, lat);
               const promise3 = HospitalActions.getErmList(long, lat);
+
               Promise.all([promise1, promise2, promise3]).then(async () => {
                 await CovidActions.getCovidList();
                 await props.navigation.navigate('root');

@@ -12,15 +12,8 @@ import {TopView, HomeAd, CovidView} from '../../components/home/View';
 import {DataList} from '../../components/home/DataList';
 import {ScrollView} from 'react-native-gesture-handler';
 import {NBGBText, NBGText} from '../../components/common/Text';
-import {
-  widthPercentageToDP,
-  storeData,
-  getData,
-  removeData,
-} from '../../utils/util';
+import {widthPercentageToDP} from '../../utils/util';
 import {CovidActions} from '../../store/actionCreator';
-import {Platform} from 'react-native';
-import OneSignal from 'react-native-onesignal';
 
 // 병원별 이미지 및 타이틀
 const DATA = [
@@ -119,22 +112,6 @@ const Home = props => {
   useEffect(() => {
     props.covidList.length === 0 ? CovidActions.getCovidList() : null;
   }, [props.covidList]);
-
-  useEffect(() => {
-    if (Platform.OS === 'android') {
-      OneSignal.init('ffaa627f-c0ab-48a5-92ff-aab4aba972f3');
-      OneSignal.inFocusDisplaying(2);
-
-      OneSignal.addEventListener('received', this.onReceived);
-      OneSignal.addEventListener('opened', this.onOpened);
-      OneSignal.addEventListener('ids', this.onIds);
-
-      OneSignal.getPermissionSubscriptionState(async status => {
-        await removeData('playerId');
-        await storeData('playerId', status.userId);
-      });
-    }
-  }, []);
 
   return (
     <TopContainerView>

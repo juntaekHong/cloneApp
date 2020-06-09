@@ -13,9 +13,7 @@ import {
   widthPercentageToDP,
   getData,
   showMessage,
-  storeData,
   removeAllData,
-  removeData,
 } from '../../utils/util';
 import {CustomModal} from '../../components/common/Modal';
 import colors from '../../configs/colors';
@@ -42,7 +40,6 @@ import Communications from 'react-native-communications';
 import Toast from 'react-native-root-toast';
 import KakaoLogins from '@react-native-seoul/kakao-login';
 import {SecessionModal} from '../../components/myPage/Modal';
-import OneSignal from 'react-native-onesignal';
 
 const MyPage = props => {
   // 로그인 모달
@@ -65,15 +62,6 @@ const MyPage = props => {
 
   // 아이디 입력 후, 패스워드 포커싱
   const passRef = useRef(null);
-
-  useEffect(() => {
-    if (Platform.OS === 'android') {
-      OneSignal.getPermissionSubscriptionState(async status => {
-        await removeData('playerId');
-        await storeData('playerId', status.userId);
-      });
-    }
-  }, [props.user]);
 
   // 병원 상세페이지에서 예약버튼을 통한 자동으로 로그인 창 뜨기.
   useEffect(() => {
