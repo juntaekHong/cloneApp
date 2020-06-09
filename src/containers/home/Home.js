@@ -95,19 +95,19 @@ const DATA = [
     hospitalCategoryName: '약국',
   },
   {
-    image: require('../../../assets/image/home/pill.png'),
+    image: require('../../../assets/image/home/facial-treatment.png'),
     title: '피부과',
     hospitalCategoryName: '피부과',
   },
   {
-    image: require('../../../assets/image/home/pill.png'),
+    image: require('../../../assets/image/home/vision.png'),
     title: '안과',
     hospitalCategoryName: '안과',
   },
   {
-    image: require('../../../assets/image/home/pill.png'),
+    image: require('../../../assets/image/home/pediatrics.png'),
     title: '소아과',
-    hospitalCategoryName: '소아과',
+    hospitalCategoryName: '소아',
   },
 ];
 
