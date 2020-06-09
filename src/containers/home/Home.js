@@ -94,6 +94,21 @@ const DATA = [
     title: '약국',
     hospitalCategoryName: '약국',
   },
+  {
+    image: require('../../../assets/image/home/pill.png'),
+    title: '피부과',
+    hospitalCategoryName: '피부과',
+  },
+  {
+    image: require('../../../assets/image/home/pill.png'),
+    title: '안과',
+    hospitalCategoryName: '안과',
+  },
+  {
+    image: require('../../../assets/image/home/pill.png'),
+    title: '소아과',
+    hospitalCategoryName: '소아과',
+  },
 ];
 
 const Home = props => {
