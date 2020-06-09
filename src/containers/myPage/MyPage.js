@@ -69,12 +69,8 @@ const MyPage = props => {
   useEffect(() => {
     if (Platform.OS === 'android') {
       OneSignal.getPermissionSubscriptionState(async status => {
-        const id = await getData('playerId');
-
-        if (id !== null) {
-          await removeData('playerId');
-          await storeData('playerId', status.userId);
-        }
+        await removeData('playerId');
+        await storeData('playerId', status.userId);
       });
     }
   }, [props.user]);

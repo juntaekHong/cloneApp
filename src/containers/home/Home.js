@@ -130,12 +130,8 @@ const Home = props => {
       OneSignal.addEventListener('ids', this.onIds);
 
       OneSignal.getPermissionSubscriptionState(async status => {
-        const id = await getData('playerId');
-
-        if (id !== null) {
-          await removeData('playerId');
-          await storeData('playerId', status.userId);
-        }
+        await removeData('playerId');
+        await storeData('playerId', status.userId);
       });
     }
   }, []);

@@ -35,6 +35,8 @@ export const signIn = (email, userPw, playerId) => async dispatch => {
       body: userData,
     });
 
+    console.log(userData);
+
     // 이메일 인증 여부에 따라 데이터 저장
     if (typeof jsonData.result === 'object') {
       const result = jsonData.result;
