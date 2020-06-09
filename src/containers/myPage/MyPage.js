@@ -66,16 +66,7 @@ const MyPage = props => {
   const passRef = useRef(null);
 
   useEffect(() => {
-    if (Platform.OS === 'android') {
-      OneSignal.init('ffaa627f-c0ab-48a5-92ff-aab4aba972f3', {
-        kOSSettingsKeyAutoPrompt: true,
-      });
-      OneSignal.inFocusDisplaying(2);
-
-      OneSignal.addEventListener('received', this.onReceived);
-      OneSignal.addEventListener('opened', this.onOpened);
-      OneSignal.addEventListener('ids', this.onIds);
-
+    if (Platform.OS !== 'android') {
       OneSignal.getPermissionSubscriptionState(async status => {
         await storeData('playerId', status.userId);
       });
@@ -201,56 +192,45 @@ const MyPage = props => {
                     setPass('');
 
                     try {
-                      await KakaoLogins.login()
-                        .then(async result => {
-                          await CommonActions.handleLoading(true);
+                      await KakaoLogins.login();
 
-                          await KakaoLogins.getProfile().then(
-                            async userData => {
-                              // 알림 - playerId 추가
-                              // const playerId = await getData('playerId');
+                      await KakaoLogins.getProfile().then(async userData => {
+                        // 알림 - playerId 추가
+                        // const playerId = await getData('playerId');
 
-                              const token = await SignupActions.kakaoSignUp({
-                                snsId: userData.id,
-                                provider: 'kakao',
-                                playerId: null,
-                              });
+                        const token = await SignupActions.kakaoSignUp({
+                          snsId: userData.id,
+                          provider: 'kakao',
+                          playerId: null,
+                        });
 
-                              if (token !== false) {
-                                const userNickName = await getData(
-                                  'user_userNickName',
-                                );
-
-                                if (userNickName !== null) {
-                                  await SigninActions.handleLoginData({
-                                    token: token,
-                                    provider: 'kakao',
-                                    userNickName: userNickName,
-                                  });
-                                } else {
-                                  await SigninActions.handleLoginData({
-                                    token: token,
-                                    provider: 'kakao',
-                                  });
-                                }
-                              }
-
-                              await ReservationActions.getReservation();
-                              await ReservationActions.getReservationLog();
-
-                              await HospitalActions.getAllHospitalSubscribers();
-                              await ReviewActions.getMyReview();
-
-                              await CommonActions.handleLoading(false);
-                            },
+                        if (token !== false) {
+                          const userNickName = await getData(
+                            'user_userNickName',
                           );
 
-                          showMessage('카카오톡 연동 로그인 성공!');
-                        })
-                        .catch(e => {
-                          // 로그인 실패
-                          console.log(e);
-                        });
+                          if (userNickName !== null) {
+                            await SigninActions.handleLoginData({
+                              token: token,
+                              provider: 'kakao',
+                              userNickName: userNickName,
+                            });
+                          } else {
+                            await SigninActions.handleLoginData({
+                              token: token,
+                              provider: 'kakao',
+                            });
+                          }
+                        }
+
+                        await ReservationActions.getReservation();
+                        await ReservationActions.getReservationLog();
+
+                        await HospitalActions.getAllHospitalSubscribers();
+                        await ReviewActions.getMyReview();
+
+                        await CommonActions.handleLoading(false);
+                      });
                     } catch (e) {
                       console.log('kakao error receive......', e.code);
                     }

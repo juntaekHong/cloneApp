@@ -120,36 +120,16 @@ const Home = props => {
     props.covidList.length === 0 ? CovidActions.getCovidList() : null;
   }, [props.covidList]);
 
-  // useEffect(() => {
-  //   if (Platform.OS === 'android') {
-  //     OneSignal.init('ffaa627f-c0ab-48a5-92ff-aab4aba972f3', {
-  //       kOSSettingsKeyAutoPrompt: true,
-  //     });
-  //     OneSignal.inFocusDisplaying(2);
+  useEffect(() => {
+    if (Platform.OS !== 'android') {
+      OneSignal.init('ffaa627f-c0ab-48a5-92ff-aab4aba972f3');
+      OneSignal.inFocusDisplaying(2);
 
-  //     OneSignal.addEventListener('received', this.onReceived);
-  //     OneSignal.addEventListener('opened', this.onOpened);
-  //     OneSignal.addEventListener('ids', this.onIds);
-
-  //     OneSignal.getPermissionSubscriptionState(async status => {
-  //       const access = await getData('playerId');
-
-  //       if (access !== null) {
-  //         await removeData('playerId');
-  //       }
-  //       await storeData('playerId', status.userId);
-  //       console.log(status.userId);
-  //     });
-  //   }
-
-  //   return async () => {
-  //     if (Platform.OS === 'android') {
-  //       await OneSignal.removeEventListener('received', this.onReceived);
-  //       await OneSignal.removeEventListener('opened', this.onOpened);
-  //       await OneSignal.removeEventListener('ids', this.onIds);
-  //     }
-  //   };
-  // }, []);
+      OneSignal.addEventListener('received', this.onReceived);
+      OneSignal.addEventListener('opened', this.onOpened);
+      OneSignal.addEventListener('ids', this.onIds);
+    }
+  }, []);
 
   return (
     <TopContainerView>
