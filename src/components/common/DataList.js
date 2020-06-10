@@ -52,11 +52,14 @@ export const List = props => {
           source={
             items.img
               ? {uri: items.img}
-              : require('../../../assets/image/navigation/homeblue.png')
+              : {
+                  url:
+                    'https://cdn.icon-icons.com/icons2/1465/PNG/512/588hospital_100778.png',
+                }
           }
           width={80}
           height={80}
-          radius={25}
+          radius={items.img ? 25 : 0}
         />
         <ContentDataView>
           <NBGBText fontSize={14} numberOfLines={1}>
@@ -185,10 +188,9 @@ export const ErmList = props => {
           await CommonActions.loadingAction(false);
         }}>
         <PhotoImg
-          source={require('../../../assets/image/navigation/homeblue.png')}
+          source={require('../../../assets/image/home/pharmacy.png')}
           width={80}
           height={80}
-          radius={25}
         />
         <ContentDataView>
           <NBGBText fontSize={14} numberOfLines={1}>
