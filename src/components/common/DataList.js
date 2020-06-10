@@ -53,7 +53,7 @@ export const List = props => {
             items.img
               ? {uri: items.img}
               : {
-                  url:
+                  uri:
                     'https://cdn.icon-icons.com/icons2/1465/PNG/512/588hospital_100778.png',
                 }
           }

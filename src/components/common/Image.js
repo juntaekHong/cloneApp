@@ -1,7 +1,9 @@
 /* eslint-disable react/react-in-jsx-scope */
-import React from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import styled from 'styled-components/native';
 import {widthPercentageToDP} from '../../utils/util';
+import {StandardView} from './View';
+import {UIActivityIndicator} from 'react-native-indicators';
 
 export const Img = styled.Image`
   width: ${props =>
@@ -25,8 +27,45 @@ export const CloseImg = ({source, width, height}) => {
   return <Img source={source} width={width} height={height} />;
 };
 
-export const PhotoImg = ({source, width, height, radius}) => {
-  return <Img source={source} width={width} height={height} radius={radius} />;
+export const PhotoImg = ({item, source, width, height, radius}) => {
+  const [imgLoad, setImgLoad] = useState(false);
+
+  return (
+    <StandardView>
+      {!imgLoad ? (
+        <StandardView>
+          <Img
+            source={require('../../../assets/image/white.png')}
+            width={width}
+            height={height}
+            onLoadEnd={() => {
+              setImgLoad(source);
+            }}
+          />
+          <UIActivityIndicator
+            style={{
+              position: 'absolute',
+              left: widthPercentageToDP(30),
+              top: widthPercentageToDP(30),
+            }}
+            size={widthPercentageToDP(20)}
+            color={'gray'}
+          />
+        </StandardView>
+      ) : (
+        <StandardView>
+          <Img
+            style={{
+              borderRadius: widthPercentageToDP(radius),
+            }}
+            source={imgLoad}
+            width={width}
+            height={height}
+          />
+        </StandardView>
+      )}
+    </StandardView>
+  );
 };
 
 export const StarImg = ({source, width, height}) => {
