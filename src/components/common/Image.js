@@ -29,6 +29,7 @@ export const CloseImg = ({source, width, height}) => {
 
 export const PhotoImg = ({item, source, width, height, radius}) => {
   const [imgLoad, setImgLoad] = useState(false);
+  const [uiLoad, setUiLoad] = useState(false);
 
   return (
     <StandardView>
@@ -61,7 +62,24 @@ export const PhotoImg = ({item, source, width, height, radius}) => {
             source={imgLoad}
             width={width}
             height={height}
+            onLoadStart={() => {
+              setUiLoad(true);
+            }}
+            onLoadEnd={() => {
+              setUiLoad(false);
+            }}
           />
+          {uiLoad ? (
+            <UIActivityIndicator
+              style={{
+                position: 'absolute',
+                left: widthPercentageToDP(30),
+                top: widthPercentageToDP(30),
+              }}
+              size={widthPercentageToDP(20)}
+              color={'gray'}
+            />
+          ) : null}
         </StandardView>
       )}
     </StandardView>
