@@ -1,4 +1,4 @@
-package com.cloneapp;
+package com.hospitalReservation;
 
 import android.app.Application;
 import android.content.Context;

@@ -1,4 +1,4 @@
-package com.cloneapp;
+package com.hospitalReservation;
 
 import com.facebook.react.ReactActivity;
 
